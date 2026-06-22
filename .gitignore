@@ -1,0 +1,15 @@
+.DS_Store
+.idea
+.vscode
+.fleet
+.nova
+.zed
+
+# Safety net — ignore env files anywhere in the repo regardless of nesting
+**/.env
+**/.env.*
+!**/.env.example
+
+# Dependency / build artifacts (already covered by per-app .gitignore, kept here as a safety net)
+**/node_modules
+**/vendor

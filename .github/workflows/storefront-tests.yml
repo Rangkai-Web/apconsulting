@@ -1,0 +1,23 @@
+name: Storefront Tests
+
+on:
+  push:
+    paths:
+      - 'storefront/**'
+  pull_request:
+    paths:
+      - 'storefront/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: storefront
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install
+      - run: npx vitest run
