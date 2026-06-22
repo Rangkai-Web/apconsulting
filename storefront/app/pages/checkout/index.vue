@@ -1,9 +1,3 @@
-<script setup lang="ts">
-definePageMeta({
-  middleware: "auth",
-});
-</script>
-
 <template>
   <div
     class="relative overflow-hidden bg-linear-to-b from-primary-50/15 via-white to-white min-h-screen py-20"

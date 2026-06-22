@@ -89,9 +89,10 @@ Dashboard (ringkasan sales/order/revenue + chart)
 Produk (CRUD produk + kategori + variant + stock per variant)
 Pesanan (list masuk → detail → konfirmasi bayar manual jika perlu → input resi)
 Pelanggan (list + detail histori beli)
-Settings (config toko, ganti password admin)
+Settings (profil toko, ganti password admin)
 ```
 
+- **Menu Settings** (Filament, single-row form terhadap `store_settings`, §5): nama toko, logo, alamat, nomor telepon, nomor WhatsApp, link Instagram, embed Google Maps, jam operasional. Semua field yang sekarang hardcoded di footer storefront (`AppFooter.vue`) harus jadi editable di sini, bukan tetap hardcode di kode.
 - Role admin cuma 1 (owner/admin full akses) — tidak perlu RBAC/permission granular.
 - Status order: `pending` → `paid` (auto via webhook Midtrans) → `processing` → `shipped` (admin input resi) → `completed` / `cancelled` / `expired`.
 - Admin bisa override status manual untuk edge case, walau pembayaran cuma lewat Midtrans.
@@ -169,10 +170,32 @@ rajaongkir_districts : id (= ID asli RajaOngkir), city_id, name
 ### Settings
 
 ```
-store_settings : single-row table — store_name, logo, address, contact, dll (non-secret saja)
+store_settings : single-row table — store_name, logo, address, phone, whatsapp_number,
+                  instagram_url, google_maps_embed_url, operating_hours,
+                  rajaongkir_origin_district_id (non-secret saja)
 ```
 
+- Field ini yang ditampilkan storefront di footer (alamat, WhatsApp, jam operasional, link Instagram, embed Google Maps) — saat ini masih **hardcoded** di `AppFooter.vue`. Begitu endpoint `GET /api/settings` ada (lihat §9.1), footer wajib switch ke fetch dari situ, bukan tetap hardcode.
+- `phone` (CS umum) dipisah dari `whatsapp_number` (link `wa.me`/`api.whatsapp.com`) — keduanya bisa beda nomor.
+- `google_maps_embed_url`: simpan full iframe embed URL dari Google Maps "Share > Embed a map", bukan koordinat lat/lng manual — lebih simpel di-render storefront (`<iframe :src="...">` langsung).
+- `operating_hours`: simpan sebagai string bebas (mis. `"Senin - Minggu, 10.00 - 22.00 WIB"`), bukan kolom terstruktur per-hari — gak ada kebutuhan jam beda per hari saat ini (YAGNI).
 - Midtrans server key & RajaOngkir API key disimpan di **`.env`**, bukan di DB/admin UI — secret tidak boleh editable lewat panel.
+
+### Profile & Address (Member)
+
+```
+GET    /api/profile           — data member yang login (name, email, phone)
+PUT    /api/profile           — update name/phone
+PUT    /api/profile/password  — ganti password
+GET    /api/addresses         — list alamat tersimpan milik member
+POST   /api/addresses         — tambah alamat baru
+PUT    /api/addresses/{id}    — update alamat
+DELETE /api/addresses/{id}    — hapus alamat
+```
+
+- Semua endpoint di atas **member-only** (`auth:sanctum`, guard `users`). Tidak ada konsep "profile guest" — guest gak punya akun, gak ada data yang persisten buat di-fetch sebagai profile.
+- Guest tracking order pakai mekanisme beda: **order lookup**, bukan profile. Lihat §9.2.
+- Endpoint ini belum ada di Foundation plan (yang baru bikin register/login/logout) — masuk scope plan Catalog/Checkout berikutnya, didokumentasikan di `docs/api/auth.md` (profile) dan `docs/api/cart-checkout.md` (addresses) begitu dibuat.
 
 ## 6. Integrasi Midtrans (Payment)
 
@@ -259,6 +282,26 @@ Ada 2 permukaan yang dipakai client berbeda: **Filament admin panel** (server-re
 - Bukan OpenAPI/Swagger formal — cukup markdown manual, konsisten format, gampang dibaca tanpa tooling tambahan. Di-generate begini biar gak nambah dependency (`l5-swagger` dkk) yang gak dibutuhin skala project ini.
 - Ditambahkan ke aturan CLAUDE.md (Foundation plan Task 11) sebagai convention wajib.
 
+### 9.1 Endpoint Settings (Public)
+
+```
+GET /api/settings — public, tanpa auth
+```
+
+Return field non-secret dari `store_settings` (§5): `store_name`, `logo`, `address`, `phone`, `whatsapp_number`, `instagram_url`, `google_maps_embed_url`, `operating_hours`. Dipakai storefront buat render footer (lihat §5 catatan Settings) dan `services/api.ts` (`getSettings()` di storefront udah ada stub-nya, tinggal disambungkan).
+
+### 9.2 Guest Tidak Punya "Profile" — Order Lookup, Bukan Identitas Persisten
+
+Guest checkout cuma butuh nama+email+telp sekali pas checkout (snapshot ke `orders`, lihat §5) — tidak ada akun, tidak ada sesi, tidak ada yang persisten di luar order itu sendiri. Jadi:
+
+```
+GET /api/orders/lookup?order_number=ORD-12345678&email=guest@example.com
+```
+
+- Bukan `auth:sanctum` — validasi cukup pakai kombinasi `order_number` + `email` harus cocok di tabel `orders`.
+- Dipakai di halaman Order History versi guest (spec §3: "Order history guest dicari pakai order_number + email").
+- Beda total dari `GET /api/profile` (§5 Profile & Address) yang member-only dan butuh token. Jangan disatukan jadi 1 endpoint "profile" generik — semantiknya beda (guest = lookup sekali pakai per order, member = identitas persisten).
+
 ## 10. Scope yang Dicoret / Tidak Termasuk
 
 - Xendit (cuma Midtrans).
@@ -266,3 +309,82 @@ Ada 2 permukaan yang dipakai client berbeda: **Filament admin panel** (server-re
 - Multi-warehouse (cuma 1 origin gudang).
 - Komentar teks di rating (cuma bintang).
 - Microservice architecture.
+
+## 11. Checklist Implementasi: API & Admin Panel (Reference)
+
+Konsolidasi semua endpoint/controller/resource yang disebut tersebar di §2–§9, plus gap yang baru ketemu pas audit kelengkapan. Dipakai sebagai acuan pas nulis plan Catalog/Checkout/Admin berikutnya — biar gak ada yang ketinggalan. Belum ada yang dibangun di luar yang udah disebut "✓ Foundation" (Task 1-9, lihat `docs/superpowers/plans/2026-06-19-foundation.md`).
+
+### 11.1 Controller yang Dibutuhkan
+
+```
+AuthController        ✓ Foundation Task 2 — register, login, logout
+CategoryController     — list kategori (katalog publik)
+ProductController       — list+filter+search+sort+pagination, detail by slug
+AddressController       — CRUD alamat tersimpan (member-only)
+ProfileController        — get/update profile, ganti password (member-only)
+OrderController            — create order, list order milik member, detail order
+ShippingController          — hitung ongkir (proxy ke RajaOngkir /cost)
+RatingController              — submit rating per order_item
+WebhookController              — terima notifikasi Midtrans, verifikasi signature
+SettingsController               — get store_settings (public, read-only dari sisi API)
+```
+
+### 11.2 REST API — Daftar Lengkap Endpoint
+
+```
+# Auth (✓ Foundation Task 2, profile/password baru — lihat §5)
+GET    /api/health                          — no auth
+POST   /api/register                        — no auth
+POST   /api/login                           — no auth
+POST   /api/logout                          — auth:sanctum
+GET    /api/profile                         — auth:sanctum
+PUT    /api/profile                         — auth:sanctum
+PUT    /api/profile/password                — auth:sanctum
+
+# Katalog (publik, belum ada controller-nya — gap baru)
+GET    /api/categories                      — no auth
+GET    /api/products                        — no auth — query: category, min, max, sort, search, page
+GET    /api/products/{slug}                 — no auth
+
+# Alamat (member-only — gap baru)
+GET    /api/addresses                       — auth:sanctum
+POST   /api/addresses                       — auth:sanctum
+PUT    /api/addresses/{id}                  — auth:sanctum
+DELETE /api/addresses/{id}                  — auth:sanctum
+
+# Shipping (formal entry — sebelumnya cuma di diagram §7)
+POST   /api/shipping/cost                   — no auth — body: { district_id, total_weight } -> list kurir+harga
+
+# Order (formal entry — sebelumnya cuma di diagram §6; list/detail member = gap baru)
+POST   /api/orders                          — no auth (guest) ATAU auth:sanctum (member) — body: items, shipping_address, courier, dst
+GET    /api/orders                          — auth:sanctum — list order milik member yang login
+GET    /api/orders/{order_number}           — auth:sanctum (punya sendiri) ATAU lihat /lookup buat guest
+GET    /api/orders/lookup                   — no auth — query: order_number, email (✓ sudah didokumentasikan §9.2)
+
+# Rating (gap baru — fitur ada di DB+UI plan, endpoint belum pernah disebut)
+POST   /api/order-items/{id}/rating         — auth:sanctum — body: { stars } — gagal kalau order_item bukan milik user / order belum completed / udah pernah dirating (unique constraint §5)
+
+# Webhook (formal entry — sebelumnya cuma di diagram §6)
+POST   /api/webhooks/midtrans               — no Sanctum auth, validasi via signature_key Midtrans
+
+# Settings (✓ sudah didokumentasikan §9.1)
+GET    /api/settings                        — no auth
+```
+
+### 11.3 Admin Panel — Filament Resource & Sidebar (Detail)
+
+```
+Dashboard           — custom Widget: StatsOverview (total sales/order/revenue) + Chart (order per hari/minggu)
+CategoryResource     — CRUD biasa (name, slug, parent_id dropdown)
+ProductResource       — CRUD + RelationManager (ProductVariantsRelationManager, nested di halaman edit produk)
+                         FileUpload: images (max 5, max 2MB/file, jpg/png/webp — §5)
+OrderResource          — List+detail (read mostly), RelationManager (OrderItemsRelationManager, read-only)
+                          Custom Action "Input Resi" (update tracking_number, set status=shipped)
+                          Custom Action "Ubah Status" (override manual, §4)
+CustomerResource        — Read-only list User + relasi ke histori order (gak ada create/edit dari sisi admin)
+SettingsPage              — custom Filament Page (BUKAN Resource — single-row form ke store_settings, §5)
+Admin Account/Password     — bawaan Filament (panel profile widget), gak perlu Resource custom
+```
+
+- Semua di atas belum dibangun — ini checklist buat plan **Admin Catalog**, **Customer Catalog**, **Cart & Checkout**, **Payment & Order Creation**, dan **Admin Order Management** (urutan plan dari sesi brainstorming awal).
+- Tiap endpoint yang jadi dibangun, wajib disinkronkan ke `docs/api/<resource>.md` sesuai convention §9.

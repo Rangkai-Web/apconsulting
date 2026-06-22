@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: "guest-only",
+});
+
 import { useAuthStore } from "~/store/auth";
 
 const route = useRoute();

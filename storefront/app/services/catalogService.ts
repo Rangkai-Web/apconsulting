@@ -1,15 +1,44 @@
-import type { Category, CatalogFilters, PaginatedResult, Product } from '~/types'
-import { dummyCategories, dummyProducts } from './dummyData'
+import type { Category, CatalogFilters, PaginatedResult, Product, ProductVariant } from '~/types'
 
-// Dummy implementation — same function signatures the real API-backed
-// service will use later, so swapping the body for $fetch() calls is the
-// only change needed once api/ ships these endpoints.
+function mapVariant(raw: any): ProductVariant {
+  return {
+    id: raw.id,
+    productId: raw.product_id ?? 0,
+    name: raw.name,
+    sku: raw.sku,
+    price: raw.price,
+    stock: raw.stock,
+    weight: raw.weight,
+    image: raw.image,
+  }
+}
 
-const PAGE_SIZE = 8
-const SIMULATED_LATENCY_MS = 300
+function mapProduct(raw: any): Product {
+  return {
+    id: raw.id,
+    categoryId: raw.category_id,
+    name: raw.name,
+    slug: raw.slug,
+    description: raw.description,
+    images: raw.images ?? [],
+    isActive: raw.is_active,
+    ratingAvg: raw.rating_avg,
+    ratingCount: raw.rating_count,
+    variants: (raw.variants ?? []).map(mapVariant),
+  }
+}
 
-function delay<T>(value: T): Promise<T> {
-  return new Promise((resolve) => setTimeout(() => resolve(value), SIMULATED_LATENCY_MS))
+function mapCategory(raw: any): Category {
+  return {
+    id: raw.id,
+    name: raw.name,
+    slug: raw.slug,
+    parentId: raw.parent_id,
+  }
+}
+
+function apiBase(): string {
+  return useRuntimeConfig().public.apiBase
 }
 
 function minPrice(product: Product): number {
@@ -22,75 +51,55 @@ function isOutOfStock(product: Product): boolean {
 
 export const catalogService = {
   async getCategories(): Promise<Category[]> {
-    return delay(dummyCategories)
+    const response = await $fetch<{ data: any[] }>('/categories', { baseURL: apiBase() })
+    return response.data.map(mapCategory)
   },
 
   async getProducts(filters: Partial<CatalogFilters> = {}): Promise<PaginatedResult<Product>> {
-    const page = filters.page ?? 1
-    const search = (filters.search ?? '').trim().toLowerCase()
+    const response = await $fetch<{ data: any[]; meta: { has_more: boolean; next_page: number | null; total: number } }>(
+      '/products',
+      {
+        baseURL: apiBase(),
+        query: {
+          category: filters.category ?? undefined,
+          min: filters.minPrice ?? undefined,
+          max: filters.maxPrice ?? undefined,
+          search: filters.search || undefined,
+          sort: filters.sort ?? undefined,
+          page: filters.page ?? 1,
+        },
+      },
+    )
 
-    let results = dummyProducts.filter((p) => p.isActive)
-
-    if (filters.category) {
-      const category = dummyCategories.find((c) => c.slug === filters.category)
-      if (category) results = results.filter((p) => p.categoryId === category.id)
+    return {
+      data: response.data.map(mapProduct),
+      hasMore: response.meta.has_more,
+      nextPage: response.meta.next_page,
+      total: response.meta.total,
     }
-
-    if (filters.minPrice != null) {
-      results = results.filter((p) => minPrice(p) >= filters.minPrice!)
-    }
-
-    if (filters.maxPrice != null) {
-      results = results.filter((p) => minPrice(p) <= filters.maxPrice!)
-    }
-
-    if (search) {
-      results = results.filter((p) => p.name.toLowerCase().includes(search))
-    }
-
-    switch (filters.sort) {
-      case 'price_asc':
-        results = [...results].sort((a, b) => minPrice(a) - minPrice(b))
-        break
-      case 'price_desc':
-        results = [...results].sort((a, b) => minPrice(b) - minPrice(a))
-        break
-      case 'rating':
-        results = [...results].sort((a, b) => b.ratingAvg - a.ratingAvg)
-        break
-      default:
-        results = [...results].sort((a, b) => b.id - a.id)
-    }
-
-    const total = results.length
-    const start = (page - 1) * PAGE_SIZE
-    const pageItems = results.slice(start, start + PAGE_SIZE)
-    const hasMore = start + PAGE_SIZE < total
-
-    return delay({
-      data: pageItems,
-      hasMore,
-      nextPage: hasMore ? page + 1 : null,
-      total,
-    })
   },
 
   async getFeaturedProducts(limit = 4): Promise<Product[]> {
-    const featured = [...dummyProducts]
-      .filter((p) => p.isActive)
-      .sort((a, b) => b.ratingAvg - a.ratingAvg)
-      .slice(0, limit)
-    return delay(featured)
+    const result = await catalogService.getProducts({ sort: 'rating', page: 1 })
+    return result.data.slice(0, limit)
   },
 
   async getProductBySlug(slug: string): Promise<Product | null> {
-    const product = dummyProducts.find((p) => p.slug === slug) ?? null
-    return delay(product)
+    try {
+      const response = await $fetch<{ data: any }>(`/products/${slug}`, { baseURL: apiBase() })
+      return mapProduct(response.data)
+    } catch {
+      return null
+    }
   },
 
   async getProductsByIds(ids: number[]): Promise<Product[]> {
-    const results = dummyProducts.filter((p) => ids.includes(p.id))
-    return delay(results)
+    if (ids.length === 0) return []
+    const response = await $fetch<{ data: any[] }>('/products', {
+      baseURL: apiBase(),
+      query: { ids: ids.join(',') },
+    })
+    return response.data.map(mapProduct)
   },
 
   isOutOfStock,
