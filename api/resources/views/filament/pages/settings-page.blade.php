@@ -4,6 +4,7 @@
 
         <x-filament::actions
             :actions="$this->getFormActions()"
+            style="margin-top: 24px;"
         />
     </form>
 </x-filament-panels::page>

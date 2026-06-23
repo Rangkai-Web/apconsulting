@@ -13,4 +13,9 @@ class CreateProduct extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
+
+    public function canCreateAnother(): bool
+    {
+        return false;
+    }
 }

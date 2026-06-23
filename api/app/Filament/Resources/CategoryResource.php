@@ -32,7 +32,7 @@ class CategoryResource extends Resource
                 ->label('Nama Kategori')
                 ->required()
                 ->maxLength(255)
-                ->live(onBlur: true)
+                ->live(debounce: 500)
                 ->afterStateUpdated(function (string $operation, Set $set, ?string $state) {
                     if ($operation === 'create') {
                         $set('slug', Str::slug($state ?? ''));
@@ -43,15 +43,6 @@ class CategoryResource extends Resource
                 ->required()
                 ->maxLength(255)
                 ->unique(ignoreRecord: true),
-            Select::make('parent_id')
-                ->label('Kategori Induk')
-                ->options(
-                    fn (?Category $record) => Category::query()
-                        ->when($record, fn ($query) => $query->whereNot('id', $record->id))
-                        ->pluck('name', 'id')
-                )
-                ->searchable()
-                ->nullable(),
         ]);
     }
 
@@ -61,9 +52,10 @@ class CategoryResource extends Resource
             ->columns([
                 TextColumn::make('name')->label('Nama')->searchable()->sortable(),
                 TextColumn::make('slug')->label('Slug'),
-                TextColumn::make('parent.name')->label('Induk')->default('—'),
                 TextColumn::make('products_count')->label('Jumlah Produk')->counts('products'),
             ])
+            ->defaultSort('created_at', 'desc')
+            ->defaultPaginationPageOption(10)
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make()

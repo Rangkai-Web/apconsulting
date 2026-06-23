@@ -25,6 +25,13 @@ class Product extends Model
         ];
     }
 
+    protected function description(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn (?string $value) => empty($value) ? '' : (str_starts_with($value, '<') ? $value : '<p>' . e($value) . '</p>'),
+        );
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

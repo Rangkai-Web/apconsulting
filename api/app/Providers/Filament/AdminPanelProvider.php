@@ -29,6 +29,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->authGuard('admin')
             ->login()
+            ->brandName('Admin Panel DR Plant Indonesia')
+            ->brandLogo(asset('logo_dr_plant.jpg'))
+            ->brandLogoHeight('5rem')
             ->colors([
                 'primary' => Color::Emerald,
             ])
@@ -39,8 +42,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                \App\Filament\Widgets\StatsOverview::class,
             ])
             ->middleware([
                 EncryptCookies::class,

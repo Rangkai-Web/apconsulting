@@ -25,6 +25,8 @@ class SettingsPage extends Page implements HasForms
 
     protected static ?string $navigationLabel = 'Pengaturan';
 
+    protected static ?int $navigationSort = 100;
+
     protected string $view = 'filament.pages.settings-page';
 
     public ?array $data = [];
