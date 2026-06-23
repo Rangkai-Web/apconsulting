@@ -6,7 +6,15 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
 #[Fillable([
-    'store_name', 'logo', 'address', 'contact', 'rajaongkir_origin_district_id',
+    'store_name',
+    'logo',
+    'address',
+    'contact',
+    'phone',
+    'whatsapp_number',
+    'instagram_url',
+    'operating_hours',
+    'rajaongkir_origin_district_id',
 ])]
 class StoreSetting extends Model
 {

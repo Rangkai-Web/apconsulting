@@ -1,3 +1,27 @@
+<script setup lang="ts">
+import { useApi } from "~/services/api";
+
+const api = useApi();
+const { data: settingsResponse } = await useAsyncData("store-settings", () =>
+  api.getSettings(),
+);
+
+const settings = computed(() => {
+  return (
+    settingsResponse.value?.data || {
+      store_name: "Doctor Plant Indonesia",
+      logo: null,
+      address:
+        "1st Floor, Jl. Artha Gading Sel. No.1, RT.18/RW.8, Klp. Gading Bar., Kec. Klp. Gading, Jkt Utara, Jakarta 14240",
+      phone: "+62 812-9504-0884",
+      whatsapp_number: "6281295040884",
+      instagram_url: "https://www.instagram.com/drplant_official_id/",
+      operating_hours: "Senin - Minggu\n10.00 - 22.00 WIB",
+    }
+  );
+});
+</script>
+
 <template>
   <footer
     class="bg-[#081710] text-gray-300 relative overflow-hidden mt-20 border-t border-primary-950/20"
@@ -14,10 +38,10 @@
       <div class="md:col-span-4 space-y-4">
         <NuxtLink to="/" class="flex items-center gap-2.5 group w-fit">
           <div
-            class="w-12 h-12 rounded-full bg-linear-to-tr from-primary-600 to-primary-400 flex items-center justify-center text-white shadow-md shadow-primary-600/20 transform transition-transform group-hover:scale-105 group-hover:rotate-3 duration-300"
+            class="w-12 h-12 rounded-full bg-linear-to-tr from-primary-600 to-primary-400 flex items-center justify-center text-white shadow-md shadow-primary-600/20 transform transition-transform group-hover:scale-105 group-hover:rotate-3 duration-300 overflow-hidden"
           >
             <NuxtImg
-              src="/logo_dr_plant.jpg"
+              :src="settings.logo || '/logo_dr_plant.jpg'"
               alt="Logo Dr. Plant"
               width="40"
               height="40"
@@ -27,7 +51,7 @@
           <div class="flex flex-col">
             <span
               class="font-bold text-white text-base tracking-wide leading-tight group-hover:text-primary-300 transition-colors"
-              >Doctor Plant</span
+              >{{ settings.store_name }}</span
             >
             <span
               class="text-xs text-primary-400 uppercase tracking-widest font-extrabold -mt-0.5"
@@ -42,7 +66,8 @@
         </p>
         <div class="flex items-center gap-3 pt-2">
           <a
-            href="https://www.instagram.com/drplant_official_id/"
+            v-if="settings.instagram_url"
+            :href="settings.instagram_url"
             target="_blank"
             rel="noopener"
             class="w-8.5 h-8.5 rounded-full bg-gray-900/60 border border-gray-800/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300 hover:scale-110"
@@ -51,7 +76,12 @@
             <UIcon name="i-simple-icons-instagram" class="w-4.5 h-4.5" />
           </a>
           <a
-            href="https://api.whatsapp.com/send/?phone=6281295040884&text&type=phone_number&app_absent=0"
+            v-if="settings.whatsapp_number"
+            :href="
+              'https://api.whatsapp.com/send/?phone=' +
+              settings.whatsapp_number +
+              '&text&type=phone_number&app_absent=0'
+            "
             target="_blank"
             rel="noopener"
             class="w-8.5 h-8.5 rounded-full bg-gray-900/60 border border-gray-800/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300 hover:scale-110"
@@ -97,60 +127,32 @@
           Hubungi Kami
         </h4>
         <ul class="flex flex-col gap-3 text-xs text-gray-400">
-          <li class="flex items-start gap-2.5 leading-relaxed">
+          <li v-if="settings.address" class="flex items-start gap-2.5 leading-relaxed">
             <UIcon
               name="i-heroicons-map-pin"
               class="w-4.5 h-4.5 text-primary-500 shrink-0 mt-0.5"
             />
-            <span
-              >1st Floor, Jl. Artha Gading Sel. No.1, RT.18/RW.8, Klp. Gading
-              Bar., Kec. Klp. Gading, Jkt Utara, Jakarta 14240</span
-            >
+            <span>{{ settings.address }}</span>
           </li>
-          <li class="flex items-center gap-2.5">
+          <li v-if="settings.phone" class="flex items-center gap-2.5">
             <UIcon
               name="i-heroicons-phone"
               class="w-4.5 h-4.5 text-primary-500 shrink-0"
             />
             <a
-              href="https://api.whatsapp.com/send/?phone=6281295040884&text&type=phone_number&app_absent=0"
-              target="_blank"
-              rel="noopener"
+              :href="'tel:' + settings.phone"
               class="hover:text-white transition-colors"
-              >+62 812-9504-0884</a
+              >{{ settings.phone }}</a
             >
           </li>
-          <!-- <li class="flex items-center gap-2.5">
-            <UIcon
-              name="i-heroicons-envelope"
-              class="w-4.5 h-4.5 text-primary-500 shrink-0"
-            />
-            <a
-              href="mailto:cs@doctorplant.id"
-              class="hover:text-white transition-colors"
-              >cs@doctorplant.id</a
-            >
-          </li> -->
-          <li class="flex items-start gap-2.5">
+          <li v-if="settings.operating_hours" class="flex items-start gap-2.5">
             <UIcon
               name="i-heroicons-clock"
               class="w-4.5 h-4.5 text-primary-500 shrink-0 mt-0.5"
             />
-            <span>Senin - Minggu<br />10.00 - 22.00 WIB</span>
+            <span class="whitespace-pre-line">{{ settings.operating_hours }}</span>
           </li>
         </ul>
-        <div class="pt-2">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4467.915118422002!2d106.89216549999999!3d-6.1456352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f51951de45bd%3A0x189817daabbd9f68!2sDR%20Plant%20Store!5e1!3m2!1sen!2sid!4v1781962632513!5m2!1sen!2sid"
-            width="100%"
-            height="180"
-            style="border: 0"
-            class="rounded-xl opacity-80 hover:opacity-100 transition-opacity duration-300"
-            allowfullscreen="true"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
       </div>
 
       <!-- Payments (2 cols) -->
@@ -188,7 +190,7 @@
         class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left"
       >
         <span
-          >&copy; {{ new Date().getFullYear() }} PT Doctor Plant Indonesia. Hak
+          >&copy; {{ new Date().getFullYear() }} {{ settings.store_name }}. Hak
           Cipta Dilindungi.</span
         >
       </div>
