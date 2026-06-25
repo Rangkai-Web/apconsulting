@@ -17,5 +17,8 @@ export const useApi = () => {
     async getSettings() {
       return await fetchApi<any>("/settings");
     },
+    async getBanners() {
+      return await fetchApi<any>("/banners");
+    },
   };
 };

@@ -45,7 +45,7 @@ class ProductController extends Controller
             'price_asc' => $query->orderBy('variants_min_price', 'asc'),
             'price_desc' => $query->orderBy('variants_min_price', 'desc'),
             'rating' => $query->orderBy('rating_avg', 'desc'),
-            default => $query->orderBy('id', 'desc'),
+            default => $query->orderBy('created_at', 'desc'),
         };
 
         $page = max(1, (int) $request->input('page', 1));

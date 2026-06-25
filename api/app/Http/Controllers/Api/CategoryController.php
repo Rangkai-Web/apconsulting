@@ -10,6 +10,6 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return CategoryResource::collection(Category::query()->orderBy('name')->get());
+        return CategoryResource::collection(Category::query()->orderBy('created_at', 'desc')->get());
     }
 }

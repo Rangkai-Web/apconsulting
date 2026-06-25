@@ -2,6 +2,21 @@
 import { useCartStore } from "~/store/cart";
 import { useWishlistStore } from "~/store/wishlist";
 import { useAuthStore } from "~/store/auth";
+import { useApi } from "~/services/api";
+
+const api = useApi();
+const { data: settingsResponse } = useAsyncData("store-settings", () =>
+  api.getSettings(),
+);
+
+const settings = computed(() => {
+  return (
+    settingsResponse.value?.data || {
+      store_name: "Doctor Plant Indonesia",
+      logo: null,
+    }
+  );
+});
 
 const router = useRouter();
 const route = useRoute();
@@ -93,7 +108,7 @@ async function handleMobileLogout() {
             class="w-10 h-10 shrink-0 rounded-full bg-linear-to-tr from-primary-600 to-primary-400 flex items-center justify-center text-white shadow-md shadow-primary-600/25 transform transition-transform group-hover:scale-105 group-hover:rotate-3 duration-300 overflow-hidden"
           >
             <NuxtImg
-              src="/logo_dr_plant.jpg"
+              :src="settings.logo || '/logo_dr_plant.jpg'"
               alt="Logo Dr. Plant"
               width="40"
               height="40"
@@ -266,7 +281,7 @@ async function handleMobileLogout() {
                   class="w-10 h-10 shrink-0 rounded-full bg-linear-to-tr from-primary-600 to-primary-400 flex items-center justify-center text-white overflow-hidden"
                 >
                   <NuxtImg
-                    src="/logo_dr_plant.jpg"
+                    :src="settings.logo || '/logo_dr_plant.jpg'"
                     alt="Logo Dr. Plant"
                     width="40"
                     height="40"

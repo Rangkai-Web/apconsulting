@@ -1,17 +1,31 @@
 <script setup lang="ts">
 import { catalogService } from "~/services/catalogService";
 import type { Product } from "~/types";
+import { useApi } from "~/services/api";
 
+const api = useApi();
 const featured = ref<Product[]>([]);
 const loadingFeatured = ref(true);
 
-const banners = [
+const { data: bannersResponse } = useAsyncData("homepage-banners", () =>
+  api.getBanners(),
+);
+
+interface BannerItem {
+  title: string;
+  subtitle: string;
+  image: string;
+  link?: string;
+}
+
+const defaultBanners: BannerItem[] = [
   {
     title: "Perawatan Kulit Alami Berbasis Alpine Plants",
     subtitle:
       "Rangkaian produk hidrasi premium dari ekstrak tanaman pegunungan tinggi untuk kulit sehat berseri.",
     image:
       "https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1600&h=600&q=80",
+    link: "/katalog",
   },
   {
     title: "Sheet Mask Mewah untuk Hidrasi Instan",
@@ -19,6 +33,7 @@ const banners = [
       "Mengembalikan kelembaban optimal dan menyegarkan kulit lelah dalam 15 menit.",
     image:
       "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1600&h=600&q=80",
+    link: "/katalog",
   },
   {
     title: "Layanan Facial Treatment Eksklusif",
@@ -26,8 +41,14 @@ const banners = [
       "Perawatan kulit mendalam dengan teknologi ultrasound dan terapis berpengalaman di klinik kami.",
     image:
       "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=1600&h=600&q=80",
+    link: "/katalog",
   },
 ];
+
+const banners = computed<BannerItem[]>(() => {
+  const apiBanners = (bannersResponse.value?.data || []) as BannerItem[];
+  return apiBanners.length > 0 ? apiBanners : defaultBanners;
+});
 
 onMounted(async () => {
   featured.value = await catalogService.getFeaturedProducts(4);
@@ -84,7 +105,7 @@ onMounted(async () => {
                 {{ item.subtitle }}
               </p>
               <UButton
-                to="/katalog"
+                :to="item.link || '/katalog'"
                 color="primary"
                 class="mt-3.5 sm:mt-5 font-semibold text-xs sm:text-sm px-4 sm:px-6 py-1.5 sm:py-2.5 rounded-full shadow-lg shadow-primary-600/20 hover:scale-105 transition-transform duration-300 cursor-pointer"
                 >Belanja Sekarang</UButton

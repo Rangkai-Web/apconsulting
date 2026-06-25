@@ -75,11 +75,11 @@ class SettingsPage extends Page implements HasForms
                     ->label('Jam Operasional')
                     ->placeholder('Senin - Minggu, 10.00 - 22.00 WIB')
                     ->maxLength(255),
-                Select::make('rajaongkir_origin_district_id')
-                    ->label('Kecamatan Asal (RajaOngkir)')
-                    ->options(RajaongkirDistrict::all()->pluck('name', 'id'))
-                    ->searchable()
-                    ->placeholder('Pilih kecamatan asal pengiriman'),
+                // Select::make('rajaongkir_origin_district_id')
+                //     ->label('Kecamatan Asal (RajaOngkir)')
+                //     ->options(RajaongkirDistrict::all()->pluck('name', 'id'))
+                //     ->searchable()
+                //     ->placeholder('Pilih kecamatan asal pengiriman'),
             ])
             ->statePath('data');
     }
