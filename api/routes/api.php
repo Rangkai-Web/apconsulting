@@ -30,5 +30,5 @@ Route::get('/products/{slug}', [ProductController::class, 'show']);
 // Public settings route
 Route::get('/settings', [SettingsController::class, 'show']);
 
-// Public shipping route
-Route::post('/shipping/cost', [ShippingController::class, 'cost']);
+// Public shipping route — stricter throttle: this proxies a paid-per-call RajaOngkir endpoint
+Route::post('/shipping/cost', [ShippingController::class, 'cost'])->middleware('throttle:10,1');

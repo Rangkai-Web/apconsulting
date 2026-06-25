@@ -92,4 +92,19 @@ class ShippingCostApiTest extends TestCase
         $response->assertStatus(503)
             ->assertJsonPath('message', 'Gagal cek ongkir, coba lagi');
     }
+
+    public function test_throttles_after_10_requests_per_minute(): void
+    {
+        $this->fakeRajaOngkirSuccess();
+        StoreSetting::create(['store_name' => 'Doctor Plant Indonesia', 'rajaongkir_origin_district_id' => 501]);
+        $district = $this->seedDestinationDistrict();
+
+        for ($i = 0; $i < 10; $i++) {
+            $this->postJson('/api/shipping/cost', ['district_id' => $district->id, 'total_weight' => 1000])
+                ->assertStatus(200);
+        }
+
+        $this->postJson('/api/shipping/cost', ['district_id' => $district->id, 'total_weight' => 1000])
+            ->assertStatus(429);
+    }
 }

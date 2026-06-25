@@ -13,4 +13,13 @@ class HealthCheckTest extends TestCase
         $response->assertStatus(200)
             ->assertJson(['status' => 'ok']);
     }
+
+    public function test_throttles_api_routes_after_60_requests_per_minute(): void
+    {
+        for ($i = 0; $i < 60; $i++) {
+            $this->getJson('/api/health')->assertStatus(200);
+        }
+
+        $this->getJson('/api/health')->assertStatus(429);
+    }
 }
