@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\SettingsController;
+use App\Http\Controllers\Api\ShippingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', function () {
@@ -28,3 +29,6 @@ Route::get('/products/{slug}', [ProductController::class, 'show']);
 
 // Public settings route
 Route::get('/settings', [SettingsController::class, 'show']);
+
+// Public shipping route
+Route::post('/shipping/cost', [ShippingController::class, 'cost']);
