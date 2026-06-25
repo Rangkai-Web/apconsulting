@@ -1,24 +1,24 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-const STORAGE_KEY = 'dpi-wishlist'
+const STORAGE_KEY = "dpi-wishlist";
 
 // ssr: false (SPA mode) — safe to touch localStorage directly, mirrors store/cart.ts.
 function readFromStorage(): number[] {
-  if (typeof localStorage === 'undefined') return []
+  if (typeof localStorage === "undefined") return [];
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? (JSON.parse(raw) as number[]) : []
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as number[]) : [];
   } catch {
-    return []
+    return [];
   }
 }
 
 function writeToStorage(ids: number[]) {
-  if (typeof localStorage === 'undefined') return
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(ids))
+  if (typeof localStorage === "undefined") return;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
 }
 
-export const useWishlistStore = defineStore('wishlist', {
+export const useWishlistStore = defineStore("wishlist", {
   state: () => ({
     productIds: readFromStorage(),
   }),
@@ -29,18 +29,18 @@ export const useWishlistStore = defineStore('wishlist', {
 
   actions: {
     persist() {
-      writeToStorage(this.productIds)
+      writeToStorage(this.productIds);
     },
 
     isWishlisted(productId: number) {
-      return this.productIds.includes(productId)
+      return this.productIds.includes(productId);
     },
 
     toggle(productId: number) {
       this.productIds = this.productIds.includes(productId)
         ? this.productIds.filter((id) => id !== productId)
-        : [...this.productIds, productId]
-      this.persist()
+        : [...this.productIds, productId];
+      this.persist();
     },
   },
-})
+});

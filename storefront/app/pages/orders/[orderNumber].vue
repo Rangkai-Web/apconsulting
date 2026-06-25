@@ -155,7 +155,7 @@ async function submitRating() {
   }
 }
 
-function getStatusBadgeColor(status: string): string {
+function getStatusBadgeColor(status: string): "error" | "primary" | "secondary" | "success" | "info" | "warning" | "neutral" {
   switch (status.toLowerCase()) {
     case "paid":
       return "primary";

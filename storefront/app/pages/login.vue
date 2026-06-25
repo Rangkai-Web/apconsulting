@@ -145,35 +145,43 @@ async function onSubmit() {
             >
               Kata Sandi
             </label>
-          <div class="relative">
-            <UInput
-              v-model="state.password"
-              :type="showPassword ? 'text' : 'password'"
-              placeholder="••••••••"
-              icon="i-heroicons-lock-closed"
-              size="md"
-              class="w-full border border-gray-200 rounded-full"
-              :ui="{
-                base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
-                trailing: 'pe-2',
-              }"
-            >
-              <template #trailing>
-                <button
-                  type="button"
-                  tabindex="-1"
-                  class="text-gray-400 hover:text-primary-600 transition-colors cursor-pointer p-1"
-                  :aria-label="showPassword ? 'Sembunyikan password' : 'Tampilkan password'"
-                  @click="showPassword = !showPassword"
-                >
-                  <UIcon
-                    :name="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
-                    class="w-4 h-4"
-                  />
-                </button>
-              </template>
-            </UInput>
-          </div>
+            <div class="relative">
+              <UInput
+                v-model="state.password"
+                :type="showPassword ? 'text' : 'password'"
+                placeholder="••••••••"
+                icon="i-heroicons-lock-closed"
+                size="md"
+                class="w-full border border-gray-200 rounded-full"
+                :ui="{
+                  base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
+                  trailing: 'pe-2',
+                }"
+              >
+                <template #trailing>
+                  <button
+                    type="button"
+                    tabindex="-1"
+                    class="text-gray-400 hover:text-primary-600 transition-colors cursor-pointer p-1"
+                    :aria-label="
+                      showPassword
+                        ? 'Sembunyikan password'
+                        : 'Tampilkan password'
+                    "
+                    @click="showPassword = !showPassword"
+                  >
+                    <UIcon
+                      :name="
+                        showPassword
+                          ? 'i-heroicons-eye-slash'
+                          : 'i-heroicons-eye'
+                      "
+                      class="w-4 h-4"
+                    />
+                  </button>
+                </template>
+              </UInput>
+            </div>
           </div>
 
           <div class="pt-2">

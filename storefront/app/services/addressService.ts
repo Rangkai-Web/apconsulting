@@ -1,4 +1,5 @@
 import type { Address } from "~/types";
+import { useAuthStore } from "~/store/auth";
 
 function apiBase(): string {
   return useRuntimeConfig().public.apiBase;
@@ -28,7 +29,8 @@ function mapAddress(raw: any): Address {
     postalCode: raw.postalCode ?? raw.postal_code,
     fullAddress: raw.fullAddress ?? raw.full_address,
     isDefault: !!(raw.isDefault ?? raw.is_default),
-    rajaongkirDistrictId: raw.rajaongkirDistrictId ?? raw.rajaongkir_district_id ?? null,
+    rajaongkirDistrictId:
+      raw.rajaongkirDistrictId ?? raw.rajaongkir_district_id ?? null,
   };
 }
 

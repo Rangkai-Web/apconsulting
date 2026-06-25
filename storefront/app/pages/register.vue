@@ -229,11 +229,19 @@ async function onSubmit() {
                     type="button"
                     tabindex="-1"
                     class="text-gray-400 hover:text-primary-600 transition-colors cursor-pointer p-1"
-                    :aria-label="showPassword ? 'Sembunyikan password' : 'Tampilkan password'"
+                    :aria-label="
+                      showPassword
+                        ? 'Sembunyikan password'
+                        : 'Tampilkan password'
+                    "
                     @click="showPassword = !showPassword"
                   >
                     <UIcon
-                      :name="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
+                      :name="
+                        showPassword
+                          ? 'i-heroicons-eye-slash'
+                          : 'i-heroicons-eye'
+                      "
                       class="w-4 h-4"
                     />
                   </button>
@@ -266,11 +274,19 @@ async function onSubmit() {
                     type="button"
                     tabindex="-1"
                     class="text-gray-400 hover:text-primary-600 transition-colors cursor-pointer p-1"
-                    :aria-label="showPasswordConfirm ? 'Sembunyikan password' : 'Tampilkan password'"
+                    :aria-label="
+                      showPasswordConfirm
+                        ? 'Sembunyikan password'
+                        : 'Tampilkan password'
+                    "
                     @click="showPasswordConfirm = !showPasswordConfirm"
                   >
                     <UIcon
-                      :name="showPasswordConfirm ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
+                      :name="
+                        showPasswordConfirm
+                          ? 'i-heroicons-eye-slash'
+                          : 'i-heroicons-eye'
+                      "
                       class="w-4 h-4"
                     />
                   </button>

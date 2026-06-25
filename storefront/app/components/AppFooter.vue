@@ -127,7 +127,10 @@ const settings = computed(() => {
           Hubungi Kami
         </h4>
         <ul class="flex flex-col gap-3 text-xs text-gray-400">
-          <li v-if="settings.address" class="flex items-start gap-2.5 leading-relaxed">
+          <li
+            v-if="settings.address"
+            class="flex items-start gap-2.5 leading-relaxed"
+          >
             <UIcon
               name="i-heroicons-map-pin"
               class="w-4.5 h-4.5 text-primary-500 shrink-0 mt-0.5"
@@ -150,7 +153,9 @@ const settings = computed(() => {
               name="i-heroicons-clock"
               class="w-4.5 h-4.5 text-primary-500 shrink-0 mt-0.5"
             />
-            <span class="whitespace-pre-line">{{ settings.operating_hours }}</span>
+            <span class="whitespace-pre-line">{{
+              settings.operating_hours
+            }}</span>
           </li>
         </ul>
       </div>

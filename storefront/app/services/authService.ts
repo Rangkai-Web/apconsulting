@@ -1,4 +1,9 @@
-import type { User, LoginCredentials, RegisterData, AuthResponse } from "~/types";
+import type {
+  User,
+  LoginCredentials,
+  RegisterData,
+  AuthResponse,
+} from "~/types";
 
 const MOCK_USERS_KEY = "dpi-mock-users";
 const DEFAULT_MEMBER = {
@@ -46,12 +51,15 @@ export const authService = {
       return response;
     } catch (error: any) {
       // If server is unreachable or offline, perform mock fallback
-      const isConnectionError = !error.response || error.status === 503 || error.status === 504;
+      const isConnectionError =
+        !error.response || error.status === 503 || error.status === 504;
       if (isConnectionError) {
-        console.warn("API Server offline. Falling back to mock authentication.");
+        console.warn(
+          "API Server offline. Falling back to mock authentication.",
+        );
         const users = getMockUsers();
         const found = users.find(
-          (u) => u.email.toLowerCase() === credentials.email.toLowerCase()
+          (u) => u.email.toLowerCase() === credentials.email.toLowerCase(),
         );
 
         if (found && found.password === credentials.password) {
@@ -62,7 +70,7 @@ export const authService = {
             token: "mock-jwt-token-xyz-12345",
           };
         }
-        
+
         // Mock validation error
         throw {
           status: 422,
@@ -87,12 +95,13 @@ export const authService = {
       });
       return response;
     } catch (error: any) {
-      const isConnectionError = !error.response || error.status === 503 || error.status === 504;
+      const isConnectionError =
+        !error.response || error.status === 503 || error.status === 504;
       if (isConnectionError) {
         console.warn("API Server offline. Falling back to mock registration.");
         const users = getMockUsers();
         const emailExists = users.some(
-          (u) => u.email.toLowerCase() === data.email.toLowerCase()
+          (u) => u.email.toLowerCase() === data.email.toLowerCase(),
         );
 
         if (emailExists) {

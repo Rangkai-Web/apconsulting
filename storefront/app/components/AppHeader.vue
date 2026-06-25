@@ -338,7 +338,10 @@ async function handleMobileLogout() {
                   @click="mobileNavOpen = false"
                 >
                   <span class="flex items-center gap-2">
-                    <UIcon name="i-heroicons-shopping-bag" class="w-4 h-4 text-primary-600" />
+                    <UIcon
+                      name="i-heroicons-shopping-bag"
+                      class="w-4 h-4 text-primary-600"
+                    />
                     Pesanan Saya
                   </span>
                 </NuxtLink>

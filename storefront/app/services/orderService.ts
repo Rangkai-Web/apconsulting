@@ -1,4 +1,5 @@
 import type { Order, OrderItem } from "~/types";
+import { useAuthStore } from "~/store/auth";
 
 function apiBase(): string {
   return useRuntimeConfig().public.apiBase;
@@ -30,16 +31,19 @@ function mapOrderItem(raw: any): OrderItem {
 }
 
 function mapOrder(raw: any): Order {
-  const shippingAddress = raw.shipping_address ? {
-    recipientName: raw.shipping_address.recipient_name,
-    phone: raw.shipping_address.phone,
-    province: raw.shipping_address.province,
-    city: raw.shipping_address.city,
-    district: raw.shipping_address.district,
-    postalCode: raw.shipping_address.postal_code,
-    fullAddress: raw.shipping_address.full_address,
-    rajaongkirDistrictId: raw.shipping_address.rajaongkir_district_id ?? null,
-  } : null;
+  const shippingAddress = raw.shipping_address
+    ? {
+        recipientName: raw.shipping_address.recipient_name,
+        phone: raw.shipping_address.phone,
+        province: raw.shipping_address.province,
+        city: raw.shipping_address.city,
+        district: raw.shipping_address.district,
+        postalCode: raw.shipping_address.postal_code,
+        fullAddress: raw.shipping_address.full_address,
+        rajaongkirDistrictId:
+          raw.shipping_address.rajaongkir_district_id ?? null,
+      }
+    : null;
 
   return {
     id: raw.id,
@@ -60,10 +64,13 @@ function mapOrder(raw: any): Order {
 
 export const orderService = {
   async getOrders(): Promise<{ data: Order[]; total: number }> {
-    const response = await $fetch<{ data: any[]; meta?: { total: number } }>("/orders", {
-      baseURL: apiBase(),
-      headers: getHeaders(),
-    });
+    const response = await $fetch<{ data: any[]; meta?: { total: number } }>(
+      "/orders",
+      {
+        baseURL: apiBase(),
+        headers: getHeaders(),
+      },
+    );
     return {
       data: (response.data ?? []).map(mapOrder),
       total: response.meta?.total ?? (response.data ?? []).length,
@@ -110,24 +117,29 @@ export const orderService = {
       body.guest_name = data.guestName;
       body.guest_email = data.guestEmail;
       body.guest_phone = data.guestPhone;
-      body.shipping_address = data.shippingAddress ? {
-        recipient_name: data.shippingAddress.recipientName,
-        phone: data.shippingAddress.phone,
-        province: data.shippingAddress.province,
-        city: data.shippingAddress.city,
-        district: data.shippingAddress.district,
-        postal_code: data.shippingAddress.postalCode,
-        full_address: data.shippingAddress.fullAddress,
-        rajaongkir_district_id: data.shippingAddress.rajaongkirDistrictId,
-      } : null;
+      body.shipping_address = data.shippingAddress
+        ? {
+            recipient_name: data.shippingAddress.recipientName,
+            phone: data.shippingAddress.phone,
+            province: data.shippingAddress.province,
+            city: data.shippingAddress.city,
+            district: data.shippingAddress.district,
+            postal_code: data.shippingAddress.postalCode,
+            full_address: data.shippingAddress.fullAddress,
+            rajaongkir_district_id: data.shippingAddress.rajaongkirDistrictId,
+          }
+        : null;
     }
 
-    const response = await $fetch<{ order_number: string; snap_token: string }>("/orders", {
-      baseURL: apiBase(),
-      method: "POST",
-      headers: getHeaders(),
-      body,
-    });
+    const response = await $fetch<{ order_number: string; snap_token: string }>(
+      "/orders",
+      {
+        baseURL: apiBase(),
+        method: "POST",
+        headers: getHeaders(),
+        body,
+      },
+    );
 
     return {
       orderNumber: response.order_number,
@@ -135,7 +147,10 @@ export const orderService = {
     };
   },
 
-  async getShippingCost(districtId: number, totalWeight: number): Promise<any[]> {
+  async getShippingCost(
+    districtId: number,
+    totalWeight: number,
+  ): Promise<any[]> {
     const response = await $fetch<{ couriers: any[] }>("/shipping/cost", {
       baseURL: apiBase(),
       method: "POST",
@@ -149,11 +164,14 @@ export const orderService = {
   },
 
   async requestSnapToken(orderNumber: string): Promise<string> {
-    const response = await $fetch<{ snap_token: string }>(`/orders/${orderNumber}/snap-token`, {
-      baseURL: apiBase(),
-      method: "POST",
-      headers: getHeaders(),
-    });
+    const response = await $fetch<{ snap_token: string }>(
+      `/orders/${orderNumber}/snap-token`,
+      {
+        baseURL: apiBase(),
+        method: "POST",
+        headers: getHeaders(),
+      },
+    );
     return response.snap_token;
   },
 
