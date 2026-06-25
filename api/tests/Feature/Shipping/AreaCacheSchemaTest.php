@@ -35,4 +35,26 @@ class AreaCacheSchemaTest extends TestCase
         $this->assertEquals('Doctor Plant Indonesia', StoreSetting::first()->store_name);
         $this->assertEquals(501, $settings->rajaongkir_origin_district_id);
     }
+
+    public function test_can_fetch_provinces_cities_and_districts(): void
+    {
+        $province = RajaongkirProvince::create(['id' => 9, 'name' => 'Jawa Barat']);
+        $city = RajaongkirCity::create(['id' => 23, 'province_id' => $province->id, 'name' => 'Bandung']);
+        $district = RajaongkirDistrict::create(['id' => 501, 'city_id' => $city->id, 'name' => 'Coblong']);
+
+        $response = $this->getJson('/api/shipping/provinces');
+        $response->assertStatus(200)
+            ->assertJsonPath('data.0.id', $province->id)
+            ->assertJsonPath('data.0.name', 'Jawa Barat');
+
+        $response = $this->getJson('/api/shipping/cities?province_id=' . $province->id);
+        $response->assertStatus(200)
+            ->assertJsonPath('data.0.id', $city->id)
+            ->assertJsonPath('data.0.name', 'Bandung');
+
+        $response = $this->getJson('/api/shipping/districts?city_id=' . $city->id);
+        $response->assertStatus(200)
+            ->assertJsonPath('data.0.id', $district->id)
+            ->assertJsonPath('data.0.name', 'Coblong');
+    }
 }

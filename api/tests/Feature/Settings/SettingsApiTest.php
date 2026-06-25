@@ -29,7 +29,7 @@ class SettingsApiTest extends TestCase
             ->assertJson([
                 'data' => [
                     'store_name' => 'Test Dr. Plant Store',
-                    'logo' => 'http://localhost/uploads/settings/logo.png', // APP_URL is http://localhost in test config
+                    'logo' => url('uploads/settings/logo.png'), // APP_URL is dynamic in config
                     'address' => 'Jl. Test No. 123',
                     'phone' => '+62 812-3456-7890',
                     'whatsapp_number' => '6281234567890',

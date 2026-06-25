@@ -32,6 +32,12 @@ const userDropdownItems = computed(() => [
       icon: "i-heroicons-envelope",
       disabled: true,
     },
+    {
+      label: "Pesanan Saya",
+      icon: "i-heroicons-shopping-bag",
+      to: "/orders/history",
+      class: "cursor-pointer",
+    },
   ],
   [
     {
@@ -326,6 +332,16 @@ async function handleMobileLogout() {
                     </span>
                   </div>
                 </div>
+                <NuxtLink
+                  to="/orders/history"
+                  class="flex items-center justify-between text-gray-700 hover:bg-gray-50 hover:text-gray-950 font-semibold w-full text-left px-4 py-3 rounded-xl transition-all duration-300 cursor-pointer"
+                  @click="mobileNavOpen = false"
+                >
+                  <span class="flex items-center gap-2">
+                    <UIcon name="i-heroicons-shopping-bag" class="w-4 h-4 text-primary-600" />
+                    Pesanan Saya
+                  </span>
+                </NuxtLink>
                 <button
                   type="button"
                   class="flex items-center justify-between text-red-600 hover:bg-red-50 hover:text-red-700 font-semibold w-full text-left px-4 py-3 rounded-xl transition-all duration-300 cursor-pointer"

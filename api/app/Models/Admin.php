@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Illuminate\Notifications\Notifiable;
+
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class Admin extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<AdminFactory> */
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     public function canAccessPanel(Panel $panel): bool
     {

@@ -54,6 +54,7 @@ export interface Address {
   postalCode: string
   fullAddress: string
   isDefault: boolean
+  rajaongkirDistrictId?: number | null
 }
 
 export type OrderStatus =
@@ -88,6 +89,17 @@ export interface Order {
   trackingNumber: string | null
   createdAt: string
   items: OrderItem[]
+  snapToken?: string | null
+  shippingAddress?: {
+    recipientName: string
+    phone: string
+    province: string
+    city: string
+    district: string
+    postalCode: string
+    fullAddress: string
+    rajaongkirDistrictId?: number | null
+  } | null
 }
 
 export interface PaginatedResult<T> {

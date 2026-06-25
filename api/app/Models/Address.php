@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Fillable([
     'user_id', 'label', 'recipient_name', 'phone',
-    'province', 'city', 'district', 'postal_code', 'full_address', 'is_default',
+    'province', 'city', 'district', 'postal_code', 'full_address', 'is_default', 'rajaongkir_district_id',
 ])]
 class Address extends Model
 {

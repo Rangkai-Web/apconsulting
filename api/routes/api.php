@@ -4,8 +4,12 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\Api\ShippingController;
+use App\Http\Controllers\Api\WebhookController;
+use App\Http\Controllers\Api\RatingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', function () {
@@ -15,11 +19,29 @@ Route::get('/health', function () {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+// Public order checkout & guest lookup routes
+Route::post('/orders', [OrderController::class, 'store']);
+Route::get('/orders/lookup', [OrderController::class, 'lookup']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [ProfileController::class, 'show']);
     Route::put('/profile', [ProfileController::class, 'update']);
     Route::put('/profile/password', [ProfileController::class, 'updatePassword']);
+
+    // Address routes
+    Route::get('/addresses', [AddressController::class, 'index']);
+    Route::post('/addresses', [AddressController::class, 'store']);
+    Route::put('/addresses/{id}', [AddressController::class, 'update']);
+    Route::delete('/addresses/{id}', [AddressController::class, 'destroy']);
+
+    // Order routes (member)
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/orders/{order_number}', [OrderController::class, 'show']);
+    Route::post('/orders/{order_number}/snap-token', [OrderController::class, 'requestSnapToken']);
+
+    // Rating routes
+    Route::post('/order-items/{id}/rating', [RatingController::class, 'rate']);
 });
 
 // Public catalog routes (no auth required)
@@ -32,3 +54,11 @@ Route::get('/settings', [SettingsController::class, 'show']);
 
 // Public shipping route — stricter throttle: this proxies a paid-per-call RajaOngkir endpoint
 Route::post('/shipping/cost', [ShippingController::class, 'cost'])->middleware('throttle:10,1');
+
+// Public shipping area lookups
+Route::get('/shipping/provinces', [ShippingController::class, 'provinces']);
+Route::get('/shipping/cities', [ShippingController::class, 'cities']);
+Route::get('/shipping/districts', [ShippingController::class, 'districts']);
+
+// Public webhook route
+Route::post('/webhooks/midtrans', [WebhookController::class, 'midtrans']);

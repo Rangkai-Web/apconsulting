@@ -46,3 +46,54 @@ Calculates shipping cost from the store's fixed origin to a destination district
 ```json
 { "message": "Gagal cek ongkir, coba lagi" }
 ```
+
+---
+
+## GET /api/shipping/provinces
+
+Retrieves all provinces from the local cache database.
+
+**Response 200**
+```json
+{
+  "data": [
+    { "id": 9, "name": "Jawa Barat" }
+  ]
+}
+```
+
+---
+
+## GET /api/shipping/cities
+
+Retrieves cities in a province.
+
+**Query Parameters**
+- `province_id`: int (required)
+
+**Response 200**
+```json
+{
+  "data": [
+    { "id": 23, "province_id": 9, "name": "Bandung" }
+  ]
+}
+```
+
+---
+
+## GET /api/shipping/districts
+
+Retrieves districts in a city.
+
+**Query Parameters**
+- `city_id`: int (required)
+
+**Response 200**
+```json
+{
+  "data": [
+    { "id": 501, "city_id": 23, "name": "Coblong" }
+  ]
+}
+```

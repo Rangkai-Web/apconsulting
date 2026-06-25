@@ -46,4 +46,33 @@ class ShippingController extends Controller
 
         return response()->json(['couriers' => $couriers]);
     }
+
+    public function provinces()
+    {
+        return response()->json([
+            'data' => \App\Models\RajaongkirProvince::orderBy('name')->get()
+        ]);
+    }
+
+    public function cities(Request $request)
+    {
+        $validated = $request->validate([
+            'province_id' => ['required', 'integer', 'exists:rajaongkir_provinces,id'],
+        ]);
+
+        return response()->json([
+            'data' => \App\Models\RajaongkirCity::where('province_id', $validated['province_id'])->orderBy('name')->get()
+        ]);
+    }
+
+    public function districts(Request $request)
+    {
+        $validated = $request->validate([
+            'city_id' => ['required', 'integer', 'exists:rajaongkir_cities,id'],
+        ]);
+
+        return response()->json([
+            'data' => \App\Models\RajaongkirDistrict::where('city_id', $validated['city_id'])->orderBy('name')->get()
+        ]);
+    }
 }

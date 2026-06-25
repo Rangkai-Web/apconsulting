@@ -46,7 +46,7 @@ export const authService = {
       return response;
     } catch (error: any) {
       // If server is unreachable or offline, perform mock fallback
-      const isConnectionError = !error.response || error.status === 503 || error.status === 504 || error.status === 500;
+      const isConnectionError = !error.response || error.status === 503 || error.status === 504;
       if (isConnectionError) {
         console.warn("API Server offline. Falling back to mock authentication.");
         const users = getMockUsers();
@@ -87,7 +87,7 @@ export const authService = {
       });
       return response;
     } catch (error: any) {
-      const isConnectionError = !error.response || error.status === 503 || error.status === 504 || error.status === 500;
+      const isConnectionError = !error.response || error.status === 503 || error.status === 504;
       if (isConnectionError) {
         console.warn("API Server offline. Falling back to mock registration.");
         const users = getMockUsers();
