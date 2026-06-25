@@ -30,10 +30,10 @@ class RajaOngkirService
         }
 
         return array_map(fn (array $item) => [
-            'courier' => $item['code'],
-            'service' => $item['service'],
-            'cost' => (int) $item['cost'],
-            'etd' => $item['etd'],
+            'courier' => $item['code'] ?? '',
+            'service' => $item['service'] ?? '',
+            'cost' => (int) ($item['cost'] ?? 0),
+            'etd' => $item['etd'] ?? '',
         ], $data);
     }
 }
