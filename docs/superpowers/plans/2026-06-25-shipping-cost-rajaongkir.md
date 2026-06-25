@@ -33,7 +33,7 @@
 - Produces: `App\Services\RajaOngkirService::calculateDomesticCost(int $originDistrictId, int $destinationDistrictId, int $weightGrams): array`. Returns a list of `['courier' => string, 'service' => string, 'cost' => int, 'etd' => string]`. Throws `\RuntimeException` on any non-2xx response or malformed body (no `data` array).
 - Produces: config keys `rajaongkir.base_url`, `rajaongkir.api_key`, `rajaongkir.couriers` (array), `rajaongkir.cache_ttl_hours` (int) — consumed by Task 2.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `api/tests/Feature/Shipping/RajaOngkirServiceTest.php`:
 
@@ -93,12 +93,12 @@ class RajaOngkirServiceTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=RajaOngkirServiceTest`
 Expected: FAIL with `Class "App\Services\RajaOngkirService" not found`.
 
-- [ ] **Step 3: Create the config file**
+- [x] **Step 3: Create the config file**
 
 Create `api/config/rajaongkir.php`:
 
@@ -113,7 +113,7 @@ return [
 ];
 ```
 
-- [ ] **Step 4: Add env placeholders**
+- [x] **Step 4: Add env placeholders**
 
 Append to `api/.env.example` (after `STOREFRONT_URL=http://localhost:3000`):
 
@@ -124,7 +124,7 @@ RAJAONGKIR_COURIERS=jne,jnt,sicepat
 RAJAONGKIR_CACHE_TTL_HOURS=6
 ```
 
-- [ ] **Step 5: Implement `RajaOngkirService`**
+- [x] **Step 5: Implement `RajaOngkirService`**
 
 Create `api/app/Services/RajaOngkirService.php`:
 
@@ -170,12 +170,12 @@ class RajaOngkirService
 }
 ```
 
-- [ ] **Step 6: Run test to verify it passes**
+- [x] **Step 6: Run test to verify it passes**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=RajaOngkirServiceTest`
 Expected: PASS (3 tests).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add api/config/rajaongkir.php api/.env.example api/app/Services/RajaOngkirService.php api/tests/Feature/Shipping/RajaOngkirServiceTest.php
@@ -196,7 +196,7 @@ git commit -m "feat(api): add RajaOngkirService for domestic shipping cost looku
 - Consumes: `App\Services\RajaOngkirService::calculateDomesticCost(int, int, int): array` (Task 1). `App\Models\StoreSetting` (existing) — `rajaongkir_origin_district_id` field. `App\Models\RajaongkirDistrict` (existing) — used only via the `exists:rajaongkir_districts,id` validation rule.
 - Produces: route `POST /api/shipping/cost`, public, no middleware. Response `200 { "couriers": [{ "courier": string, "service": string, "cost": int, "etd": string }] }`. Error responses: `422 { "message": string }` (validation or missing origin), `503 { "message": "Gagal cek ongkir, coba lagi" }` (RajaOngkir call failed).
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `api/tests/Feature/Shipping/ShippingCostApiTest.php`:
 
@@ -298,12 +298,12 @@ class ShippingCostApiTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=ShippingCostApiTest`
 Expected: FAIL with 404 (route `/api/shipping/cost` not found) on every test.
 
-- [ ] **Step 3: Implement `ShippingController`**
+- [x] **Step 3: Implement `ShippingController`**
 
 Create `api/app/Http/Controllers/Api/ShippingController.php`:
 
@@ -359,7 +359,7 @@ class ShippingController extends Controller
 }
 ```
 
-- [ ] **Step 4: Register the route**
+- [x] **Step 4: Register the route**
 
 Modify `api/routes/api.php` — add the import and route in the public section (after the settings route):
 
@@ -372,12 +372,12 @@ use App\Http\Controllers\Api\ShippingController;
 Route::post('/shipping/cost', [ShippingController::class, 'cost']);
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=ShippingCostApiTest`
 Expected: PASS (5 tests).
 
-- [ ] **Step 6: Write API documentation**
+- [x] **Step 6: Write API documentation**
 
 Create `docs/api/shipping.md`:
 
@@ -427,12 +427,12 @@ Calculates shipping cost from the store's fixed origin to a destination district
 ```
 ````
 
-- [ ] **Step 7: Run the full test suite**
+- [x] **Step 7: Run the full test suite**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test`
 Expected: PASS, no regressions in existing suites.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add api/app/Http/Controllers/Api/ShippingController.php api/routes/api.php api/tests/Feature/Shipping/ShippingCostApiTest.php docs/api/shipping.md

@@ -30,11 +30,16 @@ Calculates shipping cost from the store's fixed origin to a destination district
 }
 ```
 
-**Response 422** — invalid `district_id`/`total_weight`, or store has no `rajaongkir_origin_district_id` configured:
+**Response 422** — two cases:
 
-```json
-{ "message": "Toko belum mengatur lokasi asal pengiriman" }
-```
+- Store has no `rajaongkir_origin_district_id` configured:
+  ```json
+  { "message": "Toko belum mengatur lokasi asal pengiriman" }
+  ```
+- Invalid `district_id`/`total_weight` (standard Laravel validation error shape):
+  ```json
+  { "message": "The district id field is required.", "errors": { "district_id": ["The district id field is required."] } }
+  ```
 
 **Response 503** — RajaOngkir call failed (timeout, non-2xx, malformed response):
 
