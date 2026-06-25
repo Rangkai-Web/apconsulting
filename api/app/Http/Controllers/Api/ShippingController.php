@@ -23,7 +23,7 @@ class ShippingController extends Controller
             'total_weight' => ['required', 'integer', 'min:1'],
         ]);
 
-        $origin = StoreSetting::first()?->rajaongkir_origin_district_id;
+        $origin = StoreSetting::firstOrCreate([], ['store_name' => 'Doctor Plant Indonesia'])->rajaongkir_origin_district_id;
 
         if (! $origin) {
             return response()->json(['message' => 'Toko belum mengatur lokasi asal pengiriman'], 422);
