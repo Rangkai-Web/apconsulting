@@ -14,7 +14,7 @@ class ExpirePendingOrders extends Command
 
     public function handle(): void
     {
-        $threshold = now()->subHours((int) config('midtrans.order_expire_hours'));
+        $threshold = now()->subHours(config('midtrans.order_expire_hours'));
 
         $orders = Order::where('status', 'pending')
             ->where('created_at', '<=', $threshold)
