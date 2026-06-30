@@ -15,6 +15,17 @@ REST API reference (kept in sync per endpoint task): `docs/api/`.
 - Run tests: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test`
 - Run single test: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=TestClassName`
 - Run migrations: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan migrate`
+- List scheduled commands: `php artisan schedule:list`
+
+## Deployment Note — Laravel Scheduler
+
+The app uses `php artisan schedule:run` (registered in `bootstrap/app.php` via `->withSchedule()`). In production (Hostinger), a cron entry is required to invoke the scheduler every minute:
+
+```bash
+* * * * * cd /path/to/api && php artisan schedule:run >> /dev/null 2>&1
+```
+
+Without this cron entry, `orders:expire-pending` (and any future scheduled commands) will never run, regardless of how they are registered in code.
 
 ## Conventions
 - Snapshot fields (`order_items.product_name/variant_name/price`) are intentional — never replace with a live join to `products`/`product_variants`. Order history must not change retroactively.
