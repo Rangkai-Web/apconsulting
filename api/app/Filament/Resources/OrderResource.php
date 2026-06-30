@@ -54,6 +54,11 @@ class OrderResource extends Resource
         ];
     }
 
+    public static function formatCourier(Order $record): string
+    {
+        return $record->courier ? strtoupper($record->courier).' - '.$record->courier_service : '-';
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -79,7 +84,7 @@ class OrderResource extends Resource
                     ->money('IDR'),
                 TextColumn::make('courier')
                     ->label('Kurir')
-                    ->formatStateUsing(fn (Order $record): string => $record->courier ? strtoupper($record->courier).' - '.$record->courier_service : '-'),
+                    ->formatStateUsing(fn (Order $record): string => self::formatCourier($record)),
                 TextColumn::make('created_at')
                     ->label('Tanggal')
                     ->dateTime('d M Y H:i')
@@ -103,7 +108,7 @@ class OrderResource extends Resource
                     TextEntry::make('created_at')->label('Tanggal Pesanan')->dateTime('d M Y H:i'),
                     TextEntry::make('courier')
                         ->label('Kurir')
-                        ->formatStateUsing(fn (Order $record): string => $record->courier ? strtoupper($record->courier).' - '.$record->courier_service : '-'),
+                        ->formatStateUsing(fn (Order $record): string => self::formatCourier($record)),
                     TextEntry::make('tracking_number')->label('No. Resi')->placeholder('-'),
                     TextEntry::make('shipped_at')->label('Dikirim Pada')->dateTime('d M Y H:i')->placeholder('-'),
                     TextEntry::make('completed_at')->label('Selesai Pada')->dateTime('d M Y H:i')->placeholder('-'),
