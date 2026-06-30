@@ -83,15 +83,7 @@ class WebhookController extends Controller
         $order->status = $newStatus;
         $order->save();
 
-        // Release stocks back if order becomes cancelled or expired
-        if (in_array($newStatus, ['cancelled', 'expired']) && $oldStatus === 'pending') {
-            foreach ($order->items as $item) {
-                if ($item->variant) {
-                    $item->variant->increment('stock', $item->qty);
-                }
-            }
-            Log::info("Midtrans Webhook: Released stock for cancelled/expired order {$order->order_number}.");
-        }
+        $order->releaseStockIfApplicable($oldStatus, $newStatus);
 
         // Filament notifications to Admin on successful payment
         if ($newStatus === 'paid' && $oldStatus !== 'paid') {

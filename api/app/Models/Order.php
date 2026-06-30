@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Log;
 
 #[Fillable([
     'order_number', 'user_id', 'guest_name', 'guest_email', 'guest_phone',
@@ -40,5 +41,20 @@ class Order extends Model
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function releaseStockIfApplicable(string $oldStatus, string $newStatus): void
+    {
+        if (! in_array($newStatus, ['cancelled', 'expired']) || $oldStatus !== 'pending') {
+            return;
+        }
+
+        foreach ($this->items()->with('variant')->get() as $item) {
+            if ($item->variant) {
+                $item->variant->increment('stock', $item->qty);
+            }
+        }
+
+        Log::info("Released stock for cancelled/expired order {$this->order_number}.");
     }
 }
