@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -96,5 +97,27 @@ class OrderResourcePanelTest extends TestCase
             ->assertSee('ORD-VIEW-TEST')
             ->assertSee('Guest Tester')
             ->assertSee('Sunscreen');
+    }
+
+    public function test_member_order_shows_member_badge_and_account_name(): void
+    {
+        $admin = Admin::factory()->create();
+        $member = User::factory()->create(['name' => 'Member Tester']);
+        Order::create([
+            'order_number' => 'ORD-MEMBER-TEST',
+            'user_id' => $member->id,
+            'shipping_address' => ['recipient_name' => 'Member Tester'],
+            'shipping_cost' => 15000,
+            'subtotal' => 200000,
+            'total' => 215000,
+            'status' => 'pending',
+        ]);
+
+        $response = $this->actingAs($admin, 'admin')->get('/admin/orders');
+
+        $response->assertStatus(200)
+            ->assertSee('ORD-MEMBER-TEST')
+            ->assertSee('Member Tester')
+            ->assertSee('Member');
     }
 }

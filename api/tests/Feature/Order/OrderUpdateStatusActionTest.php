@@ -102,4 +102,17 @@ class OrderUpdateStatusActionTest extends TestCase
         $this->assertEquals('cancelled', $order->fresh()->status);
         $this->assertEquals(8, $variant->fresh()->stock);
     }
+
+    public function test_requires_tracking_number_when_status_is_shipped(): void
+    {
+        $admin = Admin::factory()->create();
+        [$order] = $this->createOrderWithItem('paid');
+
+        Livewire::actingAs($admin, 'admin')
+            ->test(ViewOrder::class, ['record' => $order->getRouteKey()])
+            ->callAction('updateStatus', data: ['status' => 'shipped'])
+            ->assertHasActionErrors(['tracking_number' => 'required']);
+
+        $this->assertEquals('paid', $order->fresh()->status);
+    }
 }
