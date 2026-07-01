@@ -223,6 +223,15 @@ async function handleMobileLogout() {
             </UBadge>
           </NuxtLink>
 
+          <!-- Cek Pesanan link — visible to guests only, desktop -->
+          <NuxtLink
+            v-if="!authStore.isLoggedIn"
+            to="/orders/cek"
+            class="hidden lg:flex items-center text-xs font-bold text-gray-600 hover:text-primary-600 transition-colors mr-1"
+          >
+            Cek Pesanan
+          </NuxtLink>
+
           <!-- User Profile Dropdown or Login Button -->
           <div class="ml-1 shrink-0 flex items-center">
             <UDropdownMenu
@@ -412,21 +421,31 @@ async function handleMobileLogout() {
                   </span>
                 </button>
               </div>
-              <div v-else class="grid grid-cols-2 gap-2 px-2">
+              <div v-else class="space-y-2 px-2">
                 <NuxtLink
-                  to="/login"
-                  class="flex items-center justify-center font-bold text-xs rounded-full px-4 py-3 border border-primary-600 text-primary-700 bg-white hover:bg-primary-50/50 text-center transition-all duration-200 cursor-pointer"
+                  to="/orders/cek"
+                  class="flex items-center justify-center gap-1.5 font-bold text-xs rounded-full px-4 py-3 border border-gray-200 text-gray-600 bg-white hover:bg-gray-50 text-center transition-all duration-200 cursor-pointer w-full"
                   @click="mobileNavOpen = false"
                 >
-                  Masuk
+                  <UIcon name="i-heroicons-magnifying-glass" class="w-3.5 h-3.5" />
+                  Cek Pesanan
                 </NuxtLink>
-                <NuxtLink
-                  to="/register"
-                  class="flex items-center justify-center font-bold text-xs rounded-full px-4 py-3 bg-primary-600 text-white hover:bg-primary-700 text-center transition-all duration-200 cursor-pointer"
-                  @click="mobileNavOpen = false"
-                >
-                  Daftar
-                </NuxtLink>
+                <div class="grid grid-cols-2 gap-2">
+                  <NuxtLink
+                    to="/login"
+                    class="flex items-center justify-center font-bold text-xs rounded-full px-4 py-3 border border-primary-600 text-primary-700 bg-white hover:bg-primary-50/50 text-center transition-all duration-200 cursor-pointer"
+                    @click="mobileNavOpen = false"
+                  >
+                    Masuk
+                  </NuxtLink>
+                  <NuxtLink
+                    to="/register"
+                    class="flex items-center justify-center font-bold text-xs rounded-full px-4 py-3 bg-primary-600 text-white hover:bg-primary-700 text-center transition-all duration-200 cursor-pointer"
+                    @click="mobileNavOpen = false"
+                  >
+                    Daftar
+                  </NuxtLink>
+                </div>
               </div>
             </div>
           </div>
