@@ -15,9 +15,13 @@ const formValid = computed(
 async function handleLookup() {
   if (!formValid.value) return;
   loading.value = true;
-  router.push(
-    `/orders/${form.orderNumber.trim()}?email=${encodeURIComponent(form.email.trim())}`,
-  );
+  try {
+    await router.push(
+      `/orders/${form.orderNumber.trim()}?email=${encodeURIComponent(form.email.trim())}`,
+    );
+  } finally {
+    loading.value = false;
+  }
 }
 </script>
 
