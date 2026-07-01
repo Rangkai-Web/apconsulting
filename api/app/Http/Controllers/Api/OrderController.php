@@ -18,7 +18,7 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $orders = $request->user()->orders()->with('items')->orderBy('created_at', 'desc')->paginate(15);
+        $orders = $request->user()->orders()->with('items.rating')->orderBy('created_at', 'desc')->paginate(15);
 
         return response()->json([
             'data' => $orders->items(),
@@ -33,7 +33,7 @@ class OrderController extends Controller
 
     public function show(Request $request, $orderNumber)
     {
-        $order = Order::with('items')->where('order_number', $orderNumber)->firstOrFail();
+        $order = Order::with('items.rating')->where('order_number', $orderNumber)->firstOrFail();
 
         // If authenticated, make sure the order belongs to them
         if ($request->user()) {
@@ -59,7 +59,7 @@ class OrderController extends Controller
             'email' => ['required', 'email'],
         ]);
 
-        $order = Order::with('items')
+        $order = Order::with('items.rating')
             ->where('order_number', $validated['order_number'])
             ->where(function ($query) use ($validated) {
                 $query->where('guest_email', $validated['email'])
