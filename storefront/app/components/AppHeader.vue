@@ -48,6 +48,18 @@ const userDropdownItems = computed(() => [
       disabled: true,
     },
     {
+      label: "Profil Saya",
+      icon: "i-heroicons-user-circle",
+      to: "/akun/profil",
+      class: "cursor-pointer",
+    },
+    {
+      label: "Alamat Saya",
+      icon: "i-heroicons-map-pin",
+      to: "/akun/alamat",
+      class: "cursor-pointer",
+    },
+    {
       label: "Pesanan Saya",
       icon: "i-heroicons-shopping-bag",
       to: "/orders/history",
@@ -347,6 +359,32 @@ async function handleMobileLogout() {
                     </span>
                   </div>
                 </div>
+                <NuxtLink
+                  to="/akun/profil"
+                  class="flex items-center justify-between text-gray-700 hover:bg-gray-50 hover:text-gray-950 font-semibold w-full text-left px-4 py-3 rounded-xl transition-all duration-300 cursor-pointer"
+                  @click="mobileNavOpen = false"
+                >
+                  <span class="flex items-center gap-2">
+                    <UIcon
+                      name="i-heroicons-user-circle"
+                      class="w-4 h-4 text-primary-600"
+                    />
+                    Profil Saya
+                  </span>
+                </NuxtLink>
+                <NuxtLink
+                  to="/akun/alamat"
+                  class="flex items-center justify-between text-gray-700 hover:bg-gray-50 hover:text-gray-950 font-semibold w-full text-left px-4 py-3 rounded-xl transition-all duration-300 cursor-pointer"
+                  @click="mobileNavOpen = false"
+                >
+                  <span class="flex items-center gap-2">
+                    <UIcon
+                      name="i-heroicons-map-pin"
+                      class="w-4 h-4 text-primary-600"
+                    />
+                    Alamat Saya
+                  </span>
+                </NuxtLink>
                 <NuxtLink
                   to="/orders/history"
                   class="flex items-center justify-between text-gray-700 hover:bg-gray-50 hover:text-gray-950 font-semibold w-full text-left px-4 py-3 rounded-xl transition-all duration-300 cursor-pointer"
