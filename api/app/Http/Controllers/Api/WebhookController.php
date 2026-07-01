@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Order;
+use App\Notifications\OrderPaidNotification;
 use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -87,8 +88,10 @@ class WebhookController extends Controller
 
         // Filament notifications to Admin on successful payment
         if ($newStatus === 'paid' && $oldStatus !== 'paid') {
+            $admins = Admin::all();
+
+            // Filament bell notification (separate try/catch so its failure doesn't block email)
             try {
-                $admins = Admin::all();
                 if ($admins->count() > 0 && class_exists(Notification::class)) {
                     Notification::make()
                         ->title('Pesanan Baru Dibayar')
@@ -97,7 +100,16 @@ class WebhookController extends Controller
                         ->sendToDatabase($admins);
                 }
             } catch (\Throwable $e) {
-                Log::error('Gagal mengirim database notification ke Filament admin: ' . $e->getMessage());
+                Log::error('Gagal mengirim Filament database notification ke admin: ' . $e->getMessage());
+            }
+
+            // Email notification via Resend
+            try {
+                foreach ($admins as $admin) {
+                    $admin->notify(new OrderPaidNotification($order));
+                }
+            } catch (\Throwable $e) {
+                Log::error('Gagal mengirim email notification ke admin: ' . $e->getMessage());
             }
         }
 
