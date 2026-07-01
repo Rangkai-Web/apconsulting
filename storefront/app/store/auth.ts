@@ -68,6 +68,14 @@ export const useAuthStore = defineStore("auth", {
       this.clear();
     },
 
+    updateProfile(data: { name: string; phone?: string | null }) {
+      if (this.user) {
+        this.user.name = data.name;
+        this.user.phone = data.phone ?? null;
+        this.persist();
+      }
+    },
+
     persist() {
       if (typeof window === "undefined") return;
       if (this.user && this.token) {
