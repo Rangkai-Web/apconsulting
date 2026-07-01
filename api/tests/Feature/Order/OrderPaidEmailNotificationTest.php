@@ -3,10 +3,7 @@
 namespace Tests\Feature\Order;
 
 use App\Models\Admin;
-use App\Models\Category;
 use App\Models\Order;
-use App\Models\Product;
-use App\Models\ProductVariant;
 use App\Notifications\OrderPaidNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
@@ -40,7 +37,7 @@ class OrderPaidEmailNotificationTest extends TestCase
         $admin = Admin::factory()->create();
         $order = $this->createOrder('pending', 'ORD-PAY-001');
 
-        $this->postJson('/api/webhooks/midtrans', [
+        $response = $this->postJson('/api/webhooks/midtrans', [
             'order_id' => $order->order_number,
             'transaction_status' => 'settlement',
             'status_code' => '200',
@@ -48,6 +45,7 @@ class OrderPaidEmailNotificationTest extends TestCase
             'signature_key' => 'dummy',
         ]);
 
+        $response->assertStatus(200);
         Notification::assertSentTo($admin, OrderPaidNotification::class);
     }
 
