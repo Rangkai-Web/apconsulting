@@ -17,8 +17,13 @@ const loadingList = ref(true);
 
 async function loadAddresses() {
   loadingList.value = true;
-  addresses.value = await addressService.getAddresses();
-  loadingList.value = false;
+  try {
+    addresses.value = await addressService.getAddresses();
+  } catch {
+    toast.add({ title: "Gagal memuat alamat.", color: "error" });
+  } finally {
+    loadingList.value = false;
+  }
 }
 
 onMounted(loadAddresses);
@@ -104,6 +109,8 @@ async function openEdit(address: Address) {
   form.isDefault = address.isDefault;
 
   // Re-hydrate cascade: find province by name → load cities → find city → load districts → find district
+  // Province/city names are matched by string equality — safe because both
+  // come from the same RajaOngkir cache (stored on create, re-fetched here).
   const prov = provinces.value.find((p) => p.name === address.province);
   if (prov) {
     form.provinceName = prov.name;
