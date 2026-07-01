@@ -367,6 +367,16 @@ function loadMidtransSnapScript(): Promise<boolean> {
   });
 }
 
+// Build order detail URL with guest email if not logged in
+function orderUrl(orderNumber: string, extra: Record<string, string> = {}): string {
+  const params = new URLSearchParams(extra);
+  if (!isLoggedIn.value && guestForm.email) {
+    params.set("email", guestForm.email);
+  }
+  const qs = params.toString();
+  return `/orders/${orderNumber}${qs ? `?${qs}` : ""}`;
+}
+
 // Submit Checkout Order & Initiate Payment Flow
 async function handleCheckout() {
   if (isSubmitDisabled.value) return;
@@ -411,7 +421,7 @@ async function handleCheckout() {
         color: "primary",
       });
       cart.clear();
-      router.push(`/orders/${orderNumber}?mock=true`);
+      router.push(orderUrl(orderNumber, { mock: "true" }));
       return;
     }
 
@@ -430,7 +440,7 @@ async function handleCheckout() {
           color: "primary",
         });
         cart.clear();
-        router.push(`/orders/${orderNumber}?status=success`);
+        router.push(orderUrl(orderNumber, { status: "success" }));
       },
       onPending: function (result: any) {
         toast.add({
@@ -439,7 +449,7 @@ async function handleCheckout() {
           color: "warning",
         });
         cart.clear();
-        router.push(`/orders/${orderNumber}?status=pending`);
+        router.push(orderUrl(orderNumber, { status: "pending" }));
       },
       onError: function (result: any) {
         toast.add({
@@ -447,7 +457,7 @@ async function handleCheckout() {
           description: "Transaksi Anda gagal diproses.",
           color: "error",
         });
-        router.push(`/orders/${orderNumber}?status=error`);
+        router.push(orderUrl(orderNumber, { status: "error" }));
       },
       onClose: function () {
         toast.add({
@@ -456,7 +466,7 @@ async function handleCheckout() {
           color: "neutral",
         });
         cart.clear();
-        router.push(`/orders/${orderNumber}`);
+        router.push(orderUrl(orderNumber));
       },
     });
   } catch (error: any) {
