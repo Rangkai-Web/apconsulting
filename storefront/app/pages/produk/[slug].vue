@@ -254,9 +254,8 @@ watch(() => route.params.slug, load);
             </h3>
             <p
               class="text-xs md:text-sm text-gray-600 leading-relaxed font-medium"
-            >
-              {{ product.description }}
-            </p>
+              v-html="product.description"
+            ></p>
           </div>
 
           <!-- Variant Selector -->
