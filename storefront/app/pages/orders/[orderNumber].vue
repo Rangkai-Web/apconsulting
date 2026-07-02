@@ -223,9 +223,9 @@ function formatDate(dateStr: string): string {
           color="neutral"
           variant="ghost"
           class="rounded-xl font-bold px-3 py-2 cursor-pointer"
-          to="/orders/history"
+          :to="guestEmail ? '/orders/cek' : '/orders/history'"
         >
-          Kembali ke Riwayat Pesanan
+          {{ guestEmail ? 'Kembali ke Cek Pesanan' : 'Kembali ke Riwayat Pesanan' }}
         </UButton>
       </div>
 
@@ -233,6 +233,26 @@ function formatDate(dateStr: string): string {
       <div v-if="loading" class="flex flex-col items-center justify-center py-20 gap-3">
         <UIcon name="i-heroicons-arrow-path" class="w-8 h-8 animate-spin text-primary-600" />
         <span class="text-xs text-gray-400 font-bold">Memuat detail transaksi...</span>
+      </div>
+
+      <!-- Not found -->
+      <div v-else-if="!loading && !order" class="flex flex-col items-center justify-center py-24 gap-4">
+        <div class="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center shadow-sm">
+          <UIcon name="i-heroicons-document-magnifying-glass" class="w-7 h-7 text-gray-400" />
+        </div>
+        <div class="text-center">
+          <p class="text-sm font-extrabold text-gray-900">Pesanan Tidak Ditemukan</p>
+          <p class="text-xs text-gray-400 font-medium mt-1">Nomor pesanan atau email tidak cocok.</p>
+        </div>
+        <UButton
+          :to="guestEmail ? '/orders/cek' : '/orders/history'"
+          color="primary"
+          variant="outline"
+          size="sm"
+          class="rounded-full font-bold mt-2 cursor-pointer"
+        >
+          {{ guestEmail ? 'Coba Lagi' : 'Riwayat Pesanan' }}
+        </UButton>
       </div>
 
       <!-- Main Content -->
