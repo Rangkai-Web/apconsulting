@@ -75,11 +75,16 @@ class SettingsPage extends Page implements HasForms
                     ->label('Jam Operasional')
                     ->placeholder('Senin - Minggu, 10.00 - 22.00 WIB')
                     ->maxLength(255),
-                // Select::make('rajaongkir_origin_district_id')
-                //     ->label('Kecamatan Asal (RajaOngkir)')
-                //     ->options(RajaongkirDistrict::all()->pluck('name', 'id'))
-                //     ->searchable()
-                //     ->placeholder('Pilih kecamatan asal pengiriman'),
+                Select::make('rajaongkir_origin_district_id')
+                    ->label('Kecamatan Asal (RajaOngkir)')
+                    ->searchable()
+                    ->getSearchResultsUsing(fn (string $search): array => RajaongkirDistrict::where('name', 'like', "%{$search}%")
+                        ->limit(50)
+                        ->pluck('name', 'id')
+                        ->toArray())
+                    ->getOptionLabelUsing(fn ($value): ?string => RajaongkirDistrict::find($value)?->name)
+                    ->placeholder('Pilih kecamatan asal pengiriman')
+                    ->helperText('Wajib diisi supaya fitur cek ongkir di storefront berfungsi.'),
             ])
             ->statePath('data');
     }

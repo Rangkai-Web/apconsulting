@@ -50,4 +50,62 @@ class RajaOngkirServiceTest extends TestCase
 
         (new RajaOngkirService())->calculateDomesticCost(501, 999, 1000);
     }
+
+    public function test_fetch_provinces_normalizes_id_and_name(): void
+    {
+        Http::fake([
+            '*/destination/province' => Http::response([
+                'data' => [
+                    ['id' => 1, 'name' => 'Jawa Barat'],
+                    ['id' => 2, 'name' => 'Jawa Tengah'],
+                ],
+            ], 200),
+        ]);
+
+        $result = (new RajaOngkirService())->fetchProvinces();
+
+        $this->assertEquals([
+            ['id' => 1, 'name' => 'Jawa Barat'],
+            ['id' => 2, 'name' => 'Jawa Tengah'],
+        ], $result);
+    }
+
+    public function test_fetch_cities_hits_province_scoped_endpoint(): void
+    {
+        Http::fake([
+            '*/destination/city/1' => Http::response([
+                'data' => [['id' => 10, 'name' => 'Bandung']],
+            ], 200),
+        ]);
+
+        $result = (new RajaOngkirService())->fetchCities(1);
+
+        $this->assertEquals([['id' => 10, 'name' => 'Bandung']], $result);
+        Http::assertSent(fn ($request) => str_contains($request->url(), '/destination/city/1'));
+    }
+
+    public function test_fetch_districts_hits_city_scoped_endpoint(): void
+    {
+        Http::fake([
+            '*/destination/district/10' => Http::response([
+                'data' => [['id' => 100, 'name' => 'Coblong']],
+            ], 200),
+        ]);
+
+        $result = (new RajaOngkirService())->fetchDistricts(10);
+
+        $this->assertEquals([['id' => 100, 'name' => 'Coblong']], $result);
+        Http::assertSent(fn ($request) => str_contains($request->url(), '/destination/district/10'));
+    }
+
+    public function test_fetch_area_list_throws_on_non_2xx(): void
+    {
+        Http::fake([
+            '*/destination/province' => Http::response(['message' => 'Unauthorized'], 401),
+        ]);
+
+        $this->expectException(RuntimeException::class);
+
+        (new RajaOngkirService())->fetchProvinces();
+    }
 }
