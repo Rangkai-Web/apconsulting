@@ -32,7 +32,7 @@
 - Consumes: `useRouter()` (Nuxt built-in), `useToast()` (Nuxt UI), no service calls
 - Produces: Navigation to `/orders/${orderNumber}?email=${email}` which the existing `[orderNumber].vue` handles
 
-- [ ] **Step 1: Create `/orders/cek.vue`**
+- [x] **Step 1: Create `/orders/cek.vue`**
 
 Create `storefront/app/pages/orders/cek.vue` with this complete content:
 
@@ -137,7 +137,7 @@ async function handleLookup() {
 </template>
 ```
 
-- [ ] **Step 2: Add `orderUrl()` helper to checkout and fix 5 redirect calls**
+- [x] **Step 2: Add `orderUrl()` helper to checkout and fix 5 redirect calls**
 
 Open `storefront/app/pages/checkout/index.vue`. Add the helper function after the existing `loadMidtransSnapScript` function (around line 70, before `handleRetryPayment`):
 
@@ -194,7 +194,7 @@ router.push(`/orders/${orderNumber}`);
 router.push(orderUrl(orderNumber));
 ```
 
-- [ ] **Step 3: Commit Task 1**
+- [x] **Step 3: Commit Task 1**
 
 ```bash
 git add storefront/app/pages/orders/cek.vue storefront/app/pages/checkout/index.vue
@@ -212,7 +212,7 @@ git commit -m "feat(storefront): add guest order lookup page and fix checkout re
 - Consumes: `authStore.isLoggedIn` (already imported in AppHeader), `mobileNavOpen` ref (already exists)
 - Produces: nothing consumed by other tasks
 
-- [ ] **Step 1: Add desktop "Cek Pesanan" link**
+- [x] **Step 1: Add desktop "Cek Pesanan" link**
 
 In `storefront/app/components/AppHeader.vue`, find the desktop auth section (around line 226). The current structure is:
 
@@ -244,7 +244,7 @@ Add a "Cek Pesanan" link BEFORE that `<div class="ml-1 shrink-0 flex items-cente
 <div class="ml-1 shrink-0 flex items-center">
 ```
 
-- [ ] **Step 2: Add mobile nav "Cek Pesanan" link**
+- [x] **Step 2: Add mobile nav "Cek Pesanan" link**
 
 In the same file, find the mobile guest section (around line 415). Current structure:
 
@@ -290,7 +290,7 @@ Replace with:
 </div>
 ```
 
-- [ ] **Step 3: Commit Task 2**
+- [x] **Step 3: Commit Task 2**
 
 ```bash
 git add storefront/app/components/AppHeader.vue

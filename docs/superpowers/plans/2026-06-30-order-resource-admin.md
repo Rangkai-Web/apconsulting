@@ -30,7 +30,7 @@
 **Interfaces:**
 - Produces: `App\Models\Order::releaseStockIfApplicable(string $oldStatus, string $newStatus): void`. No-op unless `$newStatus` is `cancelled` or `expired` AND `$oldStatus === 'pending'`. When it fires, increments `product_variants.stock` by each order item's `qty` for every item with a non-null `variant` relation, and logs via `Log::info`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `api/tests/Feature/Order/OrderReleaseStockTest.php`:
 
@@ -130,12 +130,12 @@ class OrderReleaseStockTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=OrderReleaseStockTest`
 Expected: FAIL with `Call to undefined method App\Models\Order::releaseStockIfApplicable()`.
 
-- [ ] **Step 3: Add the method to `Order`**
+- [x] **Step 3: Add the method to `Order`**
 
 Read `api/app/Models/Order.php` first. Add `use Illuminate\Support\Facades\Log;` to the imports, and add this method to the class body (after the `items()` relation method):
 
@@ -156,12 +156,12 @@ Read `api/app/Models/Order.php` first. Add `use Illuminate\Support\Facades\Log;`
     }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=OrderReleaseStockTest`
 Expected: PASS (4 tests).
 
-- [ ] **Step 5: Refactor `WebhookController` to use the new method**
+- [x] **Step 5: Refactor `WebhookController` to use the new method**
 
 Read `api/app/Http/Controllers/Api/WebhookController.php` first. Replace lines 86-94:
 
@@ -183,12 +183,12 @@ with:
         $order->releaseStockIfApplicable($oldStatus, $newStatus);
 ```
 
-- [ ] **Step 6: Run the existing webhook tests to confirm no regression**
+- [x] **Step 6: Run the existing webhook tests to confirm no regression**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=WebhookControllerTest`
 Expected: PASS (2 tests) — same behavior as before the refactor, log message text changes (no longer prefixed "Midtrans Webhook:") but that's not asserted by any test.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add api/app/Models/Order.php api/app/Http/Controllers/Api/WebhookController.php api/tests/Feature/Order/OrderReleaseStockTest.php
@@ -209,7 +209,7 @@ git commit -m "refactor(api): extract Order::releaseStockIfApplicable from Webho
 - Consumes: `App\Models\Order` (existing model, relations `user()`, `items()`), `App\Models\OrderItem` (fields `product_name`, `variant_name`, `qty`, `price`, `subtotal`).
 - Produces: `App\Filament\Resources\OrderResource::statusColor(string $status): string` — used by Task 3's status `Select` field for consistent coloring if needed, and reused internally by both table and infolist status badges. Routes: `GET /admin/orders` (list), `GET /admin/orders/{record}` (view).
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `api/tests/Feature/Order/OrderResourcePanelTest.php`:
 
@@ -316,12 +316,12 @@ class OrderResourcePanelTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=OrderResourcePanelTest`
 Expected: FAIL on all three tests — `/admin/orders` and `/admin/orders/{id}` routes don't exist yet (404), so `assertRedirect('/admin/login')` and `assertStatus(200)` both fail.
 
-- [ ] **Step 3: Create `OrderResource.php`**
+- [x] **Step 3: Create `OrderResource.php`**
 
 Create `api/app/Filament/Resources/OrderResource.php`:
 
@@ -485,7 +485,7 @@ class OrderResource extends Resource
 }
 ```
 
-- [ ] **Step 4: Create `ListOrders.php`**
+- [x] **Step 4: Create `ListOrders.php`**
 
 Create `api/app/Filament/Resources/OrderResource/Pages/ListOrders.php`:
 
@@ -503,7 +503,7 @@ class ListOrders extends ListRecords
 }
 ```
 
-- [ ] **Step 5: Create `ViewOrder.php`**
+- [x] **Step 5: Create `ViewOrder.php`**
 
 Create `api/app/Filament/Resources/OrderResource/Pages/ViewOrder.php`:
 
@@ -521,12 +521,12 @@ class ViewOrder extends ViewRecord
 }
 ```
 
-- [ ] **Step 6: Run test to verify it passes**
+- [x] **Step 6: Run test to verify it passes**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=OrderResourcePanelTest`
 Expected: PASS (3 tests).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add api/app/Filament/Resources/OrderResource.php api/app/Filament/Resources/OrderResource/Pages/ListOrders.php api/app/Filament/Resources/OrderResource/Pages/ViewOrder.php api/tests/Feature/Order/OrderResourcePanelTest.php
@@ -544,7 +544,7 @@ git commit -m "feat(api): add read-only OrderResource (list + view) for admin"
 **Interfaces:**
 - Consumes: `App\Filament\Resources\OrderResource::statusOptions(): array` (Task 2), `App\Models\Order::releaseStockIfApplicable(string $oldStatus, string $newStatus): void` (Task 1).
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `api/tests/Feature/Order/OrderUpdateStatusActionTest.php`:
 
@@ -656,12 +656,12 @@ class OrderUpdateStatusActionTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=OrderUpdateStatusActionTest`
 Expected: FAIL — `callAction('updateStatus', ...)` finds no action with that name (the action doesn't exist on `ViewOrder` yet).
 
-- [ ] **Step 3: Add the action**
+- [x] **Step 3: Add the action**
 
 Replace the full contents of `api/app/Filament/Resources/OrderResource/Pages/ViewOrder.php` with:
 
@@ -729,17 +729,17 @@ class ViewOrder extends ViewRecord
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=OrderUpdateStatusActionTest`
 Expected: PASS (3 tests).
 
-- [ ] **Step 5: Run the full suite**
+- [x] **Step 5: Run the full suite**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test`
 Expected: PASS, no regressions (pre-existing unrelated `SettingsApiTest::test_can_fetch_public_store_settings` failure, if still present, is not caused by this change).
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add api/app/Filament/Resources/OrderResource/Pages/ViewOrder.php api/tests/Feature/Order/OrderUpdateStatusActionTest.php

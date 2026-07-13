@@ -64,7 +64,7 @@ storefront/app/services/catalogService.ts            (modified — call real API
 **Interfaces:**
 - Produces: filesystem disk name `public_uploads`, used by Task 3 (`ProductResource` images FileUpload) and Task 4 (`ProductVariantsRelationManager` image FileUpload).
 
-- [ ] **Step 1: Add the disk**
+- [x] **Step 1: Add the disk**
 
 ```php
 <?php
@@ -80,7 +80,7 @@ storefront/app/services/catalogService.ts            (modified — call real API
 ],
 ```
 
-- [ ] **Step 2: Create the upload directory with a keep-folder `.gitignore`**
+- [x] **Step 2: Create the upload directory with a keep-folder `.gitignore`**
 
 ```bash
 mkdir -p api/public/uploads
@@ -92,12 +92,12 @@ mkdir -p api/public/uploads
 !.gitignore
 ```
 
-- [ ] **Step 3: Verify the disk resolves**
+- [x] **Step 3: Verify the disk resolves**
 
 Run: `cd api && php artisan tinker --execute="echo Storage::disk('public_uploads')->path('');"`
 Expected: prints the absolute path ending in `public/uploads` (or `public/uploads/`), no exception.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/pt-doctor-plant-indonesia"
@@ -120,7 +120,7 @@ git commit -m "feat(api): add public_uploads disk for symlink-free image storage
 - Consumes: `Category::class` (already exists, Foundation Task 5).
 - Produces: `/admin/categories` (list/create/edit), discovered automatically by `AdminPanelProvider`'s `discoverResources()`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```php
 <?php
@@ -156,12 +156,12 @@ class AdminCatalogPanelTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd api && php artisan test --filter=AdminCatalogPanelTest`
 Expected: FAIL — `/admin/categories` 404s, Resource not registered yet
 
-- [ ] **Step 3: Create the Resource**
+- [x] **Step 3: Create the Resource**
 
 ```php
 <?php
@@ -258,7 +258,7 @@ class CategoryResource extends Resource
 }
 ```
 
-- [ ] **Step 4: Create the Pages**
+- [x] **Step 4: Create the Pages**
 
 ```php
 <?php
@@ -326,12 +326,12 @@ class EditCategory extends EditRecord
 }
 ```
 
-- [ ] **Step 5: Run the categories test to verify it passes** (products test still fails until Task 3)
+- [x] **Step 5: Run the categories test to verify it passes** (products test still fails until Task 3)
 
 Run: `cd api && php artisan test --filter=AdminCatalogPanelTest::test_admin_can_reach_the_categories_list_page`
 Expected: PASS
 
-- [ ] **Step 6: Write a failing test for the delete-guard (categories with products must not cascade-delete silently)**
+- [x] **Step 6: Write a failing test for the delete-guard (categories with products must not cascade-delete silently)**
 
 ```php
 <?php
@@ -351,17 +351,17 @@ Expected: PASS
     }
 ```
 
-- [ ] **Step 7: Run test to verify it fails**
+- [x] **Step 7: Run test to verify it fails**
 
 Run: `cd api && php artisan test --filter=test_deleting_a_category_with_products_is_blocked`
 Expected: FAIL — category gets deleted (no guard yet), `assertDatabaseHas` fails
 
-- [ ] **Step 8: Run the full file to verify the guard (already written in Step 3 above) makes it pass**
+- [x] **Step 8: Run the full file to verify the guard (already written in Step 3 above) makes it pass**
 
 Run: `cd api && php artisan test --filter=AdminCatalogPanelTest`
 Expected: PASS (3 tests)
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/pt-doctor-plant-indonesia"
@@ -381,7 +381,7 @@ git commit -m "feat(api): add Filament CategoryResource (admin CRUD)"
 - Consumes: `Product::class` (Foundation Task 5), `public_uploads` disk (Task 1).
 - Produces: `/admin/products` (list/create/edit). `ProductResource::class` itself is consumed by Task 4 (the variants RelationManager attaches to this Resource's Edit page).
 
-- [ ] **Step 1: Create the Resource**
+- [x] **Step 1: Create the Resource**
 
 ```php
 <?php
@@ -502,7 +502,7 @@ class ProductResource extends Resource
 }
 ```
 
-- [ ] **Step 2: Create the Pages**
+- [x] **Step 2: Create the Pages**
 
 ```php
 <?php
@@ -575,12 +575,12 @@ class EditProduct extends EditRecord
 }
 ```
 
-- [ ] **Step 3: Run the products panel test to verify it passes**
+- [x] **Step 3: Run the products panel test to verify it passes**
 
 Run: `cd api && php artisan test --filter=AdminCatalogPanelTest`
 Expected: PASS (both tests — categories from Task 2, products now too)
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/pt-doctor-plant-indonesia"
@@ -599,7 +599,7 @@ git commit -m "feat(api): add Filament ProductResource with image upload"
 - Consumes: `Product::variants()` relation (Foundation Task 5), `ProductResource::class` (Task 3), `public_uploads` disk (Task 1).
 - Produces: nothing consumed by later tasks — this is the leaf of the admin catalog UI.
 
-- [ ] **Step 1: Create the RelationManager**
+- [x] **Step 1: Create the RelationManager**
 
 ```php
 <?php
@@ -686,12 +686,12 @@ class ProductVariantsRelationManager extends RelationManager
 }
 ```
 
-- [ ] **Step 2: Verify the Product edit page loads with the relation manager**
+- [x] **Step 2: Verify the Product edit page loads with the relation manager**
 
 Run: `cd api && php artisan test --filter=AdminCatalogPanelTest`
 Expected: PASS (unchanged — relation manager only renders on the Edit page, not List; this step is a manual sanity check, run `php artisan serve` and open `/admin/products/{id}/edit` in a browser to confirm the "Varian" tab appears)
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/pt-doctor-plant-indonesia"
@@ -711,7 +711,7 @@ git commit -m "feat(api): add ProductVariantsRelationManager nested on Product e
 - Consumes: `Category::class`, `Product::class`, `ProductVariant::class`.
 - Produces: seeded rows so the admin panel and public API (Tasks 6-8) have real data to manually verify against, beyond factory-generated test data.
 
-- [ ] **Step 1: Write the seeder**
+- [x] **Step 1: Write the seeder**
 
 ```php
 <?php
@@ -788,7 +788,7 @@ class CatalogSeeder extends Seeder
 }
 ```
 
-- [ ] **Step 2: Wire it into `DatabaseSeeder`**
+- [x] **Step 2: Wire it into `DatabaseSeeder`**
 
 ```php
 <?php
@@ -809,12 +809,12 @@ class DatabaseSeeder extends Seeder
 }
 ```
 
-- [ ] **Step 3: Run the seeder against the local dev database**
+- [x] **Step 3: Run the seeder against the local dev database**
 
 Run: `cd api && php artisan db:seed`
 Expected: no errors; `php artisan tinker --execute="echo App\Models\Product::count();"` prints `3`
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/pt-doctor-plant-indonesia"
@@ -836,7 +836,7 @@ git commit -m "feat(api): add CatalogSeeder with sample categories/products/vari
 - Consumes: `Category::class`.
 - Produces: `GET /api/categories` → `{"data": [{"id", "name", "slug", "parent_id"}, ...]}`. Storefront's `catalogService.getCategories()` (Task 10) calls this.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```php
 <?php
@@ -867,12 +867,12 @@ class CategoryApiTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd api && php artisan test --filter=CategoryApiTest`
 Expected: FAIL — route not defined (404)
 
-- [ ] **Step 3: Create the API Resource**
+- [x] **Step 3: Create the API Resource**
 
 ```php
 <?php
@@ -897,7 +897,7 @@ class CategoryResource extends JsonResource
 }
 ```
 
-- [ ] **Step 4: Create the Controller**
+- [x] **Step 4: Create the Controller**
 
 ```php
 <?php
@@ -918,7 +918,7 @@ class CategoryController extends Controller
 }
 ```
 
-- [ ] **Step 5: Add the route**
+- [x] **Step 5: Add the route**
 
 ```php
 <?php
@@ -929,12 +929,12 @@ use App\Http\Controllers\Api\CategoryController;
 Route::get('/categories', [CategoryController::class, 'index']);
 ```
 
-- [ ] **Step 6: Run test to verify it passes**
+- [x] **Step 6: Run test to verify it passes**
 
 Run: `cd api && php artisan test --filter=CategoryApiTest`
 Expected: PASS
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/pt-doctor-plant-indonesia"
@@ -957,7 +957,7 @@ git commit -m "feat(api): add public GET /api/categories endpoint"
 - Consumes: `Product::class`, `ProductVariant::class`, `Category::class`.
 - Produces: `GET /api/products` → `{"data": [...], "meta": {"has_more", "next_page", "total"}}`. Storefront's `catalogService.getProducts()` (Task 10) calls this. Also supports `?ids=1,2,3` (used by wishlist/`getProductsByIds`).
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```php
 <?php
@@ -1045,12 +1045,12 @@ class ProductApiTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `cd api && php artisan test --filter=ProductApiTest`
 Expected: FAIL — route not defined
 
-- [ ] **Step 3: Create the API Resources**
+- [x] **Step 3: Create the API Resources**
 
 ```php
 <?php
@@ -1107,7 +1107,7 @@ class ProductResource extends JsonResource
 }
 ```
 
-- [ ] **Step 4: Create the Controller**
+- [x] **Step 4: Create the Controller**
 
 ```php
 <?php
@@ -1188,7 +1188,7 @@ class ProductController extends Controller
 }
 ```
 
-- [ ] **Step 5: Add the routes**
+- [x] **Step 5: Add the routes**
 
 ```php
 <?php
@@ -1200,12 +1200,12 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{slug}', [ProductController::class, 'show']);
 ```
 
-- [ ] **Step 6: Run tests to verify they pass**
+- [x] **Step 6: Run tests to verify they pass**
 
 Run: `cd api && php artisan test --filter=ProductApiTest`
 Expected: PASS (5 tests)
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/pt-doctor-plant-indonesia"
@@ -1223,7 +1223,7 @@ git commit -m "feat(api): add public GET /api/products with filter/sort/search/p
 **Interfaces:**
 - Consumes: `ProductController::show()` (already implemented in Task 7, Step 4 — this task is purely test coverage that was deferred to keep Task 7 focused on the list endpoint).
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```php
 <?php
@@ -1258,12 +1258,12 @@ git commit -m "feat(api): add public GET /api/products with filter/sort/search/p
     }
 ```
 
-- [ ] **Step 2: Run tests to verify they pass**
+- [x] **Step 2: Run tests to verify they pass**
 
 Run: `cd api && php artisan test --filter=ProductApiTest`
 Expected: PASS (8 tests total)
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/pt-doctor-plant-indonesia"
@@ -1281,7 +1281,7 @@ git commit -m "test(api): cover GET /api/products/{slug} success and 404 cases"
 **Interfaces:**
 - Consumes: nothing (documentation only — required by the project convention in main spec §9).
 
-- [ ] **Step 1: Write the doc**
+- [x] **Step 1: Write the doc**
 
 ```markdown
 <!-- docs/api/catalog.md -->
@@ -1344,7 +1344,7 @@ Auth: none. 404 if not found or `is_active = false`.
 **Response 200**: same shape as one item of `/api/products` `data[]`.
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/pt-doctor-plant-indonesia"
@@ -1363,7 +1363,7 @@ git commit -m "docs: add catalog API reference"
 - Consumes: `GET /api/categories`, `GET /api/products`, `GET /api/products/{slug}` (Tasks 6-8).
 - Produces: same exported function signatures as before (`getCategories`, `getProducts`, `getFeaturedProducts`, `getProductBySlug`, `getProductsByIds`, `isOutOfStock`, `minPrice`) — every page/component (`ProductCard.vue`, `ProductGrid.vue`, `katalog/index.vue`, `produk/[slug].vue`, `wishlist/index.vue`, `store/catalog.ts`) keeps working unchanged.
 
-- [ ] **Step 1: Replace the dummy implementation with real `$fetch` calls**
+- [x] **Step 1: Replace the dummy implementation with real `$fetch` calls**
 
 ```typescript
 // storefront/app/services/catalogService.ts
@@ -1477,13 +1477,13 @@ export const catalogService = {
 }
 ```
 
-- [ ] **Step 2: Delete the now-unused dummy data module**
+- [x] **Step 2: Delete the now-unused dummy data module**
 
 ```bash
 rm "/Users/adiprimanto/Developer/Rangkai Web/pt-doctor-plant-indonesia/storefront/app/services/dummyData.ts"
 ```
 
-- [ ] **Step 3: Manually verify end to end**
+- [x] **Step 3: Manually verify end to end**
 
 Run in two terminals:
 ```bash
@@ -1494,7 +1494,7 @@ cd storefront && npm run dev
 ```
 Open `http://localhost:3000/katalog`. Expected: the 3 products seeded in Task 5 (`Alpine Moisture Cream`, `Glacier Hydrating Sheet Mask`, `Alpine Botanical Serum`) appear — not the old hardcoded dummy catalog. Click into a product detail page, confirm variants/price/stock render correctly.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/pt-doctor-plant-indonesia"

@@ -33,7 +33,7 @@
 - Consumes: `App\Models\Order` (existing: `order_number`, `total`, `id`, `user` relation, `guest_name`). `App\Models\Admin` (existing, has `Notifiable` trait + `email` field).
 - Produces: `App\Notifications\OrderPaidNotification` — instantiated with `new OrderPaidNotification(Order $order)`, dispatched via `$admin->notify(...)`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `api/tests/Feature/Order/OrderPaidEmailNotificationTest.php`:
 
@@ -129,12 +129,12 @@ class OrderPaidEmailNotificationTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=OrderPaidEmailNotificationTest`
 Expected: FAIL — `Class "App\Notifications\OrderPaidNotification" not found`.
 
-- [ ] **Step 3: Install Resend PHP package**
+- [x] **Step 3: Install Resend PHP package**
 
 Run from `api/`:
 ```bash
@@ -142,7 +142,7 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && composer require resend/
 ```
 Expected: `Package operations: 1 install` (or similar). This installs the `Resend\Client` class that Laravel's built-in `ResendTransport` depends on.
 
-- [ ] **Step 4: Create `OrderPaidNotification`**
+- [x] **Step 4: Create `OrderPaidNotification`**
 
 Create `api/app/Notifications/OrderPaidNotification.php`:
 
@@ -185,7 +185,7 @@ class OrderPaidNotification extends Notification
 }
 ```
 
-- [ ] **Step 5: Add email loop to `WebhookController`**
+- [x] **Step 5: Add email loop to `WebhookController`**
 
 Read `api/app/Http/Controllers/Api/WebhookController.php` first. Add two things:
 
@@ -235,7 +235,7 @@ The full block after modification should look like:
 
 **Kenapa 2 try/catch terpisah:** Filament's `sendToDatabase` mungkin throw exception (misal notifications table belum ada) — kalau digabung 1 try/catch, exception dari Filament akan mencegah foreach email di-execute. Dengan 2 try/catch, keduanya independent: failure satu tidak memblokir yang lain. `$admins` di-fetch sekali di luar dan di-share ke kedua block.
 
-- [ ] **Step 6: Update `.env.example`**
+- [x] **Step 6: Update `.env.example`**
 
 Add after `MAIL_FROM_NAME="${APP_NAME}"`:
 
@@ -256,17 +256,17 @@ And update `MAIL_FROM_ADDRESS` to a placeholder that reminds client to use a Res
 MAIL_FROM_ADDRESS="noreply@yourdomain.com"
 ```
 
-- [ ] **Step 7: Run test to verify it passes**
+- [x] **Step 7: Run test to verify it passes**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=OrderPaidEmailNotificationTest`
 Expected: PASS (3 tests).
 
-- [ ] **Step 8: Run the full suite**
+- [x] **Step 8: Run the full suite**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test`
 Expected: PASS, no regressions.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add api/app/Notifications/OrderPaidNotification.php api/app/Http/Controllers/Api/WebhookController.php api/.env.example api/tests/Feature/Order/OrderPaidEmailNotificationTest.php api/composer.json api/composer.lock

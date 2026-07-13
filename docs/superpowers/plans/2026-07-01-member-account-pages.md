@@ -31,7 +31,7 @@
 - Consumes: `useAuthStore()` (existing: `token`, `user`, `persist()`), `useRuntimeConfig().public.apiBase` (existing)
 - Produces: `profileService.getProfile()`, `profileService.updateProfile()`, `profileService.updatePassword()`, `authStore.updateProfile({ name, phone })`
 
-- [ ] **Step 1: Create `profileService.ts`**
+- [x] **Step 1: Create `profileService.ts`**
 
 Create `storefront/app/services/profileService.ts`:
 
@@ -98,7 +98,7 @@ export const profileService = {
 };
 ```
 
-- [ ] **Step 2: Add `updateProfile()` action to auth store**
+- [x] **Step 2: Add `updateProfile()` action to auth store**
 
 Read `storefront/app/store/auth.ts`. In the `actions` object, add after the `logout` action:
 
@@ -177,7 +177,7 @@ The full `actions` block after modification:
   },
 ```
 
-- [ ] **Step 3: Create `/akun/profil.vue`**
+- [x] **Step 3: Create `/akun/profil.vue`**
 
 Create `storefront/app/pages/akun/profil.vue`:
 
@@ -362,7 +362,7 @@ async function savePassword() {
 </template>
 ```
 
-- [ ] **Step 4: Start dev server and verify `/akun/profil`**
+- [x] **Step 4: Start dev server and verify `/akun/profil`**
 
 Run from `storefront/`:
 ```bash
@@ -376,7 +376,7 @@ Manual checks:
 4. Enter wrong current password → click "Ubah Password" → inline error "Password saat ini tidak cocok." shows under the field.
 5. Enter correct current password + matching new passwords → click "Ubah Password" → toast "Password berhasil diperbarui." → form clears.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add storefront/app/services/profileService.ts storefront/app/store/auth.ts storefront/app/pages/akun/profil.vue
@@ -396,7 +396,7 @@ git commit -m "feat(storefront): add profile management page and profileService"
 - Consumes: `Address` type from `~/types` (existing: `id`, `label`, `recipientName`, `phone`, `province`, `city`, `district`, `postalCode`, `fullAddress`, `isDefault`, `rajaongkirDistrictId`)
 - Produces: `/akun/alamat` route with full CRUD; `AppHeader` dropdown with "Profil Saya" and "Alamat Saya" links
 
-- [ ] **Step 1: Create `/akun/alamat.vue`**
+- [x] **Step 1: Create `/akun/alamat.vue`**
 
 Create `storefront/app/pages/akun/alamat.vue`:
 
@@ -895,7 +895,7 @@ async function confirmDelete(id: number) {
 </template>
 ```
 
-- [ ] **Step 2: Update AppHeader desktop dropdown**
+- [x] **Step 2: Update AppHeader desktop dropdown**
 
 Read `storefront/app/components/AppHeader.vue`. Replace the `userDropdownItems` computed at lines 43–74 with:
 
@@ -946,7 +946,7 @@ const userDropdownItems = computed(() => [
 ]);
 ```
 
-- [ ] **Step 3: Update AppHeader mobile nav**
+- [x] **Step 3: Update AppHeader mobile nav**
 
 In `storefront/app/components/AppHeader.vue`, replace the mobile "Pesanan Saya" `NuxtLink` block at lines 350–362 with (add Profil and Alamat links before it):
 
@@ -992,7 +992,7 @@ In `storefront/app/components/AppHeader.vue`, replace the mobile "Pesanan Saya" 
                 </NuxtLink>
 ```
 
-- [ ] **Step 4: Start dev server and verify `/akun/alamat` and header**
+- [x] **Step 4: Start dev server and verify `/akun/alamat` and header**
 
 Run from `storefront/`:
 ```bash
@@ -1010,7 +1010,7 @@ Manual checks:
 8. Mobile: open hamburger menu → "Profil Saya" and "Alamat Saya" links appear above "Pesanan Saya".
 9. Both tab links (Profil | Alamat) work correctly between the two pages.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add storefront/app/pages/akun/alamat.vue storefront/app/components/AppHeader.vue

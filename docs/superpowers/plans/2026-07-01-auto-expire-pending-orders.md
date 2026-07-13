@@ -32,7 +32,7 @@
 - Consumes: `App\Models\Order::releaseStockIfApplicable(string $oldStatus, string $newStatus): void` (existing, `api/app/Models/Order.php`). `config('midtrans.order_expire_hours')` (added in this task).
 - Produces: `php artisan orders:expire-pending` — no output contract; side-effect only (DB updates + `Log::info`). Scheduler registration runs the command hourly in production.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `api/tests/Feature/Order/ExpirePendingOrdersCommandTest.php`:
 
@@ -159,12 +159,12 @@ class ExpirePendingOrdersCommandTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=ExpirePendingOrdersCommandTest`
 Expected: FAIL — `Command "orders:expire-pending" is not defined.`
 
-- [ ] **Step 3: Add config key**
+- [x] **Step 3: Add config key**
 
 Read `api/config/midtrans.php` first. Add `order_expire_hours` to the returned array:
 
@@ -179,7 +179,7 @@ return [
 ];
 ```
 
-- [ ] **Step 4: Add env placeholder**
+- [x] **Step 4: Add env placeholder**
 
 Append to `api/.env.example` (after `MIDTRANS_IS_PRODUCTION=false`):
 
@@ -187,7 +187,7 @@ Append to `api/.env.example` (after `MIDTRANS_IS_PRODUCTION=false`):
 ORDER_EXPIRE_HOURS=24
 ```
 
-- [ ] **Step 5: Create the command class**
+- [x] **Step 5: Create the command class**
 
 Create `api/app/Console/Commands/ExpirePendingOrders.php`:
 
@@ -226,7 +226,7 @@ class ExpirePendingOrders extends Command
 }
 ```
 
-- [ ] **Step 6: Register command auto-discovery and scheduler in `bootstrap/app.php`**
+- [x] **Step 6: Register command auto-discovery and scheduler in `bootstrap/app.php`**
 
 Read `api/bootstrap/app.php` first. Replace the full file with:
 
@@ -260,17 +260,17 @@ return Application::configure(basePath: dirname(__DIR__))
 
 `->withCommands()` with no arguments auto-discovers command classes in `app/Console/Commands/`. This coexists with `withRouting(commands: ...)` which loads the closure-based commands in `routes/console.php` — both register independently through the `ConsoleKernel`.
 
-- [ ] **Step 7: Run test to verify it passes**
+- [x] **Step 7: Run test to verify it passes**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=ExpirePendingOrdersCommandTest`
 Expected: PASS (4 tests).
 
-- [ ] **Step 8: Run the full suite**
+- [x] **Step 8: Run the full suite**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test`
 Expected: PASS, no regressions.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add api/app/Console/Commands/ExpirePendingOrders.php api/bootstrap/app.php api/config/midtrans.php api/.env.example api/tests/Feature/Order/ExpirePendingOrdersCommandTest.php

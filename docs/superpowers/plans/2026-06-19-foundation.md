@@ -53,19 +53,19 @@ pt-doctor-plant-indonesia/
 **Interfaces:**
 - Produces: `GET /api/health` → `{"status": "ok"}`, used by Task 9 (Nuxt smoke test) to verify cross-origin reachability.
 
-- [ ] **Step 1: Create the Laravel 13 project**
+- [x] **Step 1: Create the Laravel 13 project**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
 composer create-project laravel/laravel api "13.*"
 ```
 
-- [ ] **Step 2: Confirm PHP/Laravel versions**
+- [x] **Step 2: Confirm PHP/Laravel versions**
 
 Run: `cd api && php artisan --version`
 Expected: `Laravel Framework 13.x.x` (and `php -v` shows 8.3+)
 
-- [ ] **Step 3: Write the failing test**
+- [x] **Step 3: Write the failing test**
 
 ```php
 <?php
@@ -81,12 +81,12 @@ it('returns ok status from the health check endpoint', function () {
 });
 ```
 
-- [ ] **Step 4: Run test to verify it fails**
+- [x] **Step 4: Run test to verify it fails**
 
 Run: `cd api && php artisan test --filter=HealthCheckTest`
 Expected: FAIL — route `/api/health` not defined (404)
 
-- [ ] **Step 5: Add the route**
+- [x] **Step 5: Add the route**
 
 ```php
 <?php
@@ -99,12 +99,12 @@ Route::get('/health', function () {
 });
 ```
 
-- [ ] **Step 6: Run test to verify it passes**
+- [x] **Step 6: Run test to verify it passes**
 
 Run: `cd api && php artisan test --filter=HealthCheckTest`
 Expected: PASS
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
@@ -127,14 +127,14 @@ git commit -m "feat(api): scaffold Laravel 13 project with health check endpoint
 - Consumes: nothing from Task 1 beyond the running app skeleton.
 - Produces: `POST /api/register`, `POST /api/login`, `POST /api/logout` (Bearer token auth). `User` model with `name`, `email`, `phone`, `password`. Later tasks (Task 6 Address, Task 7 Order) use `User::class` for `user_id` foreign keys.
 
-- [ ] **Step 1: Install Sanctum**
+- [x] **Step 1: Install Sanctum**
 
 ```bash
 cd api && composer require laravel/sanctum
 php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
 ```
 
-- [ ] **Step 2: Add `phone` to the users table migration**
+- [x] **Step 2: Add `phone` to the users table migration**
 
 ```php
 <?php
@@ -153,7 +153,7 @@ Schema::create('users', function (Blueprint $table) {
 });
 ```
 
-- [ ] **Step 3: Add `HasApiTokens` trait to User model**
+- [x] **Step 3: Add `HasApiTokens` trait to User model**
 
 ```php
 <?php
@@ -183,7 +183,7 @@ class User extends Authenticatable
 }
 ```
 
-- [ ] **Step 4: Write the failing tests**
+- [x] **Step 4: Write the failing tests**
 
 ```php
 <?php
@@ -242,12 +242,12 @@ it('logs out and revokes the current token', function () {
 });
 ```
 
-- [ ] **Step 5: Run tests to verify they fail**
+- [x] **Step 5: Run tests to verify they fail**
 
 Run: `cd api && php artisan test --filter=CustomerAuthTest`
 Expected: FAIL — routes/controller not defined
 
-- [ ] **Step 6: Implement the controller**
+- [x] **Step 6: Implement the controller**
 
 ```php
 <?php
@@ -315,7 +315,7 @@ class AuthController extends Controller
 }
 ```
 
-- [ ] **Step 7: Add routes**
+- [x] **Step 7: Add routes**
 
 ```php
 <?php
@@ -332,12 +332,12 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 ```
 
-- [ ] **Step 8: Run tests to verify they pass**
+- [x] **Step 8: Run tests to verify they pass**
 
 Run: `cd api && php artisan test --filter=CustomerAuthTest`
 Expected: PASS (4 tests)
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
@@ -359,7 +359,7 @@ git commit -m "feat(api): add Sanctum customer auth (register/login/logout)"
 - Consumes: nothing new.
 - Produces: `Admin` model, `admin` guard (config key `auth.guards.admin`), used by Task 4 (Filament panel auth) and Task 5 onward wherever admin-only actions are checked.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```php
 <?php
@@ -382,12 +382,12 @@ it('authenticates an admin via the admin guard, separate from the customer guard
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd api && php artisan test --filter=AdminGuardTest`
 Expected: FAIL — `Admin` model / `admins` table / `admin` guard don't exist
 
-- [ ] **Step 3: Create the migration**
+- [x] **Step 3: Create the migration**
 
 ```bash
 cd api && php artisan make:migration create_admins_table
@@ -422,7 +422,7 @@ return new class extends Migration
 };
 ```
 
-- [ ] **Step 4: Create the model**
+- [x] **Step 4: Create the model**
 
 ```php
 <?php
@@ -445,7 +445,7 @@ class Admin extends Authenticatable
 }
 ```
 
-- [ ] **Step 5: Create the factory**
+- [x] **Step 5: Create the factory**
 
 ```php
 <?php
@@ -471,7 +471,7 @@ class AdminFactory extends Factory
 }
 ```
 
-- [ ] **Step 6: Register the `admin` guard and provider**
+- [x] **Step 6: Register the `admin` guard and provider**
 
 ```php
 <?php
@@ -502,12 +502,12 @@ class AdminFactory extends Factory
 ],
 ```
 
-- [ ] **Step 7: Run migration and test**
+- [x] **Step 7: Run migration and test**
 
 Run: `cd api && php artisan migrate && php artisan test --filter=AdminGuardTest`
 Expected: PASS
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
@@ -528,7 +528,7 @@ git commit -m "feat(api): add admins table, model, and dedicated admin guard"
 - Consumes: `Admin` model and `admin` guard from Task 3.
 - Produces: panel mounted at `/admin`, login screen reachable, authenticated `Admin` users can reach `/admin` dashboard. Task 5+ register Filament Resources against this panel.
 
-- [ ] **Step 1: Install Filament**
+- [x] **Step 1: Install Filament**
 
 ```bash
 cd api && composer require filament/filament:"^5.0"
@@ -537,7 +537,7 @@ php artisan filament:install --panels
 
 When prompted for the panel ID, use `admin`.
 
-- [ ] **Step 2: Point the panel at the `admin` guard**
+- [x] **Step 2: Point the panel at the `admin` guard**
 
 ```php
 <?php
@@ -577,7 +577,7 @@ public function panel(Panel $panel): Panel
 }
 ```
 
-- [ ] **Step 3: Write the failing test**
+- [x] **Step 3: Write the failing test**
 
 ```php
 <?php
@@ -598,17 +598,17 @@ it('lets an authenticated admin reach the dashboard', function () {
 });
 ```
 
-- [ ] **Step 4: Run test to verify behavior before fix**
+- [x] **Step 4: Run test to verify behavior before fix**
 
 Run: `cd api && php artisan test --filter=FilamentPanelAccessTest`
 Expected: FAIL on the second assertion until Step 2's guard wiring is in place (if Step 1-2 already done in order, this confirms it — run it right after Step 1 install but before Step 2 edit to see the genuine failure, then re-run after Step 2)
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `cd api && php artisan test --filter=FilamentPanelAccessTest`
 Expected: PASS (2 tests)
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
@@ -632,7 +632,7 @@ git commit -m "feat(api): install Filament v5 admin panel on the admin guard"
 - Consumes: nothing new.
 - Produces: `Category::class`, `Product::class` (with `category()`, `variants()` relations, `rating_avg`, `rating_count` columns), `ProductVariant::class` (with `product()` relation, `price`, `stock`, `weight` columns). Task 7 (`OrderItem`) references `ProductVariant::class` by FK. Task 8 (`Rating`) references `Product::class` by FK.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```php
 <?php
@@ -686,12 +686,12 @@ it('defaults rating_avg and rating_count to zero on a new product', function () 
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd api && php artisan test --filter=CatalogSchemaTest`
 Expected: FAIL — tables/models don't exist
 
-- [ ] **Step 3: Create migrations**
+- [x] **Step 3: Create migrations**
 
 ```bash
 cd api && php artisan make:migration create_categories_table
@@ -792,7 +792,7 @@ return new class extends Migration
 };
 ```
 
-- [ ] **Step 4: Create models**
+- [x] **Step 4: Create models**
 
 ```php
 <?php
@@ -894,7 +894,7 @@ class ProductVariant extends Model
 }
 ```
 
-- [ ] **Step 5: Create factories**
+- [x] **Step 5: Create factories**
 
 ```php
 <?php
@@ -973,12 +973,12 @@ class ProductVariantFactory extends Factory
 }
 ```
 
-- [ ] **Step 6: Run migrations and test**
+- [x] **Step 6: Run migrations and test**
 
 Run: `cd api && php artisan migrate && php artisan test --filter=CatalogSchemaTest`
 Expected: PASS (3 tests)
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
@@ -1000,7 +1000,7 @@ git commit -m "feat(api): add catalog schema (categories, products, product_vari
 - Consumes: `User::class` from Task 2.
 - Produces: `Address::class` (nullable `user_id`, used only for logged-in customers per spec §5 — guest checkout snapshots address directly onto `orders.shipping_address` in Task 7, no `Address` row).
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```php
 <?php
@@ -1024,12 +1024,12 @@ it('allows a null user_id for addresses not tied to an account', function () {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd api && php artisan test --filter=AddressSchemaTest`
 Expected: FAIL — table/model don't exist
 
-- [ ] **Step 3: Create the migration**
+- [x] **Step 3: Create the migration**
 
 ```bash
 cd api && php artisan make:migration create_addresses_table
@@ -1070,7 +1070,7 @@ return new class extends Migration
 };
 ```
 
-- [ ] **Step 4: Create the model**
+- [x] **Step 4: Create the model**
 
 ```php
 <?php
@@ -1103,7 +1103,7 @@ class Address extends Model
 }
 ```
 
-- [ ] **Step 5: Create the factory**
+- [x] **Step 5: Create the factory**
 
 ```php
 <?php
@@ -1134,12 +1134,12 @@ class AddressFactory extends Factory
 }
 ```
 
-- [ ] **Step 6: Run migration and test**
+- [x] **Step 6: Run migration and test**
 
 Run: `cd api && php artisan migrate && php artisan test --filter=AddressSchemaTest`
 Expected: PASS (2 tests)
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
@@ -1162,7 +1162,7 @@ git commit -m "feat(api): add addresses schema"
 - Consumes: `User::class` (Task 2), `ProductVariant::class` (Task 5).
 - Produces: `Order::class` (status enum: `pending|paid|processing|shipped|completed|cancelled|expired`), `OrderItem::class` (snapshot fields `product_name`, `variant_name`, `price`). Task 8 (`Rating`) references `OrderItem::class` by FK.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```php
 <?php
@@ -1211,12 +1211,12 @@ it('supports a guest order with no user_id but guest contact fields', function (
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd api && php artisan test --filter=OrderSchemaTest`
 Expected: FAIL — tables/models don't exist
 
-- [ ] **Step 3: Create migrations**
+- [x] **Step 3: Create migrations**
 
 ```bash
 cd api && php artisan make:migration create_orders_table
@@ -1299,7 +1299,7 @@ return new class extends Migration
 };
 ```
 
-- [ ] **Step 4: Create models**
+- [x] **Step 4: Create models**
 
 ```php
 <?php
@@ -1380,7 +1380,7 @@ class OrderItem extends Model
 }
 ```
 
-- [ ] **Step 5: Create factories**
+- [x] **Step 5: Create factories**
 
 ```php
 <?php
@@ -1442,12 +1442,12 @@ class OrderItemFactory extends Factory
 }
 ```
 
-- [ ] **Step 6: Run migrations and test**
+- [x] **Step 6: Run migrations and test**
 
 Run: `cd api && php artisan migrate && php artisan test --filter=OrderSchemaTest`
 Expected: PASS (3 tests)
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
@@ -1469,7 +1469,7 @@ git commit -m "feat(api): add order schema (orders, order_items)"
 - Consumes: `OrderItem::class` (Task 7), `Product::class` (Task 5), `User::class` (Task 2).
 - Produces: `Rating::class`, unique constraint on `order_item_id` enforced at the DB level (1 rating per purchased item).
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```php
 <?php
@@ -1500,12 +1500,12 @@ it('rejects a second rating for the same order item', function () {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd api && php artisan test --filter=RatingSchemaTest`
 Expected: FAIL — table/model don't exist
 
-- [ ] **Step 3: Create the migration**
+- [x] **Step 3: Create the migration**
 
 ```bash
 cd api && php artisan make:migration create_ratings_table
@@ -1540,7 +1540,7 @@ return new class extends Migration
 };
 ```
 
-- [ ] **Step 4: Create the model**
+- [x] **Step 4: Create the model**
 
 ```php
 <?php
@@ -1575,7 +1575,7 @@ class Rating extends Model
 }
 ```
 
-- [ ] **Step 5: Create the factory**
+- [x] **Step 5: Create the factory**
 
 ```php
 <?php
@@ -1602,12 +1602,12 @@ class RatingFactory extends Factory
 }
 ```
 
-- [ ] **Step 6: Run migration and test**
+- [x] **Step 6: Run migration and test**
 
 Run: `cd api && php artisan migrate && php artisan test --filter=RatingSchemaTest`
 Expected: PASS (2 tests)
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
@@ -1629,7 +1629,7 @@ git commit -m "feat(api): add ratings schema with verified-purchase unique const
 - Consumes: nothing new (these tables are seeded by a real RajaOngkir API call in the Shipping plan, #4 in the project plan list — this task only creates the schema and proves the relationships hold with fake rows).
 - Produces: `RajaongkirProvince/City/District::class`, `StoreSetting::class` (single-row settings table). Shipping plan's seed command and cost-lookup query rely on these table/column names.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```php
 <?php
@@ -1662,12 +1662,12 @@ it('stores a single store_settings row for non-secret store info', function () {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd api && php artisan test --filter=AreaCacheSchemaTest`
 Expected: FAIL — tables/models don't exist
 
-- [ ] **Step 3: Create migrations**
+- [x] **Step 3: Create migrations**
 
 ```bash
 cd api && php artisan make:migration create_rajaongkir_area_tables
@@ -1750,7 +1750,7 @@ return new class extends Migration
 };
 ```
 
-- [ ] **Step 4: Create models**
+- [x] **Step 4: Create models**
 
 ```php
 <?php
@@ -1838,12 +1838,12 @@ class StoreSetting extends Model
 }
 ```
 
-- [ ] **Step 5: Run migrations and test**
+- [x] **Step 5: Run migrations and test**
 
 Run: `cd api && php artisan migrate && php artisan test --filter=AreaCacheSchemaTest`
 Expected: PASS (2 tests)
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
@@ -1866,7 +1866,7 @@ git commit -m "feat(api): add RajaOngkir area cache tables and store_settings"
 - Consumes: `GET /api/health` from Task 1.
 - Produces: `useRuntimeConfig().public.apiBase` — every later Nuxt task (catalog, checkout, etc.) reads the API base URL from this same runtime config key.
 
-- [ ] **Step 1: Configure Laravel CORS to allow the storefront origin**
+- [x] **Step 1: Configure Laravel CORS to allow the storefront origin**
 
 ```php
 <?php
@@ -1889,7 +1889,7 @@ return [
 echo "STOREFRONT_URL=http://localhost:3000" >> api/.env
 ```
 
-- [ ] **Step 2: Scaffold the Nuxt 4 project**
+- [x] **Step 2: Scaffold the Nuxt 4 project**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
@@ -1899,7 +1899,7 @@ npm install --save-dev @nuxt/test-utils vitest @vue/test-utils happy-dom
 npm install @pinia/nuxt pinia
 ```
 
-- [ ] **Step 3: Configure SPA mode and runtime config**
+- [x] **Step 3: Configure SPA mode and runtime config**
 
 ```typescript
 // storefront/nuxt.config.ts
@@ -1921,7 +1921,7 @@ export default defineNuxtConfig({
 echo "NUXT_PUBLIC_API_BASE=http://localhost:8000/api" >> storefront/.env
 ```
 
-- [ ] **Step 4: Write the failing test**
+- [x] **Step 4: Write the failing test**
 
 ```typescript
 // storefront/tests/health.test.ts
@@ -1940,12 +1940,12 @@ describe('API health check', () => {
 })
 ```
 
-- [ ] **Step 5: Run test to verify it fails**
+- [x] **Step 5: Run test to verify it fails**
 
 Run: `cd storefront && npx vitest run tests/health.test.ts`
 Expected: FAIL — `vitest` not configured yet (no config file resolving `tests/`)
 
-- [ ] **Step 6: Add Vitest config**
+- [x] **Step 6: Add Vitest config**
 
 ```typescript
 // storefront/vitest.config.ts
@@ -1960,12 +1960,12 @@ export default defineConfig({
 })
 ```
 
-- [ ] **Step 7: Run test to verify it passes**
+- [x] **Step 7: Run test to verify it passes**
 
 Run: `cd storefront && npx vitest run tests/health.test.ts`
 Expected: PASS
 
-- [ ] **Step 8: Wire the real page to call the real API (manual smoke test, not unit-testable without a browser)**
+- [x] **Step 8: Wire the real page to call the real API (manual smoke test, not unit-testable without a browser)**
 
 ```vue
 <!-- storefront/app/pages/index.vue -->
@@ -1985,7 +1985,7 @@ const { data: health } = await useFetch<{ status: string }>('/health', {
 </template>
 ```
 
-- [ ] **Step 9: Manually verify cross-origin call works end to end**
+- [x] **Step 9: Manually verify cross-origin call works end to end**
 
 Run in two terminals:
 ```bash
@@ -1996,7 +1996,7 @@ cd storefront && npm run dev
 ```
 Open `http://localhost:3000` in a browser. Expected: page shows "API status: ok" with no CORS error in the browser console.
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
@@ -2017,7 +2017,7 @@ git commit -m "feat: configure CORS and scaffold Nuxt 4 SPA shell calling the AP
 - Consumes: nothing (documentation + CI wiring only).
 - Produces: nothing consumed by later plan tasks — this is the terminal task of the Foundation plan.
 
-- [ ] **Step 1: Write CLAUDE.md**
+- [x] **Step 1: Write CLAUDE.md**
 
 ```markdown
 <!-- CLAUDE.md -->
@@ -2061,7 +2061,7 @@ refactor a completed task's files unless the user explicitly asks for a change. 
 plan file before modifying any file under `api/` or `storefront/`.
 ```
 
-- [ ] **Step 2: Write the API CI workflow**
+- [x] **Step 2: Write the API CI workflow**
 
 ```yaml
 # .github/workflows/api-tests.yml
@@ -2097,7 +2097,7 @@ jobs:
           DB_DATABASE: database/database.sqlite
 ```
 
-- [ ] **Step 3: Write the storefront CI workflow**
+- [x] **Step 3: Write the storefront CI workflow**
 
 ```yaml
 # .github/workflows/storefront-tests.yml
@@ -2127,12 +2127,12 @@ jobs:
       - run: npx vitest run
 ```
 
-- [ ] **Step 4: Verify the API workflow passes locally with the SQLite path it uses in CI**
+- [x] **Step 4: Verify the API workflow passes locally with the SQLite path it uses in CI**
 
 Run: `cd api && cp .env.example .env.ci && DB_CONNECTION=sqlite DB_DATABASE=database/database.sqlite php artisan test --env=ci`
 Expected: PASS (all tests from Tasks 1–9 run against SQLite, confirming the CI job's DB driver works)
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 cd "/Users/adiprimanto/Developer/Rangkai Web/PT Doctor Plant Indonesia"
