@@ -57,6 +57,17 @@ Submits a checkout order from the cart. Open to both authenticated members and g
 }
 ```
 
+**`shipping_cost` is not trusted from the client.** It's re-derived server-side from `rajaongkir_district_id` + cart weight + `courier`/`courier_service`, reusing the same cache as `POST /api/shipping/cost` (so a "Cek Ongkir" call made earlier in checkout is not re-billed). The submitted `shipping_cost` value is accepted for validation shape only and then discarded. This means `shipping_address.rajaongkir_district_id` must resolve to a real district — a missing/invalid value or a `courier`/`courier_service` combo that no longer returns a quote fails with:
+
+**Response 422**
+```json
+{ "message": "The shipping address.rajaongkir district id field is required.", "errors": { "shipping_address": ["Kecamatan tujuan pengiriman tidak valid untuk cek ongkir."] } }
+```
+or
+```json
+{ "errors": { "courier_service": ["Kurir/layanan yang dipilih tidak lagi tersedia, cek ongkir ulang."] } }
+```
+
 ---
 
 ## GET /api/orders
