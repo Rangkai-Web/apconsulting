@@ -126,3 +126,24 @@ Allows guests to track and retrieve their order status using their order number 
 - `email`: string (required)
 
 **Response 200** (Same structure as individual order entry above)
+
+---
+
+## POST /api/webhooks/midtrans
+
+Receives Midtrans payment notification callbacks and updates order status accordingly. Not called by the storefront directly — configured as the notification URL in the Midtrans dashboard.
+
+**Auth:** none (verified instead via Midtrans `signature_key`, skipped only when `MIDTRANS_SERVER_KEY` is empty, e.g. local/testing)
+
+Maps `transaction_status`/`fraud_status` to an order status: `capture`+`accept` or `settlement` → `paid`, `capture`+`challenge` or `pending` → `pending`, `deny`/`cancel` → `cancelled`, `expire` → `expired`. Idempotent — ignores cancel/expire callbacks for orders already `paid`/`processing`/`shipped`/`completed`, and releases reserved stock when a paid order transitions to `cancelled`/`expired`. On transition to `paid`, notifies all admins via Filament database notification and email (`OrderPaidNotification`).
+
+**Response 200**
+```json
+{
+  "message": "Webhook processed successfully.",
+  "order_number": "ORD-20260625-ABCDEF",
+  "status": "paid"
+}
+```
+
+**Response 403** — invalid signature. **Response 404** — order not found for the given `order_id`.
