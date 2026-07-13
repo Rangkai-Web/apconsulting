@@ -12,11 +12,15 @@ use Throwable;
 
 class SyncRajaOngkirAreas extends Command
 {
-    protected $signature = 'rajaongkir:sync-areas {--fresh : Re-fetch cities/districts even for provinces/cities already synced}';
+    protected $signature = 'rajaongkir:sync-areas
+        {--fresh : Re-fetch cities/districts even for provinces/cities already synced}
+        {--province= : Comma-separated RajaOngkir province IDs to sync, in priority order (default: all, ID order)}';
 
     protected $description = 'One-time/occasional sync of RajaOngkir province, city, and district data into local cache tables.';
 
     private bool $fresh = false;
+
+    private bool $stopEarly = false;
 
     public function handle(RajaOngkirService $rajaOngkir): int
     {
@@ -30,12 +34,24 @@ class SyncRajaOngkirAreas extends Command
         }
         $this->info(count($provinces).' provinces synced.');
 
+        if ($provinceIds = $this->option('province')) {
+            $priority = array_map('intval', explode(',', $provinceIds));
+            $byId = collect($provinces)->keyBy('id');
+            $provinces = array_values(array_filter(array_map(fn ($id) => $byId->get($id), $priority)));
+        }
+
         $provinceBar = $this->output->createProgressBar(count($provinces));
         $provinceBar->start();
 
         foreach ($provinces as $province) {
             $this->syncCitiesForProvince($rajaOngkir, $province);
             $provinceBar->advance();
+
+            if ($this->stopEarly) {
+                $this->newLine();
+                $this->warn('Stopping early: RajaOngkir rate limit (429) hit, further calls today are unlikely to succeed.');
+                break;
+            }
         }
 
         $provinceBar->finish();
@@ -63,10 +79,12 @@ class SyncRajaOngkirAreas extends Command
             $cities = $rajaOngkir->fetchCities($province['id']);
         } catch (Throwable $e) {
             Log::warning("rajaongkir:sync-areas: failed to fetch cities for province {$province['id']}: {$e->getMessage()}");
+            $this->stopEarly = str_contains($e->getMessage(), '429');
+
             return;
         }
 
-        usleep(150_000);
+        usleep(1_000_000);
 
         foreach ($cities as $city) {
             RajaongkirCity::updateOrCreate(
@@ -77,6 +95,10 @@ class SyncRajaOngkirAreas extends Command
 
         foreach ($cities as $city) {
             $this->syncDistrictsForCity($rajaOngkir, $city);
+
+            if ($this->stopEarly) {
+                break;
+            }
         }
     }
 
@@ -92,6 +114,8 @@ class SyncRajaOngkirAreas extends Command
             $districts = $rajaOngkir->fetchDistricts($city['id']);
         } catch (Throwable $e) {
             Log::warning("rajaongkir:sync-areas: failed to fetch districts for city {$city['id']}: {$e->getMessage()}");
+            $this->stopEarly = str_contains($e->getMessage(), '429');
+
             return;
         }
 
@@ -102,6 +126,6 @@ class SyncRajaOngkirAreas extends Command
             );
         }
 
-        usleep(150_000);
+        usleep(1_000_000);
     }
 }

@@ -56,7 +56,7 @@ class RajaOngkirService
     {
         try {
             $response = Http::withHeaders(['key' => config('rajaongkir.api_key')])
-                ->retry(5, 1000, fn ($exception) => $exception instanceof \Illuminate\Http\Client\RequestException
+                ->retry(5, fn (int $attempt) => min(2000 * 2 ** ($attempt - 1), 20000), fn ($exception) => $exception instanceof \Illuminate\Http\Client\RequestException
                     && $exception->response->status() === 429)
                 ->get(config('rajaongkir.base_url').$path);
         } catch (\Illuminate\Http\Client\RequestException $e) {
