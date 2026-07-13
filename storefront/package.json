@@ -7,7 +7,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck",
+    "test": "vitest run"
   },
   "dependencies": {
     "@nuxt/fonts": "^0.14.0",
@@ -46,6 +48,7 @@
     "@nuxt/test-utils": "^4.0.3",
     "@vue/test-utils": "^2.4.11",
     "happy-dom": "^20.10.6",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.9",
+    "vue-tsc": "^3.3.7"
   }
 }
