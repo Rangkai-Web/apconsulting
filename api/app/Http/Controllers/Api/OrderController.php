@@ -7,7 +7,10 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ProductVariant;
+use App\Models\StoreSetting;
+use App\Services\RajaOngkirService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -16,6 +19,10 @@ use Illuminate\Validation\ValidationException;
 
 class OrderController extends Controller
 {
+    public function __construct(private RajaOngkirService $rajaOngkir)
+    {
+    }
+
     public function index(Request $request)
     {
         $orders = $request->user()->orders()->with('items.rating')->orderBy('created_at', 'desc')->paginate(15);
@@ -145,6 +152,7 @@ class OrderController extends Controller
                 // Process items, verify stock and calculate subtotal
                 $orderItemsData = [];
                 $subtotal = 0;
+                $totalWeight = 0;
 
                 foreach ($validated['items'] as $itemInput) {
                     // Lock for update to prevent race condition
@@ -162,6 +170,7 @@ class OrderController extends Controller
                     $itemPrice = $variant->price;
                     $itemSubtotal = $itemPrice * $itemInput['qty'];
                     $subtotal += $itemSubtotal;
+                    $totalWeight += $variant->weight * $itemInput['qty'];
 
                     $orderItemsData[] = [
                         'product_variant_id' => $variant->id,
@@ -173,7 +182,19 @@ class OrderController extends Controller
                     ];
                 }
 
-                $total = $subtotal + $validated['shipping_cost'];
+                // Shipping cost is never trusted from the client — recompute it the same way
+                // /api/shipping/cost does (same cache key), so a legitimate "Cek Ongkir" call
+                // made earlier in checkout is reused instead of hitting RajaOngkir again.
+                $shippingCost = $this->verifiedShippingCost(
+                    isset($shippingAddressSnapshot['rajaongkir_district_id'])
+                        ? (int) $shippingAddressSnapshot['rajaongkir_district_id']
+                        : null,
+                    $totalWeight,
+                    $validated['courier'],
+                    $validated['courier_service'],
+                );
+
+                $total = $subtotal + $shippingCost;
                 $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(Str::random(6));
 
                 // Save Order
@@ -186,7 +207,7 @@ class OrderController extends Controller
                     'shipping_address' => $shippingAddressSnapshot,
                     'courier' => $validated['courier'],
                     'courier_service' => $validated['courier_service'],
-                    'shipping_cost' => $validated['shipping_cost'],
+                    'shipping_cost' => $shippingCost,
                     'subtotal' => $subtotal,
                     'total' => $total,
                     'status' => 'pending',
@@ -249,6 +270,52 @@ class OrderController extends Controller
         return response()->json([
             'snap_token' => $snapToken,
         ]);
+    }
+
+    private function verifiedShippingCost(?int $destinationDistrictId, int $totalWeight, string $courier, string $courierService): int
+    {
+        if (! $destinationDistrictId) {
+            throw ValidationException::withMessages([
+                'shipping_address' => ['Kecamatan tujuan pengiriman tidak valid untuk cek ongkir.'],
+            ]);
+        }
+
+        $origin = StoreSetting::firstOrCreate([], ['store_name' => 'Doctor Plant Indonesia'])->rajaongkir_origin_district_id;
+
+        if (! $origin) {
+            throw ValidationException::withMessages([
+                'shipping_cost' => ['Toko belum mengatur lokasi asal pengiriman.'],
+            ]);
+        }
+
+        $cacheKey = "shipping-cost:{$origin}:{$destinationDistrictId}:{$totalWeight}";
+        $ttl = now()->addHours((int) config('rajaongkir.cache_ttl_hours'));
+
+        try {
+            $couriers = Cache::remember($cacheKey, $ttl, fn () => $this->rajaOngkir->calculateDomesticCost(
+                (int) $origin,
+                $destinationDistrictId,
+                $totalWeight,
+            ));
+        } catch (\Throwable $e) {
+            Log::error('RajaOngkir cost verification failed: '.$e->getMessage());
+
+            throw ValidationException::withMessages([
+                'shipping_cost' => ['Gagal memverifikasi ongkir, coba lagi.'],
+            ]);
+        }
+
+        $match = collect($couriers)->first(
+            fn ($c) => $c['courier'] === $courier && $c['service'] === $courierService,
+        );
+
+        if (! $match) {
+            throw ValidationException::withMessages([
+                'courier_service' => ['Kurir/layanan yang dipilih tidak lagi tersedia, cek ongkir ulang.'],
+            ]);
+        }
+
+        return (int) $match['cost'];
     }
 
     private function getMidtransSnapToken(Order $order): string

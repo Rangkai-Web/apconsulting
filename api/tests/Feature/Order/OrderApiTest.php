@@ -6,6 +6,10 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Order;
+use App\Models\RajaongkirCity;
+use App\Models\RajaongkirDistrict;
+use App\Models\RajaongkirProvince;
+use App\Models\StoreSetting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
@@ -37,10 +41,28 @@ class OrderApiTest extends TestCase
         ]);
     }
 
+    private function seedShippingFixtures(int $destinationDistrictId, string $courier, string $service, int $cost): void
+    {
+        StoreSetting::create(['store_name' => 'Doctor Plant Indonesia', 'rajaongkir_origin_district_id' => 501]);
+        RajaongkirProvince::create(['id' => 1, 'name' => 'Jawa Barat']);
+        RajaongkirCity::create(['id' => 1, 'province_id' => 1, 'name' => 'Bandung']);
+        RajaongkirDistrict::create(['id' => $destinationDistrictId, 'city_id' => 1, 'name' => 'Coblong']);
+
+        Http::fake([
+            '*/calculate/domestic-cost' => Http::response([
+                'meta' => ['code' => 200, 'message' => 'success'],
+                'data' => [
+                    ['code' => $courier, 'service' => $service, 'description' => 'Layanan', 'cost' => $cost, 'etd' => '2-3'],
+                ],
+            ], 200),
+        ]);
+    }
+
     public function test_member_can_checkout_successfully(): void
     {
         $user = User::factory()->create();
         $variant = $this->createVariant(5);
+        $this->seedShippingFixtures(501001, 'jne', 'REG', 15000);
 
         $response = $this->actingAs($user, 'sanctum')->postJson('/api/orders', [
             'items' => [
@@ -54,6 +76,7 @@ class OrderApiTest extends TestCase
                 'district' => 'Coblong',
                 'postal_code' => '40135',
                 'full_address' => 'Jl. Dago 10',
+                'rajaongkir_district_id' => 501001,
             ],
             'courier' => 'jne',
             'courier_service' => 'REG',
@@ -75,6 +98,7 @@ class OrderApiTest extends TestCase
     public function test_guest_can_checkout_successfully(): void
     {
         $variant = $this->createVariant(5);
+        $this->seedShippingFixtures(501002, 'jnt', 'EZ', 12000);
 
         $response = $this->postJson('/api/orders', [
             'guest_name' => 'Guest User',
@@ -91,6 +115,7 @@ class OrderApiTest extends TestCase
                 'district' => 'Coblong',
                 'postal_code' => '40135',
                 'full_address' => 'Jl. Dago 20',
+                'rajaongkir_district_id' => 501002,
             ],
             'courier' => 'jnt',
             'courier_service' => 'EZ',
