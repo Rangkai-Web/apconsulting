@@ -416,7 +416,7 @@ function formatDate(dateStr: string): string {
 
       <template #footer>
         <div class="flex items-center justify-between gap-3 w-full">
-          <UButton color="neutral" variant="outline" class="flex-1 rounded-xl cursor-pointer" @click="ratingModalOpen = false">Batal</UButton>
+          <UButton color="neutral" variant="outline" class="flex-1 rounded-xl cursor-pointer" @click="() => { ratingModalOpen = false }">Batal</UButton>
           <UButton
             color="primary"
             class="flex-1 rounded-xl font-bold cursor-pointer"

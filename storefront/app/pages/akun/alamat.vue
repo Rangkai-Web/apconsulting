@@ -367,7 +367,7 @@ async function confirmDelete(id: number) {
                   variant="outline"
                   color="error"
                   class="cursor-pointer"
-                  @click="deleteConfirmId = address.id"
+                  @click="() => { deleteConfirmId = address.id }"
                 >
                   Hapus
                 </UButton>
@@ -387,7 +387,7 @@ async function confirmDelete(id: number) {
                   variant="ghost"
                   color="neutral"
                   class="cursor-pointer"
-                  @click="deleteConfirmId = null"
+                  @click="() => { deleteConfirmId = null }"
                 >
                   Batal
                 </UButton>
@@ -478,7 +478,7 @@ async function confirmDelete(id: number) {
               variant="outline"
               color="neutral"
               class="cursor-pointer"
-              @click="modalOpen = false"
+              @click="() => { modalOpen = false }"
             >
               Batal
             </UButton>

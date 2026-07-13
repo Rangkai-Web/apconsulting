@@ -557,7 +557,7 @@ async function handleCheckout() {
                 color="primary"
                 variant="ghost"
                 class="rounded-xl font-bold cursor-pointer"
-                @click="addressSlideoverOpen = true"
+                @click="() => { addressSlideoverOpen = true }"
               >
                 Tambah Alamat
               </UButton>
@@ -580,7 +580,7 @@ async function handleCheckout() {
                   color="primary"
                   variant="solid"
                   class="rounded-xl font-semibold cursor-pointer"
-                  @click="addressSlideoverOpen = true"
+                  @click="() => { addressSlideoverOpen = true }"
                 >
                   Tambah Alamat Baru
                 </UButton>
@@ -967,7 +967,7 @@ async function handleCheckout() {
                 color="neutral"
                 variant="ghost"
                 class="hover:bg-gray-100 rounded-lg"
-                @click="addressSlideoverOpen = false"
+                @click="() => { addressSlideoverOpen = false }"
               />
             </div>
 
@@ -1062,7 +1062,7 @@ async function handleCheckout() {
               color="neutral"
               variant="outline"
               class="flex-1 rounded-xl cursor-pointer"
-              @click="addressSlideoverOpen = false"
+              @click="() => { addressSlideoverOpen = false }"
               >Batal</UButton
             >
             <UButton

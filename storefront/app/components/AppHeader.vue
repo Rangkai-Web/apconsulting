@@ -113,7 +113,7 @@ async function handleMobileLogout() {
           variant="ghost"
           class="lg:hidden hover:bg-gray-100/80 rounded-xl p-2 shrink-0"
           aria-label="Buka Menu"
-          @click="mobileNavOpen = true"
+          @click="() => { mobileNavOpen = true }"
         />
         <NuxtLink to="/" class="flex items-center gap-2.5 group">
           <div
@@ -324,7 +324,7 @@ async function handleMobileLogout() {
                 color="neutral"
                 variant="ghost"
                 class="hover:bg-gray-100 rounded-lg"
-                @click="mobileNavOpen = false"
+                @click="() => { mobileNavOpen = false }"
               />
             </div>
 

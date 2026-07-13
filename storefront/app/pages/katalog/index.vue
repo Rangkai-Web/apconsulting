@@ -122,7 +122,7 @@ watch(() => route.query, syncFromRoute);
           color="primary"
           variant="soft"
           class="font-semibold"
-          @click="filterOpen = true"
+          @click="() => { filterOpen = true }"
         >
           Filter
         </UButton>
@@ -226,7 +226,7 @@ watch(() => route.query, syncFromRoute);
                   color="neutral"
                   variant="ghost"
                   class="rounded-lg"
-                  @click="filterOpen = false"
+                  @click="() => { filterOpen = false }"
                 />
               </div>
 
@@ -305,7 +305,7 @@ watch(() => route.query, syncFromRoute);
                   color="primary"
                   size="md"
                   class="font-semibold rounded-full py-2"
-                  @click="filterOpen = false"
+                  @click="() => { filterOpen = false }"
                 >
                   Terapkan Filter
                 </UButton>

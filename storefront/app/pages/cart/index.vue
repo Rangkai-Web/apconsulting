@@ -230,7 +230,7 @@ function confirmRemove() {
               color="neutral"
               variant="outline"
               class="rounded-xl cursor-pointer"
-              @click="confirmOpen = false"
+              @click="() => { confirmOpen = false }"
               >Batal</UButton
             >
             <UButton
