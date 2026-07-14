@@ -46,18 +46,18 @@ Kode fitur inti (auth, catalog, cart, checkout, order, admin panel, rating, ship
 ## C. Frontend (Storefront)
 
 **Checkout & Cart (paling kritis buat konversi):**
-- [ ] `getProvinces`/`getCities`/`getDistricts` di checkout **gak ada try/catch** — kalau API gagal, dropdown alamat diem kosong tanpa pesan error ke user.
+- [x] ~~`getProvinces`/`getCities`/`getDistricts` di checkout gak ada try/catch~~ — sekarang toast error + loading skeleton pas initial load (2026-07-15).
 - [ ] Form checkout guest gak ada validasi per-field — cuma tombol submit yang disable, user gak tau field mana yang salah.
 - [ ] Selector kurir di checkout berpotensi overflow di layar sangat sempit (<375px) — belum ada `flex-wrap`.
 
 **Loading/error states:**
-- [ ] Home, Katalog, Wishlist: fetch produk awal **gak ada try/catch** — kalau API gagal, skeleton loading muter selamanya tanpa pesan error.
+- [x] ~~Home, Katalog, Wishlist: fetch produk awal gak ada try/catch~~ — sekarang toast error + loading direset di `finally` (2026-07-15).
 - [ ] Detail produk: error API asli (network/500) ke-treat sama kayak "Produk tidak ditemukan" — nyamarin error asli jadi 404 palsu.
-- [ ] `auth.ts` `logout()` gak ada try/catch — kalau logout gagal di server, tetap nampilin toast "Logout Berhasil" ke user (menyesatkan).
+- [x] ~~`auth.ts` `logout()` gak ada try/catch~~ — sekarang selalu clear sesi lokal di `finally`, walau server-side logout gagal (2026-07-15).
 
 **Aksesibilitas:**
-- [ ] Beberapa tombol icon-only gak ada `aria-label`: tombol +/- qty stepper (cart & detail produk), tombol wishlist-heart, 3 tombol close (×) di slideover checkout/katalog/header.
-- [ ] Login & Register pakai `<label>` tanpa `for`/`id` terhubung ke input — screen reader gak bisa asosiasikan label ke field.
+- [x] ~~Beberapa tombol icon-only gak ada `aria-label`~~ — qty stepper, wishlist-heart (card & PDP), 3 tombol close slideover (checkout/katalog/header) udah dikasih `aria-label`/`aria-pressed` (2026-07-15).
+- [x] ~~Login & Register pakai `<label>` tanpa `for`/`id`~~ — udah dikasih `id`/`for` di semua field (2026-07-15).
 - [ ] Login & Register cuma nampilin 1 pesan error pertama dari validasi, gak ada indikator per-field mana yang salah.
 
 **Sudah oke:** cart logic (stock cap, persist), halaman order detail/history/cek, akun profil/alamat, checkout submit+Midtrans callback handling — semua udah ada loading/error/empty state yang proper.
