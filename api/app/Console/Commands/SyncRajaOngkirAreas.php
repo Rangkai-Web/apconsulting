@@ -72,25 +72,31 @@ class SyncRajaOngkirAreas extends Command
         $hasCities = RajaongkirCity::where('province_id', $province['id'])->exists();
 
         if ($hasCities && ! $this->fresh) {
-            return;
-        }
+            // Cities already cached, but don't skip the province outright: some of its
+            // cities may still be missing districts from a run that got cut off early
+            // (e.g. rate-limited mid-province). Reuse the cached list instead of an API call.
+            $cities = RajaongkirCity::where('province_id', $province['id'])
+                ->get(['id', 'name'])
+                ->map(fn ($c) => ['id' => $c->id, 'name' => $c->name])
+                ->all();
+        } else {
+            try {
+                $cities = $rajaOngkir->fetchCities($province['id']);
+            } catch (Throwable $e) {
+                Log::warning("rajaongkir:sync-areas: failed to fetch cities for province {$province['id']}: {$e->getMessage()}");
+                $this->stopEarly = str_contains($e->getMessage(), '429');
 
-        try {
-            $cities = $rajaOngkir->fetchCities($province['id']);
-        } catch (Throwable $e) {
-            Log::warning("rajaongkir:sync-areas: failed to fetch cities for province {$province['id']}: {$e->getMessage()}");
-            $this->stopEarly = str_contains($e->getMessage(), '429');
+                return;
+            }
 
-            return;
-        }
+            usleep(1_000_000);
 
-        usleep(1_000_000);
-
-        foreach ($cities as $city) {
-            RajaongkirCity::updateOrCreate(
-                ['id' => $city['id']],
-                ['name' => $city['name'], 'province_id' => $province['id']],
-            );
+            foreach ($cities as $city) {
+                RajaongkirCity::updateOrCreate(
+                    ['id' => $city['id']],
+                    ['name' => $city['name'], 'province_id' => $province['id']],
+                );
+            }
         }
 
         foreach ($cities as $city) {

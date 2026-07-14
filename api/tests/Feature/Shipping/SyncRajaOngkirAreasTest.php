@@ -64,6 +64,32 @@ class SyncRajaOngkirAreasTest extends TestCase
         Http::assertSent(fn ($request) => str_contains($request->url(), '/destination/city/2'));
     }
 
+    public function test_fills_in_missing_districts_for_a_partially_synced_province(): void
+    {
+        Http::fake([
+            '*/destination/province' => Http::response([
+                'data' => [['id' => 1, 'name' => 'Jawa Barat']],
+            ], 200),
+            '*/destination/district/11' => Http::response([
+                'data' => [['id' => 110, 'name' => 'Cimahi Selatan']],
+            ], 200),
+        ]);
+
+        // Province 1 already has both its cities cached (e.g. from a run that got
+        // rate-limited midway), but only city 10 got its districts filled in.
+        RajaongkirProvince::create(['id' => 1, 'name' => 'Jawa Barat']);
+        RajaongkirCity::create(['id' => 10, 'province_id' => 1, 'name' => 'Bandung']);
+        RajaongkirDistrict::create(['id' => 100, 'city_id' => 10, 'name' => 'Coblong']);
+        RajaongkirCity::create(['id' => 11, 'province_id' => 1, 'name' => 'Cimahi']);
+
+        $this->artisan('rajaongkir:sync-areas')->assertSuccessful();
+
+        Http::assertNotSent(fn ($request) => str_contains($request->url(), '/destination/city/1'));
+        Http::assertNotSent(fn ($request) => str_contains($request->url(), '/destination/district/10'));
+        Http::assertSent(fn ($request) => str_contains($request->url(), '/destination/district/11'));
+        $this->assertDatabaseHas('rajaongkir_districts', ['id' => 110, 'city_id' => 11]);
+    }
+
     public function test_fresh_flag_refetches_already_synced_areas(): void
     {
         $this->fakeAreaTree();
