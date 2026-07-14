@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\Admin::firstOrCreate([
-            'email' => 'admin@drplant.id',
+            'email' => 'perawatankulittumbuhanalpine@gmail.com',
         ], [
             'name' => 'Admin Dr. Plant',
             'password' => bcrypt('password'),
