@@ -23,19 +23,12 @@ class DatabaseSeeder extends Seeder
             'rajaongkir_origin_district_id' => 151,
         ]);
 
-        $adminEmail = 'perawatankulittumbuhanalpine@gmail.com';
-
-        if (! \App\Models\Admin::where('email', $adminEmail)->exists()) {
-            $generatedPassword = \Illuminate\Support\Str::random(16);
-
-            \App\Models\Admin::create([
-                'email' => $adminEmail,
-                'name' => 'Admin Dr. Plant',
-                'password' => bcrypt($generatedPassword),
-            ]);
-
-            $this->command?->info("Admin created: {$adminEmail} / password: {$generatedPassword}");
-        }
+        \App\Models\Admin::firstOrCreate([
+            'email' => 'perawatankulittumbuhanalpine@gmail.com',
+        ], [
+            'name' => 'Admin Dr. Plant',
+            'password' => bcrypt('Admindrplant123@'),
+        ]);
 
         // Seed default banners
         $banners = [
