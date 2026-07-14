@@ -66,10 +66,10 @@ Kode fitur inti (auth, catalog, cart, checkout, order, admin panel, rating, ship
 
 ## D. Data & Infrastruktur
 
-- [ ] RajaOngkir area data: **20/34 provinsi** ke-sync (303 kota, 4314 kecamatan). Sisa provinsi + beberapa kota lama yang kecamatannya bolong — nunggu kuota harian reset / keputusan upgrade paket.
+- [ ] RajaOngkir area data: **26/34 provinsi** ke-sync (402 kota, 5544 kecamatan). Sisa 8 provinsi (Gorontalo, NTT, Sulut, Sulteng, Papua Barat, Kalut, Malut, Sulbar) — nunggu kuota harian reset / keputusan upgrade paket.
 - [ ] `MIDTRANS_IS_PRODUCTION=false` — masih sandbox, ganti ke `true` + API key production pas mau live.
 - [ ] `APP_ENV=local`, `APP_URL=http://127.0.0.1:8000` — belum di-set buat server production.
-- [ ] Cron scheduler (`orders:expire-pending`) — **harus dipasang manual** di server Hostinger (`* * * * * php artisan schedule:run`), gak otomatis jalan cuma dari deploy kode.
+- [x] ~~Cron scheduler (`orders:expire-pending`)~~ — sudah terpasang di Hostinger (`* * * * *` → `schedule:run`), terverifikasi 2026-07-15.
 - [ ] Test coverage frontend masih tipis — baru store `cart` yang ke-cover. `auth.ts`, `catalog.ts`, `wishlist.ts`, dan semua file `services/*.ts` belum ada test.
 - [ ] CI/CD deploy workflow (`deploy-api.yml`, `deploy-storefront.yml`) — ada fix SSH key baru-baru ini, worth dipastikan jalan mulus sampai production.
 
