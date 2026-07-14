@@ -150,11 +150,13 @@ async function onSubmit() {
         <form @submit.prevent="onSubmit" class="space-y-4 relative">
           <div>
             <label
+              for="register-name"
               class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
             >
               Nama Lengkap
             </label>
             <UInput
+              id="register-name"
               v-model="state.name"
               type="text"
               placeholder="Masukkan nama lengkap Anda"
@@ -169,11 +171,13 @@ async function onSubmit() {
 
           <div>
             <label
+              for="register-email"
               class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
             >
               Alamat Email
             </label>
             <UInput
+              id="register-email"
               v-model="state.email"
               type="email"
               placeholder="nama@email.com"
@@ -188,11 +192,13 @@ async function onSubmit() {
 
           <div>
             <label
+              for="register-phone"
               class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
             >
               No. Telepon / WhatsApp
             </label>
             <UInput
+              id="register-phone"
               v-model="state.phone"
               type="text"
               placeholder="08xx atau 628xx (cth: 08121234567)"
@@ -207,12 +213,14 @@ async function onSubmit() {
 
           <div>
             <label
+              for="register-password"
               class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
             >
               Kata Sandi
             </label>
             <div class="relative">
               <UInput
+                id="register-password"
                 v-model="state.password"
                 :type="showPassword ? 'text' : 'password'"
                 placeholder="Min. 6 karakter"
@@ -252,12 +260,14 @@ async function onSubmit() {
 
           <div>
             <label
+              for="register-password-confirmation"
               class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
             >
               Konfirmasi Kata Sandi
             </label>
             <div class="relative">
               <UInput
+                id="register-password-confirmation"
                 v-model="state.password_confirmation"
                 :type="showPasswordConfirm ? 'text' : 'password'"
                 placeholder="Ulangi kata sandi Anda"

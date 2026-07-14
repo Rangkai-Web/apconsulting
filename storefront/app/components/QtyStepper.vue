@@ -30,6 +30,7 @@ function onInput(event: Event) {
       icon="i-heroicons-minus"
       color="neutral"
       variant="ghost"
+      aria-label="Kurangi jumlah"
       :disabled="modelValue <= 1"
       @click="decrement"
     />
@@ -38,6 +39,7 @@ function onInput(event: Event) {
       type="number"
       min="1"
       :max="max"
+      aria-label="Jumlah"
       class="w-12 text-center border-0 focus:ring-0 text-sm"
       @input="onInput"
     />
@@ -45,6 +47,7 @@ function onInput(event: Event) {
       icon="i-heroicons-plus"
       color="neutral"
       variant="ghost"
+      aria-label="Tambah jumlah"
       :disabled="modelValue >= max"
       @click="increment"
     />

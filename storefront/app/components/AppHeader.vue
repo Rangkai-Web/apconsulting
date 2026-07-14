@@ -323,6 +323,7 @@ async function handleMobileLogout() {
                 icon="i-heroicons-x-mark"
                 color="neutral"
                 variant="ghost"
+                aria-label="Tutup menu"
                 class="hover:bg-gray-100 rounded-lg"
                 @click="() => { mobileNavOpen = false }"
               />

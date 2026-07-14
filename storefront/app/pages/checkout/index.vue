@@ -113,7 +113,15 @@ watch(
     if (newVal) {
       const prov = provinces.value.find((p) => p.id === newVal);
       addressForm.provinceName = prov ? prov.name : "";
-      cities.value = await addressService.getCities(newVal);
+      try {
+        cities.value = await addressService.getCities(newVal);
+      } catch {
+        toast.add({
+          title: "Gagal memuat daftar kota",
+          description: "Terjadi kesalahan, coba pilih ulang provinsi.",
+          color: "error",
+        });
+      }
     }
   },
 );
@@ -127,7 +135,15 @@ watch(
     if (newVal) {
       const city = cities.value.find((c) => c.id === newVal);
       addressForm.cityName = city ? city.name : "";
-      districts.value = await addressService.getDistricts(newVal);
+      try {
+        districts.value = await addressService.getDistricts(newVal);
+      } catch {
+        toast.add({
+          title: "Gagal memuat daftar kecamatan",
+          description: "Terjadi kesalahan, coba pilih ulang kota.",
+          color: "error",
+        });
+      }
     }
   },
 );
@@ -158,7 +174,15 @@ watch(
     if (newVal) {
       const prov = provinces.value.find((p) => p.id === newVal);
       guestForm.provinceName = prov ? prov.name : "";
-      guestCities.value = await addressService.getCities(newVal);
+      try {
+        guestCities.value = await addressService.getCities(newVal);
+      } catch {
+        toast.add({
+          title: "Gagal memuat daftar kota",
+          description: "Terjadi kesalahan, coba pilih ulang provinsi.",
+          color: "error",
+        });
+      }
     }
   },
 );
@@ -172,7 +196,15 @@ watch(
     if (newVal) {
       const city = guestCities.value.find((c) => c.id === newVal);
       guestForm.cityName = city ? city.name : "";
-      guestDistricts.value = await addressService.getDistricts(newVal);
+      try {
+        guestDistricts.value = await addressService.getDistricts(newVal);
+      } catch {
+        toast.add({
+          title: "Gagal memuat daftar kecamatan",
+          description: "Terjadi kesalahan, coba pilih ulang kota.",
+          color: "error",
+        });
+      }
     }
   },
 );
@@ -192,14 +224,27 @@ watch(
 );
 
 // Initial load
+const loadingInitial = ref(false);
+
 onMounted(async () => {
   if (cart.items.length === 0) return;
 
-  // Load provinces for forms
-  provinces.value = await addressService.getProvinces();
+  loadingInitial.value = true;
+  try {
+    // Load provinces for forms
+    provinces.value = await addressService.getProvinces();
 
-  if (isLoggedIn.value) {
-    await loadAddresses();
+    if (isLoggedIn.value) {
+      await loadAddresses();
+    }
+  } catch {
+    toast.add({
+      title: "Gagal memuat data checkout",
+      description: "Terjadi kesalahan, coba muat ulang halaman.",
+      color: "error",
+    });
+  } finally {
+    loadingInitial.value = false;
   }
 });
 
@@ -565,8 +610,12 @@ async function handleCheckout() {
 
             <!-- Member View: Address Selection -->
             <div v-if="isLoggedIn" class="space-y-4">
+              <div v-if="loadingInitial" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <USkeleton v-for="n in 2" :key="n" class="h-28 rounded-2xl" />
+              </div>
+
               <div
-                v-if="addresses.length === 0"
+                v-else-if="addresses.length === 0"
                 class="text-center py-8 bg-gray-55/30 rounded-2xl border border-dashed border-gray-200"
               >
                 <UIcon
@@ -966,6 +1015,7 @@ async function handleCheckout() {
                 icon="i-heroicons-x-mark"
                 color="neutral"
                 variant="ghost"
+                aria-label="Tutup formulir alamat"
                 class="hover:bg-gray-100 rounded-lg"
                 @click="() => { addressSlideoverOpen = false }"
               />

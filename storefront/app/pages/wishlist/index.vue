@@ -6,13 +6,23 @@ import type { Product } from "~/types";
 const wishlist = useWishlistStore();
 const products = ref<Product[]>([]);
 const loading = ref(true);
+const toast = useToast();
 
 async function load() {
   loading.value = true;
-  products.value = wishlist.productIds.length
-    ? await catalogService.getProductsByIds(wishlist.productIds)
-    : [];
-  loading.value = false;
+  try {
+    products.value = wishlist.productIds.length
+      ? await catalogService.getProductsByIds(wishlist.productIds)
+      : [];
+  } catch {
+    toast.add({
+      title: "Gagal memuat wishlist",
+      description: "Terjadi kesalahan, coba muat ulang halaman.",
+      color: "error",
+    });
+  } finally {
+    loading.value = false;
+  }
 }
 
 onMounted(load);

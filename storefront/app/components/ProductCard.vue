@@ -49,6 +49,8 @@ function toggleWishlist(event: MouseEvent) {
       <button
         type="button"
         class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow-sm"
+        :aria-label="wishlisted ? 'Hapus dari wishlist' : 'Tambah ke wishlist'"
+        :aria-pressed="wishlisted"
         @click="toggleWishlist"
       >
         <UIcon

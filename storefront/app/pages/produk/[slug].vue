@@ -226,6 +226,12 @@ watch(() => route.params.slug, load);
               :color="wishlist.isWishlisted(product.id) ? 'error' : 'neutral'"
               variant="subtle"
               class="rounded-2xl shadow-sm p-3 group transition-transform duration-300 hover:scale-105 active:scale-95 shrink-0"
+              :aria-label="
+                wishlist.isWishlisted(product.id)
+                  ? 'Hapus dari wishlist'
+                  : 'Tambah ke wishlist'
+              "
+              :aria-pressed="wishlist.isWishlisted(product.id)"
               @click="wishlist.toggle(product.id)"
             />
           </div>

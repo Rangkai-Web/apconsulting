@@ -5,6 +5,7 @@ import type { CatalogSort } from "~/types";
 const route = useRoute();
 const router = useRouter();
 const catalog = useCatalogStore();
+const toast = useToast();
 
 const filterOpen = ref(false);
 
@@ -35,7 +36,15 @@ async function syncFromRoute() {
   const filters = filtersFromRoute();
   minPriceInput.value = filters.minPrice;
   maxPriceInput.value = filters.maxPrice;
-  await catalog.applyFilters(filters);
+  try {
+    await catalog.applyFilters(filters);
+  } catch {
+    toast.add({
+      title: "Gagal memuat produk",
+      description: "Terjadi kesalahan, coba muat ulang halaman.",
+      color: "error",
+    });
+  }
 }
 
 function updateQuery(
@@ -59,8 +68,28 @@ function changeSort(sort: string) {
   updateQuery({ sort });
 }
 
+async function handleLoadMore() {
+  try {
+    await catalog.loadMore();
+  } catch {
+    toast.add({
+      title: "Gagal memuat produk",
+      description: "Terjadi kesalahan, coba lagi.",
+      color: "error",
+    });
+  }
+}
+
 onMounted(async () => {
-  await catalog.loadCategories();
+  try {
+    await catalog.loadCategories();
+  } catch {
+    toast.add({
+      title: "Gagal memuat kategori",
+      description: "Terjadi kesalahan, coba muat ulang halaman.",
+      color: "error",
+    });
+  }
   await syncFromRoute();
 });
 
@@ -225,6 +254,7 @@ watch(() => route.query, syncFromRoute);
                   icon="i-heroicons-x-mark"
                   color="neutral"
                   variant="ghost"
+                  aria-label="Tutup filter"
                   class="rounded-lg"
                   @click="() => { filterOpen = false }"
                 />
@@ -345,7 +375,7 @@ watch(() => route.query, syncFromRoute);
               :products="catalog.products"
               :loading="catalog.loading"
               :has-more="catalog.hasMore"
-              @load-more="catalog.loadMore"
+              @load-more="handleLoadMore"
             />
           </div>
         </div>

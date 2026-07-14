@@ -62,10 +62,13 @@ export const useAuthStore = defineStore("auth", {
     },
 
     async logout() {
-      if (this.token) {
-        await authService.logout(this.token);
+      try {
+        if (this.token) {
+          await authService.logout(this.token);
+        }
+      } finally {
+        this.clear();
       }
-      this.clear();
     },
 
     updateProfile(data: { name: string; phone?: string | null }) {

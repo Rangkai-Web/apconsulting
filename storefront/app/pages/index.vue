@@ -50,9 +50,20 @@ const banners = computed<BannerItem[]>(() => {
   return apiBanners.length > 0 ? apiBanners : defaultBanners;
 });
 
+const toast = useToast();
+
 onMounted(async () => {
-  featured.value = await catalogService.getFeaturedProducts(4);
-  loadingFeatured.value = false;
+  try {
+    featured.value = await catalogService.getFeaturedProducts(4);
+  } catch {
+    toast.add({
+      title: "Gagal memuat produk unggulan",
+      description: "Terjadi kesalahan, coba muat ulang halaman.",
+      color: "error",
+    });
+  } finally {
+    loadingFeatured.value = false;
+  }
 });
 </script>
 

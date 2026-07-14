@@ -122,11 +122,13 @@ async function onSubmit() {
         <form @submit.prevent="onSubmit" class="space-y-4 relative">
           <div>
             <label
+              for="login-email"
               class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
             >
               Alamat Email
             </label>
             <UInput
+              id="login-email"
               v-model="state.email"
               type="email"
               placeholder="nama@email.com"
@@ -141,12 +143,14 @@ async function onSubmit() {
 
           <div>
             <label
+              for="login-password"
               class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
             >
               Kata Sandi
             </label>
             <div class="relative">
               <UInput
+                id="login-password"
                 v-model="state.password"
                 :type="showPassword ? 'text' : 'password'"
                 placeholder="••••••••"
