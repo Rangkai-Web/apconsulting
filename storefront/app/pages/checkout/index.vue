@@ -56,6 +56,59 @@ const guestForm = reactive({
   fullAddress: "",
 });
 
+const guestFieldErrors = reactive({
+  name: "",
+  email: "",
+  phone: "",
+  recipientName: "",
+  recipientPhone: "",
+  provinceId: "",
+  cityId: "",
+  districtId: "",
+  postalCode: "",
+  fullAddress: "",
+});
+
+// Clear a field's error as soon as the user fills it in
+watch(
+  guestForm,
+  () => {
+    for (const key of Object.keys(guestFieldErrors) as (keyof typeof guestFieldErrors)[]) {
+      if (guestForm[key]) guestFieldErrors[key] = "";
+    }
+  },
+  { deep: true },
+);
+
+// Validate every guest field so the user sees exactly which one is wrong,
+// instead of just a disabled submit button with no explanation.
+function validateGuestForm(): boolean {
+  (Object.keys(guestFieldErrors) as (keyof typeof guestFieldErrors)[]).forEach(
+    (key) => { guestFieldErrors[key] = ""; },
+  );
+
+  if (!guestForm.name) guestFieldErrors.name = "Nama wajib diisi.";
+  if (!guestForm.email) guestFieldErrors.email = "Email wajib diisi.";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(guestForm.email))
+    guestFieldErrors.email = "Format email tidak valid.";
+  if (!guestForm.phone) guestFieldErrors.phone = "No. telepon wajib diisi.";
+  if (!guestForm.recipientName)
+    guestFieldErrors.recipientName = "Nama penerima wajib diisi.";
+  if (!guestForm.recipientPhone)
+    guestFieldErrors.recipientPhone = "No. telp penerima wajib diisi.";
+  if (!guestForm.provinceId)
+    guestFieldErrors.provinceId = "Provinsi wajib dipilih.";
+  if (!guestForm.cityId) guestFieldErrors.cityId = "Kota wajib dipilih.";
+  if (!guestForm.districtId)
+    guestFieldErrors.districtId = "Kecamatan wajib dipilih.";
+  if (!guestForm.postalCode)
+    guestFieldErrors.postalCode = "Kode pos wajib diisi.";
+  if (!guestForm.fullAddress)
+    guestFieldErrors.fullAddress = "Alamat lengkap wajib diisi.";
+
+  return Object.values(guestFieldErrors).every((e) => !e);
+}
+
 // Shipping courier options
 const couriersList = [
   { code: "jne", name: "JNE" },
@@ -84,16 +137,10 @@ const isSubmitDisabled = computed(() => {
 
   if (isLoggedIn.value) {
     if (!selectedAddressId.value) return true;
-  } else {
-    if (!guestForm.name || !guestForm.email || !guestForm.phone) return true;
-    if (
-      !guestForm.recipientName ||
-      !guestForm.recipientPhone ||
-      !guestForm.districtId
-    )
-      return true;
-    if (!guestForm.fullAddress || !guestForm.postalCode) return true;
   }
+  // Guest field completeness is validated on submit (validateGuestForm),
+  // with per-field error messages — a disabled button gave no feedback on
+  // which field was missing.
 
   if (!selectedCourier.value || !selectedService.value) return true;
 
@@ -426,6 +473,15 @@ function orderUrl(orderNumber: string, extra: Record<string, string> = {}): stri
 async function handleCheckout() {
   if (isSubmitDisabled.value) return;
 
+  if (!isLoggedIn.value && !validateGuestForm()) {
+    toast.add({
+      title: "Lengkapi Data Pengiriman",
+      description: "Mohon periksa kembali field yang ditandai merah.",
+      color: "error",
+    });
+    return;
+  }
+
   loading.value = true;
 
   try {
@@ -691,14 +747,14 @@ async function handleCheckout() {
                   Informasi Pemesan (Guest)
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <UFormField label="Nama Lengkap" required>
+                  <UFormField label="Nama Lengkap" required :error="guestFieldErrors.name || undefined">
                     <UInput
                       v-model="guestForm.name"
                       placeholder="Masukkan nama lengkap Anda"
                       class="w-full"
                     />
                   </UFormField>
-                  <UFormField label="Email" required>
+                  <UFormField label="Email" required :error="guestFieldErrors.email || undefined">
                     <UInput
                       v-model="guestForm.email"
                       type="email"
@@ -706,7 +762,7 @@ async function handleCheckout() {
                       class="w-full"
                     />
                   </UFormField>
-                  <UFormField label="Nomor Telepon" required>
+                  <UFormField label="Nomor Telepon" required :error="guestFieldErrors.phone || undefined">
                     <UInput
                       v-model="guestForm.phone"
                       placeholder="Contoh: 0812345678"
@@ -725,14 +781,14 @@ async function handleCheckout() {
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <UFormField label="Nama Penerima" required>
+                  <UFormField label="Nama Penerima" required :error="guestFieldErrors.recipientName || undefined">
                     <UInput
                       v-model="guestForm.recipientName"
                       placeholder="Nama penerima paket"
                       class="w-full"
                     />
                   </UFormField>
-                  <UFormField label="No. Telp Penerima" required>
+                  <UFormField label="No. Telp Penerima" required :error="guestFieldErrors.recipientPhone || undefined">
                     <UInput
                       v-model="guestForm.recipientPhone"
                       placeholder="No. telp penerima paket"
@@ -743,7 +799,7 @@ async function handleCheckout() {
 
                 <!-- Dropdowns wilayah cascading -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <UFormField label="Provinsi" required>
+                  <UFormField label="Provinsi" required :error="guestFieldErrors.provinceId || undefined">
                     <USelect
                       v-model="guestForm.provinceId"
                       :items="provinces"
@@ -753,7 +809,7 @@ async function handleCheckout() {
                       value-attribute="id"
                     />
                   </UFormField>
-                  <UFormField label="Kota / Kabupaten" required>
+                  <UFormField label="Kota / Kabupaten" required :error="guestFieldErrors.cityId || undefined">
                     <USelect
                       v-model="guestForm.cityId"
                       :items="guestCities"
@@ -764,7 +820,7 @@ async function handleCheckout() {
                       value-attribute="id"
                     />
                   </UFormField>
-                  <UFormField label="Kecamatan" required>
+                  <UFormField label="Kecamatan" required :error="guestFieldErrors.districtId || undefined">
                     <USelect
                       v-model="guestForm.districtId"
                       :items="guestDistricts"
@@ -778,14 +834,14 @@ async function handleCheckout() {
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-[1fr_160px] gap-4">
-                  <UFormField label="Alamat Lengkap" required>
+                  <UFormField label="Alamat Lengkap" required :error="guestFieldErrors.fullAddress || undefined">
                     <UTextarea
                       v-model="guestForm.fullAddress"
                       placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan"
                       class="w-full"
                     />
                   </UFormField>
-                  <UFormField label="Kode Pos" required>
+                  <UFormField label="Kode Pos" required :error="guestFieldErrors.postalCode || undefined">
                     <UInput
                       v-model="guestForm.postalCode"
                       placeholder="Kode pos"
@@ -828,7 +884,7 @@ async function handleCheckout() {
                 <span class="block text-xs font-black text-gray-700 mb-3"
                   >Pilih Kurir Eksplisit</span
                 >
-                <div class="flex items-center gap-3">
+                <div class="flex flex-wrap items-center gap-3">
                   <button
                     v-for="c in couriersList"
                     :key="c.code"

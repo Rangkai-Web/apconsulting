@@ -103,8 +103,14 @@ export const catalogService = {
         baseURL: apiBase(),
       });
       return mapProduct(response.data);
-    } catch {
-      return null;
+    } catch (error: any) {
+      // 404 means the product genuinely doesn't exist — treat as "not found".
+      // Any other error (network failure, 500, etc.) is a real failure and
+      // must not be disguised as a missing product.
+      if (error?.status === 404 || error?.response?.status === 404) {
+        return null;
+      }
+      throw error;
     }
   },
 

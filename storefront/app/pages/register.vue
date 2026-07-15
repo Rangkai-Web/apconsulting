@@ -18,10 +18,24 @@ const state = reactive({
   password_confirmation: "",
 });
 
+const fieldErrors = reactive({
+  name: "",
+  email: "",
+  phone: "",
+  password: "",
+  password_confirmation: "",
+});
+
 const errorMsg = ref("");
 const loading = ref(false);
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
+
+watch(() => state.name, () => { fieldErrors.name = ""; });
+watch(() => state.email, () => { fieldErrors.email = ""; });
+watch(() => state.phone, () => { fieldErrors.phone = ""; });
+watch(() => state.password, () => { fieldErrors.password = ""; });
+watch(() => state.password_confirmation, () => { fieldErrors.password_confirmation = ""; });
 
 // Normalize phone to international format 628XXXXXXXXXX
 function normalizePhone(phone: string): string {
@@ -32,33 +46,46 @@ function normalizePhone(phone: string): string {
   return digits;
 }
 
-function validate() {
-  if (!state.name) return "Nama Lengkap wajib diisi.";
-  if (!state.email) return "Email wajib diisi.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email))
-    return "Format email tidak valid.";
-  if (!state.phone) return "No. Telepon wajib diisi.";
-  // Accept: 08xx, 628xx, +62xx  — must be a valid Indonesian mobile number
-  const cleaned = state.phone.replace(/[^0-9]/g, "");
-  const isValid =
-    /^(08|628|\+?62)/.test(state.phone) &&
-    cleaned.length >= 10 &&
-    cleaned.length <= 14;
-  if (!isValid)
-    return "No. Telepon tidak valid. Gunakan format 08xx atau 628xx (10–14 angka).";
-  if (!state.password) return "Password wajib diisi.";
-  if (state.password.length < 6) return "Password minimal harus 6 karakter.";
-  if (state.password !== state.password_confirmation)
-    return "Konfirmasi password tidak cocok.";
-  return null;
+// Validate every field so the user sees exactly which one is wrong
+function validate(): boolean {
+  fieldErrors.name = "";
+  fieldErrors.email = "";
+  fieldErrors.phone = "";
+  fieldErrors.password = "";
+  fieldErrors.password_confirmation = "";
+
+  if (!state.name) fieldErrors.name = "Nama Lengkap wajib diisi.";
+
+  if (!state.email) fieldErrors.email = "Email wajib diisi.";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email))
+    fieldErrors.email = "Format email tidak valid.";
+
+  if (!state.phone) {
+    fieldErrors.phone = "No. Telepon wajib diisi.";
+  } else {
+    // Accept: 08xx, 628xx, +62xx  — must be a valid Indonesian mobile number
+    const cleaned = state.phone.replace(/[^0-9]/g, "");
+    const isValid =
+      /^(08|628|\+?62)/.test(state.phone) &&
+      cleaned.length >= 10 &&
+      cleaned.length <= 14;
+    if (!isValid)
+      fieldErrors.phone =
+        "No. Telepon tidak valid. Gunakan format 08xx atau 628xx (10–14 angka).";
+  }
+
+  if (!state.password) fieldErrors.password = "Password wajib diisi.";
+  else if (state.password.length < 6)
+    fieldErrors.password = "Password minimal harus 6 karakter.";
+
+  if (state.password && state.password !== state.password_confirmation)
+    fieldErrors.password_confirmation = "Konfirmasi password tidak cocok.";
+
+  return Object.values(fieldErrors).every((e) => !e);
 }
 
 async function onSubmit() {
-  const validationError = validate();
-  if (validationError) {
-    errorMsg.value = validationError;
-    return;
-  }
+  if (!validate()) return;
 
   errorMsg.value = "";
   loading.value = true;
@@ -148,13 +175,11 @@ async function onSubmit() {
 
         <!-- Registration Form -->
         <form @submit.prevent="onSubmit" class="space-y-4 relative">
-          <div>
-            <label
-              for="register-name"
-              class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
-            >
-              Nama Lengkap
-            </label>
+          <UFormField
+            label="Nama Lengkap"
+            :error="fieldErrors.name || undefined"
+            :ui="{ label: 'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1' }"
+          >
             <UInput
               id="register-name"
               v-model="state.name"
@@ -167,15 +192,13 @@ async function onSubmit() {
                 base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
               }"
             />
-          </div>
+          </UFormField>
 
-          <div>
-            <label
-              for="register-email"
-              class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
-            >
-              Alamat Email
-            </label>
+          <UFormField
+            label="Alamat Email"
+            :error="fieldErrors.email || undefined"
+            :ui="{ label: 'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1' }"
+          >
             <UInput
               id="register-email"
               v-model="state.email"
@@ -188,15 +211,13 @@ async function onSubmit() {
                 base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
               }"
             />
-          </div>
+          </UFormField>
 
-          <div>
-            <label
-              for="register-phone"
-              class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
-            >
-              No. Telepon / WhatsApp
-            </label>
+          <UFormField
+            label="No. Telepon / WhatsApp"
+            :error="fieldErrors.phone || undefined"
+            :ui="{ label: 'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1' }"
+          >
             <UInput
               id="register-phone"
               v-model="state.phone"
@@ -209,101 +230,91 @@ async function onSubmit() {
                 base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
               }"
             />
-          </div>
+          </UFormField>
 
-          <div>
-            <label
-              for="register-password"
-              class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
+          <UFormField
+            label="Kata Sandi"
+            :error="fieldErrors.password || undefined"
+            :ui="{ label: 'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1' }"
+          >
+            <UInput
+              id="register-password"
+              v-model="state.password"
+              :type="showPassword ? 'text' : 'password'"
+              placeholder="Min. 6 karakter"
+              icon="i-heroicons-lock-closed"
+              size="md"
+              class="w-full border border-gray-200 rounded-full"
+              :ui="{
+                base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
+                trailing: 'pe-2',
+              }"
             >
-              Kata Sandi
-            </label>
-            <div class="relative">
-              <UInput
-                id="register-password"
-                v-model="state.password"
-                :type="showPassword ? 'text' : 'password'"
-                placeholder="Min. 6 karakter"
-                icon="i-heroicons-lock-closed"
-                size="md"
-                class="w-full border border-gray-200 rounded-full"
-                :ui="{
-                  base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
-                  trailing: 'pe-2',
-                }"
-              >
-                <template #trailing>
-                  <button
-                    type="button"
-                    tabindex="-1"
-                    class="text-gray-400 hover:text-primary-600 transition-colors cursor-pointer p-1"
-                    :aria-label="
-                      showPassword
-                        ? 'Sembunyikan password'
-                        : 'Tampilkan password'
+              <template #trailing>
+                <button
+                  type="button"
+                  tabindex="-1"
+                  class="text-gray-400 hover:text-primary-600 transition-colors cursor-pointer p-1"
+                  :aria-label="
+                    showPassword
+                      ? 'Sembunyikan password'
+                      : 'Tampilkan password'
+                  "
+                  @click="showPassword = !showPassword"
+                >
+                  <UIcon
+                    :name="
+                      showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'
                     "
-                    @click="showPassword = !showPassword"
-                  >
-                    <UIcon
-                      :name="
-                        showPassword
-                          ? 'i-heroicons-eye-slash'
-                          : 'i-heroicons-eye'
-                      "
-                      class="w-4 h-4"
-                    />
-                  </button>
-                </template>
-              </UInput>
-            </div>
-          </div>
+                    class="w-4 h-4"
+                  />
+                </button>
+              </template>
+            </UInput>
+          </UFormField>
 
-          <div>
-            <label
-              for="register-password-confirmation"
-              class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
+          <UFormField
+            label="Konfirmasi Kata Sandi"
+            :error="fieldErrors.password_confirmation || undefined"
+            :ui="{ label: 'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1' }"
+          >
+            <UInput
+              id="register-password-confirmation"
+              v-model="state.password_confirmation"
+              :type="showPasswordConfirm ? 'text' : 'password'"
+              placeholder="Ulangi kata sandi Anda"
+              icon="i-heroicons-check-circle"
+              size="md"
+              class="w-full border border-gray-200 rounded-full"
+              :ui="{
+                base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
+                trailing: 'pe-2',
+              }"
             >
-              Konfirmasi Kata Sandi
-            </label>
-            <div class="relative">
-              <UInput
-                id="register-password-confirmation"
-                v-model="state.password_confirmation"
-                :type="showPasswordConfirm ? 'text' : 'password'"
-                placeholder="Ulangi kata sandi Anda"
-                icon="i-heroicons-check-circle"
-                size="md"
-                class="w-full border border-gray-200 rounded-full"
-                :ui="{
-                  base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
-                  trailing: 'pe-2',
-                }"
-              >
-                <template #trailing>
-                  <button
-                    type="button"
-                    tabindex="-1"
-                    class="text-gray-400 hover:text-primary-600 transition-colors cursor-pointer p-1"
-                    :aria-label="
+              <template #trailing>
+                <button
+                  type="button"
+                  tabindex="-1"
+                  class="text-gray-400 hover:text-primary-600 transition-colors cursor-pointer p-1"
+                  :aria-label="
+                    showPasswordConfirm
+                      ? 'Sembunyikan password'
+                      : 'Tampilkan password'
+                  "
+                  @click="showPasswordConfirm = !showPasswordConfirm"
+                >
+                  <UIcon
+                    :name="
                       showPasswordConfirm
-                        ? 'Sembunyikan password'
-                        : 'Tampilkan password'
+                        ? 'i-heroicons-eye-slash'
+                        : 'i-heroicons-eye'
                     "
-                    @click="showPasswordConfirm = !showPasswordConfirm"
-                  >
-                    <UIcon
-                      :name="
-                        showPasswordConfirm
-                          ? 'i-heroicons-eye-slash'
-                          : 'i-heroicons-eye'
-                      "
-                      class="w-4 h-4"
-                    />
-                  </button>
-                </template>
-              </UInput>
-            </div>
-          </div>
+                    class="w-4 h-4"
+                  />
+                </button>
+              </template>
+            </UInput>
+          </UFormField>
 
           <div class="pt-2">
             <UButton

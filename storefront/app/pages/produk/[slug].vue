@@ -13,6 +13,7 @@ const { format } = useCurrency();
 
 const product = ref<Product | null>(null);
 const loading = ref(true);
+const loadError = ref(false);
 const selectedVariantId = ref<number | null>(null);
 const qty = ref(1);
 
@@ -58,15 +59,27 @@ watch(selectedVariant, () => {
 
 async function load() {
   loading.value = true;
-  product.value = await catalogService.getProductBySlug(
-    route.params.slug as string,
-  );
-  if (product.value) {
-    const firstInStock = product.value.variants.find((v) => v.stock > 0);
-    selectedVariantId.value =
-      firstInStock?.id ?? product.value.variants[0]?.id ?? null;
+  loadError.value = false;
+  try {
+    product.value = await catalogService.getProductBySlug(
+      route.params.slug as string,
+    );
+    if (product.value) {
+      const firstInStock = product.value.variants.find((v) => v.stock > 0);
+      selectedVariantId.value =
+        firstInStock?.id ?? product.value.variants[0]?.id ?? null;
+    }
+  } catch (error) {
+    console.error("Gagal memuat produk:", error);
+    loadError.value = true;
+    toast.add({
+      title: "Gagal Memuat Produk",
+      description: "Terjadi kesalahan koneksi. Silakan coba lagi.",
+      color: "error",
+    });
+  } finally {
+    loading.value = false;
   }
-  loading.value = false;
 }
 
 function addToCart() {
@@ -119,6 +132,20 @@ watch(() => route.params.slug, load);
           <USkeleton class="h-28 w-full rounded-xl" />
           <USkeleton class="h-10 w-full rounded-xl" />
         </div>
+      </div>
+
+      <!-- Load Error State (network/500 — not a real 404) -->
+      <div
+        v-else-if="loadError"
+        class="max-w-md mx-auto bg-white/60 backdrop-blur-sm border border-gray-100 rounded-3xl p-8 shadow-sm"
+      >
+        <EmptyState
+          icon="i-heroicons-wifi"
+          title="Gagal memuat produk"
+          description="Terjadi kesalahan koneksi saat memuat halaman ini. Coba lagi."
+          action-label="Coba Lagi"
+          @action="load"
+        />
       </div>
 
       <!-- Not Found State -->

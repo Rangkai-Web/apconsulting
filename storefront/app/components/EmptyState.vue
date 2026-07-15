@@ -6,6 +6,8 @@ defineProps<{
   actionLabel?: string;
   actionTo?: string;
 }>();
+
+const emit = defineEmits<{ action: [] }>();
 </script>
 
 <template>
@@ -27,6 +29,14 @@ defineProps<{
       :to="actionTo"
       color="primary"
       class="mt-5 rounded-full cursor-pointer py-2 px-4"
+    >
+      {{ actionLabel }}
+    </UButton>
+    <UButton
+      v-else-if="actionLabel"
+      color="primary"
+      class="mt-5 rounded-full cursor-pointer py-2 px-4"
+      @click="emit('action')"
     >
       {{ actionLabel }}
     </UButton>

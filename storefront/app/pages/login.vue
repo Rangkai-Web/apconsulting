@@ -15,26 +15,36 @@ const state = reactive({
   password: "",
 });
 
+const fieldErrors = reactive({
+  email: "",
+  password: "",
+});
+
 const errorMsg = ref("");
 const loading = ref(false);
 const showPassword = ref(false);
 
-// Simple validate function to keep form handling clean
-function validate() {
-  if (!state.email) return "Email wajib diisi.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email))
-    return "Format email tidak valid.";
-  if (!state.password) return "Password wajib diisi.";
-  if (state.password.length < 6) return "Password minimal harus 6 karakter.";
-  return null;
+watch(() => state.email, () => { fieldErrors.email = ""; });
+watch(() => state.password, () => { fieldErrors.password = ""; });
+
+// Validate every field so the user sees exactly which one is wrong
+function validate(): boolean {
+  fieldErrors.email = "";
+  fieldErrors.password = "";
+
+  if (!state.email) fieldErrors.email = "Email wajib diisi.";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email))
+    fieldErrors.email = "Format email tidak valid.";
+
+  if (!state.password) fieldErrors.password = "Password wajib diisi.";
+  else if (state.password.length < 6)
+    fieldErrors.password = "Password minimal harus 6 karakter.";
+
+  return !fieldErrors.email && !fieldErrors.password;
 }
 
 async function onSubmit() {
-  const validationError = validate();
-  if (validationError) {
-    errorMsg.value = validationError;
-    return;
-  }
+  if (!validate()) return;
 
   errorMsg.value = "";
   loading.value = true;
@@ -120,13 +130,11 @@ async function onSubmit() {
 
         <!-- Login Form -->
         <form @submit.prevent="onSubmit" class="space-y-4 relative">
-          <div>
-            <label
-              for="login-email"
-              class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
-            >
-              Alamat Email
-            </label>
+          <UFormField
+            label="Alamat Email"
+            :error="fieldErrors.email || undefined"
+            :ui="{ label: 'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1' }"
+          >
             <UInput
               id="login-email"
               v-model="state.email"
@@ -139,54 +147,48 @@ async function onSubmit() {
                 base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
               }"
             />
-          </div>
+          </UFormField>
 
-          <div>
-            <label
-              for="login-password"
-              class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1"
+          <UFormField
+            label="Kata Sandi"
+            :error="fieldErrors.password || undefined"
+            :ui="{ label: 'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1' }"
+          >
+            <UInput
+              id="login-password"
+              v-model="state.password"
+              :type="showPassword ? 'text' : 'password'"
+              placeholder="••••••••"
+              icon="i-heroicons-lock-closed"
+              size="md"
+              class="w-full border border-gray-200 rounded-full"
+              :ui="{
+                base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
+                trailing: 'pe-2',
+              }"
             >
-              Kata Sandi
-            </label>
-            <div class="relative">
-              <UInput
-                id="login-password"
-                v-model="state.password"
-                :type="showPassword ? 'text' : 'password'"
-                placeholder="••••••••"
-                icon="i-heroicons-lock-closed"
-                size="md"
-                class="w-full border border-gray-200 rounded-full"
-                :ui="{
-                  base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
-                  trailing: 'pe-2',
-                }"
-              >
-                <template #trailing>
-                  <button
-                    type="button"
-                    tabindex="-1"
-                    class="text-gray-400 hover:text-primary-600 transition-colors cursor-pointer p-1"
-                    :aria-label="
-                      showPassword
-                        ? 'Sembunyikan password'
-                        : 'Tampilkan password'
+              <template #trailing>
+                <button
+                  type="button"
+                  tabindex="-1"
+                  class="text-gray-400 hover:text-primary-600 transition-colors cursor-pointer p-1"
+                  :aria-label="
+                    showPassword
+                      ? 'Sembunyikan password'
+                      : 'Tampilkan password'
+                  "
+                  @click="showPassword = !showPassword"
+                >
+                  <UIcon
+                    :name="
+                      showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'
                     "
-                    @click="showPassword = !showPassword"
-                  >
-                    <UIcon
-                      :name="
-                        showPassword
-                          ? 'i-heroicons-eye-slash'
-                          : 'i-heroicons-eye'
-                      "
-                      class="w-4 h-4"
-                    />
-                  </button>
-                </template>
-              </UInput>
-            </div>
-          </div>
+                    class="w-4 h-4"
+                  />
+                </button>
+              </template>
+            </UInput>
+          </UFormField>
 
           <div class="pt-2">
             <UButton

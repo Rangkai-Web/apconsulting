@@ -21,16 +21,15 @@ function mapAddress(raw: any): Address {
   return {
     id: raw.id,
     label: raw.label ?? "",
-    recipientName: raw.recipientName ?? raw.recipient_name,
+    recipientName: raw.recipient_name,
     phone: raw.phone,
     province: raw.province,
     city: raw.city,
     district: raw.district,
-    postalCode: raw.postalCode ?? raw.postal_code,
-    fullAddress: raw.fullAddress ?? raw.full_address,
-    isDefault: !!(raw.isDefault ?? raw.is_default),
-    rajaongkirDistrictId:
-      raw.rajaongkirDistrictId ?? raw.rajaongkir_district_id ?? null,
+    postalCode: raw.postal_code,
+    fullAddress: raw.full_address,
+    isDefault: !!raw.is_default,
+    rajaongkirDistrictId: raw.rajaongkir_district_id ?? null,
   };
 }
 
