@@ -805,8 +805,8 @@ async function handleCheckout() {
                       :items="provinces"
                       placeholder="Pilih Provinsi"
                       class="w-full"
-                      item-attribute="name"
-                      value-attribute="id"
+                      label-key="name"
+                      value-key="id"
                     />
                   </UFormField>
                   <UFormField label="Kota / Kabupaten" required :error="guestFieldErrors.cityId || undefined">
@@ -816,8 +816,8 @@ async function handleCheckout() {
                       placeholder="Pilih Kota"
                       class="w-full"
                       :disabled="!guestForm.provinceId"
-                      item-attribute="name"
-                      value-attribute="id"
+                      label-key="name"
+                      value-key="id"
                     />
                   </UFormField>
                   <UFormField label="Kecamatan" required :error="guestFieldErrors.districtId || undefined">
@@ -827,8 +827,8 @@ async function handleCheckout() {
                       placeholder="Pilih Kecamatan"
                       class="w-full"
                       :disabled="!guestForm.cityId"
-                      item-attribute="name"
-                      value-attribute="id"
+                      label-key="name"
+                      value-key="id"
                     />
                   </UFormField>
                 </div>
@@ -1109,8 +1109,8 @@ async function handleCheckout() {
                   :items="provinces"
                   placeholder="Pilih Provinsi"
                   class="w-full"
-                  item-attribute="name"
-                  value-attribute="id"
+                  label-key="name"
+                  value-key="id"
                 />
               </UFormField>
               <UFormField label="Kota / Kabupaten" required>
@@ -1120,8 +1120,8 @@ async function handleCheckout() {
                   placeholder="Pilih Kota"
                   class="w-full"
                   :disabled="!addressForm.provinceId"
-                  item-attribute="name"
-                  value-attribute="id"
+                  label-key="name"
+                  value-key="id"
                 />
               </UFormField>
             </div>
@@ -1134,8 +1134,8 @@ async function handleCheckout() {
                   placeholder="Pilih Kecamatan"
                   class="w-full"
                   :disabled="!addressForm.cityId"
-                  item-attribute="name"
-                  value-attribute="id"
+                  label-key="name"
+                  value-key="id"
                 />
               </UFormField>
               <UFormField label="Kode Pos" required>
@@ -1167,13 +1167,13 @@ async function handleCheckout() {
             <UButton
               color="neutral"
               variant="outline"
-              class="flex-1 rounded-xl cursor-pointer"
+              class="flex-1 justify-center rounded-xl cursor-pointer"
               @click="() => { addressSlideoverOpen = false }"
               >Batal</UButton
             >
             <UButton
               color="primary"
-              class="flex-1 rounded-xl font-bold cursor-pointer"
+              class="flex-1 justify-center rounded-xl font-bold cursor-pointer"
               @click="saveAddress"
               >Simpan Alamat</UButton
             >
