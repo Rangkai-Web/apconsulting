@@ -15,7 +15,6 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Group;
@@ -24,6 +23,8 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -166,19 +167,19 @@ class ProductResource extends Resource
                 ),
                 ToggleColumn::make('is_active')->label('Aktif'),
             ])
+            ->filters([
+                SelectFilter::make('category_id')
+                    ->label('Kategori')
+                    ->options(fn () => Category::query()->pluck('name', 'id')),
+                TernaryFilter::make('is_active')
+                    ->label('Status'),
+            ])
             ->defaultSort('created_at', 'desc')
             ->defaultPaginationPageOption(10)
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

@@ -43,6 +43,15 @@ class CategoryResource extends Resource
                 ->required()
                 ->maxLength(255)
                 ->unique(ignoreRecord: true),
+            Select::make('parent_id')
+                ->label('Kategori Induk')
+                ->options(
+                    fn (?Category $record) => Category::query()
+                        ->when($record, fn ($query) => $query->whereNot('id', $record->id))
+                        ->pluck('name', 'id')
+                )
+                ->searchable()
+                ->nullable(),
         ]);
     }
 
@@ -51,7 +60,8 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label('Nama')->searchable()->sortable(),
-                TextColumn::make('slug')->label('Slug'),
+                TextColumn::make('slug')->label('Slug')->searchable(),
+                TextColumn::make('parent.name')->label('Induk')->default('—'),
                 TextColumn::make('products_count')->label('Jumlah Produk')->counts('products'),
             ])
             ->defaultSort('created_at', 'desc')

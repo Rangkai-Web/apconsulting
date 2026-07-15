@@ -16,6 +16,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
 class BannerResource extends Resource
@@ -88,6 +89,10 @@ class BannerResource extends Resource
                 TextColumn::make('sort_order')
                     ->label('Urutan')
                     ->sortable(),
+            ])
+            ->filters([
+                TernaryFilter::make('is_active')
+                    ->label('Status'),
             ])
             ->defaultSort('created_at', 'desc')
             ->defaultPaginationPageOption(10)

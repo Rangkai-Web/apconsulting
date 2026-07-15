@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
     'store_name',
     'logo',
     'address',
-    'contact',
     'phone',
     'whatsapp_number',
     'instagram_url',

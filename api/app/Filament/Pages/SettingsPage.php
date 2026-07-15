@@ -84,6 +84,7 @@ class SettingsPage extends Page implements HasForms
                         ->toArray())
                     ->getOptionLabelUsing(fn ($value): ?string => RajaongkirDistrict::find($value)?->name)
                     ->placeholder('Pilih kecamatan asal pengiriman')
+                    ->required()
                     ->helperText('Wajib diisi supaya fitur cek ongkir di storefront berfungsi.'),
             ])
             ->statePath('data');

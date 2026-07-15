@@ -10,18 +10,21 @@ Kode fitur inti (auth, catalog, cart, checkout, order, admin panel, rating, ship
 
 ## A. Admin Panel (Filament)
 
-**Fitur yang belum ada:**
-- [ ] `CustomerResource` ("Pelanggan") **belum ada sama sekali** — model `User` juga belum punya relasi `orders()`. Ini requirement inti di spec ("Pelanggan: list + detail histori beli") yang belum dikerjakan.
+- [x] Kategori punya kolom `parent_id` di DB+model (support subkategori) — form + table Category sekarang punya field/kolom "Kategori Induk" (`CategoryResource.php`).
+
+### A1. Bisa dikerjakan sekarang (urut effort terbesar → terkecil)
+
+- [x] **[Medium]** Tabel Produk & Banner gak ada filter — `SelectFilter('category_id')` + `TernaryFilter('is_active')` di `ProductResource.php`, `TernaryFilter('is_active')` di `BannerResource.php`.
+- [x] **[Kecil, ~1 baris]** Field "RajaOngkir origin district" sekarang `->required()` di `SettingsPage.php`.
+- [x] **[Kecil, ~1 baris]** Kolom `slug` di Category sekarang `->searchable()`.
+- [x] **[Kecil, ~1 baris]** Import `Textarea` gak kepake + `getRelations()` stub kosong dihapus dari `ProductResource.php`.
+- [x] **[Kecil]** Kolom `contact` di `StoreSetting` dihapus — migration `drop_contact_from_store_settings_table` + fillable diupdate (field emang gak pernah kepake di form Settings maupun `SettingsResource`).
+
+### A2. Fitur masa depan (setelah fitur utama kelar)
+
+- [ ] `CustomerResource` ("Pelanggan") **belum ada sama sekali** — model `User` juga belum punya relasi `orders()`. Requirement inti di spec ("Pelanggan: list + detail histori beli").
 - [ ] Dashboard belum ada **chart** (cuma 4 stat card `StatsOverview`) — spec minta "stats + chart".
 - [ ] **Gak ada cara ganti password admin** dari dalam panel — `SettingsPage` cuma ada form profil toko, gak ada halaman/aksi ganti password akun admin.
-- [ ] Kategori punya kolom `parent_id` di DB+model (support subkategori), tapi **form Category gak ada field buat itu** — subkategori gak bisa diatur dari admin panel.
-
-**Polish/konsistensi kecil:**
-- [ ] Field "RajaOngkir origin district" di Settings ditulis wajib di teks bantuan, tapi field-nya **gak divalidasi `required()`** — admin bisa save kosong padahal fitur cek ongkir butuh ini.
-- [ ] Tabel Produk & Banner gak ada filter (kategori / aktif-nonaktif), padahal Order udah ada filter status.
-- [ ] Kolom `slug` di Category gak searchable (cuma `name`).
-- [ ] Import `Textarea` gak kepake di `ProductResource.php`, `getRelations()` isinya stub kosong — dead code kecil.
-- [ ] Kolom `contact` di `StoreSetting` gak pernah dipakai di form Settings — field mati, bisa dihapus.
 
 ---
 
