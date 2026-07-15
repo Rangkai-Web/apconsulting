@@ -10,7 +10,7 @@ Register a new customer account.
 - `name` (string, required)
 - `email` (string, required, unique)
 - `phone` (string, nullable)
-- `password` (string, required, min:8, confirmed)
+- `password` (string, required, confirmed, `Password::defaults()` — same policy as `PUT /api/profile/password`, min 8 chars unless the app-wide default is changed)
 
 **Response 201**
 ```json
@@ -115,7 +115,7 @@ Change the authenticated customer's password.
 
 **Parameters:**
 - `current_password` (string, required)
-- `password` (string, required, confirmed, min:8)
+- `password` (string, required, confirmed, `Password::defaults()` — same policy as `POST /api/register`, min 8 chars unless the app-wide default is changed)
 
 **Response 200**
 ```json

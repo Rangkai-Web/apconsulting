@@ -15,15 +15,15 @@ Retrieves all saved addresses for the authenticated member.
     {
       "id": 1,
       "label": "Rumah",
-      "recipientName": "Budi Santoso",
+      "recipient_name": "Budi Santoso",
       "phone": "0812345678",
       "province": "Jawa Barat",
       "city": "Bandung",
       "district": "Coblong",
-      "postalCode": "40135",
-      "fullAddress": "Apartment Dago Suite No. 10B",
-      "isDefault": true,
-      "rajaongkirDistrictId": 501
+      "postal_code": "40135",
+      "full_address": "Apartment Dago Suite No. 10B",
+      "is_default": true,
+      "rajaongkir_district_id": 501
     }
   ]
 }
@@ -57,15 +57,15 @@ Saves a new shipping address. If it's the first saved address, it is forced to b
   "data": {
     "id": 2,
     "label": "Kantor",
-    "recipientName": "Budi Santoso",
+    "recipient_name": "Budi Santoso",
     "phone": "0812345678",
     "province": "Jawa Barat",
     "city": "Bandung",
     "district": "Coblong",
-    "postalCode": "40135",
-    "fullAddress": "Jl. Ganesha No. 10",
-    "isDefault": true,
-    "rajaongkirDistrictId": 501
+    "postal_code": "40135",
+    "full_address": "Jl. Ganesha No. 10",
+    "is_default": true,
+    "rajaongkir_district_id": 501
   }
 }
 ```
