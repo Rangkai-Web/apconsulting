@@ -32,15 +32,15 @@ Kode fitur inti (auth, catalog, cart, checkout, order, admin panel, rating, ship
 
 **Correctness/keamanan:**
 - [x] ~~`/login` & `/register` gak ada rate limit khusus~~ — ditambah `throttle:5,1` (2026-07-15).
-- [ ] `courier` & `courier_service` di `POST /api/orders` gak divalidasi max-length — input kepanjangan bisa lolos validasi terus gagal di level DB, jadi error 500 generik bukan 422 yang rapi.
-- [ ] Ada **2 cara beda** buat bikin URL gambar (`asset()` di ProductResource vs `Storage::disk()->url()` di Banner/Settings Resource) — bisa beda hasil kalau nanti pakai CDN/proxy.
+- [x] ~~`courier` & `courier_service` di `POST /api/orders` gak divalidasi max-length~~ — ditambah `max:255` (match kolom DB) di `OrderController::store` (2026-07-15).
+- [x] ~~Ada 2 cara beda buat bikin URL gambar~~ — `ProductResource`/`ProductVariantResource` (API) diseragamkan pakai `Storage::disk('public_uploads')->url()`, sama kayak Banner/Settings Resource (2026-07-15).
 
 **Konsistensi:**
-- [ ] Response `AddressController` pakai **camelCase**, semua endpoint lain **snake_case** — inkonsisten (meski sudah terdokumentasi apa adanya). **Belum dikerjain sengaja** — ini breaking change ke frontend (`addressService.ts` udah gantungin camelCase ini), butuh koordinasi FE+BE bareng, bukan fix satu sisi.
+- [x] ~~Response `AddressController` pakai camelCase, endpoint lain snake_case~~ — `mapAddress()` diganti snake_case (2026-07-15). Ternyata gak breaking: `addressService.ts` `mapAddress()` udah punya fallback `raw.recipientName ?? raw.recipient_name` dari awal (defensif, gak sengaja nunggu ini), jadi FE tetap jalan begitu BE ganti; fallback camelCase-nya dibersihin karena udah mati. `unmapAddress()` (request body) emang udah snake_case dari awal, gak kesentuh. Test BE (`AddressApiTest.php`) + docs (`addresses.md`) diupdate ke snake_case.
 - [x] ~~Order/Profile/Address gak pakai API Resource class~~ — `OrderResource`/`OrderItemResource` dibuat, Order sekarang gak bocorin `guest_email`, `midtrans_order_id`, `midtrans_transaction_id`, `shipped_at`, `completed_at`, dll (2026-07-15). Profile/Address masih raw array/model tapi field-nya emang udah sesuai spec, gak ada yang bocor.
 - [x] ~~Error "not found" gak konsisten~~ — semua 404 di `api/*` sekarang pesan Bahasa Indonesia seragam, gak ada lagi yang bocorin nama class model (2026-07-15).
 - [x] ~~`docs/api/orders.md` gak nyebut blok `meta`~~ — udah ditambahin ke contoh response (2026-07-15).
-- [ ] Policy validasi password beda jalur antara register (`min:8`) vs ganti password (`Password::defaults()`) — kebetulan sama sekarang, tapi gak dijamin tetap sama kalau salah satu diubah nanti.
+- [x] ~~Policy validasi password beda jalur antara register vs ganti password~~ — `AuthController::register` sekarang pakai `Password::defaults()`, sama kayak `ProfileController` (2026-07-15). `docs/api/auth.md` diupdate.
 
 **Sudah oke (dikonfirmasi lewat audit, gak perlu dikerjain):** gak ada IDOR di endpoint manapun, shipping cost udah diverifikasi server-side, webhook signature+idempotency aman, race condition stock udah di-lock, pagination udah dibatasi server-side, gak ada N+1 query.
 
@@ -50,18 +50,18 @@ Kode fitur inti (auth, catalog, cart, checkout, order, admin panel, rating, ship
 
 **Checkout & Cart (paling kritis buat konversi):**
 - [x] ~~`getProvinces`/`getCities`/`getDistricts` di checkout gak ada try/catch~~ — sekarang toast error + loading skeleton pas initial load (2026-07-15).
-- [ ] Form checkout guest gak ada validasi per-field — cuma tombol submit yang disable, user gak tau field mana yang salah.
-- [ ] Selector kurir di checkout berpotensi overflow di layar sangat sempit (<375px) — belum ada `flex-wrap`.
+- [x] ~~Form checkout guest gak ada validasi per-field~~ — 10 field guest form (`checkout/index.vue`) sekarang punya `guestFieldErrors` + `:error` di tiap `UFormField`, tervalidasi saat submit diklik (bukan cuma disable tombol), error per field hilang otomatis begitu diisi (2026-07-15).
+- [x] ~~Selector kurir di checkout berpotensi overflow di layar sempit~~ — ditambah `flex-wrap` (2026-07-15).
 
 **Loading/error states:**
 - [x] ~~Home, Katalog, Wishlist: fetch produk awal gak ada try/catch~~ — sekarang toast error + loading direset di `finally` (2026-07-15).
-- [ ] Detail produk: error API asli (network/500) ke-treat sama kayak "Produk tidak ditemukan" — nyamarin error asli jadi 404 palsu.
+- [x] ~~Detail produk: error API asli ke-treat sama kayak "Produk tidak ditemukan"~~ — `catalogService.getProductBySlug` sekarang cuma treat 404 asli sebagai "not found", error lain (network/500) di-rethrow dan tampil sebagai state error terpisah + toast + tombol "Coba Lagi" (`produk/[slug].vue`, `EmptyState.vue` ditambah event `@action` buat retry non-navigasi) (2026-07-15).
 - [x] ~~`auth.ts` `logout()` gak ada try/catch~~ — sekarang selalu clear sesi lokal di `finally`, walau server-side logout gagal (2026-07-15).
 
 **Aksesibilitas:**
 - [x] ~~Beberapa tombol icon-only gak ada `aria-label`~~ — qty stepper, wishlist-heart (card & PDP), 3 tombol close slideover (checkout/katalog/header) udah dikasih `aria-label`/`aria-pressed` (2026-07-15).
 - [x] ~~Login & Register pakai `<label>` tanpa `for`/`id`~~ — udah dikasih `id`/`for` di semua field (2026-07-15).
-- [ ] Login & Register cuma nampilin 1 pesan error pertama dari validasi, gak ada indikator per-field mana yang salah.
+- [x] ~~Login & Register cuma nampilin 1 pesan error pertama~~ — kedua form diganti `UFormField` + `:error` per field (pattern sama kayak `akun/profil.vue`), error field hilang otomatis begitu user ngetik ulang (2026-07-15).
 
 **Sudah oke:** cart logic (stock cap, persist), halaman order detail/history/cek, akun profil/alamat, checkout submit+Midtrans callback handling — semua udah ada loading/error/empty state yang proper.
 
