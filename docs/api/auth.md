@@ -4,6 +4,7 @@
 Register a new customer account.
 
 **Auth:** none
+**Rate limit:** 5 requests/minute per IP (`throttle:5,1`)
 
 **Parameters:**
 - `name` (string, required)
@@ -30,6 +31,7 @@ Register a new customer account.
 Log in to an existing customer account.
 
 **Auth:** none
+**Rate limit:** 5 requests/minute per IP (`throttle:5,1`)
 
 **Parameters:**
 - `email` (string, required)

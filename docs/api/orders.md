@@ -74,6 +74,8 @@ or
 
 Lists order history for the authenticated member. Requires Sanctum.
 
+Response is wrapped through `OrderResource`/`OrderItemResource` — only the fields below are ever returned. Internal fields (`guest_email`, `guest_phone`, `midtrans_order_id`, `midtrans_transaction_id`, `shipped_at`, `completed_at`, `updated_at`, `user_id`) are never exposed.
+
 **Response 200**
 ```json
 {
@@ -88,6 +90,16 @@ Lists order history for the authenticated member. Requires Sanctum.
       "subtotal": 200000,
       "total": 215000,
       "tracking_number": null,
+      "shipping_address": {
+        "recipient_name": "Budi",
+        "phone": "081234",
+        "province": "Jawa Barat",
+        "city": "Bandung",
+        "district": "Coblong",
+        "postal_code": "40135",
+        "full_address": "Jl. Dago 10",
+        "rajaongkir_district_id": 501
+      },
       "created_at": "2026-06-25T11:34:52.000000Z",
       "items": [
         {
@@ -97,11 +109,18 @@ Lists order history for the authenticated member. Requires Sanctum.
           "variant_name": "50ml",
           "price": 100000,
           "qty": 2,
-          "subtotal": 200000
+          "subtotal": 200000,
+          "rating": null
         }
       ]
     }
-  ]
+  ],
+  "meta": {
+    "current_page": 1,
+    "last_page": 1,
+    "per_page": 15,
+    "total": 1
+  }
 }
 ```
 
