@@ -17,8 +17,9 @@ Route::get('/health', function () {
     return response()->json(['status' => 'ok']);
 });
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+// Stricter throttle than the global API limiter — these are brute-force targets
+Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:5,1');
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 
 // Public order checkout & guest lookup routes
 Route::post('/orders', [OrderController::class, 'store']);

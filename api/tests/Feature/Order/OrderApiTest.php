@@ -186,6 +186,7 @@ class OrderApiTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonPath('data.order_number', 'ORD-TEST-123')
-            ->assertJsonPath('data.guest_email', 'guest@example.com');
+            ->assertJsonMissingPath('data.guest_email')
+            ->assertJsonMissingPath('data.midtrans_order_id');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\OrderResource;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -28,7 +29,7 @@ class OrderController extends Controller
         $orders = $request->user()->orders()->with('items.rating')->orderBy('created_at', 'desc')->paginate(15);
 
         return response()->json([
-            'data' => $orders->items(),
+            'data' => OrderResource::collection($orders->items()),
             'meta' => [
                 'current_page' => $orders->currentPage(),
                 'last_page' => $orders->lastPage(),
@@ -55,7 +56,7 @@ class OrderController extends Controller
         }
 
         return response()->json([
-            'data' => $order,
+            'data' => new OrderResource($order),
         ]);
     }
 
@@ -81,7 +82,7 @@ class OrderController extends Controller
         }
 
         return response()->json([
-            'data' => $order,
+            'data' => new OrderResource($order),
         ]);
     }
 
