@@ -28,15 +28,15 @@ Kode fitur inti (auth, catalog, cart, checkout, order, admin panel, rating, ship
 ## B. API (Laravel Backend)
 
 **Correctness/keamanan:**
-- [ ] `/login` & `/register` **gak ada rate limit khusus** (cuma limiter global 60/menit) — rawan brute-force. Endpoint lain yang sensitif (`/shipping/cost`) udah dikasih throttle eksplisit, ini belum.
+- [x] ~~`/login` & `/register` gak ada rate limit khusus~~ — ditambah `throttle:5,1` (2026-07-15).
 - [ ] `courier` & `courier_service` di `POST /api/orders` gak divalidasi max-length — input kepanjangan bisa lolos validasi terus gagal di level DB, jadi error 500 generik bukan 422 yang rapi.
 - [ ] Ada **2 cara beda** buat bikin URL gambar (`asset()` di ProductResource vs `Storage::disk()->url()` di Banner/Settings Resource) — bisa beda hasil kalau nanti pakai CDN/proxy.
 
 **Konsistensi:**
-- [ ] Response `AddressController` pakai **camelCase**, semua endpoint lain **snake_case** — inkonsisten (meski sudah terdokumentasi apa adanya).
-- [ ] Order/Profile/Address **gak pakai API Resource class** (langsung serialize model Eloquent) — response Order jadi bocorin field internal yang gak terdokumentasi: `guest_email`, `midtrans_order_id`, `midtrans_transaction_id`, `shipped_at`, `completed_at`, dll.
-- [ ] Error "not found" gak konsisten — sebagian custom message Bahasa Indonesia, sebagian jatuh ke pesan default Laravel (Bahasa Inggris + bocorin nama class model).
-- [ ] `docs/api/orders.md` gak nyebut blok `meta` (pagination) yang sebenarnya selalu ada di response `GET /api/orders`.
+- [ ] Response `AddressController` pakai **camelCase**, semua endpoint lain **snake_case** — inkonsisten (meski sudah terdokumentasi apa adanya). **Belum dikerjain sengaja** — ini breaking change ke frontend (`addressService.ts` udah gantungin camelCase ini), butuh koordinasi FE+BE bareng, bukan fix satu sisi.
+- [x] ~~Order/Profile/Address gak pakai API Resource class~~ — `OrderResource`/`OrderItemResource` dibuat, Order sekarang gak bocorin `guest_email`, `midtrans_order_id`, `midtrans_transaction_id`, `shipped_at`, `completed_at`, dll (2026-07-15). Profile/Address masih raw array/model tapi field-nya emang udah sesuai spec, gak ada yang bocor.
+- [x] ~~Error "not found" gak konsisten~~ — semua 404 di `api/*` sekarang pesan Bahasa Indonesia seragam, gak ada lagi yang bocorin nama class model (2026-07-15).
+- [x] ~~`docs/api/orders.md` gak nyebut blok `meta`~~ — udah ditambahin ke contoh response (2026-07-15).
 - [ ] Policy validasi password beda jalur antara register (`min:8`) vs ganti password (`Password::defaults()`) — kebetulan sama sekarang, tapi gak dijamin tetap sama kalau salah satu diubah nanti.
 
 **Sudah oke (dikonfirmasi lewat audit, gak perlu dikerjain):** gak ada IDOR di endpoint manapun, shipping cost udah diverifikasi server-side, webhook signature+idempotency aman, race condition stock udah di-lock, pagination udah dibatasi server-side, gak ada N+1 query.
