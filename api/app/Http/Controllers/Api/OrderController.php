@@ -94,8 +94,8 @@ class OrderController extends Controller
             'items' => ['required', 'array', 'min:1'],
             'items.*.variant_id' => ['required', 'integer', 'exists:product_variants,id'],
             'items.*.qty' => ['required', 'integer', 'min:1'],
-            'courier' => ['required', 'string'],
-            'courier_service' => ['required', 'string'],
+            'courier' => ['required', 'string', 'max:255'],
+            'courier_service' => ['required', 'string', 'max:255'],
             'shipping_cost' => ['required', 'integer', 'min:0'],
         ];
 

@@ -108,15 +108,15 @@ class AddressController extends Controller
         return [
             'id' => $address->id,
             'label' => $address->label,
-            'recipientName' => $address->recipient_name,
+            'recipient_name' => $address->recipient_name,
             'phone' => $address->phone,
             'province' => $address->province,
             'city' => $address->city,
             'district' => $address->district,
-            'postalCode' => $address->postal_code,
-            'fullAddress' => $address->full_address,
-            'isDefault' => $address->is_default,
-            'rajaongkirDistrictId' => $address->rajaongkir_district_id,
+            'postal_code' => $address->postal_code,
+            'full_address' => $address->full_address,
+            'is_default' => $address->is_default,
+            'rajaongkir_district_id' => $address->rajaongkir_district_id,
         ];
     }
 }

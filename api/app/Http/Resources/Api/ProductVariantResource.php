@@ -4,6 +4,7 @@ namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class ProductVariantResource extends JsonResource
 {
@@ -16,7 +17,7 @@ class ProductVariantResource extends JsonResource
             'price' => $this->price,
             'stock' => $this->stock,
             'weight' => $this->weight,
-            'image' => $this->image ? asset('uploads/'.$this->image) : null,
+            'image' => $this->image ? Storage::disk('public_uploads')->url($this->image) : null,
         ];
     }
 }

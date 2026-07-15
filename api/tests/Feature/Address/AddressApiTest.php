@@ -70,8 +70,8 @@ class AddressApiTest extends TestCase
             ->assertJsonCount(1, 'data')
             ->assertJsonPath('data.0.id', $address1->id)
             ->assertJsonPath('data.0.label', 'Rumah')
-            ->assertJsonPath('data.0.recipientName', 'Budi')
-            ->assertJsonPath('data.0.rajaongkirDistrictId', $district->id);
+            ->assertJsonPath('data.0.recipient_name', 'Budi')
+            ->assertJsonPath('data.0.rajaongkir_district_id', $district->id);
     }
 
     public function test_user_can_create_address_and_automatically_sets_default(): void
@@ -93,9 +93,9 @@ class AddressApiTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-            ->assertJsonPath('data.isDefault', true)
+            ->assertJsonPath('data.is_default', true)
             ->assertJsonPath('data.label', 'Apartment')
-            ->assertJsonPath('data.recipientName', 'Budi Santoso');
+            ->assertJsonPath('data.recipient_name', 'Budi Santoso');
 
         $this->assertDatabaseHas('addresses', [
             'user_id' => $user->id,
@@ -138,7 +138,7 @@ class AddressApiTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-            ->assertJsonPath('data.isDefault', true);
+            ->assertJsonPath('data.is_default', true);
 
         $this->assertFalse($oldAddress->fresh()->is_default);
     }
@@ -177,7 +177,7 @@ class AddressApiTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonPath('data.label', 'Rumah Baru')
-            ->assertJsonPath('data.fullAddress', 'Jl. Coblong No. 100');
+            ->assertJsonPath('data.full_address', 'Jl. Coblong No. 100');
 
         $this->assertDatabaseHas('addresses', [
             'id' => $address->id,

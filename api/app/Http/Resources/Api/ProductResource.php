@@ -4,6 +4,7 @@ namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class ProductResource extends JsonResource
 {
@@ -15,7 +16,7 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'description' => $this->description,
-            'images' => collect($this->images ?? [])->map(fn ($path) => asset('uploads/'.$path))->all(),
+            'images' => collect($this->images ?? [])->map(fn ($path) => Storage::disk('public_uploads')->url($path))->all(),
             'is_active' => $this->is_active,
             'rating_avg' => (float) $this->rating_avg,
             'rating_count' => $this->rating_count,
