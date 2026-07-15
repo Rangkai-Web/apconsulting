@@ -22,7 +22,9 @@ jobs:
 
       - name: Install dependencies
         working-directory: storefront
-        run: npm ci
+        run: |
+          npm install -g npm@11
+          npm ci
 
       - name: Build
         working-directory: storefront
