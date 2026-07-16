@@ -49,7 +49,7 @@ class ProductController extends Controller
         };
 
         $page = max(1, (int) $request->input('page', 1));
-        $total = $query->clone()->count('products.id');
+        $total = $query->clone()->count();
         $products = $query->forPage($page, self::PER_PAGE)->get();
 
         return ProductResource::collection($products)->additional([
