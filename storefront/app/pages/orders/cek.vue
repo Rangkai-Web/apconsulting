@@ -81,7 +81,7 @@ async function handleLookup() {
             type="submit"
             color="primary"
             size="lg"
-            class="w-full font-extrabold rounded-full cursor-pointer shadow-md shadow-primary-600/15 mt-2"
+            class="w-full font-extrabold rounded-full cursor-pointer shadow-md shadow-primary-600/15 mt-2 text-center flex justify-center"
             :disabled="!formValid"
             :loading="loading"
           >
