@@ -35,8 +35,10 @@ class WebhookController extends Controller
         $order = Order::with('items.variant')
             ->where('midtrans_order_id', $orderId)
             ->orWhere('order_number', $orderId)
-            // Support checking without attempt suffix if midtrans sent raw order number
-            ->orWhere('order_number', explode('-', $orderId)[0])
+            // Strip the trailing "-{attempt}" suffix so a payment that settles on an
+            // older retry attempt still resolves, even if midtrans_order_id has since
+            // moved on to a newer attempt.
+            ->orWhere('order_number', preg_replace('/-\d+$/', '', $orderId))
             ->first();
 
         if (! $order) {
