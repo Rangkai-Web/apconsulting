@@ -88,7 +88,7 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $user = $request->user();
+        $user = $request->user('sanctum');
 
         $rules = [
             'items' => ['required', 'array', 'min:1'],
