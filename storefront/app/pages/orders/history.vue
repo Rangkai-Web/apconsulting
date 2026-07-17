@@ -26,8 +26,9 @@ const tabs = computed(() => {
   const list = [];
   if (authStore.isLoggedIn) {
     list.push({ label: "Pesanan Saya", value: "member" });
+  } else {
+    list.push({ label: "Lacak Pesanan Guest", value: "guest" });
   }
-  list.push({ label: "Lacak Pesanan Guest", value: "guest" });
   return list;
 });
 
