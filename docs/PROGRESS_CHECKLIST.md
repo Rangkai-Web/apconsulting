@@ -69,7 +69,7 @@ Kode fitur inti (auth, catalog, cart, checkout, order, admin panel, rating, ship
 
 ## D. Data & Infrastruktur
 
-- [ ] RajaOngkir area data: **26/34 provinsi** ke-sync (402 kota, 5544 kecamatan). Sisa 8 provinsi (Gorontalo, NTT, Sulut, Sulteng, Papua Barat, Kalut, Malut, Sulbar) — nunggu kuota harian reset / keputusan upgrade paket.
+- [ ] RajaOngkir area data: **34/34 provinsi tersinkron, 33/34 lengkap sampai kecamatan** (489 kota, 6693 kecamatan) — dikonfirmasi 2026-07-17 setelah kuota harian reset. Sisa cuma **1 kota di Sulawesi Barat** yang kecamatannya belum ke-fetch, kena rate-limit (429) lagi pas dicoba — tunggu reset besok buat nuntasin sisa recehan ini.
 - [ ] `MIDTRANS_IS_PRODUCTION` — key production udah dipasang di server (2026-07-16), tapi lagi disetel sementara ke **Sandbox** (buat testing checkout aman tanpa uang asli). Belum di-swap balik ke production, dan checkout end-to-end belum ke-tes tuntas (kebentur error cek ongkir/RajaOngkir 429 duluan — lihat poin pertama).
 - [x] ~~`APP_ENV=local`, `APP_URL=http://127.0.0.1:8000` — belum di-set buat server production~~ — dikonfirmasi 2026-07-16, `.env` server production udah benar (`APP_ENV=production`, `APP_URL=https://api.drplant.co.id`).
 - [x] ~~Cron scheduler (`orders:expire-pending`)~~ — entry lama ternyata salah format (redirect `>>` ke-passing literal ke `artisan`, gagal tiap menit walau sempat tercatat "terverifikasi" 2026-07-15). Di-fix ulang 2026-07-16, re-tested lewat "Lihat Output" → `INFO No scheduled commands are ready to run.` (sukses, scheduler jalan normal).
