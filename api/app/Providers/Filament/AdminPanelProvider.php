@@ -44,6 +44,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 \App\Filament\Widgets\StatsOverview::class,
                 \App\Filament\Widgets\OrdersChart::class,
+                \App\Filament\Widgets\OrderStatusChart::class,
             ])
             ->middleware([
                 EncryptCookies::class,

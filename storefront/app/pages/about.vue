@@ -85,4 +85,10 @@ useSeoMeta({
 .about-content :deep(li) {
   margin-bottom: 0.5rem;
 }
+.about-content :deep(img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  margin: 1.5rem 0;
+}
 </style>

@@ -99,9 +99,13 @@ class SettingsPage extends Page implements HasForms
                         'orderedList',
                         'h2',
                         'h3',
+                        'attachFiles',
                         'redo',
                         'undo',
                     ])
+                    ->fileAttachmentsDisk('public_uploads')
+                    ->fileAttachmentsDirectory('settings/about')
+                    ->fileAttachmentsVisibility('public')
                     ->helperText('Tampil di halaman /about storefront. Kosongkan untuk pakai teks bawaan.'),
             ])
             ->statePath('data');
