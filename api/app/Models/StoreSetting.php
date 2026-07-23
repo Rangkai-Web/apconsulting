@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
     'instagram_url',
     'operating_hours',
     'rajaongkir_origin_district_id',
+    'about_content',
 ])]
 class StoreSetting extends Model
 {

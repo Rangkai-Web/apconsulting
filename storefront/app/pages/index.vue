@@ -76,7 +76,7 @@ onMounted(async () => {
       class="absolute top-20 -left-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
     ></div>
     <div
-      class="absolute top-[600px] -right-40 w-96 h-96 bg-secondary-100/20 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-150 -right-40 w-96 h-96 bg-secondary-100/20 rounded-full blur-3xl pointer-events-none"
     ></div>
 
     <!-- Hero Section -->
@@ -91,7 +91,7 @@ onMounted(async () => {
           autoplay
           class="w-full"
         >
-          <div class="relative aspect-3/2 sm:aspect-16/5 w-full">
+          <div class="relative aspect-video sm:aspect-16/5 w-full">
             <img
               :src="item.image"
               :alt="item.title"
@@ -106,12 +106,12 @@ onMounted(async () => {
                 >Doctor Plant Indonesia</span
               >
               <h2
-                class="text-lg sm:text-2xl md:text-4xl font-extrabold max-w-xs sm:max-w-lg tracking-tight leading-snug sm:leading-tight"
+                class="text-lg sm:text-2xl md:text-4xl font-extrabold max-w-xs sm:max-w-lg tracking-tight leading-snug sm:leading-tight line-clamp-2"
               >
                 {{ item.title }}
               </h2>
               <p
-                class="text-[10px] sm:text-xs md:text-base mt-1.5 max-w-xs sm:max-w-md text-gray-200 leading-relaxed font-medium"
+                class="text-[10px] sm:text-xs md:text-base mt-1.5 max-w-xs sm:max-w-md text-gray-200 leading-relaxed font-medium line-clamp-2"
               >
                 {{ item.subtitle }}
               </p>

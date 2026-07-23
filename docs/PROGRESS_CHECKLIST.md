@@ -22,8 +22,8 @@ Kode fitur inti (auth, catalog, cart, checkout, order, admin panel, rating, ship
 
 ### A2. Fitur masa depan (setelah fitur utama kelar)
 
-- [ ] `CustomerResource` ("Pelanggan") **belum ada sama sekali** — model `User` juga belum punya relasi `orders()`. Requirement inti di spec ("Pelanggan: list + detail histori beli").
-- [ ] Dashboard belum ada **chart** (cuma 4 stat card `StatsOverview`) — spec minta "stats + chart".
+- [x] `CustomerResource` ("Pelanggan") dibuat — list + detail (infolist summary + `OrdersRelationManager` paginated histori pesanan), `User::orders()` relation ditambah.
+- [x] Dashboard sekarang ada **chart** — `OrdersChart` (`LineChartWidget`, order per hari, 7 hari terakhir), registered abis `StatsOverview` di `AdminPanelProvider`.
 - [ ] **Gak ada cara ganti password admin** dari dalam panel — `SettingsPage` cuma ada form profil toko, gak ada halaman/aksi ganti password akun admin.
 
 ---

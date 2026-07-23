@@ -31,6 +31,7 @@ const mobileNavOpen = ref(false);
 const navLinks = [
   { label: "Home", to: "/" },
   { label: "Katalog", to: "/katalog" },
+  { label: "Tentang Kami", to: "/about" },
   { label: "Keranjang", to: "/cart" },
 ];
 

@@ -21,6 +21,7 @@ class SettingsApiTest extends TestCase
             'instagram_url' => 'https://instagram.com/test_drplant',
             'operating_hours' => 'Senin - Jumat, 09.00 - 18.00 WIB',
             'rajaongkir_origin_district_id' => 151,
+            'about_content' => '<p>Cerita brand test.</p>',
         ]);
 
         $response = $this->getJson('/api/settings');
@@ -35,6 +36,7 @@ class SettingsApiTest extends TestCase
                     'whatsapp_number' => '6281234567890',
                     'instagram_url' => 'https://instagram.com/test_drplant',
                     'operating_hours' => 'Senin - Jumat, 09.00 - 18.00 WIB',
+                    'about_content' => '<p>Cerita brand test.</p>',
                 ]
             ])
             ->assertJsonMissing(['rajaongkir_origin_district_id'])

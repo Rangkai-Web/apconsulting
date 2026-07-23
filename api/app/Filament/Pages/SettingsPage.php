@@ -6,6 +6,7 @@ use App\Models\RajaongkirDistrict;
 use App\Models\StoreSetting;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -86,6 +87,22 @@ class SettingsPage extends Page implements HasForms
                     ->placeholder('Pilih kecamatan asal pengiriman')
                     ->required()
                     ->helperText('Wajib diisi supaya fitur cek ongkir di storefront berfungsi.'),
+                RichEditor::make('about_content')
+                    ->label('Konten Halaman Tentang Kami')
+                    ->columnSpanFull()
+                    ->toolbarButtons([
+                        'bold',
+                        'italic',
+                        'strike',
+                        'underline',
+                        'bulletList',
+                        'orderedList',
+                        'h2',
+                        'h3',
+                        'redo',
+                        'undo',
+                    ])
+                    ->helperText('Tampil di halaman /about storefront. Kosongkan untuk pakai teks bawaan.'),
             ])
             ->statePath('data');
     }

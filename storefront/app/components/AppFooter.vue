@@ -103,6 +103,7 @@ const settings = computed(() => {
           <NuxtLink
             v-for="link in [
               { label: 'Katalog Produk', to: '/katalog' },
+              { label: 'Tentang Kami', to: '/about' },
               { label: 'Wishlist Saya', to: '/wishlist' },
               { label: 'Keranjang', to: '/cart' },
             ]"
