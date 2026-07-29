@@ -45,13 +45,20 @@ class BannerResource extends Resource
                 ->placeholder('Masukkan sub-judul/deskripsi pendek')
                 ->maxLength(255),
             FileUpload::make('image')
-                ->label('Gambar Banner')
+                ->label('Gambar Banner (Desktop)')
                 ->disk('public_uploads')
                 ->directory('banners')
                 ->image()
                 ->required()
                 ->maxSize(2048)
-                ->helperText('Format: JPG, PNG, WEBP. Maksimal 2MB. Rekomendasi rasio: 1600x600 (landskap).'),
+                ->helperText('Format: JPG, PNG, WEBP. Maksimal 2MB. Rekomendasi rasio 16:5 (landskap).'),
+            FileUpload::make('image_mobile')
+                ->label('Gambar Banner (Mobile)')
+                ->disk('public_uploads')
+                ->directory('banners')
+                ->image()
+                ->maxSize(2048)
+                ->helperText('Opsional. Format: JPG, PNG, WEBP. Maksimal 2MB. Rekomendasi rasio 4:3. Kalau kosong, storefront pakai gambar desktop.'),
             TextInput::make('link')
                 ->label('Link / Tautan Redirect')
                 ->placeholder('Contoh: /katalog atau https://google.com')
@@ -73,7 +80,11 @@ class BannerResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('image')
-                    ->label('Gambar')
+                    ->label('Gambar Desktop')
+                    ->disk('public_uploads')
+                    ->square(),
+                ImageColumn::make('image_mobile')
+                    ->label('Gambar Mobile')
                     ->disk('public_uploads')
                     ->square(),
                 TextColumn::make('title')

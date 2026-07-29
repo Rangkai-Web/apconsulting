@@ -15,6 +15,7 @@ class BannerResource extends JsonResource
             'title' => $this->title,
             'subtitle' => $this->subtitle,
             'image' => $this->image ? (filter_var($this->image, FILTER_VALIDATE_URL) ? $this->image : Storage::disk('public_uploads')->url($this->image)) : null,
+            'image_mobile' => $this->image_mobile ? (filter_var($this->image_mobile, FILTER_VALIDATE_URL) ? $this->image_mobile : Storage::disk('public_uploads')->url($this->image_mobile)) : null,
             'link' => $this->link,
             'sort_order' => $this->sort_order,
         ];

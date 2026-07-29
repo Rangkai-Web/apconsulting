@@ -15,6 +15,7 @@ interface BannerItem {
   title: string;
   subtitle: string;
   image: string;
+  image_mobile?: string | null;
   link?: string;
 }
 
@@ -91,11 +92,16 @@ onMounted(async () => {
           autoplay
           class="w-full"
         >
-          <div class="relative aspect-video sm:aspect-16/5 w-full">
+          <div class="relative aspect-4/3 sm:aspect-16/5 w-full">
+            <img
+              :src="item.image_mobile || item.image"
+              :alt="item.title"
+              class="w-full h-full object-cover sm:hidden"
+            />
             <img
               :src="item.image"
               :alt="item.title"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover hidden sm:block"
             />
             <!-- Overlay with linear -->
             <div

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
     'title',
     'subtitle',
     'image',
+    'image_mobile',
     'link',
     'sort_order',
     'is_active',
