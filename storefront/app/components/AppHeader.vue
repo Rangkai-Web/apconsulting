@@ -118,7 +118,7 @@ async function handleMobileLogout() {
         />
         <NuxtLink to="/" class="flex items-center gap-2.5 group">
           <div
-            class="w-10 h-10 shrink-0 rounded-full bg-linear-to-tr from-primary-600 to-primary-400 flex items-center justify-center text-white shadow-md shadow-primary-600/25 transform transition-transform group-hover:scale-105 group-hover:rotate-3 duration-300 overflow-hidden"
+            class="w-auto h-10 shrink-0 flex items-center justify-center"
           >
             <NuxtImg
               :src="settings.logo || '/logo_dr_plant.jpg'"
@@ -128,7 +128,7 @@ async function handleMobileLogout() {
               class="w-full h-full object-cover"
             />
           </div>
-          <div class="hidden md:block">
+          <!-- <div class="hidden md:block">
             <div class="flex flex-col shrink-0">
               <span
                 class="font-extrabold text-gray-900 tracking-tight leading-tight text-base sm:text-lg group-hover:text-primary-700 transition-colors"
@@ -139,7 +139,7 @@ async function handleMobileLogout() {
                 >Indonesia</span
               >
             </div>
-          </div>
+          </div> -->
         </NuxtLink>
       </div>
 

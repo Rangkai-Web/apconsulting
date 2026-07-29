@@ -38,7 +38,7 @@ const settings = computed(() => {
       <div class="md:col-span-4 space-y-4">
         <NuxtLink to="/" class="flex items-center gap-2.5 group w-fit">
           <div
-            class="w-12 h-12 rounded-full bg-linear-to-tr from-primary-600 to-primary-400 flex items-center justify-center text-white shadow-md shadow-primary-600/20 transform transition-transform group-hover:scale-105 group-hover:rotate-3 duration-300 overflow-hidden"
+            class="w-auto h-10 shrink-0 flex items-center justify-center"
           >
             <NuxtImg
               :src="settings.logo || '/logo_dr_plant.jpg'"
@@ -48,7 +48,7 @@ const settings = computed(() => {
               class="w-full h-full object-contain rounded-full"
             />
           </div>
-          <div class="flex flex-col">
+          <!-- <div class="flex flex-col">
             <span
               class="font-bold text-white text-base tracking-wide leading-tight group-hover:text-primary-300 transition-colors"
               >{{ settings.store_name }}</span
@@ -57,7 +57,7 @@ const settings = computed(() => {
               class="text-xs text-primary-400 uppercase tracking-widest font-extrabold -mt-0.5"
               >Indonesia</span
             >
-          </div>
+          </div> -->
         </NuxtLink>
         <p class="text-xs text-gray-400 leading-relaxed max-w-sm">
           Merek skincare asal Tiongkok yang berfokus pada kecantikan kulit sehat
