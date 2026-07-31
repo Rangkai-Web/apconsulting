@@ -38,14 +38,14 @@ const settings = computed(() => {
       <div class="md:col-span-4 space-y-4">
         <NuxtLink to="/" class="flex items-center gap-2.5 group w-fit">
           <div
-            class="w-auto h-10 shrink-0 flex items-center justify-center"
+            class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
           >
             <NuxtImg
               :src="settings.logo || '/logo_dr_plant.jpg'"
               alt="Logo Dr. Plant"
               width="40"
               height="40"
-              class="w-full h-full object-contain rounded-full"
+              class="w-full h-full object-contain"
             />
           </div>
           <!-- <div class="flex flex-col">

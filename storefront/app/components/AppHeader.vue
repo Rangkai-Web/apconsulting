@@ -118,14 +118,14 @@ async function handleMobileLogout() {
         />
         <NuxtLink to="/" class="flex items-center gap-2.5 group">
           <div
-            class="w-auto h-10 shrink-0 flex items-center justify-center"
+            class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
           >
             <NuxtImg
               :src="settings.logo || '/logo_dr_plant.jpg'"
               alt="Logo Dr. Plant"
               width="40"
               height="40"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-contain"
             />
           </div>
           <!-- <div class="hidden md:block">
