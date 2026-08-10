@@ -300,17 +300,17 @@ async function handleMobileLogout() {
                 @click="mobileNavOpen = false"
               >
                 <div
-                  class="w-10 h-10 shrink-0 rounded-full bg-linear-to-tr from-primary-600 to-primary-400 flex items-center justify-center text-white overflow-hidden"
+                  class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
                 >
                   <NuxtImg
                     :src="settings.logo || '/logo_dr_plant.jpg'"
                     alt="Logo Dr. Plant"
                     width="40"
                     height="40"
-                    class="w-full h-full object-cover"
+                    class="w-full h-full object-contain"
                   />
                 </div>
-                <div class="flex flex-col">
+                <!-- <div class="flex flex-col">
                   <span class="font-bold text-gray-900 leading-tight"
                     >Doctor Plant</span
                   >
@@ -318,7 +318,7 @@ async function handleMobileLogout() {
                     class="text-[8px] text-primary-600 uppercase tracking-widest font-extrabold -mt-0.5"
                     >Indonesia</span
                   >
-                </div>
+                </div> -->
               </NuxtLink>
               <UButton
                 icon="i-heroicons-x-mark"
