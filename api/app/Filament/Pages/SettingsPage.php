@@ -79,14 +79,22 @@ class SettingsPage extends Page implements HasForms
                 Select::make('rajaongkir_origin_district_id')
                     ->label('Kecamatan Asal (RajaOngkir)')
                     ->searchable()
-                    ->getSearchResultsUsing(fn (string $search): array => RajaongkirDistrict::where('name', 'like', "%{$search}%")
+                    ->getSearchResultsUsing(fn (string $search): array => RajaongkirDistrict::with('city.province')
+                        ->where('name', 'like', "%{$search}%")
                         ->limit(50)
-                        ->pluck('name', 'id')
+                        ->get()
+                        ->mapWithKeys(fn (RajaongkirDistrict $district) => [
+                            $district->id => "{$district->name}, {$district->city?->name}, {$district->city?->province?->name}",
+                        ])
                         ->toArray())
-                    ->getOptionLabelUsing(fn ($value): ?string => RajaongkirDistrict::find($value)?->name)
+                    ->getOptionLabelUsing(function ($value): ?string {
+                        $district = RajaongkirDistrict::with('city.province')->find($value);
+
+                        return $district ? "{$district->name}, {$district->city?->name}, {$district->city?->province?->name}" : null;
+                    })
                     ->placeholder('Pilih kecamatan asal pengiriman')
                     ->required()
-                    ->helperText('Wajib diisi supaya fitur cek ongkir di storefront berfungsi.'),
+                    ->helperText('Wajib diisi supaya fitur cek ongkir di storefront berfungsi. Pastikan kota/provinsi yang tertera sesuai — beberapa kecamatan punya nama sama di daerah berbeda.'),
                 RichEditor::make('about_content')
                     ->label('Konten Halaman Tentang Kami')
                     ->columnSpanFull()
