@@ -938,7 +938,12 @@ async function handleCheckout() {
                         {{ service.courier }} - {{ service.service }}
                       </p>
                       <p class="text-[10px] text-gray-400 font-semibold mt-0.5">
-                        Estimasi tiba: {{ service.etd }} hari
+                        Estimasi tiba:
+                        {{
+                          service.etd
+                            ? service.etd.replace(/\bday\b/gi, 'hari')
+                            : '-'
+                        }}
                       </p>
                     </div>
                     <span class="text-xs font-black text-primary-700">{{

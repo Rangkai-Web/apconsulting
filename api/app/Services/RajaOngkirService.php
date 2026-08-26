@@ -29,12 +29,19 @@ class RajaOngkirService
             throw new RuntimeException('RajaOngkir response missing data array');
         }
 
-        return array_map(fn (array $item) => [
+        $normalized = array_map(fn (array $item) => [
             'courier' => $item['code'] ?? '',
             'service' => $item['service'] ?? '',
             'cost' => (int) ($item['cost'] ?? 0),
             'etd' => $item['etd'] ?? '',
         ], $data);
+
+        $retailServices = config('rajaongkir.retail_services');
+
+        return array_values(array_filter(
+            $normalized,
+            fn (array $item) => in_array($item['service'], $retailServices[$item['courier']] ?? [], true)
+        ));
     }
 
     public function fetchProvinces(): array

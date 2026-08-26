@@ -29,6 +29,25 @@ class RajaOngkirServiceTest extends TestCase
         ], $result);
     }
 
+    public function test_filters_out_non_retail_cargo_services(): void
+    {
+        Http::fake([
+            '*/calculate/district/domestic-cost' => Http::response([
+                'meta' => ['code' => 200, 'message' => 'success'],
+                'data' => [
+                    ['code' => 'jne', 'service' => 'REG', 'description' => 'Layanan Reguler', 'cost' => 15000, 'etd' => '2-3'],
+                    ['code' => 'jne', 'service' => 'JTR<130', 'description' => 'Cargo', 'cost' => 300000, 'etd' => '3'],
+                ],
+            ], 200),
+        ]);
+
+        $result = (new RajaOngkirService())->calculateDomesticCost(501, 999, 1000);
+
+        $this->assertEquals([
+            ['courier' => 'jne', 'service' => 'REG', 'cost' => 15000, 'etd' => '2-3'],
+        ], $result);
+    }
+
     public function test_throws_when_rajaongkir_returns_non_2xx(): void
     {
         Http::fake([
