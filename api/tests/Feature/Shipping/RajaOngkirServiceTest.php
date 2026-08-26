@@ -12,7 +12,7 @@ class RajaOngkirServiceTest extends TestCase
     public function test_normalizes_successful_response_into_courier_list(): void
     {
         Http::fake([
-            '*/calculate/domestic-cost' => Http::response([
+            '*/calculate/district/domestic-cost' => Http::response([
                 'meta' => ['code' => 200, 'message' => 'success'],
                 'data' => [
                     ['code' => 'jne', 'service' => 'REG', 'description' => 'Layanan Reguler', 'cost' => 15000, 'etd' => '2-3'],
@@ -32,7 +32,7 @@ class RajaOngkirServiceTest extends TestCase
     public function test_throws_when_rajaongkir_returns_non_2xx(): void
     {
         Http::fake([
-            '*/calculate/domestic-cost' => Http::response(['message' => 'Unauthorized'], 401),
+            '*/calculate/district/domestic-cost' => Http::response(['message' => 'Unauthorized'], 401),
         ]);
 
         $this->expectException(RuntimeException::class);
@@ -43,7 +43,7 @@ class RajaOngkirServiceTest extends TestCase
     public function test_throws_when_response_has_no_data_array(): void
     {
         Http::fake([
-            '*/calculate/domestic-cost' => Http::response(['meta' => ['code' => 200]], 200),
+            '*/calculate/district/domestic-cost' => Http::response(['meta' => ['code' => 200]], 200),
         ]);
 
         $this->expectException(RuntimeException::class);

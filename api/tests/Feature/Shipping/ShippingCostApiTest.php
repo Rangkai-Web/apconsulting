@@ -25,7 +25,7 @@ class ShippingCostApiTest extends TestCase
     private function fakeRajaOngkirSuccess(): void
     {
         Http::fake([
-            '*/calculate/domestic-cost' => Http::response([
+            '*/calculate/district/domestic-cost' => Http::response([
                 'meta' => ['code' => 200, 'message' => 'success'],
                 'data' => [
                     ['code' => 'jne', 'service' => 'REG', 'description' => 'Layanan Reguler', 'cost' => 15000, 'etd' => '2-3'],
@@ -83,7 +83,7 @@ class ShippingCostApiTest extends TestCase
 
     public function test_returns_503_when_rajaongkir_call_fails(): void
     {
-        Http::fake(['*/calculate/domestic-cost' => Http::response(['message' => 'Unauthorized'], 401)]);
+        Http::fake(['*/calculate/district/domestic-cost' => Http::response(['message' => 'Unauthorized'], 401)]);
         StoreSetting::create(['store_name' => 'Doctor Plant Indonesia', 'rajaongkir_origin_district_id' => 501]);
         $district = $this->seedDestinationDistrict();
 

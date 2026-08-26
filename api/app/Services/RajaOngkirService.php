@@ -11,7 +11,7 @@ class RajaOngkirService
     {
         $response = Http::asForm()
             ->withHeaders(['key' => config('rajaongkir.api_key')])
-            ->post(config('rajaongkir.base_url').'/calculate/domestic-cost', [
+            ->post(config('rajaongkir.base_url').'/calculate/district/domestic-cost', [
                 'origin' => $originDistrictId,
                 'destination' => $destinationDistrictId,
                 'weight' => $weightGrams,

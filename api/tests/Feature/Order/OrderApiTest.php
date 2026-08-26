@@ -49,7 +49,7 @@ class OrderApiTest extends TestCase
         RajaongkirDistrict::create(['id' => $destinationDistrictId, 'city_id' => 1, 'name' => 'Coblong']);
 
         Http::fake([
-            '*/calculate/domestic-cost' => Http::response([
+            '*/calculate/district/domestic-cost' => Http::response([
                 'meta' => ['code' => 200, 'message' => 'success'],
                 'data' => [
                     ['code' => $courier, 'service' => $service, 'description' => 'Layanan', 'cost' => $cost, 'etd' => '2-3'],
