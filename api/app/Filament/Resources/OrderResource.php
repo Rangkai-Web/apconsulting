@@ -32,7 +32,6 @@ class OrderResource extends Resource
     {
         return match ($status) {
             'pending' => 'gray',
-            'paid' => 'info',
             'processing' => 'warning',
             'shipped' => 'primary',
             'completed' => 'success',
@@ -45,7 +44,6 @@ class OrderResource extends Resource
     {
         return [
             'pending' => 'Pending',
-            'paid' => 'Paid',
             'processing' => 'Processing',
             'shipped' => 'Shipped',
             'completed' => 'Completed',
@@ -75,7 +73,7 @@ class OrderResource extends Resource
                     ->state(fn (Order $record): string => $record->user_id ? 'Member' : 'Guest')
                     ->badge()
                     ->color(fn (string $state): string => $state === 'Member' ? 'success' : 'gray'),
-                TextColumn::make('status')
+                TextColumn::make('order_status')
                     ->label('Status')
                     ->badge()
                     ->color(fn (string $state): string => self::statusColor($state)),
@@ -104,7 +102,7 @@ class OrderResource extends Resource
             Section::make('Informasi Pesanan')
                 ->schema([
                     TextEntry::make('order_number')->label('No. Pesanan'),
-                    TextEntry::make('status')->label('Status')->badge()->color(fn (string $state): string => self::statusColor($state)),
+                    TextEntry::make('order_status')->label('Status')->badge()->color(fn (string $state): string => self::statusColor($state)),
                     TextEntry::make('created_at')->label('Tanggal Pesanan')->dateTime('d M Y H:i'),
                     TextEntry::make('courier')
                         ->label('Kurir')

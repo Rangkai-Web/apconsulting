@@ -44,7 +44,7 @@ class RatingApiTest extends TestCase
             'shipping_cost' => 15000,
             'subtotal' => 200000,
             'total' => 215000,
-            'status' => $status,
+            'order_status' => $status,
         ]);
 
         $item = $order->items()->create([

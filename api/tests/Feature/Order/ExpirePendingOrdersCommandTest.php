@@ -42,7 +42,7 @@ class ExpirePendingOrdersCommandTest extends TestCase
             'shipping_cost' => 15000,
             'subtotal' => 200000,
             'total' => 215000,
-            'status' => $status,
+            'order_status' =>$status,
         ]);
         $order->items()->create([
             'product_variant_id' => $variant->id,
@@ -63,7 +63,7 @@ class ExpirePendingOrdersCommandTest extends TestCase
 
         $this->artisan('orders:expire-pending');
 
-        $this->assertEquals('expired', $order->fresh()->status);
+        $this->assertEquals('expired', $order->fresh()->order_status);
         $this->assertEquals(10, $variant->fresh()->stock);
     }
 
@@ -78,12 +78,12 @@ class ExpirePendingOrdersCommandTest extends TestCase
             'shipping_cost' => 15000,
             'subtotal' => 200000,
             'total' => 215000,
-            'status' => 'pending',
+            'order_status' =>'pending',
         ]);
 
         $this->artisan('orders:expire-pending');
 
-        $this->assertEquals('pending', $order->fresh()->status);
+        $this->assertEquals('pending', $order->fresh()->order_status);
     }
 
     public function test_does_not_touch_non_pending_orders_even_if_old(): void
@@ -97,13 +97,13 @@ class ExpirePendingOrdersCommandTest extends TestCase
             'shipping_cost' => 15000,
             'subtotal' => 200000,
             'total' => 215000,
-            'status' => 'paid',
+            'order_status' =>'paid',
         ]);
         Order::where('id', $order->id)->update(['created_at' => Carbon::now()->subHours(25)]);
 
         $this->artisan('orders:expire-pending');
 
-        $this->assertEquals('paid', $order->fresh()->status);
+        $this->assertEquals('paid', $order->fresh()->order_status);
     }
 
     public function test_idempotent_does_not_double_release_stock_on_second_run(): void
@@ -114,7 +114,7 @@ class ExpirePendingOrdersCommandTest extends TestCase
         $this->artisan('orders:expire-pending');
         $this->artisan('orders:expire-pending');
 
-        $this->assertEquals('expired', $order->fresh()->status);
+        $this->assertEquals('expired', $order->fresh()->order_status);
         $this->assertEquals(10, $variant->fresh()->stock); // 8 + 2 = 10, not 12 — no double release
     }
 }

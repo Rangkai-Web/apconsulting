@@ -29,7 +29,8 @@ class OrderFactory extends Factory
             ],
             'subtotal' => 50000,
             'total' => 60000,
-            'status' => 'pending',
+            'order_status' => 'pending',
+            'payment_status' => 'unpaid',
         ];
     }
 }

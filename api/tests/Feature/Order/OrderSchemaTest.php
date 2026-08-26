@@ -16,7 +16,8 @@ class OrderSchemaTest extends TestCase
     {
         $order = Order::factory()->create();
 
-        $this->assertEquals('pending', $order->status);
+        $this->assertEquals('pending', $order->order_status);
+        $this->assertEquals('unpaid', $order->payment_status);
     }
 
     public function test_snapshots_product_name_variant_name_and_price_on_the_order_item(): void

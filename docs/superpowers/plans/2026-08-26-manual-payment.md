@@ -199,7 +199,7 @@ If `ExpirePendingOrdersCommandTest` fails, open `api/app/Console/Commands/Expire
 - [ ] **Step 15: Commit**
 
 ```bash
-cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo"
+cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo/.claude/worktrees/manual-payment"
 git add api/database/migrations/2026_08_27_000001_split_order_status_and_add_payment_fields.php \
   api/app/Models/Order.php api/database/factories/OrderFactory.php \
   api/app/Http/Resources/Api/OrderResource.php api/app/Filament/Resources/OrderResource.php \
@@ -658,7 +658,7 @@ Expected: PASS
 - [ ] **Step 13: Commit**
 
 ```bash
-cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo"
+cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo/.claude/worktrees/manual-payment"
 git add api/database/migrations/2026_08_27_000002_create_payment_methods_table.php \
   api/app/Models/PaymentMethod.php api/app/Filament/Resources/PaymentMethodResource.php \
   api/app/Filament/Resources/PaymentMethodResource/ \
@@ -749,7 +749,7 @@ Expected: PASS
 - [ ] **Step 8: Commit**
 
 ```bash
-cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo"
+cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo/.claude/worktrees/manual-payment"
 git add api/database/migrations/2026_08_27_000003_add_line_url_to_store_settings_table.php \
   api/app/Models/StoreSetting.php api/app/Http/Resources/Api/SettingsResource.php \
   api/app/Filament/Pages/SettingsPage.php api/tests/Feature/Settings/SettingsApiTest.php
@@ -1088,7 +1088,7 @@ Leave the rest of `orders.md` untouched — Task 5 rewrites the checkout respons
 - [ ] **Step 9: Commit**
 
 ```bash
-cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo"
+cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo/.claude/worktrees/manual-payment"
 git add api/app/Http/Controllers/Api/OrderController.php api/app/Http/Resources/Api/OrderResource.php \
   api/routes/api.php api/tests/Feature/Order/PaymentProofUploadTest.php docs/api/orders.md
 git commit -m "feat(orders): payment proof upload endpoint"
@@ -1287,7 +1287,7 @@ to:
 - [ ] **Step 13: Commit**
 
 ```bash
-cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo"
+cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo/.claude/worktrees/manual-payment"
 git add -A api/config api/app/Http/Controllers/Api/OrderController.php api/app/Http/Controllers/Api/WebhookController.php \
   api/app/Console/Commands/ExpirePendingOrders.php api/routes/api.php \
   api/tests/Feature/Order/ docs/api/orders.md CLAUDE.md
@@ -1645,15 +1645,41 @@ class ViewOrder extends ViewRecord
 }
 ```
 
-- [ ] **Step 5: Run tests to verify they pass**
+- [ ] **Step 5: Fix `OrderUpdateStatusActionTest.php`'s now-unrealistic fixtures**
+
+`'paid'` is no longer a real `order_status` value post-Task-1 (it moved to `payment_status`). Give `createOrderWithItem()` a fourth parameter for payment status, defaulting to `'unpaid'`:
+
+```php
+private function createOrderWithItem(string $status, int $stock = 8, int $qty = 2, string $paymentStatus = 'unpaid'): array
+{
+    // ... unchanged category/product/variant setup ...
+    $order = Order::create([
+        'order_number' => 'ORD-ACTION-TEST',
+        'guest_name' => 'Guest',
+        'guest_email' => 'guest@example.com',
+        'guest_phone' => '0899',
+        'shipping_address' => ['recipient_name' => 'Guest'],
+        'shipping_cost' => 15000,
+        'subtotal' => 200000,
+        'total' => 215000,
+        'order_status' => $status,
+        'payment_status' => $paymentStatus,
+    ]);
+    // ... unchanged item creation ...
+}
+```
+
+Then update each call site: `createOrderWithItem('paid')` in `test_admin_can_update_status_to_shipped_with_tracking_number` and `test_requires_tracking_number_when_status_is_shipped` → `createOrderWithItem('processing', paymentStatus: 'paid')` (both transition toward `shipped`, so both need the new guard from Step 4 satisfied). `createOrderWithItem('paid', stock: 8, qty: 2)` in `test_does_not_release_stock_when_cancelling_an_already_paid_order` → `createOrderWithItem('processing', stock: 8, qty: 2)` (this test only exercises `releaseStockIfApplicable`'s `order_status` guard, not the payment guard — leave `paymentStatus` at its `'unpaid'` default, it's irrelevant to this assertion). Leave `test_releases_stock_when_cancelling_a_pending_order`'s `createOrderWithItem('pending', ...)` untouched — no `paid`/`processing` involved.
+
+- [ ] **Step 6: Run tests to verify they pass**
 
 Run: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter="AdminPaymentVerificationTest|OrderUpdateStatusActionTest"`
-Expected: PASS. (`OrderUpdateStatusActionTest`'s existing three cases use `createOrderWithItem('paid')`/`('pending')` as their `order_status` fixture — since `'paid'` is no longer a real `order_status` value post-Task-1, the two cases that create an order with `order_status='paid'` and then transition to `shipped`/`cancelled` are now testing an unrealistic precondition. Fix `OrderUpdateStatusActionTest.php`: change every `createOrderWithItem('paid', ...)` call to `createOrderWithItem('processing', ...)` and add `'payment_status' => 'paid',` to the `Order::create([...])` fixture inside `createOrderWithItem()` so the "shipped" transition satisfies the new guard from Step 4.)
+Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 7: Commit**
 
 ```bash
-cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo"
+cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo/.claude/worktrees/manual-payment"
 git add api/app/Filament/Resources/OrderResource.php api/app/Filament/Resources/OrderResource/Pages/ViewOrder.php \
   api/tests/Feature/Order/OrderUpdateStatusActionTest.php api/tests/Feature/Order/AdminPaymentVerificationTest.php
 git commit -m "feat(admin): manual payment verification workflow"
@@ -1997,7 +2023,7 @@ Expected: PASS
 - [ ] **Step 6: Commit**
 
 ```bash
-cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo"
+cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo/.claude/worktrees/manual-payment"
 git add storefront/app/types/index.ts storefront/app/services/orderService.ts storefront/tests/orderService.test.ts
 git commit -m "refactor(storefront): order_status/payment_status types, drop Midtrans from orderService"
 ```
@@ -2038,7 +2064,7 @@ Run: `cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo/storefront" && npm 
 - [ ] **Step 4: Commit**
 
 ```bash
-cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo"
+cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo/.claude/worktrees/manual-payment"
 git add storefront/app/pages/checkout/index.vue
 git commit -m "refactor(checkout): remove Midtrans Snap popup flow"
 ```
@@ -2219,7 +2245,7 @@ With both dev servers running, open an order in `unpaid` state: confirm payment 
 - [ ] **Step 7: Commit**
 
 ```bash
-cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo"
+cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo/.claude/worktrees/manual-payment"
 git add "storefront/app/pages/orders/[orderNumber].vue"
 git commit -m "feat(orders): payment proof upload + WA/LINE confirmation UI"
 ```
@@ -2304,7 +2330,7 @@ Run `npm run dev`, load the homepage, scroll to footer, confirm the "Metode Pemb
 - [ ] **Step 6: Commit**
 
 ```bash
-cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo"
+cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo/.claude/worktrees/manual-payment"
 git add storefront/app/components/AppFooter.vue storefront/app/services/api.ts storefront/.env storefront/nuxt.config.ts
 git commit -m "refactor(storefront): live payment methods in footer, drop Midtrans env"
 ```
@@ -2327,7 +2353,7 @@ Expected: PASS.
 
 - [ ] **Step 3: Grep the whole repo for any remaining Midtrans reference**
 
-Run: `cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo" && grep -rin "midtrans" api/app api/config api/routes api/tests storefront/app storefront/.env storefront/nuxt.config.ts docs/api CLAUDE.md 2>/dev/null`
+Run: `cd "/Users/adiprimanto/Developer/Rangkai Web/bbystargo/.claude/worktrees/manual-payment" && grep -rin "midtrans" api/app api/config api/routes api/tests storefront/app storefront/.env storefront/nuxt.config.ts docs/api CLAUDE.md 2>/dev/null`
 Expected: no output (a hit here means a step above was missed).
 
 - [ ] **Step 4: Manual end-to-end browser check**

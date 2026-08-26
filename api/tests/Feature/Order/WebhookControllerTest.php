@@ -45,7 +45,7 @@ class WebhookControllerTest extends TestCase
             'shipping_cost' => 15000,
             'subtotal' => 200000,
             'total' => 215000,
-            'status' => 'pending',
+            'order_status' => 'pending',
         ]);
 
         $item = $order->items()->create([
@@ -73,7 +73,7 @@ class WebhookControllerTest extends TestCase
         ]);
 
         $response->assertStatus(200);
-        $this->assertEquals('paid', $order->fresh()->status);
+        $this->assertEquals('paid', $order->fresh()->order_status);
     }
 
     public function test_midtrans_webhook_releases_stock_when_cancelled_or_expired(): void
@@ -93,7 +93,7 @@ class WebhookControllerTest extends TestCase
         ]);
 
         $response->assertStatus(200);
-        $this->assertEquals('expired', $order->fresh()->status);
+        $this->assertEquals('expired', $order->fresh()->order_status);
         $this->assertEquals(10, $variant->fresh()->stock); // 8 + 2
     }
 }

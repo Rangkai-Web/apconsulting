@@ -34,7 +34,7 @@ class OrderResourcePanelTest extends TestCase
             'shipping_cost' => 15000,
             'subtotal' => 200000,
             'total' => 215000,
-            'status' => 'pending',
+            'order_status' => 'pending',
         ]);
 
         $response = $this->actingAs($admin, 'admin')->get('/admin/orders');
@@ -80,7 +80,7 @@ class OrderResourcePanelTest extends TestCase
             'shipping_cost' => 15000,
             'subtotal' => 200000,
             'total' => 215000,
-            'status' => 'pending',
+            'order_status' => 'pending',
         ]);
         $order->items()->create([
             'product_variant_id' => $variant->id,
@@ -110,7 +110,7 @@ class OrderResourcePanelTest extends TestCase
             'shipping_cost' => 15000,
             'subtotal' => 200000,
             'total' => 215000,
-            'status' => 'pending',
+            'order_status' => 'pending',
         ]);
 
         $response = $this->actingAs($admin, 'admin')->get('/admin/orders');

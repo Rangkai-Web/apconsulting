@@ -24,7 +24,7 @@ class ViewOrder extends ViewRecord
                     Select::make('status')
                         ->label('Status')
                         ->options(OrderResource::statusOptions())
-                        ->default(fn (Order $record): string => $record->status)
+                        ->default(fn (Order $record): string => $record->order_status)
                         ->live()
                         ->required(),
                     TextInput::make('tracking_number')
@@ -33,8 +33,8 @@ class ViewOrder extends ViewRecord
                         ->required(fn (Get $get): bool => $get('status') === 'shipped'),
                 ])
                 ->action(function (array $data, Order $record): void {
-                    $oldStatus = $record->status;
-                    $record->status = $data['status'];
+                    $oldStatus = $record->order_status;
+                    $record->order_status = $data['status'];
 
                     if ($data['status'] === 'shipped' && ! empty($data['tracking_number'])) {
                         $record->tracking_number = $data['tracking_number'];

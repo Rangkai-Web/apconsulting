@@ -91,7 +91,8 @@ class OrderApiTest extends TestCase
         $this->assertDatabaseHas('orders', [
             'user_id' => $user->id,
             'total' => 215000, // 200000 + 15000
-            'status' => 'pending',
+            'order_status' => 'pending',
+            'payment_status' => 'unpaid',
         ]);
     }
 
@@ -132,6 +133,8 @@ class OrderApiTest extends TestCase
             'guest_name' => 'Guest User',
             'guest_email' => 'guest@example.com',
             'total' => 112000, // 100000 + 12000
+            'order_status' => 'pending',
+            'payment_status' => 'unpaid',
         ]);
     }
 
@@ -179,7 +182,7 @@ class OrderApiTest extends TestCase
             'shipping_cost' => 15000,
             'subtotal' => 100000,
             'total' => 115000,
-            'status' => 'pending',
+            'order_status' => 'pending',
         ]);
 
         $response = $this->getJson('/api/orders/lookup?order_number=ORD-TEST-123&email=guest@example.com');

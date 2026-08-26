@@ -16,13 +16,13 @@ class ExpirePendingOrders extends Command
     {
         $threshold = now()->subHours(config('midtrans.order_expire_hours'));
 
-        $orders = Order::where('status', 'pending')
+        $orders = Order::where('order_status', 'pending')
             ->where('created_at', '<=', $threshold)
             ->with('items.variant')
             ->get();
 
         foreach ($orders as $order) {
-            $order->status = 'expired';
+            $order->order_status = 'expired';
             $order->save();
             $order->releaseStockIfApplicable('pending', 'expired');
         }

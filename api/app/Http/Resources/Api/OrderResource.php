@@ -12,7 +12,7 @@ class OrderResource extends JsonResource
         return [
             'id' => $this->id,
             'order_number' => $this->order_number,
-            'status' => $this->status,
+            'status' => $this->order_status,
             'courier' => $this->courier,
             'courier_service' => $this->courier_service,
             'shipping_cost' => $this->shipping_cost,

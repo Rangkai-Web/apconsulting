@@ -24,7 +24,7 @@ class RatingController extends Controller
         }
 
         // Verify order is completed
-        if ($orderItem->order->status !== 'completed') {
+        if ($orderItem->order->order_status !== 'completed') {
             return response()->json(['message' => 'Anda hanya bisa memberi rating pada pesanan yang sudah selesai.'], 422);
         }
 

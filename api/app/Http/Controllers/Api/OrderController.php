@@ -211,7 +211,7 @@ class OrderController extends Controller
                     'shipping_cost' => $shippingCost,
                     'subtotal' => $subtotal,
                     'total' => $total,
-                    'status' => 'pending',
+                    'order_status' => 'pending',
                 ]);
 
                 // Save Order Items
@@ -253,18 +253,9 @@ class OrderController extends Controller
             }
         }
 
-        if ($order->status !== 'pending') {
+        if ($order->order_status !== 'pending') {
             return response()->json(['message' => 'Pesanan ini sudah dibayar atau dibatalkan.'], 422);
         }
-
-        // Generate a new Midtrans order ID attempt since Snap requires a unique ID per try
-        $attempt = 1;
-        if ($order->midtrans_order_id && str_contains($order->midtrans_order_id, '-')) {
-            $parts = explode('-', $order->midtrans_order_id);
-            $attempt = (int) end($parts) + 1;
-        }
-        $order->midtrans_order_id = "{$order->order_number}-{$attempt}";
-        $order->save();
 
         $snapToken = $this->getMidtransSnapToken($order);
 
@@ -324,12 +315,6 @@ class OrderController extends Controller
         $serverKey = config('midtrans.server_key');
         $isProduction = config('midtrans.is_production');
 
-        // Increment attempt on midtrans_order_id if not set yet
-        if (! $order->midtrans_order_id) {
-            $order->midtrans_order_id = "{$order->order_number}-1";
-            $order->save();
-        }
-
         // Mock fallback for development if keys are missing
         if (empty($serverKey)) {
             Log::info('Midtrans server key is empty. Using mock snap_token for dev.');
@@ -348,7 +333,7 @@ class OrderController extends Controller
             $response = Http::withBasicAuth($serverKey, '')
                 ->post($url, [
                     'transaction_details' => [
-                        'order_id' => $order->midtrans_order_id,
+                        'order_id' => $order->order_number,
                         'gross_amount' => $order->total,
                     ],
                     'credit_card' => [

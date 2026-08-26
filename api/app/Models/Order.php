@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Log;
 #[Fillable([
     'order_number', 'user_id', 'guest_name', 'guest_email', 'guest_phone',
     'shipping_address', 'courier', 'courier_service', 'shipping_cost',
-    'subtotal', 'total', 'status', 'midtrans_order_id', 'midtrans_transaction_id',
+    'subtotal', 'total', 'order_status', 'payment_status',
+    'payment_proof', 'payment_proof_uploaded_at', 'payment_rejected_reason',
     'tracking_number', 'shipped_at', 'completed_at',
 ])]
 class Order extends Model

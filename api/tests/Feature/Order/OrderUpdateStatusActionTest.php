@@ -44,7 +44,7 @@ class OrderUpdateStatusActionTest extends TestCase
             'shipping_cost' => 15000,
             'subtotal' => 200000,
             'total' => 215000,
-            'status' => $status,
+            'order_status' => $status,
         ]);
         $order->items()->create([
             'product_variant_id' => $variant->id,
@@ -72,7 +72,7 @@ class OrderUpdateStatusActionTest extends TestCase
             ->assertHasNoActionErrors();
 
         $fresh = $order->fresh();
-        $this->assertEquals('shipped', $fresh->status);
+        $this->assertEquals('shipped', $fresh->order_status);
         $this->assertEquals('JNE123456', $fresh->tracking_number);
         $this->assertNotNull($fresh->shipped_at);
     }
@@ -86,7 +86,7 @@ class OrderUpdateStatusActionTest extends TestCase
             ->test(ViewOrder::class, ['record' => $order->getRouteKey()])
             ->callAction('updateStatus', data: ['status' => 'cancelled']);
 
-        $this->assertEquals('cancelled', $order->fresh()->status);
+        $this->assertEquals('cancelled', $order->fresh()->order_status);
         $this->assertEquals(10, $variant->fresh()->stock);
     }
 
@@ -99,7 +99,7 @@ class OrderUpdateStatusActionTest extends TestCase
             ->test(ViewOrder::class, ['record' => $order->getRouteKey()])
             ->callAction('updateStatus', data: ['status' => 'cancelled']);
 
-        $this->assertEquals('cancelled', $order->fresh()->status);
+        $this->assertEquals('cancelled', $order->fresh()->order_status);
         $this->assertEquals(8, $variant->fresh()->stock);
     }
 
@@ -113,6 +113,6 @@ class OrderUpdateStatusActionTest extends TestCase
             ->callAction('updateStatus', data: ['status' => 'shipped'])
             ->assertHasActionErrors(['tracking_number' => 'required']);
 
-        $this->assertEquals('paid', $order->fresh()->status);
+        $this->assertEquals('paid', $order->fresh()->order_status);
     }
 }

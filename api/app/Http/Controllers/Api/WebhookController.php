@@ -33,11 +33,9 @@ class WebhookController extends Controller
 
         // Find order
         $order = Order::with('items.variant')
-            ->where('midtrans_order_id', $orderId)
-            ->orWhere('order_number', $orderId)
+            ->where('order_number', $orderId)
             // Strip the trailing "-{attempt}" suffix so a payment that settles on an
-            // older retry attempt still resolves, even if midtrans_order_id has since
-            // moved on to a newer attempt.
+            // older retry attempt still resolves.
             ->orWhere('order_number', preg_replace('/-\d+$/', '', $orderId))
             ->first();
 
@@ -70,20 +68,15 @@ class WebhookController extends Controller
         }
 
         // Idempotency: skip if order is already processed to prevent stock bugs or status regression
-        if (in_array($order->status, ['paid', 'processing', 'shipped', 'completed'])) {
+        if (in_array($order->order_status, ['paid', 'processing', 'shipped', 'completed'])) {
             if (in_array($newStatus, ['cancelled', 'expired'])) {
                 Log::info("Midtrans Webhook: Attempted to cancel/expire already paid order {$order->order_number}. Ignored.");
                 return response()->json(['message' => 'Order already paid, cannot cancel.'], 200);
             }
         }
 
-        // If transitioning to paid/processing, set midtrans fields
-        if ($newStatus === 'paid') {
-            $order->midtrans_transaction_id = $request->input('transaction_id');
-        }
-
-        $oldStatus = $order->status;
-        $order->status = $newStatus;
+        $oldStatus = $order->order_status;
+        $order->order_status = $newStatus;
         $order->save();
 
         $order->releaseStockIfApplicable($oldStatus, $newStatus);
