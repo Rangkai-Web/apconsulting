@@ -53,6 +53,7 @@ class PaymentMethodResource extends Resource
                 ->disk('public_uploads')
                 ->directory('payment-methods')
                 ->image()
+                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                 ->maxSize(2048)
                 ->helperText('Format: JPG, PNG, WEBP. Maksimal 2MB.'),
             Textarea::make('instructions')
