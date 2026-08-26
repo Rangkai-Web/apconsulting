@@ -25,6 +25,7 @@ Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,
 // Public order checkout & guest lookup routes
 Route::post('/orders', [OrderController::class, 'store']);
 Route::get('/orders/lookup', [OrderController::class, 'lookup']);
+Route::post('/orders/{order_number}/payment-proof', [OrderController::class, 'uploadPaymentProof']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);

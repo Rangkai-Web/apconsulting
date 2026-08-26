@@ -159,6 +159,25 @@ Allows guests to track and retrieve their order status using their order number 
 
 ---
 
+## POST /api/orders/{order_number}/payment-proof
+
+Uploads a transfer proof for a pending manual payment. Sets `payment_status` to `awaiting_verification`.
+
+**Auth:** none for guests (must supply matching `guest_email`); Sanctum member must own the order.
+
+**Request:** `multipart/form-data`
+
+| Field | Type | Notes |
+|---|---|---|
+| `proof` | file | Required. jpg/png/webp, max 2MB |
+| `guest_email` | string | Required only for guest orders — must match the order's `guest_email` |
+
+**Response 200** — `{ "data": <order, same shape as GET /orders/{order_number}> }`
+
+**Response 403** — email/ownership mismatch. **Response 422** — `payment_status` already `awaiting_verification`/`paid`, or invalid file.
+
+---
+
 ## POST /api/webhooks/midtrans
 
 Receives Midtrans payment notification callbacks and updates order status accordingly. Not called by the storefront directly — configured as the notification URL in the Midtrans dashboard.

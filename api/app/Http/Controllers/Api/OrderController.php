@@ -238,6 +238,41 @@ class OrderController extends Controller
         }
     }
 
+    public function uploadPaymentProof(Request $request, $orderNumber)
+    {
+        $order = Order::where('order_number', $orderNumber)->firstOrFail();
+
+        $user = $request->user('sanctum');
+
+        if ($user) {
+            abort_if($order->user_id !== $user->id, 403, 'Unauthorized.');
+        } else {
+            $validatedEmail = $request->validate(['guest_email' => ['required', 'email']]);
+            abort_if($order->guest_email !== $validatedEmail['guest_email'], 403, 'Unauthorized.');
+        }
+
+        abort_if(
+            ! in_array($order->payment_status, ['unpaid', 'rejected']),
+            422,
+            'Bukti pembayaran sudah diunggah untuk pesanan ini.',
+        );
+
+        $request->validate([
+            'proof' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+        ]);
+
+        $path = $request->file('proof')->store('payment-proofs', 'public_uploads');
+
+        $order->update([
+            'payment_proof' => $path,
+            'payment_proof_uploaded_at' => now(),
+            'payment_status' => 'awaiting_verification',
+            'payment_rejected_reason' => null,
+        ]);
+
+        return response()->json(['data' => new OrderResource($order)]);
+    }
+
     public function requestSnapToken(Request $request, $orderNumber)
     {
         $order = Order::where('order_number', $orderNumber)->firstOrFail();
