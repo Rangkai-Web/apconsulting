@@ -67,6 +67,12 @@ class SettingsPage extends Page implements HasForms
                     ->tel()
                     ->maxLength(255)
                     ->helperText('Gunakan format kode negara tanpa tanda +, misal: 628123456789'),
+                TextInput::make('line_url')
+                    ->label('Link LINE OA')
+                    ->url()
+                    ->placeholder('https://line.me/ti/p/@namaakun')
+                    ->maxLength(255)
+                    ->helperText('Link resmi LINE Official Account toko, dipakai sebagai tombol konfirmasi pembayaran.'),
                 TextInput::make('instagram_url')
                     ->label('Instagram URL')
                     ->url()
