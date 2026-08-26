@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\ShippingController;
 use App\Http\Controllers\Api\WebhookController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\BannerController;
+use App\Http\Controllers\Api\PaymentMethodController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', function () {
@@ -56,6 +57,9 @@ Route::get('/settings', [SettingsController::class, 'show']);
 
 // Public banners route
 Route::get('/banners', [BannerController::class, 'index']);
+
+// Public payment methods route
+Route::get('/payment-methods', [PaymentMethodController::class, 'index']);
 
 // Public shipping route — stricter throttle: this proxies a paid-per-call RajaOngkir endpoint
 Route::post('/shipping/cost', [ShippingController::class, 'cost'])->middleware('throttle:10,1');
