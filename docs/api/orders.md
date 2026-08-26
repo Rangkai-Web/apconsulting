@@ -52,8 +52,7 @@ Submits a checkout order from the cart. Open to both authenticated members and g
 **Response 201**
 ```json
 {
-  "order_number": "ORD-20260625-ABCDEF",
-  "snap_token": "mock-snap-token-xyz-12345"
+  "order_number": "ORD-20260625-ABCDEF"
 }
 ```
 
@@ -74,7 +73,7 @@ or
 
 Lists order history for the authenticated member. Requires Sanctum.
 
-Response is wrapped through `OrderResource`/`OrderItemResource` — only the fields below are ever returned. Internal fields (`guest_email`, `guest_phone`, `midtrans_order_id`, `midtrans_transaction_id`, `shipped_at`, `completed_at`, `updated_at`, `user_id`) are never exposed.
+Response is wrapped through `OrderResource`/`OrderItemResource` — only the fields below are ever returned. Internal fields (`guest_email`, `guest_phone`, `payment_proof_uploaded_at`, `shipped_at`, `completed_at`, `updated_at`, `user_id`) are never exposed.
 
 **Response 200**
 ```json
@@ -83,7 +82,10 @@ Response is wrapped through `OrderResource`/`OrderItemResource` — only the fie
     {
       "id": 1,
       "order_number": "ORD-20260625-ABCDEF",
-      "status": "pending",
+      "order_status": "pending",
+      "payment_status": "unpaid",
+      "payment_proof": null,
+      "payment_rejected_reason": null,
       "courier": "jne",
       "courier_service": "REG",
       "shipping_cost": 15000,
@@ -134,19 +136,6 @@ Gets details of an order. For members, must own the order. Guests should use `/o
 
 ---
 
-## POST /api/orders/{order_number}/snap-token
-
-Requests a fresh Midtrans Snap token for a pending order (e.g. if the user closed the payment modal and wants to retry).
-
-**Response 200**
-```json
-{
-  "snap_token": "new-mock-snap-token-98765"
-}
-```
-
----
-
 ## GET /api/orders/lookup
 
 Allows guests to track and retrieve their order status using their order number and email.
@@ -175,24 +164,3 @@ Uploads a transfer proof for a pending manual payment. Sets `payment_status` to 
 **Response 200** — `{ "data": <order, same shape as GET /orders/{order_number}> }`
 
 **Response 403** — email/ownership mismatch. **Response 422** — `payment_status` already `awaiting_verification`/`paid`, or invalid file.
-
----
-
-## POST /api/webhooks/midtrans
-
-Receives Midtrans payment notification callbacks and updates order status accordingly. Not called by the storefront directly — configured as the notification URL in the Midtrans dashboard.
-
-**Auth:** none (verified instead via Midtrans `signature_key`, skipped only when `MIDTRANS_SERVER_KEY` is empty, e.g. local/testing)
-
-Maps `transaction_status`/`fraud_status` to an order status: `capture`+`accept` or `settlement` → `paid`, `capture`+`challenge` or `pending` → `pending`, `deny`/`cancel` → `cancelled`, `expire` → `expired`. Idempotent — ignores cancel/expire callbacks for orders already `paid`/`processing`/`shipped`/`completed`, and releases reserved stock when a paid order transitions to `cancelled`/`expired`. On transition to `paid`, notifies all admins via Filament database notification and email (`OrderPaidNotification`).
-
-**Response 200**
-```json
-{
-  "message": "Webhook processed successfully.",
-  "order_number": "ORD-20260625-ABCDEF",
-  "status": "paid"
-}
-```
-
-**Response 403** — invalid signature. **Response 404** — order not found for the given `order_id`.

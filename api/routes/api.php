@@ -8,7 +8,6 @@ use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\Api\ShippingController;
-use App\Http\Controllers\Api\WebhookController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\PaymentMethodController;
@@ -42,7 +41,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Order routes (member)
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{order_number}', [OrderController::class, 'show']);
-    Route::post('/orders/{order_number}/snap-token', [OrderController::class, 'requestSnapToken']);
 
     // Rating routes
     Route::post('/order-items/{id}/rating', [RatingController::class, 'rate']);
@@ -69,6 +67,3 @@ Route::post('/shipping/cost', [ShippingController::class, 'cost'])->middleware('
 Route::get('/shipping/provinces', [ShippingController::class, 'provinces']);
 Route::get('/shipping/cities', [ShippingController::class, 'cities']);
 Route::get('/shipping/districts', [ShippingController::class, 'districts']);
-
-// Public webhook route
-Route::post('/webhooks/midtrans', [WebhookController::class, 'midtrans']);

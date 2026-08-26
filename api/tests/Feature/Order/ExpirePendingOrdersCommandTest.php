@@ -117,4 +117,30 @@ class ExpirePendingOrdersCommandTest extends TestCase
         $this->assertEquals('expired', $order->fresh()->order_status);
         $this->assertEquals(10, $variant->fresh()->stock); // 8 + 2 = 10, not 12 — no double release
     }
+
+    public function test_does_not_expire_order_awaiting_payment_verification(): void
+    {
+        $order = Order::factory()->create([
+            'order_status' => 'pending',
+            'payment_status' => 'awaiting_verification',
+            'created_at' => now()->subHours(25),
+        ]);
+
+        $this->artisan('orders:expire-pending');
+
+        $this->assertEquals('pending', $order->fresh()->order_status);
+    }
+
+    public function test_expires_a_rejected_and_abandoned_order(): void
+    {
+        $order = Order::factory()->create([
+            'order_status' => 'pending',
+            'payment_status' => 'rejected',
+            'created_at' => now()->subHours(25),
+        ]);
+
+        $this->artisan('orders:expire-pending');
+
+        $this->assertEquals('expired', $order->fresh()->order_status);
+    }
 }

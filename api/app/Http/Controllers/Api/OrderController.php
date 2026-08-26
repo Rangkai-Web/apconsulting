@@ -13,7 +13,6 @@ use App\Services\RajaOngkirService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -222,12 +221,8 @@ class OrderController extends Controller
                 return $order;
             });
 
-            // Call Midtrans Snap API
-            $snapToken = $this->getMidtransSnapToken($order);
-
             return response()->json([
                 'order_number' => $order->order_number,
-                'snap_token' => $snapToken,
             ], 201);
 
         } catch (ValidationException $e) {
@@ -271,32 +266,6 @@ class OrderController extends Controller
         ]);
 
         return response()->json(['data' => new OrderResource($order)]);
-    }
-
-    public function requestSnapToken(Request $request, $orderNumber)
-    {
-        $order = Order::where('order_number', $orderNumber)->firstOrFail();
-
-        // Access check
-        if ($request->user()) {
-            if ($order->user_id !== $request->user()->id) {
-                return response()->json(['message' => 'Unauthorized.'], 403);
-            }
-        } else {
-            if ($order->user_id !== null) {
-                return response()->json(['message' => 'Unauthorized.'], 403);
-            }
-        }
-
-        if ($order->order_status !== 'pending') {
-            return response()->json(['message' => 'Pesanan ini sudah dibayar atau dibatalkan.'], 422);
-        }
-
-        $snapToken = $this->getMidtransSnapToken($order);
-
-        return response()->json([
-            'snap_token' => $snapToken,
-        ]);
     }
 
     private function verifiedShippingCost(?int $destinationDistrictId, int $totalWeight, string $courier, string $courierService): int
@@ -343,70 +312,5 @@ class OrderController extends Controller
         }
 
         return (int) $match['cost'];
-    }
-
-    private function getMidtransSnapToken(Order $order): string
-    {
-        $serverKey = config('midtrans.server_key');
-        $isProduction = config('midtrans.is_production');
-
-        // Mock fallback for development if keys are missing
-        if (empty($serverKey)) {
-            Log::info('Midtrans server key is empty. Using mock snap_token for dev.');
-            return 'mock-snap-token-' . Str::random(10);
-        }
-
-        $url = $isProduction
-            ? 'https://app.midtrans.com/snap/v1/transactions'
-            : 'https://app.sandbox.midtrans.com/snap/v1/transactions';
-
-        $customerEmail = $order->user ? $order->user->email : $order->guest_email;
-        $customerName = $order->user ? $order->user->name : $order->guest_name;
-        $customerPhone = $order->user ? ($order->user->phone ?? $order->shipping_address['phone']) : $order->guest_phone;
-
-        try {
-            $response = Http::withBasicAuth($serverKey, '')
-                ->post($url, [
-                    'transaction_details' => [
-                        'order_id' => $order->order_number,
-                        'gross_amount' => $order->total,
-                    ],
-                    'credit_card' => [
-                        'secure' => true,
-                    ],
-                    'customer_details' => [
-                        'first_name' => $customerName,
-                        'email' => $customerEmail,
-                        'phone' => $customerPhone,
-                        'billing_address' => [
-                            'first_name' => $order->shipping_address['recipient_name'],
-                            'phone' => $order->shipping_address['phone'],
-                            'address' => $order->shipping_address['full_address'],
-                            'city' => $order->shipping_address['city'],
-                            'postal_code' => $order->shipping_address['postal_code'],
-                        ],
-                        'shipping_address' => [
-                            'first_name' => $order->shipping_address['recipient_name'],
-                            'phone' => $order->shipping_address['phone'],
-                            'address' => $order->shipping_address['full_address'],
-                            'city' => $order->shipping_address['city'],
-                            'postal_code' => $order->shipping_address['postal_code'],
-                        ]
-                    ]
-                ]);
-
-            if ($response->failed()) {
-                throw new \RuntimeException('Midtrans request failed with status ' . $response->status() . ': ' . $response->body());
-            }
-
-            return $response->json('token');
-        } catch (\Throwable $e) {
-            Log::error('Gagal mendapatkan token Midtrans Snap: ' . $e->getMessage());
-            // Fallback for offline mode in local testing to not block developers
-            if (config('app.env') === 'local' || config('app.env') === 'testing') {
-                return 'mock-snap-token-' . Str::random(10);
-            }
-            throw $e;
-        }
     }
 }

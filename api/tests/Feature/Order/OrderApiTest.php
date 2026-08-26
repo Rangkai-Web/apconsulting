@@ -84,7 +84,8 @@ class OrderApiTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-            ->assertJsonStructure(['order_number', 'snap_token']);
+            ->assertJsonStructure(['order_number'])
+            ->assertJsonMissing(['snap_token']);
 
         $this->assertEquals(3, $variant->fresh()->stock);
 
@@ -124,7 +125,8 @@ class OrderApiTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-            ->assertJsonStructure(['order_number', 'snap_token']);
+            ->assertJsonStructure(['order_number'])
+            ->assertJsonMissing(['snap_token']);
 
         $this->assertEquals(4, $variant->fresh()->stock);
 
@@ -189,7 +191,6 @@ class OrderApiTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonPath('data.order_number', 'ORD-TEST-123')
-            ->assertJsonMissingPath('data.guest_email')
-            ->assertJsonMissingPath('data.midtrans_order_id');
+            ->assertJsonMissingPath('data.guest_email');
     }
 }

@@ -10,13 +10,14 @@ class ExpirePendingOrders extends Command
 {
     protected $signature = 'orders:expire-pending';
 
-    protected $description = 'Expire pending orders that have passed the Snap token expiry window and release their reserved stock.';
+    protected $description = 'Expire pending orders whose payment was never completed or verified, and release their reserved stock.';
 
     public function handle(): void
     {
-        $threshold = now()->subHours(config('midtrans.order_expire_hours'));
+        $threshold = now()->subHours((int) config('orders.expire_hours'));
 
         $orders = Order::where('order_status', 'pending')
+            ->where('payment_status', '!=', 'awaiting_verification')
             ->where('created_at', '<=', $threshold)
             ->with('items.variant')
             ->get();
