@@ -31,6 +31,6 @@ class OrderPaidNotification extends Notification
             ->line('**Customer:** ' . $customerName)
             ->line('**Total:** ' . $total)
             ->action('Lihat Pesanan', $adminUrl)
-            ->salutation('DR Plant Indonesia Admin');
+            ->salutation('BbystarGO Admin');
     }
 }

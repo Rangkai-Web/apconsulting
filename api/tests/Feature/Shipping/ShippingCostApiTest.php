@@ -37,7 +37,7 @@ class ShippingCostApiTest extends TestCase
     public function test_returns_courier_list_for_valid_district_and_weight(): void
     {
         $this->fakeRajaOngkirSuccess();
-        StoreSetting::create(['store_name' => 'Doctor Plant Indonesia', 'rajaongkir_origin_district_id' => 501]);
+        StoreSetting::create(['store_name' => 'BbystarGO', 'rajaongkir_origin_district_id' => 501]);
         $district = $this->seedDestinationDistrict();
 
         $response = $this->postJson('/api/shipping/cost', [
@@ -53,7 +53,7 @@ class ShippingCostApiTest extends TestCase
     public function test_caches_result_for_same_district_and_weight(): void
     {
         $this->fakeRajaOngkirSuccess();
-        StoreSetting::create(['store_name' => 'Doctor Plant Indonesia', 'rajaongkir_origin_district_id' => 501]);
+        StoreSetting::create(['store_name' => 'BbystarGO', 'rajaongkir_origin_district_id' => 501]);
         $district = $this->seedDestinationDistrict();
 
         $this->postJson('/api/shipping/cost', ['district_id' => $district->id, 'total_weight' => 1000]);
@@ -64,7 +64,7 @@ class ShippingCostApiTest extends TestCase
 
     public function test_rejects_unknown_district_id(): void
     {
-        StoreSetting::create(['store_name' => 'Doctor Plant Indonesia', 'rajaongkir_origin_district_id' => 501]);
+        StoreSetting::create(['store_name' => 'BbystarGO', 'rajaongkir_origin_district_id' => 501]);
 
         $response = $this->postJson('/api/shipping/cost', ['district_id' => 999999, 'total_weight' => 1000]);
 
@@ -84,7 +84,7 @@ class ShippingCostApiTest extends TestCase
     public function test_returns_503_when_rajaongkir_call_fails(): void
     {
         Http::fake(['*/calculate/district/domestic-cost' => Http::response(['message' => 'Unauthorized'], 401)]);
-        StoreSetting::create(['store_name' => 'Doctor Plant Indonesia', 'rajaongkir_origin_district_id' => 501]);
+        StoreSetting::create(['store_name' => 'BbystarGO', 'rajaongkir_origin_district_id' => 501]);
         $district = $this->seedDestinationDistrict();
 
         $response = $this->postJson('/api/shipping/cost', ['district_id' => $district->id, 'total_weight' => 1000]);
@@ -96,7 +96,7 @@ class ShippingCostApiTest extends TestCase
     public function test_throttles_after_10_requests_per_minute(): void
     {
         $this->fakeRajaOngkirSuccess();
-        StoreSetting::create(['store_name' => 'Doctor Plant Indonesia', 'rajaongkir_origin_district_id' => 501]);
+        StoreSetting::create(['store_name' => 'BbystarGO', 'rajaongkir_origin_district_id' => 501]);
         $district = $this->seedDestinationDistrict();
 
         for ($i = 0; $i < 10; $i++) {

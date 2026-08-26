@@ -122,7 +122,7 @@ watch(() => route.query, syncFromRoute);
         />
         <span
           class="text-xs uppercase tracking-widest text-primary-400 font-extrabold mb-2 block"
-          >Doctor Plant Indonesia</span
+          >BbystarGO</span
         >
         <h1 class="text-2xl md:text-4xl font-extrabold tracking-tight">
           Katalog Produk

@@ -62,7 +62,7 @@ function confirmRemove() {
         <EmptyState
           icon="i-heroicons-shopping-cart"
           title="Keranjang Anda Kosong"
-          description="Yuk mulai telusuri katalog dan temukan produk skincare dan perawatan terbaik untuk kulit Anda."
+          description="Yuk mulai telusuri katalog dan temukan produk Ready Stock &amp; Pre Order favoritmu."
           action-label="Lihat Katalog"
           action-to="/katalog"
         />

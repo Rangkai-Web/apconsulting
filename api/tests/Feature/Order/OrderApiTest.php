@@ -43,7 +43,7 @@ class OrderApiTest extends TestCase
 
     private function seedShippingFixtures(int $destinationDistrictId, string $courier, string $service, int $cost): void
     {
-        StoreSetting::create(['store_name' => 'Doctor Plant Indonesia', 'rajaongkir_origin_district_id' => 501]);
+        StoreSetting::create(['store_name' => 'BbystarGO', 'rajaongkir_origin_district_id' => 501]);
         RajaongkirProvince::create(['id' => 1, 'name' => 'Jawa Barat']);
         RajaongkirCity::create(['id' => 1, 'province_id' => 1, 'name' => 'Bandung']);
         RajaongkirDistrict::create(['id' => $destinationDistrictId, 'city_id' => 1, 'name' => 'Coblong']);

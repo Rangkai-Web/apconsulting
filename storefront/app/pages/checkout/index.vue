@@ -114,6 +114,7 @@ const couriersList = [
   { code: "jne", name: "JNE" },
   { code: "jnt", name: "J&T" },
   { code: "sicepat", name: "SiCepat" },
+  { code: "pos", name: "POS Indonesia" },
 ];
 const selectedCourier = ref<string>("");
 const shippingServices = ref<any[]>([]);
@@ -626,7 +627,7 @@ async function handleCheckout() {
         <EmptyState
           icon="i-heroicons-shopping-cart"
           title="Keranjang Belanja Kosong"
-          description="Tambahkan beberapa produk skincare terbaik kami ke keranjang belanja Anda terlebih dahulu."
+          description="Tambahkan beberapa produk pilihan kami ke keranjang belanja Anda terlebih dahulu."
           action-label="Mulai Belanja"
           action-to="/katalog"
         />

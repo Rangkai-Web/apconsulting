@@ -6,7 +6,6 @@ use App\Models\RajaongkirDistrict;
 use App\Models\StoreSetting;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -35,7 +34,7 @@ class SettingsPage extends Page implements HasForms
     public function mount(): void
     {
         $settings = StoreSetting::firstOrCreate([], [
-            'store_name' => 'Doctor Plant Indonesia',
+            'store_name' => 'BbystarGO',
         ]);
         $this->form->fill($settings->toArray());
     }
@@ -95,26 +94,6 @@ class SettingsPage extends Page implements HasForms
                     ->placeholder('Pilih kecamatan asal pengiriman')
                     ->required()
                     ->helperText('Wajib diisi supaya fitur cek ongkir di storefront berfungsi. Pastikan kota/provinsi yang tertera sesuai — beberapa kecamatan punya nama sama di daerah berbeda.'),
-                RichEditor::make('about_content')
-                    ->label('Konten Halaman Tentang Kami')
-                    ->columnSpanFull()
-                    ->toolbarButtons([
-                        'bold',
-                        'italic',
-                        'strike',
-                        'underline',
-                        'bulletList',
-                        'orderedList',
-                        'h2',
-                        'h3',
-                        'attachFiles',
-                        'redo',
-                        'undo',
-                    ])
-                    ->fileAttachmentsDisk('public_uploads')
-                    ->fileAttachmentsDirectory('settings/about')
-                    ->fileAttachmentsVisibility('public')
-                    ->helperText('Tampil di halaman /about storefront. Kosongkan untuk pakai teks bawaan.'),
             ])
             ->statePath('data');
     }

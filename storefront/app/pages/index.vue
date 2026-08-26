@@ -21,27 +21,27 @@ interface BannerItem {
 
 const defaultBanners: BannerItem[] = [
   {
-    title: "Perawatan Kulit Alami Berbasis Alpine Plants",
+    title: "Belanja Tanpa Batas Negara",
     subtitle:
-      "Rangkaian produk hidrasi premium dari ekstrak tanaman pegunungan tinggi untuk kulit sehat berseri.",
+      "Titip beli produk favoritmu dari Korea, China, Jepang, dan negara lain — aman sampai ke tanganmu.",
     image:
-      "https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1600&h=600&q=80",
+      "https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=1600&h=600&q=80",
     link: "/katalog",
   },
   {
-    title: "Sheet Mask Mewah untuk Hidrasi Instan",
+    title: "Ready Stock, Kirim Langsung",
     subtitle:
-      "Mengembalikan kelembaban optimal dan menyegarkan kulit lelah dalam 15 menit.",
+      "Barang sudah tersedia di gudang kami — pesan hari ini, diproses tanpa perlu menunggu impor.",
     image:
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1600&h=600&q=80",
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&w=1600&h=600&q=80",
     link: "/katalog",
   },
   {
-    title: "Layanan Facial Treatment Eksklusif",
+    title: "Pre Order Terpercaya",
     subtitle:
-      "Perawatan kulit mendalam dengan teknologi ultrasound dan terapis berpengalaman di klinik kami.",
+      "Kami urus pemesanan langsung dari negara asal sampai bersih ke tanganmu.",
     image:
-      "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=1600&h=600&q=80",
+      "https://images.unsplash.com/photo-1591370874773-6702e8f12fd8?auto=format&fit=crop&w=1600&h=600&q=80",
     link: "/katalog",
   },
 ];
@@ -109,7 +109,7 @@ onMounted(async () => {
             >
               <span
                 class="text-[9px] sm:text-xs uppercase tracking-widest text-primary-400 font-extrabold mb-1"
-                >Doctor Plant Indonesia</span
+                >BbystarGO</span
               >
               <h2
                 class="text-lg sm:text-2xl md:text-4xl font-extrabold max-w-xs sm:max-w-lg tracking-tight leading-snug sm:leading-tight line-clamp-2"
@@ -133,6 +133,78 @@ onMounted(async () => {
       </div>
     </section>
 
+    <!-- Trust & Services Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span
+          class="text-[10px] text-primary-600 uppercase font-extrabold tracking-wider"
+          >BbystarGO</span
+        >
+        <p class="text-sm md:text-base text-gray-600 font-medium mt-2 leading-relaxed">
+          Toko online sejak 2023 yang menyediakan jasa pembelian barang dari
+          Indonesia, Korea, China, Jepang, dan negara lain.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+        <div
+          class="bg-white border border-gray-100 rounded-3xl p-6 shadow-xs flex items-start gap-4"
+        >
+          <div
+            class="w-11 h-11 shrink-0 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center"
+          >
+            <UIcon name="i-heroicons-archive-box" class="w-5 h-5" />
+          </div>
+          <div>
+            <h3 class="text-sm font-extrabold text-gray-900">Ready Stock</h3>
+            <p class="text-xs text-gray-500 font-medium mt-1 leading-relaxed">
+              Barang tersedia di gudang kami, siap diproses tanpa menunggu
+              impor.
+            </p>
+          </div>
+        </div>
+        <div
+          class="bg-white border border-gray-100 rounded-3xl p-6 shadow-xs flex items-start gap-4"
+        >
+          <div
+            class="w-11 h-11 shrink-0 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center"
+          >
+            <UIcon name="i-heroicons-globe-asia-australia" class="w-5 h-5" />
+          </div>
+          <div>
+            <h3 class="text-sm font-extrabold text-gray-900">Pre Order</h3>
+            <p class="text-xs text-gray-500 font-medium mt-1 leading-relaxed">
+              Pemesanan langsung dari negara asal, kami urus bersih sampai ke
+              tanganmu.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-center"
+      >
+        <div>
+          <p class="text-lg font-black text-primary-700">100+</p>
+          <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">
+            Customer Terlayani
+          </p>
+        </div>
+        <div>
+          <p class="text-lg font-black text-primary-700">5.0 ★</p>
+          <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">
+            Rating Shopee
+          </p>
+        </div>
+        <div>
+          <p class="text-lg font-black text-primary-700">2.500+</p>
+          <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">
+            Penilaian
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- Featured Products Section -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
       <!-- Background leaf icon motif -->
@@ -151,8 +223,7 @@ onMounted(async () => {
             Produk Unggulan
           </h2>
           <p class="text-xs md:text-sm text-gray-500 mt-1 font-medium">
-            Rekomendasi produk skincare alpine terbaik untuk kecantikan alami
-            kulit Anda
+            Pilihan produk Ready Stock &amp; Pre Order terlaris dari kami
           </p>
         </div>
         <NuxtLink

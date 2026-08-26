@@ -26,13 +26,13 @@ class AreaCacheSchemaTest extends TestCase
     public function test_stores_a_single_store_settings_row_for_non_secret_store_info(): void
     {
         $settings = StoreSetting::create([
-            'store_name' => 'Doctor Plant Indonesia',
+            'store_name' => 'BbystarGO',
             'address' => 'Jl. Contoh No. 1',
             'contact' => '081200000000',
             'rajaongkir_origin_district_id' => 501,
         ]);
 
-        $this->assertEquals('Doctor Plant Indonesia', StoreSetting::first()->store_name);
+        $this->assertEquals('BbystarGO', StoreSetting::first()->store_name);
         $this->assertEquals(501, $settings->rajaongkir_origin_district_id);
     }
 

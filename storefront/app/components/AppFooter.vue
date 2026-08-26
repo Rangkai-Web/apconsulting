@@ -9,14 +9,13 @@ const { data: settingsResponse } = useAsyncData("store-settings", () =>
 const settings = computed(() => {
   return (
     settingsResponse.value?.data || {
-      store_name: "Doctor Plant Indonesia",
+      store_name: "BbystarGO",
       logo: null,
-      address:
-        "1st Floor, Jl. Artha Gading Sel. No.1, RT.18/RW.8, Klp. Gading Bar., Kec. Klp. Gading, Jkt Utara, Jakarta 14240",
-      phone: "+62 812-9504-0884",
-      whatsapp_number: "6281295040884",
-      instagram_url: "https://www.instagram.com/drplant_official_id/",
-      operating_hours: "Senin - Minggu\n10.00 - 22.00 WIB",
+      address: "",
+      phone: "",
+      whatsapp_number: "",
+      instagram_url: "",
+      operating_hours: "",
     }
   );
 });
@@ -41,28 +40,18 @@ const settings = computed(() => {
             class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
           >
             <NuxtImg
-              :src="settings.logo || '/logo_dr_plant.jpg'"
-              alt="Logo Dr. Plant"
+              :src="settings.logo || '/BbystarGO_1.jpg'"
+              alt="Logo BbystarGO"
               width="40"
               height="40"
               class="w-full h-full object-contain"
             />
           </div>
-          <!-- <div class="flex flex-col">
-            <span
-              class="font-bold text-white text-base tracking-wide leading-tight group-hover:text-primary-300 transition-colors"
-              >{{ settings.store_name }}</span
-            >
-            <span
-              class="text-xs text-primary-400 uppercase tracking-widest font-extrabold -mt-0.5"
-              >Indonesia</span
-            >
-          </div> -->
         </NuxtLink>
         <p class="text-xs text-gray-400 leading-relaxed max-w-sm">
-          Merek skincare asal Tiongkok yang berfokus pada kecantikan kulit sehat
-          alami berbahan dasar tumbuhan alpine. Kami menghadirkan rangkaian
-          produk hidrasi, sheet mask, serta layanan facial terbaik.
+          {{ settings.store_name }} — jasa pembelian barang dari Indonesia,
+          Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock &amp;
+          Pre Order.
         </p>
         <div class="flex items-center gap-3 pt-2">
           <a
@@ -103,7 +92,6 @@ const settings = computed(() => {
           <NuxtLink
             v-for="link in [
               { label: 'Katalog Produk', to: '/katalog' },
-              { label: 'Tentang Kami', to: '/about' },
               { label: 'Wishlist Saya', to: '/wishlist' },
               { label: 'Keranjang', to: '/cart' },
             ]"

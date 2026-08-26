@@ -135,7 +135,7 @@ Route::post('/orders/{order_number}/payment-proof', [OrderController::class, 'up
 
 `ViewOrder.php` — two header actions:
 
-1. **`verifyPayment`** — visible only `fn (Order $record) => $record->payment_status === 'awaiting_verification'`. Form: `Radio::make('decision')` (`accept`/`reject`), `Textarea::make('reason')` visible+required only when `decision === 'reject'`. Action: `accept` → `payment_status='paid'`, and if `order_status==='pending'` bump it to `'processing'`. `reject` → `payment_status='rejected'`, `payment_rejected_reason=$data['reason']`.
+1. **`verifyPayment`** — visible only `fn (Order $record) => $record->payment_status === 'awaiting_verification'`. Form: `Radio::make('decision')` (`accept`/`reject`), `Textarea::make('reason')` visible+required only when `decision === 'reject'`. Action: `accept` → `payment_status='paid'`, and if `order_status==='pending'` bump it to `'processing'`; then fire the same admin notifications the Midtrans webhook used to fire on `paid` (Filament `Notification::make()->sendToDatabase($admins)` + `OrderPaidNotification` mail to each admin — moved here verbatim from `WebhookController::midtrans()`, which is deleted per §10). `reject` → `payment_status='rejected'`, `payment_rejected_reason=$data['reason']`, no notification.
 2. **`updateStatus`** (existing, kept) — now operates on `order_status` only (rename field references). Add a guard: disable/hide the `shipped` option in the `Select` unless `$record->payment_status === 'paid'` (`Select::options()` filtered dynamically, or a form-level validation message) — prevents shipping an unpaid order by mistake.
 
 ## 8. WhatsApp/LINE Confirmation
@@ -144,7 +144,7 @@ Route::post('/orders/{order_number}/payment-proof', [OrderController::class, 'up
 
 ## 9. Order Expiry
 
-`ExpirePendingOrders` — query becomes `Order::where('order_status', 'pending')->where('payment_status', 'unpaid')->where('created_at', '<=', $threshold)`. An order sitting in `awaiting_verification` (customer uploaded proof, admin hasn't checked yet) must **not** auto-expire even past the window — that would silently discard a legitimate pending verification.
+`ExpirePendingOrders` — query becomes `Order::where('order_status', 'pending')->where('payment_status', '!=', 'awaiting_verification')->where('created_at', '<=', $threshold)`. This covers both `unpaid` (never uploaded proof) and `rejected` (uploaded, admin rejected, never re-uploaded) — both are legitimately abandoned. Only `awaiting_verification` is excluded — customer uploaded proof and it's mid-review, so it must **not** auto-expire even past the window, that would silently discard a legitimate pending verification. (`paid` orders are never matched anyway since their `order_status` has already moved past `pending`.)
 
 Config relocation: `config/midtrans.php` deleted; `order_expire_hours` moves to new `config/orders.php`:
 ```php

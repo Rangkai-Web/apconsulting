@@ -8,8 +8,8 @@ import type {
 const MOCK_USERS_KEY = "dpi-mock-users";
 const DEFAULT_MEMBER = {
   id: 999,
-  name: "Member Doctor Plant",
-  email: "member@drplant.id",
+  name: "Member BbystarGO",
+  email: "member@bbystargo.co.id",
   phone: "081295040884",
   password: "password123", // used in mock comparison
 };

@@ -1,4 +1,4 @@
-# PT Doctor Plant Indonesia — Toko Online
+# BbystarGO — Toko Online
 
 Monorepo: `api/` (Laravel 13 + Filament v5 admin) + `storefront/` (Nuxt 4 SPA).
 Full design: `docs/superpowers/specs/2026-06-19-toko-online-design.md`.

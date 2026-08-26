@@ -12,7 +12,7 @@ const { data: settingsResponse } = useAsyncData("store-settings", () =>
 const settings = computed(() => {
   return (
     settingsResponse.value?.data || {
-      store_name: "Doctor Plant Indonesia",
+      store_name: "BbystarGO",
       logo: null,
     }
   );
@@ -31,7 +31,6 @@ const mobileNavOpen = ref(false);
 const navLinks = [
   { label: "Home", to: "/" },
   { label: "Katalog", to: "/katalog" },
-  { label: "Tentang Kami", to: "/about" },
   { label: "Keranjang", to: "/cart" },
 ];
 
@@ -121,25 +120,13 @@ async function handleMobileLogout() {
             class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
           >
             <NuxtImg
-              :src="settings.logo || '/logo_dr_plant.jpg'"
-              alt="Logo Dr. Plant"
+              :src="settings.logo || '/BbystarGO_1.jpg'"
+              alt="Logo BbystarGO"
               width="40"
               height="40"
               class="w-full h-full object-contain"
             />
           </div>
-          <!-- <div class="hidden md:block">
-            <div class="flex flex-col shrink-0">
-              <span
-                class="font-extrabold text-gray-900 tracking-tight leading-tight text-base sm:text-lg group-hover:text-primary-700 transition-colors"
-                >Doctor Plant</span
-              >
-              <span
-                class="text-[9px] text-primary-400 uppercase tracking-widest font-extrabold -mt-0.5"
-                >Indonesia</span
-              >
-            </div>
-          </div> -->
         </NuxtLink>
       </div>
 
@@ -303,22 +290,13 @@ async function handleMobileLogout() {
                   class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
                 >
                   <NuxtImg
-                    :src="settings.logo || '/logo_dr_plant.jpg'"
-                    alt="Logo Dr. Plant"
+                    :src="settings.logo || '/BbystarGO_1.jpg'"
+                    alt="Logo BbystarGO"
                     width="40"
                     height="40"
                     class="w-full h-full object-contain"
                   />
                 </div>
-                <!-- <div class="flex flex-col">
-                  <span class="font-bold text-gray-900 leading-tight"
-                    >Doctor Plant</span
-                  >
-                  <span
-                    class="text-[8px] text-primary-600 uppercase tracking-widest font-extrabold -mt-0.5"
-                    >Indonesia</span
-                  >
-                </div> -->
               </NuxtLink>
               <UButton
                 icon="i-heroicons-x-mark"
@@ -454,7 +432,7 @@ async function handleMobileLogout() {
 
           <div class="pt-6 border-t border-gray-100">
             <p class="text-xs text-gray-400 text-center font-medium">
-              &copy; {{ new Date().getFullYear() }} PT Doctor Plant Indonesia
+              &copy; {{ new Date().getFullYear() }} BbystarGO
             </p>
           </div>
         </div>

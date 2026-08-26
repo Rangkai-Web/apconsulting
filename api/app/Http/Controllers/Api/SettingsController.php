@@ -11,7 +11,7 @@ class SettingsController extends Controller
     public function show()
     {
         $settings = StoreSetting::firstOrCreate([], [
-            'store_name' => 'Doctor Plant Indonesia',
+            'store_name' => 'BbystarGO',
         ]);
 
         $settings->wasRecentlyCreated = false;

@@ -153,7 +153,7 @@ async function onSubmit() {
           </div>
           <span
             class="text-[10px] text-primary-600 uppercase font-extrabold tracking-wider"
-            >Doctor Plant Indonesia</span
+            >BbystarGO</span
           >
           <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight mt-1">
             Daftar Member Baru

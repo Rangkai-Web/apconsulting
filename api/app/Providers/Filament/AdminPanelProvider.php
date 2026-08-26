@@ -29,11 +29,11 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->authGuard('admin')
             ->login()
-            ->brandName('Admin Panel DR Plant Indonesia')
-            ->brandLogo(asset('logo_dr_plant.jpg'))
+            ->brandName('Admin Panel BbystarGO')
+            ->brandLogo(asset('BbystarGO_1.jpg'))
             ->brandLogoHeight('5rem')
             ->colors([
-                'primary' => Color::Emerald,
+                'primary' => Color::hex('#FF746C'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

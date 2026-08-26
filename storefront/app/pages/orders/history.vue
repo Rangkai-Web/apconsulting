@@ -182,7 +182,7 @@ function formatDate(dateStr: string): string {
         <div v-else-if="ordersList.length === 0" class="bg-white border border-gray-100 rounded-3xl p-10 text-center shadow-xs">
           <UIcon name="i-heroicons-shopping-bag" class="w-10 h-10 text-gray-300 mx-auto mb-3" />
           <p class="text-sm font-extrabold text-gray-900">Belum ada transaksi</p>
-          <p class="text-xs text-gray-400 font-semibold mt-1 mb-5">Temukan berbagai produk skincare terbaik di katalog kami.</p>
+          <p class="text-xs text-gray-400 font-semibold mt-1 mb-5">Temukan berbagai produk Ready Stock &amp; Pre Order pilihan di katalog kami.</p>
           <UButton color="primary" variant="solid" to="/katalog" class="rounded-xl font-bold cursor-pointer">Mulai Belanja</UButton>
         </div>
 

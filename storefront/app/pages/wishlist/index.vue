@@ -63,8 +63,8 @@ watch(() => wishlist.productIds.length, load);
         <p
           class="text-xs md:text-sm text-primary-200 mt-1 max-w-md leading-relaxed font-medium"
         >
-          Simpan produk skincare alpine dan layanan facial favorit Anda di sini.
-          Dapatkan kulit sehat impian Anda kapan saja.
+          Simpan produk Ready Stock &amp; Pre Order favoritmu di sini untuk
+          dibeli nanti.
         </p>
       </div>
 

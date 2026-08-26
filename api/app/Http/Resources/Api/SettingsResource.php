@@ -18,7 +18,6 @@ class SettingsResource extends JsonResource
             'whatsapp_number' => $this->whatsapp_number,
             'instagram_url' => $this->instagram_url,
             'operating_hours' => $this->operating_hours,
-            'about_content' => $this->about_content,
         ];
     }
 }

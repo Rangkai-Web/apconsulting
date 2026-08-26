@@ -281,7 +281,7 @@ class OrderController extends Controller
             ]);
         }
 
-        $origin = StoreSetting::firstOrCreate([], ['store_name' => 'Doctor Plant Indonesia'])->rajaongkir_origin_district_id;
+        $origin = StoreSetting::firstOrCreate([], ['store_name' => 'BbystarGO'])->rajaongkir_origin_district_id;
 
         if (! $origin) {
             throw ValidationException::withMessages([
