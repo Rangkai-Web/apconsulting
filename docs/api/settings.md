@@ -15,6 +15,7 @@ Fetch public store settings for storefront rendering.
     "address": "",
     "phone": "",
     "whatsapp_number": "",
+    "line_url": "https://line.me/ti/p/@bbystargo",
     "instagram_url": "",
     "operating_hours": ""
   }
