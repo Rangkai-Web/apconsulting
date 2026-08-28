@@ -217,11 +217,8 @@ watch(() => route.params.slug, load);
         <div
           class="bg-white/80 backdrop-blur-sm border border-gray-100 rounded-3xl p-6 md:p-8 shadow-sm space-y-6 relative overflow-hidden self-start"
         >
-          <!-- Background leaf decoration -->
-          <UIcon
-            name="i-lucide-leaf"
-            class="absolute -bottom-8 -right-8 w-32 h-32 text-primary-500/5 -rotate-45 pointer-events-none"
-          />
+          <!-- Background cute decor -->
+          <AppCuteDecor />
 
           <!-- Title & Rating & Wishlist -->
           <div

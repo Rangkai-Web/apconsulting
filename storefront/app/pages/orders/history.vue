@@ -4,6 +4,8 @@ import { useAuthStore } from "~/store/auth";
 import { useCurrency } from "~/composables/useCurrency";
 import type { Order } from "~/types";
 
+definePageMeta({ middleware: "auth" });
+
 const authStore = useAuthStore();
 const { format } = useCurrency();
 const toast = useToast();

@@ -116,10 +116,7 @@ watch(() => route.query, syncFromRoute);
         <div
           class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(4,92,52,0.4),transparent)]"
         ></div>
-        <UIcon
-          name="i-lucide-leaf"
-          class="absolute -bottom-10 -right-10 w-44 h-44 text-white/5 transform rotate-12 pointer-events-none"
-        />
+        <AppCuteDecor on-dark />
         <span
           class="text-xs uppercase tracking-widest text-primary-400 font-extrabold mb-2 block"
           >BbystarGO</span

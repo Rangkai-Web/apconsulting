@@ -207,11 +207,8 @@ onMounted(async () => {
 
     <!-- Featured Products Section -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
-      <!-- Background leaf icon motif -->
-      <UIcon
-        name="i-lucide-leaf"
-        class="absolute -top-6 -right-6 w-36 h-36 text-primary-500/5 transform rotate-45 pointer-events-none"
-      />
+      <!-- Background cute decor -->
+      <AppCuteDecor />
 
       <div
         class="flex items-end justify-between mb-8 border-b border-gray-100 pb-4"

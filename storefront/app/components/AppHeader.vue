@@ -31,7 +31,7 @@ const mobileNavOpen = ref(false);
 const navLinks = [
   { label: "Home", to: "/" },
   { label: "Katalog", to: "/katalog" },
-  { label: "Keranjang", to: "/cart" },
+  // { label: "Keranjang", to: "/cart" },
 ];
 
 const runSearch = useDebounceFn((value: string) => {
@@ -132,26 +132,10 @@ async function handleMobileLogout() {
 
       <!-- Center: Wide Search Input (Desktop Only - lg:flex) -->
       <div
-        class="hidden lg:flex items-center justify-center grow max-w-md mx-6"
+        class="flex items-center justify-between grow ml-6"
       >
-        <div class="relative w-full">
-          <UInput
-            v-model="searchQuery"
-            icon="i-heroicons-magnifying-glass"
-            placeholder="Cari produk yang Anda butuhkan..."
-            size="md"
-            class="w-full transition-all duration-300 border border-gray-200 rounded-full"
-            :ui="{
-              base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
-            }"
-          />
-        </div>
-      </div>
-
-      <!-- Right: Desktop Navigation Menu & Action Icons -->
-      <div class="flex items-center gap-6">
         <!-- Navigation links (Desktop Only - lg:flex) -->
-        <nav class="hidden lg:flex items-center gap-6">
+        <nav class="hidden lg:flex items-center gap-6" aria-label="Navigasi Utama">
           <NuxtLink
             v-for="link in navLinks"
             :key="link.to"
@@ -172,6 +156,24 @@ async function handleMobileLogout() {
             />
           </NuxtLink>
         </nav>
+      </div>
+
+      <!-- Right: Desktop Navigation Menu & Action Icons -->
+      <div class="flex items-center justify-end grow gap-6">
+        <div class="hidden lg:flex w-full max-w-lg">
+          <div class="relative w-full">
+            <UInput
+              v-model="searchQuery"
+              icon="i-heroicons-magnifying-glass"
+              placeholder="Cari produk yang Anda butuhkan..."
+              size="md"
+              class="w-full transition-all duration-300 border border-gray-200 rounded-full"
+              :ui="{
+                base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
+              }"
+            />
+          </div>
+        </div>
 
         <!-- Action Icons (Always visible on all screens) -->
         <div class="flex items-center gap-2 shrink-0">
@@ -209,15 +211,6 @@ async function handleMobileLogout() {
             >
               {{ cart.totalQty }}
             </UBadge>
-          </NuxtLink>
-
-          <!-- Cek Pesanan link — visible to guests only, desktop -->
-          <NuxtLink
-            v-if="!authStore.isLoggedIn"
-            to="/orders/cek"
-            class="hidden lg:flex items-center text-xs font-bold text-gray-600 hover:text-primary-600 transition-colors mr-1"
-          >
-            Cek Pesanan
           </NuxtLink>
 
           <!-- User Profile Dropdown or Login Button -->
@@ -402,14 +395,6 @@ async function handleMobileLogout() {
                 </button>
               </div>
               <div v-else class="space-y-2 px-2">
-                <NuxtLink
-                  to="/orders/cek"
-                  class="flex items-center justify-center gap-1.5 font-bold text-xs rounded-full px-4 py-3 border border-gray-200 text-gray-600 bg-white hover:bg-gray-50 text-center transition-all duration-200 cursor-pointer w-full"
-                  @click="mobileNavOpen = false"
-                >
-                  <UIcon name="i-heroicons-magnifying-glass" class="w-3.5 h-3.5" />
-                  Cek Pesanan
-                </NuxtLink>
                 <div class="grid grid-cols-2 gap-2">
                   <NuxtLink
                     to="/login"

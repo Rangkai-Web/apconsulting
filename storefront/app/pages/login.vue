@@ -90,14 +90,8 @@ async function onSubmit() {
       <div
         class="relative bg-white/80 backdrop-blur-sm border border-primary-100/60 rounded-3xl p-8 md:p-10 shadow-xl shadow-primary-950/5 overflow-hidden"
       >
-        <!-- Background Leaf Glow & Motif -->
-        <div
-          class="absolute -top-12 -right-12 w-32 h-32 bg-primary-100/30 rounded-full blur-2xl pointer-events-none"
-        ></div>
-        <UIcon
-          name="i-lucide-leaf"
-          class="absolute -bottom-8 -left-8 w-28 h-28 text-primary-500/5 -rotate-45 pointer-events-none"
-        />
+        <!-- Background Glow & Cute Motif -->
+        <AppCuteDecor />
 
         <!-- Title Block -->
         <div class="text-center mb-8 relative">

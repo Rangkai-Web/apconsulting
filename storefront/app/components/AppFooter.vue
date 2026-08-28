@@ -28,7 +28,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
 
 <template>
   <footer
-    class="bg-[#081710] text-gray-300 relative overflow-hidden mt-20 border-t border-primary-950/20"
+    class="bg-[#0B0C0E] text-gray-300 relative overflow-hidden mt-20 border-t border-primary-950/20"
   >
     <!-- Glowing Top Border Indicator -->
     <div
@@ -162,14 +162,24 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
           >
             Metode Pembayaran
           </h4>
-          <div class="flex flex-wrap gap-1">
-            <span
+          <div class="flex flex-wrap gap-2">
+            <div
               v-for="method in paymentMethods"
               :key="method.id"
-              class="px-2 py-1 bg-gray-700/60 border border-gray-800/80 rounded text-xs text-gray-400 font-semibold hover:border-primary-600/40 hover:text-white transition-colors duration-200"
+              class="flex items-center gap-2 px-2.5 py-1.5 bg-gray-100 border border-gray-300/60 rounded-lg hover:border-primary-600/60 transition-colors duration-200"
             >
-              {{ method.label }}
-            </span>
+              <img
+                v-if="method.qr_image"
+                :src="method.qr_image"
+                :alt="method.label"
+                class="w-8 h-8 object-contain rounded"
+              />
+              <span
+                class="text-xs text-gray-700 font-semibold hover:text-primary-600 transition-colors duration-200"
+              >
+                {{ method.label }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -180,7 +190,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
       class="border-t border-gray-900/80 bg-gray-950/20 py-6 text-xs text-gray-500"
     >
       <div
-        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left"
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-3 text-center sm:text-left"
       >
         <span
           >&copy; {{ new Date().getFullYear() }} {{ settings.store_name }}. Hak

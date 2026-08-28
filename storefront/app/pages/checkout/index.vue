@@ -6,6 +6,8 @@ import { orderService } from "~/services/orderService";
 import { useCurrency } from "~/composables/useCurrency";
 import type { Address } from "~/types";
 
+definePageMeta({ middleware: "auth" });
+
 const cart = useCartStore();
 const authStore = useAuthStore();
 const { format } = useCurrency();
@@ -895,10 +897,7 @@ async function handleCheckout() {
           <div
             class="bg-linear-to-b from-primary-50/40 to-white/90 border border-primary-100/60 rounded-3xl p-6 shadow-md shadow-primary-900/5 h-fit space-y-5 relative overflow-hidden"
           >
-            <UIcon
-              name="i-lucide-leaf"
-              class="absolute -bottom-8 -right-8 w-28 h-28 text-primary-500/5 -rotate-12 pointer-events-none"
-            />
+            <AppCuteDecor />
 
             <h2
               class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-b border-primary-100/50 pb-2.5"
