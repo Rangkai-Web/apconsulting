@@ -252,6 +252,12 @@ class OrderController extends Controller
             'Bukti pembayaran sudah diunggah untuk pesanan ini.',
         );
 
+        abort_if(
+            $order->order_status === 'expired',
+            422,
+            'Pesanan sudah kedaluwarsa dan tidak dapat diisi bukti pembayaran.',
+        );
+
         $request->validate([
             'proof' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);

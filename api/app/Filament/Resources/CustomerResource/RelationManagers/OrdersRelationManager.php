@@ -22,7 +22,7 @@ class OrdersRelationManager extends RelationManager
                 TextColumn::make('order_number')
                     ->label('No. Pesanan')
                     ->searchable(),
-                TextColumn::make('status')
+                TextColumn::make('order_status')
                     ->label('Status')
                     ->badge()
                     ->color(fn (string $state): string => OrderResource::statusColor($state)),

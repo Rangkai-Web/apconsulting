@@ -117,7 +117,7 @@ class OrderResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                SelectFilter::make('status')
+                SelectFilter::make('order_status')
                     ->label('Status')
                     ->options(self::statusOptions()),
                 SelectFilter::make('payment_status')

@@ -11,9 +11,9 @@ class OrderStatusChart extends ChartWidget
 
     protected function getData(): array
     {
-        $counts = Order::selectRaw('status, COUNT(*) as count')
-            ->groupBy('status')
-            ->pluck('count', 'status');
+        $counts = Order::selectRaw('order_status, COUNT(*) as count')
+            ->groupBy('order_status')
+            ->pluck('count', 'order_status');
 
         $cancelled = ($counts['cancelled'] ?? 0) + ($counts['expired'] ?? 0);
 

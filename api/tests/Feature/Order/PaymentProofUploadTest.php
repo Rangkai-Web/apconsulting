@@ -154,6 +154,23 @@ class PaymentProofUploadTest extends TestCase
         $this->assertNull($fresh->payment_rejected_reason);
     }
 
+    public function test_member_cannot_upload_proof_on_expired_order(): void
+    {
+        $user = User::factory()->create();
+        $order = $this->createOrder($user->id, null);
+        $order->update(['order_status' => 'expired']);
+
+        $response = $this->actingAs($user, 'sanctum')->postJson(
+            "/api/orders/{$order->order_number}/payment-proof",
+            ['proof' => UploadedFile::fake()->image('bukti.jpg')->size(500)],
+        );
+
+        $response->assertStatus(422);
+        $fresh = $order->fresh();
+        $this->assertEquals('unpaid', $fresh->payment_status);
+        $this->assertNull($fresh->payment_proof);
+    }
+
     public function test_rejects_non_image_file(): void
     {
         $user = User::factory()->create();
