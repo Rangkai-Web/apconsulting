@@ -9,7 +9,7 @@ REST API reference (kept in sync per endpoint task): `docs/api/`.
 ## Stack
 - Backend: Laravel 13, PHP 8.3+ (installed via Homebrew at `/opt/homebrew/bin/php`), MySQL, PHPUnit for tests, Sanctum (customer auth, `users` guard), separate `admin` guard + `admins` table for Filament v5.
 - Frontend: Nuxt 4.4.x, `ssr: false` (SPA only — no Node runtime in production), Nuxt UI v4 component library, Pinia for cart/auth state, Vitest for tests.
-- Payment: Midtrans Snap (popup) only. Shipping: RajaOngkir, single origin warehouse.
+- Payment: manual bank/e-wallet transfer, admin-verified in Filament (see `docs/api/orders.md`, `docs/api/payment-methods.md`). Shipping: RajaOngkir, single origin warehouse.
 
 ## Command Guidelines
 - Run tests: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test`

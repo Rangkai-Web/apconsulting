@@ -441,25 +441,6 @@ async function saveAddress() {
   }
 }
 
-// Dynamic Script Loader for Midtrans Snap.js
-function loadMidtransSnapScript(): Promise<boolean> {
-  return new Promise((resolve) => {
-    if ((window as any).snap) return resolve(true);
-
-    const config = useRuntimeConfig();
-    const snapUrl = config.public.midtransIsProduction
-      ? "https://app.midtrans.com/snap/snap.js"
-      : "https://app.sandbox.midtrans.com/snap/snap.js";
-
-    const script = document.createElement("script");
-    script.src = snapUrl;
-    script.setAttribute("data-client-key", config.public.midtransClientKey);
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
-    document.head.appendChild(script);
-  });
-}
-
 // Build order detail URL with guest email if not logged in
 function orderUrl(orderNumber: string, extra: Record<string, string> = {}): string {
   const params = new URLSearchParams(extra);
@@ -512,65 +493,10 @@ async function handleCheckout() {
     }
 
     // Submit Order
-    const { orderNumber, snapToken } =
-      await orderService.createOrder(orderPayload);
+    const { orderNumber } = await orderService.createOrder(orderPayload);
 
-    // If snapToken is a local mock token (no midtrans server key configured)
-    if (snapToken.startsWith("mock-snap-token-")) {
-      toast.add({
-        title: "Pemesanan Berhasil (Mock Mode)",
-        description: "Snap Token Midtrans kosong. Simulasi checkout berhasil.",
-        color: "primary",
-      });
-      cart.clear();
-      router.push(orderUrl(orderNumber, { mock: "true" }));
-      return;
-    }
-
-    // Load Snap.js
-    const scriptLoaded = await loadMidtransSnapScript();
-    if (!scriptLoaded) {
-      throw new Error("Gagal memuat modul pembayaran Midtrans.");
-    }
-
-    // Open Snap payment popup
-    (window as any).snap.pay(snapToken, {
-      onSuccess: function (result: any) {
-        toast.add({
-          title: "Pembayaran Sukses",
-          description: "Terima kasih atas pesanan Anda!",
-          color: "primary",
-        });
-        cart.clear();
-        router.push(orderUrl(orderNumber, { status: "success" }));
-      },
-      onPending: function (result: any) {
-        toast.add({
-          title: "Pembayaran Tertunda",
-          description: "Selesaikan pembayaran Anda segera.",
-          color: "warning",
-        });
-        cart.clear();
-        router.push(orderUrl(orderNumber, { status: "pending" }));
-      },
-      onError: function (result: any) {
-        toast.add({
-          title: "Pembayaran Gagal",
-          description: "Transaksi Anda gagal diproses.",
-          color: "error",
-        });
-        router.push(orderUrl(orderNumber, { status: "error" }));
-      },
-      onClose: function () {
-        toast.add({
-          title: "Pembayaran Ditutup",
-          description: "Anda menutup jendela pembayaran. Selesaikan nanti.",
-          color: "neutral",
-        });
-        cart.clear();
-        router.push(orderUrl(orderNumber));
-      },
-    });
+    cart.clear();
+    router.push(orderUrl(orderNumber));
   } catch (error: any) {
     console.error("Gagal melakukan checkout:", error);
     toast.add({

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\OrderResource\Pages\ListOrders;
 use App\Filament\Resources\OrderResource\Pages\ViewOrder;
 use App\Models\Order;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
@@ -32,7 +33,6 @@ class OrderResource extends Resource
     {
         return match ($status) {
             'pending' => 'gray',
-            'paid' => 'info',
             'processing' => 'warning',
             'shipped' => 'primary',
             'completed' => 'success',
@@ -45,12 +45,34 @@ class OrderResource extends Resource
     {
         return [
             'pending' => 'Pending',
-            'paid' => 'Paid',
             'processing' => 'Processing',
             'shipped' => 'Shipped',
             'completed' => 'Completed',
             'cancelled' => 'Cancelled',
             'expired' => 'Expired',
+        ];
+    }
+
+    public static function paymentStatusColor(string $status): string
+    {
+        return match ($status) {
+            'unpaid' => 'gray',
+            'awaiting_verification' => 'warning',
+            'paid' => 'success',
+            'rejected' => 'danger',
+            'refunded' => 'info',
+            default => 'gray',
+        };
+    }
+
+    public static function paymentStatusOptions(): array
+    {
+        return [
+            'unpaid' => 'Unpaid',
+            'awaiting_verification' => 'Menunggu Verifikasi',
+            'paid' => 'Paid',
+            'rejected' => 'Rejected',
+            'refunded' => 'Refunded',
         ];
     }
 
@@ -75,10 +97,14 @@ class OrderResource extends Resource
                     ->state(fn (Order $record): string => $record->user_id ? 'Member' : 'Guest')
                     ->badge()
                     ->color(fn (string $state): string => $state === 'Member' ? 'success' : 'gray'),
-                TextColumn::make('status')
+                TextColumn::make('order_status')
                     ->label('Status')
                     ->badge()
                     ->color(fn (string $state): string => self::statusColor($state)),
+                TextColumn::make('payment_status')
+                    ->label('Pembayaran')
+                    ->badge()
+                    ->color(fn (string $state): string => self::paymentStatusColor($state)),
                 TextColumn::make('total')
                     ->label('Total')
                     ->money('IDR'),
@@ -91,9 +117,12 @@ class OrderResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                SelectFilter::make('status')
+                SelectFilter::make('order_status')
                     ->label('Status')
                     ->options(self::statusOptions()),
+                SelectFilter::make('payment_status')
+                    ->label('Pembayaran')
+                    ->options(self::paymentStatusOptions()),
             ])
             ->defaultSort('created_at', 'desc');
     }
@@ -104,7 +133,7 @@ class OrderResource extends Resource
             Section::make('Informasi Pesanan')
                 ->schema([
                     TextEntry::make('order_number')->label('No. Pesanan'),
-                    TextEntry::make('status')->label('Status')->badge()->color(fn (string $state): string => self::statusColor($state)),
+                    TextEntry::make('order_status')->label('Status')->badge()->color(fn (string $state): string => self::statusColor($state)),
                     TextEntry::make('created_at')->label('Tanggal Pesanan')->dateTime('d M Y H:i'),
                     TextEntry::make('courier')
                         ->label('Kurir')
@@ -112,6 +141,21 @@ class OrderResource extends Resource
                     TextEntry::make('tracking_number')->label('No. Resi')->placeholder('-'),
                     TextEntry::make('shipped_at')->label('Dikirim Pada')->dateTime('d M Y H:i')->placeholder('-'),
                     TextEntry::make('completed_at')->label('Selesai Pada')->dateTime('d M Y H:i')->placeholder('-'),
+                ])
+                ->columns(2),
+            Section::make('Pembayaran')
+                ->schema([
+                    TextEntry::make('payment_status')
+                        ->label('Status Pembayaran')
+                        ->badge()
+                        ->color(fn (string $state): string => self::paymentStatusColor($state)),
+                    TextEntry::make('payment_rejected_reason')
+                        ->label('Alasan Ditolak')
+                        ->placeholder('-'),
+                    ImageEntry::make('payment_proof')
+                        ->label('Bukti Transfer')
+                        ->disk('public_uploads')
+                        ->visible(fn (Order $record): bool => filled($record->payment_proof)),
                 ])
                 ->columns(2),
             Section::make('Pelanggan')

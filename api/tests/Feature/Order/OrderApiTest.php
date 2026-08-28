@@ -84,14 +84,16 @@ class OrderApiTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-            ->assertJsonStructure(['order_number', 'snap_token']);
+            ->assertJsonStructure(['order_number'])
+            ->assertJsonMissing(['snap_token']);
 
         $this->assertEquals(3, $variant->fresh()->stock);
 
         $this->assertDatabaseHas('orders', [
             'user_id' => $user->id,
             'total' => 215000, // 200000 + 15000
-            'status' => 'pending',
+            'order_status' => 'pending',
+            'payment_status' => 'unpaid',
         ]);
     }
 
@@ -123,7 +125,8 @@ class OrderApiTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-            ->assertJsonStructure(['order_number', 'snap_token']);
+            ->assertJsonStructure(['order_number'])
+            ->assertJsonMissing(['snap_token']);
 
         $this->assertEquals(4, $variant->fresh()->stock);
 
@@ -132,6 +135,8 @@ class OrderApiTest extends TestCase
             'guest_name' => 'Guest User',
             'guest_email' => 'guest@example.com',
             'total' => 112000, // 100000 + 12000
+            'order_status' => 'pending',
+            'payment_status' => 'unpaid',
         ]);
     }
 
@@ -179,14 +184,13 @@ class OrderApiTest extends TestCase
             'shipping_cost' => 15000,
             'subtotal' => 100000,
             'total' => 115000,
-            'status' => 'pending',
+            'order_status' => 'pending',
         ]);
 
         $response = $this->getJson('/api/orders/lookup?order_number=ORD-TEST-123&email=guest@example.com');
 
         $response->assertStatus(200)
             ->assertJsonPath('data.order_number', 'ORD-TEST-123')
-            ->assertJsonMissingPath('data.guest_email')
-            ->assertJsonMissingPath('data.midtrans_order_id');
+            ->assertJsonMissingPath('data.guest_email');
     }
 }

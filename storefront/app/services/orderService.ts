@@ -48,7 +48,10 @@ function mapOrder(raw: any): Order {
   return {
     id: raw.id,
     orderNumber: raw.order_number,
-    status: raw.status,
+    orderStatus: raw.order_status,
+    paymentStatus: raw.payment_status,
+    paymentProof: raw.payment_proof ?? null,
+    paymentRejectedReason: raw.payment_rejected_reason ?? null,
     courier: raw.courier,
     courierService: raw.courier_service,
     shippingCost: raw.shipping_cost,
@@ -57,9 +60,14 @@ function mapOrder(raw: any): Order {
     trackingNumber: raw.tracking_number,
     createdAt: raw.created_at,
     items: (raw.items ?? []).map(mapOrderItem),
-    snapToken: raw.snap_token ?? raw.midtrans_order_id ?? null,
     shippingAddress,
   };
+}
+
+// Exported only for the unit test in tests/orderService.test.ts — not part
+// of the public service surface used by pages.
+export function mapOrderForTest(raw: any): Order {
+  return mapOrder(raw);
 }
 
 export const orderService = {
@@ -103,7 +111,7 @@ export const orderService = {
     courier: string;
     courierService: string;
     shippingCost: number;
-  }): Promise<{ orderNumber: string; snapToken: string }> {
+  }): Promise<{ orderNumber: string }> {
     const body: any = {
       items: data.items.map((i) => ({ variant_id: i.variantId, qty: i.qty })),
       courier: data.courier,
@@ -131,20 +139,14 @@ export const orderService = {
         : null;
     }
 
-    const response = await $fetch<{ order_number: string; snap_token: string }>(
-      "/orders",
-      {
-        baseURL: apiBase(),
-        method: "POST",
-        headers: getHeaders(),
-        body,
-      },
-    );
+    const response = await $fetch<{ order_number: string }>("/orders", {
+      baseURL: apiBase(),
+      method: "POST",
+      headers: getHeaders(),
+      body,
+    });
 
-    return {
-      orderNumber: response.order_number,
-      snapToken: response.snap_token,
-    };
+    return { orderNumber: response.order_number };
   },
 
   async getShippingCost(
@@ -163,16 +165,29 @@ export const orderService = {
     return response.couriers ?? [];
   },
 
-  async requestSnapToken(orderNumber: string): Promise<string> {
-    const response = await $fetch<{ snap_token: string }>(
-      `/orders/${orderNumber}/snap-token`,
+  async uploadPaymentProof(
+    orderNumber: string,
+    file: File,
+    guestEmail?: string,
+  ): Promise<Order> {
+    const formData = new FormData();
+    formData.append("proof", file);
+    if (guestEmail) formData.append("guest_email", guestEmail);
+
+    const authStore = useAuthStore();
+    const headers: Record<string, string> = {};
+    if (authStore.token) headers.Authorization = `Bearer ${authStore.token}`;
+
+    const response = await $fetch<{ data: any }>(
+      `/orders/${orderNumber}/payment-proof`,
       {
         baseURL: apiBase(),
         method: "POST",
-        headers: getHeaders(),
+        headers,
+        body: formData,
       },
     );
-    return response.snap_token;
+    return mapOrder(response.data);
   },
 
   async rateOrderItem(orderItemId: number, stars: number): Promise<any> {

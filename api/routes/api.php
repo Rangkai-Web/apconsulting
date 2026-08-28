@@ -8,9 +8,9 @@ use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\Api\ShippingController;
-use App\Http\Controllers\Api\WebhookController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\BannerController;
+use App\Http\Controllers\Api\PaymentMethodController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', function () {
@@ -24,6 +24,7 @@ Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,
 // Public order checkout & guest lookup routes
 Route::post('/orders', [OrderController::class, 'store']);
 Route::get('/orders/lookup', [OrderController::class, 'lookup']);
+Route::post('/orders/{order_number}/payment-proof', [OrderController::class, 'uploadPaymentProof']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -40,7 +41,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Order routes (member)
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{order_number}', [OrderController::class, 'show']);
-    Route::post('/orders/{order_number}/snap-token', [OrderController::class, 'requestSnapToken']);
 
     // Rating routes
     Route::post('/order-items/{id}/rating', [RatingController::class, 'rate']);
@@ -57,6 +57,9 @@ Route::get('/settings', [SettingsController::class, 'show']);
 // Public banners route
 Route::get('/banners', [BannerController::class, 'index']);
 
+// Public payment methods route
+Route::get('/payment-methods', [PaymentMethodController::class, 'index']);
+
 // Public shipping route — stricter throttle: this proxies a paid-per-call RajaOngkir endpoint
 Route::post('/shipping/cost', [ShippingController::class, 'cost'])->middleware('throttle:10,1');
 
@@ -64,6 +67,3 @@ Route::post('/shipping/cost', [ShippingController::class, 'cost'])->middleware('
 Route::get('/shipping/provinces', [ShippingController::class, 'provinces']);
 Route::get('/shipping/cities', [ShippingController::class, 'cities']);
 Route::get('/shipping/districts', [ShippingController::class, 'districts']);
-
-// Public webhook route
-Route::post('/webhooks/midtrans', [WebhookController::class, 'midtrans']);

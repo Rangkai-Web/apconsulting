@@ -12,8 +12,8 @@ class StatsOverview extends StatsOverviewWidget
 {
     protected function getStats(): array
     {
-        $revenue = Order::whereIn('status', ['paid', 'processing', 'shipped', 'completed'])->sum('total');
-        $newOrdersCount = Order::whereIn('status', ['pending', 'paid'])->count();
+        $revenue = Order::whereIn('order_status', ['paid', 'processing', 'shipped', 'completed'])->sum('total');
+        $newOrdersCount = Order::whereIn('order_status', ['pending', 'paid'])->count();
         $productsCount = Product::count();
         $customersCount = User::count();
 

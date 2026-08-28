@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
     'address',
     'phone',
     'whatsapp_number',
+    'line_url',
     'instagram_url',
     'operating_hours',
     'rajaongkir_origin_district_id',

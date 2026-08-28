@@ -5,6 +5,9 @@ const api = useApi();
 const { data: settingsResponse } = useAsyncData("store-settings", () =>
   api.getSettings(),
 );
+const { data: paymentMethodsResponse } = useAsyncData("footer-payment-methods", () =>
+  api.getPaymentMethods(),
+);
 
 const settings = computed(() => {
   return (
@@ -19,6 +22,8 @@ const settings = computed(() => {
     }
   );
 });
+
+const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
 </script>
 
 <template>
@@ -159,17 +164,11 @@ const settings = computed(() => {
           </h4>
           <div class="flex flex-wrap gap-1">
             <span
-              v-for="method in [
-                'Transfer Bank',
-                'GoPay',
-                'OVO',
-                'DANA',
-                'Kartu Kredit',
-              ]"
-              :key="method"
+              v-for="method in paymentMethods"
+              :key="method.id"
               class="px-2 py-1 bg-gray-700/60 border border-gray-800/80 rounded text-xs text-gray-400 font-semibold hover:border-primary-600/40 hover:text-white transition-colors duration-200"
             >
-              {{ method }}
+              {{ method.label }}
             </span>
           </div>
         </div>

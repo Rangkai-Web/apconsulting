@@ -33,7 +33,7 @@ class CustomerResource extends Resource
         return $table
             ->modifyQueryUsing(fn (Builder $query) => $query
                 ->withCount('orders')
-                ->withSum(['orders as orders_total_spent' => fn (Builder $q) => $q->whereIn('status', ['paid', 'processing', 'shipped', 'completed'])], 'total'))
+                ->withSum(['orders as orders_total_spent' => fn (Builder $q) => $q->whereIn('order_status', ['paid', 'processing', 'shipped', 'completed'])], 'total'))
             ->columns([
                 TextColumn::make('name')
                     ->label('Nama')
@@ -74,7 +74,7 @@ class CustomerResource extends Resource
                     TextEntry::make('orders_count')->label('Jumlah Pesanan')->state(fn (User $record): int => $record->orders()->count()),
                     TextEntry::make('orders_total_spent')
                         ->label('Total Belanja')
-                        ->state(fn (User $record): int => (int) $record->orders()->whereIn('status', ['paid', 'processing', 'shipped', 'completed'])->sum('total'))
+                        ->state(fn (User $record): int => (int) $record->orders()->whereIn('order_status', ['paid', 'processing', 'shipped', 'completed'])->sum('total'))
                         ->money('IDR'),
                 ])
                 ->columns(3),

@@ -41,7 +41,7 @@ class OrderReleaseStockTest extends TestCase
             'shipping_cost' => 15000,
             'subtotal' => 200000,
             'total' => 215000,
-            'status' => $status,
+            'order_status' => $status,
         ]);
         $order->items()->create([
             'product_variant_id' => $variant->id,
