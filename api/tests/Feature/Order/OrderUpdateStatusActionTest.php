@@ -16,7 +16,7 @@ class OrderUpdateStatusActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function createOrderWithItem(string $status, int $stock = 8, int $qty = 2): array
+    private function createOrderWithItem(string $status, int $stock = 8, int $qty = 2, string $paymentStatus = 'unpaid'): array
     {
         $category = Category::create(['name' => 'Skincare', 'slug' => 'skincare']);
         $product = Product::create([
@@ -45,6 +45,7 @@ class OrderUpdateStatusActionTest extends TestCase
             'subtotal' => 200000,
             'total' => 215000,
             'order_status' => $status,
+            'payment_status' => $paymentStatus,
         ]);
         $order->items()->create([
             'product_variant_id' => $variant->id,
@@ -61,7 +62,7 @@ class OrderUpdateStatusActionTest extends TestCase
     public function test_admin_can_update_status_to_shipped_with_tracking_number(): void
     {
         $admin = Admin::factory()->create();
-        [$order] = $this->createOrderWithItem('paid');
+        [$order] = $this->createOrderWithItem('processing', paymentStatus: 'paid');
 
         Livewire::actingAs($admin, 'admin')
             ->test(ViewOrder::class, ['record' => $order->getRouteKey()])
@@ -93,7 +94,7 @@ class OrderUpdateStatusActionTest extends TestCase
     public function test_does_not_release_stock_when_cancelling_an_already_paid_order(): void
     {
         $admin = Admin::factory()->create();
-        [$order, $variant] = $this->createOrderWithItem('paid', stock: 8, qty: 2);
+        [$order, $variant] = $this->createOrderWithItem('processing', stock: 8, qty: 2);
 
         Livewire::actingAs($admin, 'admin')
             ->test(ViewOrder::class, ['record' => $order->getRouteKey()])
@@ -106,13 +107,13 @@ class OrderUpdateStatusActionTest extends TestCase
     public function test_requires_tracking_number_when_status_is_shipped(): void
     {
         $admin = Admin::factory()->create();
-        [$order] = $this->createOrderWithItem('paid');
+        [$order] = $this->createOrderWithItem('processing', paymentStatus: 'paid');
 
         Livewire::actingAs($admin, 'admin')
             ->test(ViewOrder::class, ['record' => $order->getRouteKey()])
             ->callAction('updateStatus', data: ['status' => 'shipped'])
             ->assertHasActionErrors(['tracking_number' => 'required']);
 
-        $this->assertEquals('paid', $order->fresh()->order_status);
+        $this->assertEquals('processing', $order->fresh()->order_status);
     }
 }
