@@ -1,11 +1,14 @@
 name: Deploy Storefront
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'storefront/**'
-      - '.github/workflows/deploy-storefront.yml'
+  workflow_dispatch:
+  # NOTE: Deploy dinonaktifkan sementara sampai domain & hosting bbystargo disiapkan.
+  # Aktifkan lagi dengan menghapus komentar blok `push` di bawah sebelum push ke main.
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - 'storefront/**'
+  #     - '.github/workflows/deploy-storefront.yml'
 
 jobs:
   deploy:
