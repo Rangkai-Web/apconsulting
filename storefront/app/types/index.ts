@@ -59,12 +59,18 @@ export interface Address {
 
 export type OrderStatus =
   | "pending"
-  | "paid"
   | "processing"
   | "shipped"
   | "completed"
   | "cancelled"
   | "expired";
+
+export type PaymentStatus =
+  | "unpaid"
+  | "awaiting_verification"
+  | "paid"
+  | "rejected"
+  | "refunded";
 
 export interface OrderItem {
   id: number;
@@ -80,7 +86,10 @@ export interface OrderItem {
 export interface Order {
   id: number;
   orderNumber: string;
-  status: OrderStatus;
+  orderStatus: OrderStatus;
+  paymentStatus: PaymentStatus;
+  paymentProof: string | null;
+  paymentRejectedReason: string | null;
   courier: string;
   courierService: string;
   shippingCost: number;
@@ -89,7 +98,6 @@ export interface Order {
   trackingNumber: string | null;
   createdAt: string;
   items: OrderItem[];
-  snapToken?: string | null;
   shippingAddress?: {
     recipientName: string;
     phone: string;
