@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { orderService } from "~/services/orderService";
 import { useCurrency } from "~/composables/useCurrency";
+import { useApi } from "~/services/api";
 import type { Order, OrderItem } from "~/types";
 
 const route = useRoute();
@@ -11,12 +12,24 @@ const router = useRouter();
 const orderNumber = computed(() => route.params.orderNumber as string);
 const guestEmail = computed(() => (route.query.email as string) || "");
 
+const api = useApi();
+const { data: paymentMethodsResponse } = useAsyncData("payment-methods", () =>
+  api.getPaymentMethods(),
+);
+const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
+
+const { data: settingsResponse } = useAsyncData("store-settings-order", () =>
+  api.getSettings(),
+);
+const settings = computed(() => settingsResponse.value?.data ?? {});
+
+const proofFile = ref<File | null>(null);
+const uploadingProof = ref(false);
+const proofError = ref("");
+
 // Order state
 const order = ref<Order | null>(null);
 const loading = ref(false);
-
-// Payment retry state
-const loadingPayment = ref(false);
 
 // Rating state
 const ratingModalOpen = ref(false);
@@ -45,79 +58,6 @@ async function loadOrderDetails() {
     });
   } finally {
     loading.value = false;
-  }
-}
-
-// Midtrans Snap script loader (same helper)
-function loadMidtransSnapScript(): Promise<boolean> {
-  return new Promise((resolve) => {
-    if ((window as any).snap) return resolve(true);
-
-    const config = useRuntimeConfig();
-    const snapUrl = config.public.midtransIsProduction
-      ? "https://app.midtrans.com/snap/snap.js"
-      : "https://app.sandbox.midtrans.com/snap/snap.js";
-
-    const script = document.createElement("script");
-    script.src = snapUrl;
-    script.setAttribute("data-client-key", config.public.midtransClientKey);
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
-    document.head.appendChild(script);
-  });
-}
-
-// Retry payment for pending orders
-async function handleRetryPayment() {
-  if (!order.value) return;
-
-  loadingPayment.value = true;
-
-  try {
-    const snapToken = await orderService.requestSnapToken(order.value.orderNumber);
-
-    if (snapToken.startsWith("mock-snap-token-")) {
-      toast.add({
-        title: "Pembayaran Sukses (Mock Mode)",
-        description: "Simulasi pembayaran sukses untuk pengujian lokal.",
-        color: "primary",
-      });
-      // In mock mode, let's call webhook on backend directly or change order status locally for mock validation
-      await loadOrderDetails();
-      return;
-    }
-
-    const scriptLoaded = await loadMidtransSnapScript();
-    if (!scriptLoaded) {
-      throw new Error("Gagal memuat modul pembayaran Midtrans.");
-    }
-
-    (window as any).snap.pay(snapToken, {
-      onSuccess: function () {
-        toast.add({ title: "Pembayaran Sukses", description: "Terima kasih atas pesanan Anda!", color: "primary" });
-        loadOrderDetails();
-      },
-      onPending: function () {
-        toast.add({ title: "Pembayaran Tertunda", description: "Selesaikan pembayaran Anda segera.", color: "warning" });
-        loadOrderDetails();
-      },
-      onError: function () {
-        toast.add({ title: "Pembayaran Gagal", description: "Transaksi Anda gagal diproses.", color: "error" });
-      },
-      onClose: function () {
-        toast.add({ title: "Pembayaran Ditutup", description: "Selesaikan pembayaran sebelum batas waktu berakhir.", color: "neutral" });
-      },
-    });
-
-  } catch (error: any) {
-    console.error("Gagal membuka modul pembayaran:", error);
-    toast.add({
-      title: "Koneksi Gagal",
-      description: error.data?.message || "Gagal memproses pembayaran. Coba lagi.",
-      color: "error",
-    });
-  } finally {
-    loadingPayment.value = false;
   }
 }
 
@@ -155,6 +95,52 @@ async function submitRating() {
   }
 }
 
+function onProofFileChange(e: Event) {
+  const file = (e.target as HTMLInputElement).files?.[0] ?? null;
+  proofError.value = "";
+  if (file && file.size > 2 * 1024 * 1024) {
+    proofError.value = "Ukuran file maksimal 2MB.";
+    proofFile.value = null;
+    return;
+  }
+  proofFile.value = file;
+}
+
+async function submitProof() {
+  if (!proofFile.value || !order.value) return;
+  uploadingProof.value = true;
+  try {
+    order.value = await orderService.uploadPaymentProof(
+      order.value.orderNumber,
+      proofFile.value,
+      guestEmail.value || undefined,
+    );
+    proofFile.value = null;
+    toast.add({
+      title: "Bukti Terkirim",
+      description: "Bukti pembayaran berhasil diunggah, menunggu verifikasi admin.",
+      color: "primary",
+    });
+  } catch (error: any) {
+    toast.add({
+      title: "Gagal Mengunggah",
+      description: error.data?.message || "Terjadi kesalahan, coba lagi.",
+      color: "error",
+    });
+  } finally {
+    uploadingProof.value = false;
+  }
+}
+
+function whatsappConfirmUrl(): string {
+  const phone = settings.value.whatsapp_number;
+  if (!phone || !order.value) return "";
+  const text = encodeURIComponent(
+    `Konfirmasi pembayaran pesanan ${order.value.orderNumber}`,
+  );
+  return `https://api.whatsapp.com/send/?phone=${phone}&text=${text}&type=phone_number&app_absent=0`;
+}
+
 function getStatusBadgeColor(status: string): "error" | "primary" | "secondary" | "success" | "info" | "warning" | "neutral" {
   switch (status.toLowerCase()) {
     case "paid":
@@ -177,8 +163,6 @@ function getStatusBadgeColor(status: string): "error" | "primary" | "secondary" 
 
 function getStatusLabel(status: string): string {
   switch (status.toLowerCase()) {
-    case "paid":
-      return "Dibayar";
     case "processing":
       return "Diproses";
     case "shipped":
@@ -263,23 +247,11 @@ function formatDate(dateStr: string): string {
           <div class="space-y-2">
             <div class="flex items-center gap-3">
               <h1 class="text-lg font-black text-gray-900 tracking-tight">{{ order.orderNumber }}</h1>
-              <UBadge :color="getStatusBadgeColor(order.status)" size="sm" class="font-extrabold">
-                {{ getStatusLabel(order.status) }}
+              <UBadge :color="getStatusBadgeColor(order.orderStatus)" size="sm" class="font-extrabold">
+                {{ getStatusLabel(order.orderStatus) }}
               </UBadge>
             </div>
             <p class="text-xs text-gray-400 font-medium">Tanggal Transaksi: {{ formatDate(order.createdAt) }}</p>
-          </div>
-
-          <div v-if="order.status === 'pending'" class="shrink-0 flex items-center">
-            <UButton
-              color="primary"
-              size="lg"
-              class="font-extrabold px-6 rounded-full cursor-pointer shadow-md shadow-primary-600/15"
-              :loading="loadingPayment"
-              @click="handleRetryPayment"
-            >
-              Bayar Sekarang
-            </UButton>
           </div>
         </div>
 
@@ -304,7 +276,7 @@ function formatDate(dateStr: string): string {
                   <span class="text-xs font-black text-gray-800">{{ format(item.subtotal) }}</span>
                   
                   <!-- Star rating trigger -->
-                  <div v-if="order.status.toLowerCase() === 'completed'">
+                  <div v-if="order.orderStatus.toLowerCase() === 'completed'">
                     <UButton
                       v-if="!item.rated"
                       icon="i-heroicons-star"
@@ -382,6 +354,74 @@ function formatDate(dateStr: string): string {
                   <span class="text-sm font-black text-primary-800">{{ format(order.total) }}</span>
                 </div>
               </div>
+            </div>
+
+            <!-- Payment Instructions & Proof Upload -->
+            <div
+              v-if="order.paymentStatus === 'unpaid' || order.paymentStatus === 'rejected'"
+              class="bg-white border border-gray-100 rounded-3xl p-6 shadow-xs space-y-4"
+            >
+              <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-850 border-b border-gray-100 pb-2">
+                Instruksi Pembayaran
+              </h2>
+
+              <p v-if="order.paymentStatus === 'rejected'" class="text-xs text-red-600 font-semibold bg-red-50 rounded-xl p-3">
+                Bukti pembayaran sebelumnya ditolak{{ order.paymentRejectedReason ? ': ' + order.paymentRejectedReason : '' }}. Silakan unggah ulang.
+              </p>
+
+              <div v-for="method in paymentMethods" :key="method.id" class="text-xs border border-gray-100 rounded-2xl p-3.5 space-y-1">
+                <p class="font-extrabold text-gray-900">{{ method.label }}</p>
+                <p v-if="method.account_number" class="text-gray-600 font-semibold select-all">{{ method.account_number }}</p>
+                <p v-if="method.account_holder" class="text-gray-400">a/n {{ method.account_holder }}</p>
+                <img v-if="method.qr_image" :src="method.qr_image" alt="QR" class="w-28 h-28 object-contain mt-2" />
+              </div>
+
+              <div class="space-y-2 pt-2">
+                <input type="file" accept="image/jpeg,image/png,image/webp" class="text-xs" @change="onProofFileChange" />
+                <p v-if="proofError" class="text-[10px] text-red-500 font-semibold">{{ proofError }}</p>
+                <UButton
+                  block
+                  color="primary"
+                  size="sm"
+                  class="font-bold rounded-xl cursor-pointer"
+                  :disabled="!proofFile"
+                  :loading="uploadingProof"
+                  @click="submitProof"
+                >
+                  Kirim Bukti Transfer
+                </UButton>
+              </div>
+            </div>
+
+            <div
+              v-else-if="order.paymentStatus === 'awaiting_verification'"
+              class="bg-amber-50 border border-amber-100 rounded-3xl p-6 shadow-xs text-center"
+            >
+              <p class="text-xs font-bold text-amber-700">Menunggu verifikasi admin.</p>
+              <p class="text-[10px] text-amber-600 mt-1">Bukti pembayaran sudah diterima, proses verifikasi biasanya memakan waktu beberapa jam.</p>
+            </div>
+
+            <!-- WhatsApp/LINE Confirmation -->
+            <div v-if="order.paymentStatus !== 'unpaid'" class="grid grid-cols-1 gap-2.5">
+              <a
+                v-if="settings.whatsapp_number"
+                :href="whatsappConfirmUrl()"
+                target="_blank"
+                rel="noopener"
+                class="flex items-center justify-center gap-2 text-xs font-bold rounded-xl px-4 py-3 border border-primary-200 text-primary-700 bg-primary-50/40 hover:bg-primary-50 transition-colors"
+              >
+                <UIcon name="i-simple-icons-whatsapp" class="w-4 h-4" />
+                Konfirmasi via WhatsApp
+              </a>
+              <a
+                v-if="settings.line_url"
+                :href="settings.line_url"
+                target="_blank"
+                rel="noopener"
+                class="flex items-center justify-center gap-2 text-xs font-bold rounded-xl px-4 py-3 border border-gray-200 text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors"
+              >
+                Konfirmasi via LINE
+              </a>
             </div>
           </div>
         </div>

@@ -20,5 +20,8 @@ export const useApi = () => {
     async getBanners() {
       return await fetchApi<any>("/banners");
     },
+    async getPaymentMethods() {
+      return await fetchApi<any>("/payment-methods");
+    },
   };
 };
