@@ -98,37 +98,51 @@ watch(() => route.query, syncFromRoute);
 
 <template>
   <div
-    class="relative overflow-hidden bg-linear-to-b from-primary-50/15 via-white to-white min-h-screen py-8"
+    class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-8"
   >
+    <!-- Background cute decor spanning whole page -->
+    <AppCuteDecor />
+
     <!-- Ambient Background Glows -->
     <div
-      class="absolute top-44 -left-40 w-96 h-96 bg-primary-100/10 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-44 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"
     ></div>
     <div
-      class="absolute top-[600px] -right-40 w-96 h-96 bg-secondary-100/10 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-[600px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
     ></div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
       <!-- Premium Shop Header Banner -->
       <div
-        class="bg-linear-to-br from-primary-900 to-primary-950 text-white rounded-3xl p-8 md:p-12 mb-8 relative overflow-hidden shadow-lg shadow-primary-950/10 border border-primary-900/10"
+        class="bg-linear-to-br from-primary-400 to-primary-500 text-white rounded-3xl p-8 md:p-12 mb-8 relative overflow-hidden shadow-lg shadow-primary-500/15 border border-primary-400/25"
       >
         <div
-          class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(4,92,52,0.4),transparent)]"
+          class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent)]"
         ></div>
-        <AppCuteDecor on-dark />
+        <!-- Banner background decorations -->
+        <UIcon
+          name="i-heroicons-sparkles-solid"
+          class="absolute -top-4 -right-4 w-28 h-28 text-white/25 rotate-12 pointer-events-none"
+        />
+        <UIcon
+          name="i-heroicons-star-solid"
+          class="absolute top-1/3 right-1/4 w-16 h-16 text-white/20 -rotate-12 pointer-events-none"
+        />
+        <UIcon
+          name="i-heroicons-heart-solid"
+          class="absolute bottom-4 right-12 w-14 h-14 text-white/25 rotate-45 pointer-events-none"
+        />
         <span
-          class="text-xs uppercase tracking-widest text-primary-400 font-extrabold mb-2 block"
+          class="text-xs uppercase tracking-widest text-primary-100 font-extrabold mb-2 block"
           >BbystarGO</span
         >
         <h1 class="text-2xl md:text-4xl font-extrabold tracking-tight">
           Katalog Produk
         </h1>
         <p
-          class="text-xs md:text-sm text-primary-200 mt-2 max-w-md leading-relaxed font-medium"
+          class="text-xs md:text-sm text-white/95 mt-2 max-w-md leading-relaxed font-medium"
         >
-          Temukan rangkaian produk hidrasi premium, sheet mask alami, dan
-          layanan facial treatment terbaik untuk kesehatan kulit Anda.
+          Temukan koleksi merchandise yang lucu, unik, dan menggemaskan pilihan terbaik kami.
         </p>
       </div>
 
@@ -158,7 +172,7 @@ watch(() => route.query, syncFromRoute);
       <div class="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-8">
         <!-- Filter sidebar (desktop) -->
         <aside
-          class="hidden lg:block space-y-6 self-start bg-white/70 backdrop-blur-sm border border-gray-100 rounded-3xl p-6 shadow-sm"
+          class="hidden lg:block space-y-6 self-start bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.03)]"
         >
           <div>
             <h3
@@ -366,7 +380,7 @@ watch(() => route.query, syncFromRoute);
 
           <!-- Product card container -->
           <div
-            class="bg-white/40 backdrop-blur-sm border border-gray-100/60 rounded-3xl p-6 shadow-sm"
+            class="bg-white/60 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
           >
             <ProductGrid
               :products="catalog.products"

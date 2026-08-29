@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['category_id', 'name', 'slug', 'description', 'images', 'is_active'])]
+#[Fillable(['category_id', 'name', 'slug', 'description', 'images', 'is_active', 'shopee_url'])]
 class Product extends Model
 {
     /** @use HasFactory<ProductFactory> */

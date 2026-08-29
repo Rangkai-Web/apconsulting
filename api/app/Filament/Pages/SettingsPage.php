@@ -6,6 +6,7 @@ use App\Models\RajaongkirDistrict;
 use App\Models\StoreSetting;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -36,7 +37,17 @@ class SettingsPage extends Page implements HasForms
         $settings = StoreSetting::firstOrCreate([], [
             'store_name' => 'BbystarGO',
         ]);
-        $this->form->fill($settings->toArray());
+        
+        $data = $settings->toArray();
+        if (empty($data['dp_rules'])) {
+            $data['dp_rules'] = [
+                ['min_price' => 0, 'max_price' => 500000, 'percentage' => 30],
+                ['min_price' => 500000, 'max_price' => 1000000, 'percentage' => 40],
+                ['min_price' => 1000000, 'max_price' => null, 'percentage' => 50],
+            ];
+        }
+        
+        $this->form->fill($data);
     }
 
     public function form(Schema $schema): Schema
@@ -77,6 +88,60 @@ class SettingsPage extends Page implements HasForms
                     ->label('Instagram URL')
                     ->url()
                     ->maxLength(255),
+                Repeater::make('socials')
+                    ->label('Daftar Media Sosial Lainnya')
+                    ->schema([
+                        Select::make('platform')
+                            ->label('Platform')
+                            ->options([
+                                'instagram' => 'Instagram',
+                                'tiktok' => 'TikTok',
+                                'facebook' => 'Facebook',
+                                'twitter' => 'Twitter/X',
+                                'whatsapp' => 'WhatsApp',
+                                'line' => 'LINE',
+                                'youtube' => 'YouTube',
+                                'website' => 'Website/Lainnya',
+                            ])
+                            ->required(),
+                        TextInput::make('url')
+                            ->label('URL Link')
+                            ->url()
+                            ->required()
+                            ->maxLength(255),
+                    ])
+                    ->columns(2)
+                    ->helperText('Tambahkan tautan akun media sosial toko Anda.')
+                    ->default([]),
+                Repeater::make('dp_rules')
+                    ->label('Aturan Down Payment (DP) Pre Order')
+                    ->schema([
+                        TextInput::make('min_price')
+                            ->label('Harga Minimum (Rp)')
+                            ->numeric()
+                            ->required()
+                            ->minValue(0)
+                            ->prefix('Rp'),
+                        TextInput::make('max_price')
+                            ->label('Harga Maksimum (Rp)')
+                            ->numeric()
+                            ->placeholder('Kosongkan untuk tanpa batas')
+                            ->prefix('Rp'),
+                        TextInput::make('percentage')
+                            ->label('Persentase DP (%)')
+                            ->numeric()
+                            ->required()
+                            ->minValue(1)
+                            ->maxValue(100)
+                            ->suffix('%'),
+                    ])
+                    ->columns(3)
+                    ->helperText('Tentukan persentase DP berdasarkan range harga varian produk PO.')
+                    ->default([
+                        ['min_price' => 0, 'max_price' => 500000, 'percentage' => 30],
+                        ['min_price' => 500000, 'max_price' => 1000000, 'percentage' => 40],
+                        ['min_price' => 1000000, 'max_price' => null, 'percentage' => 50],
+                    ]),
                 TextInput::make('operating_hours')
                     ->label('Jam Operasional')
                     ->placeholder('Senin - Minggu, 10.00 - 22.00 WIB')

@@ -16,6 +16,10 @@ function mapVariant(raw: any): ProductVariant {
     stock: raw.stock,
     weight: raw.weight,
     image: raw.image,
+    fulfillmentType: raw.fulfillment_type ?? "ready_stock",
+    poDays: raw.po_days,
+    customDp: raw.custom_dp,
+    dpAmount: raw.dp_amount ?? 0,
   };
 }
 
@@ -31,6 +35,7 @@ function mapProduct(raw: any): Product {
     ratingAvg: raw.rating_avg,
     ratingCount: raw.rating_count,
     variants: (raw.variants ?? []).map(mapVariant),
+    shopeeUrl: raw.shopee_url,
   };
 }
 

@@ -29,23 +29,24 @@ async function handleLookup() {
 
 <template>
   <div
-    class="relative overflow-hidden bg-linear-to-b from-primary-50/15 via-white to-white min-h-screen py-16"
+    class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-16"
   >
     <div
-      class="absolute top-12 -left-40 w-96 h-96 bg-primary-100/10 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"
     ></div>
     <div
-      class="absolute top-[400px] -right-40 w-96 h-96 bg-secondary-100/10 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-[400px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
     ></div>
+    <AppCuteDecor />
 
-    <div class="max-w-md mx-auto px-4 relative">
+    <div class="max-w-md mx-auto px-4 relative z-20">
       <div class="text-center mb-10">
         <div
-          class="w-14 h-14 rounded-2xl bg-primary-50 flex items-center justify-center mx-auto mb-4 shadow-sm"
+          class="w-14 h-14 rounded-2xl bg-primary-50/80 flex items-center justify-center mx-auto mb-4 shadow-sm border border-primary-100/50"
         >
           <UIcon
             name="i-heroicons-magnifying-glass"
-            class="w-7 h-7 text-primary-600"
+            class="w-7 h-7 text-primary-500"
           />
         </div>
         <h1 class="text-2xl font-black text-gray-900 tracking-tight">
@@ -56,7 +57,7 @@ async function handleLookup() {
         </p>
       </div>
 
-      <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-xs">
+      <div class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-8 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]">
         <form class="space-y-5" @submit.prevent="handleLookup">
           <UFormField label="Nomor Pesanan" required>
             <UInput
@@ -83,7 +84,7 @@ async function handleLookup() {
             type="submit"
             color="primary"
             size="lg"
-            class="w-full font-extrabold rounded-full cursor-pointer shadow-md shadow-primary-600/15 mt-2 text-center flex justify-center"
+            class="w-full font-extrabold rounded-full cursor-pointer shadow-md shadow-primary-600/15 mt-2 text-center flex justify-center py-3"
             :disabled="!formValid"
             :loading="loading"
           >
@@ -94,7 +95,7 @@ async function handleLookup() {
 
       <p class="text-center text-xs text-gray-400 font-medium mt-6">
         Punya akun?
-        <NuxtLink to="/login" class="text-primary-600 font-bold hover:underline"
+        <NuxtLink to="/login" class="text-primary-500 font-bold hover:underline"
           >Masuk</NuxtLink
         >
         untuk melihat semua riwayat pesanan.

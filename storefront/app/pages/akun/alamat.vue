@@ -270,10 +270,15 @@ async function confirmDelete(id: number) {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 py-10">
-    <div class="max-w-2xl mx-auto px-4">
+  <div class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-10">
+    <!-- Ambient Background Glows -->
+    <div class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-[400px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"></div>
+    <AppCuteDecor />
+
+    <div class="max-w-2xl mx-auto px-4 relative z-20">
       <!-- Tab nav -->
-      <div class="flex gap-2 mb-8 border-b border-gray-200">
+      <div class="flex gap-2 mb-8 border-b border-primary-100/40">
         <NuxtLink
           v-for="tab in tabs"
           :key="tab.to"
@@ -281,8 +286,8 @@ async function confirmDelete(id: number) {
           class="px-4 py-2 text-sm font-semibold transition-colors"
           :class="
             $route.path === tab.to
-              ? 'text-primary-600 border-b-2 border-primary-600'
-              : 'text-gray-500 hover:text-gray-700'
+              ? 'text-primary-500 border-b-2 border-primary-500 font-bold'
+              : 'text-gray-400 hover:text-primary-500'
           "
         >
           {{ tab.label }}
@@ -291,11 +296,11 @@ async function confirmDelete(id: number) {
 
       <!-- Header row -->
       <div class="flex items-center justify-between mb-4">
-        <h2 class="font-bold text-gray-900 text-lg">Alamat Tersimpan</h2>
+        <h2 class="font-extrabold text-gray-900 text-base">Alamat Tersimpan</h2>
         <UButton
           icon="i-heroicons-plus"
           color="primary"
-          class="cursor-pointer"
+          class="cursor-pointer font-bold rounded-full px-4 py-2"
           @click="openAdd"
         >
           Tambah Alamat
@@ -317,7 +322,7 @@ async function confirmDelete(id: number) {
 
       <!-- List -->
       <div v-else class="space-y-3">
-        <UCard v-for="address in addresses" :key="address.id">
+        <UCard v-for="address in addresses" :key="address.id" class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]">
           <div class="flex items-start justify-between gap-4">
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-1">

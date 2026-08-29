@@ -18,6 +18,10 @@ class ProductVariantResource extends JsonResource
             'stock' => $this->stock,
             'weight' => $this->weight,
             'image' => $this->image ? Storage::disk('public_uploads')->url($this->image) : null,
+            'fulfillment_type' => $this->fulfillment_type ?? 'ready_stock',
+            'po_days' => $this->po_days,
+            'custom_dp' => $this->custom_dp,
+            'dp_amount' => $this->getDpAmount(),
         ];
     }
 }

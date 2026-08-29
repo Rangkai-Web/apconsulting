@@ -194,12 +194,13 @@ function formatDate(dateStr: string): string {
 </script>
 
 <template>
-  <div class="relative overflow-hidden bg-linear-to-b from-primary-50/15 via-white to-white min-h-screen py-10">
+  <div class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-10">
     <!-- Ambient Background Glows -->
-    <div class="absolute top-12 -left-40 w-96 h-96 bg-primary-100/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute top-[400px] -right-40 w-96 h-96 bg-secondary-100/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-[400px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"></div>
+    <AppCuteDecor />
 
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-20">
       <!-- Back button -->
       <div class="mb-6">
         <UButton
@@ -243,7 +244,7 @@ function formatDate(dateStr: string): string {
       <div v-else-if="order" class="space-y-8">
         
         <!-- Header Info Card -->
-        <div class="bg-white border border-gray-100 rounded-3xl p-6 md:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 md:p-8 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)] flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div class="space-y-2">
             <div class="flex items-center gap-3">
               <h1 class="text-lg font-black text-gray-900 tracking-tight">{{ order.orderNumber }}</h1>
@@ -259,8 +260,8 @@ function formatDate(dateStr: string): string {
         <div class="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-8">
           
           <!-- Left side: Items Table -->
-          <div class="bg-white border border-gray-100 rounded-3xl p-6 md:p-8 shadow-xs space-y-6">
-            <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-850 border-b border-gray-100 pb-3">
+          <div class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 md:p-8 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] space-y-6">
+            <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-500 border-b border-primary-100/30 pb-3">
               Rincian Item Belanja
             </h2>
 
@@ -302,8 +303,8 @@ function formatDate(dateStr: string): string {
           <div class="space-y-6">
             
             <!-- Shipping Details -->
-            <div class="bg-white border border-gray-100 rounded-3xl p-6 shadow-xs space-y-4">
-              <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-850 border-b border-gray-100 pb-2">
+            <div class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] space-y-4">
+              <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-500 border-b border-primary-100/30 pb-2">
                 Informasi Pengiriman
               </h2>
 
@@ -335,8 +336,8 @@ function formatDate(dateStr: string): string {
             </div>
 
             <!-- Receipt Card -->
-            <div class="bg-primary-50/5 border border-primary-100/50 rounded-3xl p-6 shadow-xs space-y-4">
-              <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-850 border-b border-primary-100/50 pb-2">
+            <div class="bg-linear-to-b from-primary-50/50 via-white/80 to-white/95 backdrop-blur-xs border border-primary-100/40 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)] space-y-4">
+              <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-500 border-b border-primary-100/30 pb-2">
                 Rincian Pembayaran
               </h2>
 
@@ -359,9 +360,9 @@ function formatDate(dateStr: string): string {
             <!-- Payment Instructions & Proof Upload -->
             <div
               v-if="order.paymentStatus === 'unpaid' || order.paymentStatus === 'rejected'"
-              class="bg-white border border-gray-100 rounded-3xl p-6 shadow-xs space-y-4"
+              class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] space-y-4"
             >
-              <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-850 border-b border-gray-100 pb-2">
+              <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-500 border-b border-primary-100/30 pb-2">
                 Instruksi Pembayaran
               </h2>
 

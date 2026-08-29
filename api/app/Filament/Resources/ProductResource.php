@@ -60,6 +60,11 @@ class ProductResource extends Resource
                 ->required()
                 ->maxLength(255)
                 ->unique(ignoreRecord: true),
+            TextInput::make('shopee_url')
+                ->label('Link Produk Shopee')
+                ->url()
+                ->placeholder('https://shopee.co.id/...')
+                ->maxLength(255),
             RichEditor::make('description')
                 ->label('Deskripsi')
                 ->columnSpan(2)
@@ -104,13 +109,13 @@ class ProductResource extends Resource
                         ->required()
                         ->placeholder('Contoh: 50ml')
                         ->maxLength(255)
-                        ->columnSpan(2),
+                        ->columnSpan(3),
                     TextInput::make('sku')
                         ->label('SKU')
                         ->required()
                         ->placeholder('AMC-50')
                         ->unique(ignoreRecord: true)
-                        ->columnSpan(2),
+                        ->columnSpan(3),
                     TextInput::make('price')
                         ->label('Harga (Rp)')
                         ->numeric()
@@ -132,6 +137,32 @@ class ProductResource extends Resource
                         ->minValue(1)
                         ->placeholder('Gram')
                         ->columnSpan(2),
+                    Select::make('fulfillment_type')
+                        ->label('Tipe Fulfillment')
+                        ->options([
+                            'ready_stock' => 'Ready Stock',
+                            'pre_order' => 'Pre Order',
+                        ])
+                        ->default('ready_stock')
+                        ->required()
+                        ->live()
+                        ->columnSpan(3),
+                    TextInput::make('po_days')
+                        ->label('Estimasi PO (Hari)')
+                        ->numeric()
+                        ->required(fn ($get) => $get('fulfillment_type') === 'pre_order')
+                        ->visible(fn ($get) => $get('fulfillment_type') === 'pre_order')
+                        ->minValue(1)
+                        ->placeholder('Hari')
+                        ->columnSpan(3),
+                    TextInput::make('custom_dp')
+                        ->label('DP Kustom (Rp)')
+                        ->numeric()
+                        ->prefix('Rp')
+                        ->nullable()
+                        ->visible(fn ($get) => $get('fulfillment_type') === 'pre_order')
+                        ->helperText('Kosongkan untuk hitung otomatis')
+                        ->columnSpan(3),
                     FileUpload::make('image')
                         ->label('Gambar Varian')
                         ->disk('public_uploads')
@@ -140,10 +171,12 @@ class ProductResource extends Resource
                         ->image()
                         ->maxSize(2048)
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                        ->columnSpan(2),
+                        ->columnSpan(3),
                 ])
                 ->columns(12)
                 ->defaultItems(1)
+                ->minItems(1)
+                ->deletable(fn ($state) => count($state ?? []) > 1)
                 ->required()
                 ->addActionLabel('Tambah Varian')
                 ->columnSpanFull(),
@@ -162,9 +195,20 @@ class ProductResource extends Resource
                 TextColumn::make('name')->label('Nama')->searchable()->sortable(),
                 TextColumn::make('category.name')->label('Kategori'),
                 TextColumn::make('variants_count')->label('Varian')->counts('variants'),
-                TextColumn::make('rating_avg')->label('Rating')->formatStateUsing(
-                    fn (?string $state) => $state ? number_format((float) $state, 1) : '—'
-                ),
+                TextColumn::make('price_range')
+                    ->label('Rentang Harga')
+                    ->getStateUsing(function (Product $record) {
+                        $min = $record->variants->min('price');
+                        $max = $record->variants->max('price');
+                        if ($min === null) return '—';
+                        if ($min === $max) return 'Rp ' . number_format($min, 0, ',', '.');
+                        return 'Rp ' . number_format($min, 0, ',', '.') . ' - Rp ' . number_format($max, 0, ',', '.');
+                    }),
+                TextColumn::make('total_stock')
+                    ->label('Total Stok')
+                    ->getStateUsing(function (Product $record) {
+                        return $record->variants->sum('stock') . ' pcs';
+                    }),
                 ToggleColumn::make('is_active')->label('Aktif'),
             ])
             ->filters([

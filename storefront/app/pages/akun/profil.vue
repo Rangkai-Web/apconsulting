@@ -79,10 +79,15 @@ async function savePassword() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 py-10">
-    <div class="max-w-2xl mx-auto px-4">
+  <div class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-10">
+    <!-- Ambient Background Glows -->
+    <div class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-[400px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"></div>
+    <AppCuteDecor />
+
+    <div class="max-w-2xl mx-auto px-4 relative z-20">
       <!-- Tab nav -->
-      <div class="flex gap-2 mb-8 border-b border-gray-200">
+      <div class="flex gap-2 mb-8 border-b border-primary-100/40">
         <NuxtLink
           v-for="tab in tabs"
           :key="tab.to"
@@ -90,8 +95,8 @@ async function savePassword() {
           class="px-4 py-2 text-sm font-semibold transition-colors"
           :class="
             $route.path === tab.to
-              ? 'text-primary-600 border-b-2 border-primary-600'
-              : 'text-gray-500 hover:text-gray-700'
+              ? 'text-primary-500 border-b-2 border-primary-500 font-bold'
+              : 'text-gray-400 hover:text-primary-500'
           "
         >
           {{ tab.label }}
@@ -99,7 +104,7 @@ async function savePassword() {
       </div>
 
       <!-- Info Profil -->
-      <UCard class="mb-6">
+      <UCard class="mb-6 bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]" :ui="{ header: 'border-b border-primary-100/30' }">
         <template #header>
           <h2 class="font-bold text-gray-900">Info Profil</h2>
         </template>
@@ -117,7 +122,7 @@ async function savePassword() {
             color="primary"
             :loading="loadingProfile"
             :disabled="!profileForm.name.trim()"
-            class="cursor-pointer"
+            class="cursor-pointer font-bold px-5 py-2 rounded-full"
             @click="saveProfile"
           >
             Simpan Profil
@@ -126,7 +131,7 @@ async function savePassword() {
       </UCard>
 
       <!-- Ganti Password -->
-      <UCard>
+      <UCard class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]" :ui="{ header: 'border-b border-primary-100/30' }">
         <template #header>
           <h2 class="font-bold text-gray-900">Ganti Password</h2>
         </template>
@@ -166,7 +171,7 @@ async function savePassword() {
               !passwordForm.password ||
               !passwordForm.password_confirmation
             "
-            class="cursor-pointer"
+            class="cursor-pointer font-bold px-5 py-2 rounded-full"
             @click="savePassword"
           >
             Ubah Password

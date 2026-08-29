@@ -26,3 +26,34 @@
   --color-secondary-900: #005a00;
   --color-secondary-950: #003d00;
 }
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(6deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes float-reverse {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(10px) rotate(-8deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes slow-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-reverse 8s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+.animate-slow-spin {
+  animation: slow-spin 25s linear infinite;
+}
+

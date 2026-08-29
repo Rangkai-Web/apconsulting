@@ -31,37 +31,49 @@ watch(() => wishlist.productIds.length, load);
 
 <template>
   <div
-    class="relative overflow-hidden bg-linear-to-b from-primary-50/15 via-white to-white min-h-screen py-10"
+    class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-10"
   >
+    <!-- Background cute decor spanning whole page -->
+    <AppCuteDecor />
+
     <!-- Ambient Background Glows -->
     <div
-      class="absolute top-12 -left-40 w-96 h-96 bg-primary-100/10 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"
     ></div>
     <div
-      class="absolute top-[400px] -right-40 w-96 h-96 bg-secondary-100/10 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-[400px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
     ></div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
       <!-- Premium Wishlist Header Banner -->
       <div
-        class="bg-linear-to-br from-primary-900 to-primary-950 text-white rounded-3xl p-8 md:p-10 mb-8 relative overflow-hidden shadow-lg shadow-primary-950/10 border border-primary-900/10"
+        class="bg-linear-to-br from-primary-400 to-primary-500 text-white rounded-3xl p-8 md:p-10 mb-8 relative overflow-hidden shadow-lg shadow-primary-500/15 border border-primary-400/25"
       >
         <div
-          class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(4,92,52,0.4),transparent)]"
+          class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent)]"
         ></div>
+        <!-- Banner background decorations -->
         <UIcon
-          name="i-heroicons-heart"
-          class="absolute -bottom-8 -right-8 w-36 h-36 text-white/5 transform rotate-12 pointer-events-none"
+          name="i-heroicons-sparkles-solid"
+          class="absolute -top-4 -right-4 w-28 h-28 text-white/25 rotate-12 pointer-events-none"
+        />
+        <UIcon
+          name="i-heroicons-star-solid"
+          class="absolute top-1/3 right-1/4 w-16 h-16 text-white/20 -rotate-12 pointer-events-none"
+        />
+        <UIcon
+          name="i-heroicons-heart-solid"
+          class="absolute bottom-4 right-12 w-14 h-14 text-white/25 rotate-45 pointer-events-none"
         />
         <span
-          class="text-xs uppercase tracking-widest text-primary-400 font-extrabold mb-1.5 block"
+          class="text-xs uppercase tracking-widest text-primary-100 font-extrabold mb-1.5 block"
           >Koleksi Favorit</span
         >
         <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">
           Wishlist Saya
         </h1>
         <p
-          class="text-xs md:text-sm text-primary-200 mt-1 max-w-md leading-relaxed font-medium"
+          class="text-xs md:text-sm text-white/95 mt-1 max-w-md leading-relaxed font-medium"
         >
           Simpan produk Ready Stock &amp; Pre Order favoritmu di sini untuk
           dibeli nanti.
@@ -71,7 +83,7 @@ watch(() => wishlist.productIds.length, load);
       <!-- Empty State -->
       <div
         v-if="!loading && products.length === 0"
-        class="max-w-md mx-auto bg-white/70 backdrop-blur-sm border border-gray-100 rounded-3xl p-8 shadow-sm"
+        class="max-w-md mx-auto bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-8 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
       >
         <EmptyState
           icon="i-heroicons-heart"
@@ -85,7 +97,7 @@ watch(() => wishlist.productIds.length, load);
       <!-- Product Grid Container -->
       <div
         v-else
-        class="bg-white/40 backdrop-blur-sm border border-gray-100/60 rounded-3xl p-6 shadow-sm"
+        class="bg-white/60 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
       >
         <ProductGrid
           :products="products"

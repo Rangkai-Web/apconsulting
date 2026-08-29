@@ -70,14 +70,16 @@ onMounted(async () => {
 
 <template>
   <div
-    class="relative overflow-hidden bg-linear-to-b from-primary-50/20 via-white to-white min-h-screen"
+    class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen"
   >
+    <!-- Background cute decor spanning whole page -->
+    <AppCuteDecor />
     <!-- Ambient Background Glows -->
     <div
-      class="absolute top-20 -left-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-20 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"
     ></div>
     <div
-      class="absolute top-150 -right-40 w-96 h-96 bg-secondary-100/20 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-150 -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
     ></div>
 
     <!-- Hero Section -->
@@ -110,7 +112,7 @@ onMounted(async () => {
               <span
                 class="text-[9px] sm:text-xs uppercase tracking-widest text-primary-400 font-extrabold mb-1"
                 >BbystarGO</span
-              >
+                >
               <h2
                 class="text-lg sm:text-2xl md:text-4xl font-extrabold max-w-xs sm:max-w-lg tracking-tight leading-snug sm:leading-tight line-clamp-2"
               >
@@ -137,7 +139,7 @@ onMounted(async () => {
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
       <div class="text-center max-w-2xl mx-auto mb-10">
         <span
-          class="text-[10px] text-primary-600 uppercase font-extrabold tracking-wider"
+          class="text-[10px] text-primary-500 uppercase font-extrabold tracking-wider"
           >BbystarGO</span
         >
         <p class="text-sm md:text-base text-gray-600 font-medium mt-2 leading-relaxed">
@@ -146,12 +148,12 @@ onMounted(async () => {
         </p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <div
-          class="bg-white border border-gray-100 rounded-3xl p-6 shadow-xs flex items-start gap-4"
+          class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] flex items-start gap-4 hover:shadow-[0_8px_30px_-6px_rgba(255,116,108,0.08)] transition-all duration-300"
         >
           <div
-            class="w-11 h-11 shrink-0 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center"
+            class="w-11 h-11 shrink-0 rounded-2xl bg-primary-50/80 text-primary-500 border border-primary-100/50 flex items-center justify-center"
           >
             <UIcon name="i-heroicons-archive-box" class="w-5 h-5" />
           </div>
@@ -164,10 +166,10 @@ onMounted(async () => {
           </div>
         </div>
         <div
-          class="bg-white border border-gray-100 rounded-3xl p-6 shadow-xs flex items-start gap-4"
+          class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] flex items-start gap-4 hover:shadow-[0_8px_30px_-6px_rgba(255,116,108,0.08)] transition-all duration-300"
         >
           <div
-            class="w-11 h-11 shrink-0 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center"
+            class="w-11 h-11 shrink-0 rounded-2xl bg-primary-50/80 text-primary-500 border border-primary-100/50 flex items-center justify-center"
           >
             <UIcon name="i-heroicons-globe-asia-australia" class="w-5 h-5" />
           </div>
@@ -182,22 +184,24 @@ onMounted(async () => {
       </div>
 
       <div
-        class="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-center"
+        class="bg-white/70 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-center"
       >
         <div>
-          <p class="text-lg font-black text-primary-700">100+</p>
+          <p class="text-lg font-black text-primary-500">100+</p>
           <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">
             Customer Terlayani
           </p>
         </div>
+        <div class="h-8 w-px bg-primary-100/60 hidden sm:block"></div>
         <div>
-          <p class="text-lg font-black text-primary-700">5.0 ★</p>
+          <p class="text-lg font-black text-primary-500">5.0 ★</p>
           <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">
             Rating Shopee
           </p>
         </div>
+        <div class="h-8 w-px bg-primary-100/60 hidden sm:block"></div>
         <div>
-          <p class="text-lg font-black text-primary-700">2.500+</p>
+          <p class="text-lg font-black text-primary-500">2.500+</p>
           <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">
             Penilaian
           </p>
@@ -206,9 +210,7 @@ onMounted(async () => {
     </section>
 
     <!-- Featured Products Section -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
-      <!-- Background cute decor -->
-      <AppCuteDecor />
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
 
       <div
         class="flex items-end justify-between mb-8 border-b border-gray-100 pb-4"
@@ -237,7 +239,7 @@ onMounted(async () => {
 
       <!-- Main product grid inside a styled card container for depth -->
       <div
-        class="bg-white/40 backdrop-blur-sm border border-gray-100/60 rounded-3xl p-6 shadow-sm"
+        class="bg-white/70 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
       >
         <ProductGrid
           :products="featured"

@@ -14,6 +14,10 @@ export interface ProductVariant {
   stock: number;
   weight: number;
   image: string | null;
+  fulfillmentType: string;
+  poDays: number | null;
+  customDp: number | null;
+  dpAmount: number;
 }
 
 export interface Product {
@@ -28,6 +32,7 @@ export interface Product {
   ratingAvg: number;
   ratingCount: number;
   variants: ProductVariant[];
+  shopeeUrl?: string | null;
 }
 
 export interface CartItem {

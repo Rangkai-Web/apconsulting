@@ -516,27 +516,30 @@ async function handleCheckout() {
 
 <template>
   <div
-    class="relative overflow-hidden bg-linear-to-b from-primary-50/15 via-white to-white min-h-screen py-10"
+    class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-10"
   >
+    <!-- Background cute decor spanning whole page -->
+    <AppCuteDecor />
+
     <!-- Ambient Background Glows -->
     <div
-      class="absolute top-12 -left-40 w-96 h-96 bg-primary-100/10 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"
     ></div>
     <div
-      class="absolute top-[400px] -right-40 w-96 h-96 bg-secondary-100/10 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-[400px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
     ></div>
 
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
       <!-- Title Block -->
       <div class="mb-8 flex items-center gap-3">
         <div
-          class="w-10 h-10 rounded-2xl bg-primary-50 flex items-center justify-center text-primary-600 shadow-sm border border-primary-100"
+          class="w-10 h-10 rounded-2xl bg-primary-50/80 flex items-center justify-center text-primary-500 shadow-sm border border-primary-100/50"
         >
           <UIcon name="i-heroicons-credit-card" class="w-5 h-5" />
         </div>
         <div>
           <span
-            class="text-[10px] text-primary-600 uppercase font-extrabold tracking-wider"
+            class="text-[10px] text-primary-500 uppercase font-extrabold tracking-wider"
             >Penyelesaian Pesanan</span
           >
           <h1
@@ -895,9 +898,8 @@ async function handleCheckout() {
         <!-- Right Column: Order Summary, Checkout Button -->
         <div class="space-y-6">
           <div
-            class="bg-linear-to-b from-primary-50/40 to-white/90 border border-primary-100/60 rounded-3xl p-6 shadow-md shadow-primary-900/5 h-fit space-y-5 relative overflow-hidden"
+            class="bg-linear-to-b from-primary-50/50 via-white/80 to-white/95 backdrop-blur-xs border border-primary-100/40 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)] h-fit space-y-5 relative overflow-hidden"
           >
-            <AppCuteDecor />
 
             <h2
               class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-b border-primary-100/50 pb-2.5"

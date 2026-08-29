@@ -20,6 +20,7 @@ class ProductResource extends JsonResource
             'is_active' => $this->is_active,
             'rating_avg' => (float) $this->rating_avg,
             'rating_count' => $this->rating_count,
+            'shopee_url' => $this->shopee_url,
             'variants' => ProductVariantResource::collection($this->whenLoaded('variants')),
         ];
     }

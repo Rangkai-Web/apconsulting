@@ -98,17 +98,20 @@ watch(() => route.params.slug, load);
 
 <template>
   <div
-    class="relative overflow-hidden bg-gradient-to-b from-primary-50/15 via-white to-white min-h-screen py-10"
+    class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-10"
   >
+    <!-- Background cute decor spanning whole page -->
+    <AppCuteDecor />
+
     <!-- Ambient Background Glows -->
     <div
-      class="absolute top-12 -left-40 w-96 h-96 bg-primary-100/10 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"
     ></div>
     <div
-      class="absolute top-[500px] -right-40 w-96 h-96 bg-secondary-100/10 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-[500px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
     ></div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
       <!-- Breadcrumb Link Back -->
       <div class="mb-6">
         <NuxtLink
@@ -217,8 +220,6 @@ watch(() => route.params.slug, load);
         <div
           class="bg-white/80 backdrop-blur-sm border border-gray-100 rounded-3xl p-6 md:p-8 shadow-sm space-y-6 relative overflow-hidden self-start"
         >
-          <!-- Background cute decor -->
-          <AppCuteDecor />
 
           <!-- Title & Rating & Wishlist -->
           <div
@@ -260,19 +261,48 @@ watch(() => route.params.slug, load);
             />
           </div>
 
-          <!-- Price Display -->
+          <!-- Price Display & Fulfillment Info -->
           <div
-            class="bg-primary-50/40 border border-primary-100/50 rounded-2xl p-4 flex flex-col justify-center"
+            class="bg-primary-50/40 border border-primary-100/50 rounded-2xl p-4 flex flex-col gap-2.5 justify-center"
           >
-            <span
-              class="text-[10px] text-primary-700 font-extrabold uppercase tracking-wider"
-              >Harga Varian</span
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <span
+                  class="text-[10px] text-primary-700 font-extrabold uppercase tracking-wider"
+                  >Harga Varian</span
+                >
+                <p
+                  class="text-2xl md:text-3xl font-black text-primary-700 tracking-tight mt-0.5"
+                >
+                  {{ selectedVariant ? format(selectedVariant.price) : "-" }}
+                </p>
+              </div>
+              <div v-if="selectedVariant" class="text-right">
+                <span
+                  v-if="selectedVariant.fulfillmentType === 'pre_order'"
+                  class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-orange-100 text-orange-700 border border-orange-200"
+                >
+                  <UIcon name="i-heroicons-clock-solid" class="w-3.5 h-3.5" />
+                  PO {{ selectedVariant.poDays }} Hari
+                </span>
+                <span
+                  v-else
+                  class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-700 border border-emerald-200"
+                >
+                  <UIcon name="i-heroicons-check-circle-solid" class="w-3.5 h-3.5" />
+                  Ready Stock
+                </span>
+              </div>
+            </div>
+
+            <!-- DP Info for PO -->
+            <div
+              v-if="selectedVariant && selectedVariant.fulfillmentType === 'pre_order'"
+              class="border-t border-primary-100/60 pt-2 flex items-center justify-between text-xs font-extrabold text-primary-850"
             >
-            <p
-              class="text-2xl md:text-3xl font-black text-primary-700 tracking-tight mt-0.5"
-            >
-              {{ selectedVariant ? format(selectedVariant.price) : "-" }}
-            </p>
+              <span>Uang Muka (DP):</span>
+              <span class="text-sm font-black text-primary-700">{{ format(selectedVariant.dpAmount) }}</span>
+            </div>
           </div>
 
           <!-- Description -->
@@ -317,8 +347,8 @@ watch(() => route.params.slug, load);
             >
           </div>
 
-          <!-- Buy Button -->
-          <div class="pt-2">
+          <!-- Buy Button & Shopee Link Button -->
+          <div class="pt-2 space-y-3">
             <UButton
               block
               color="primary"
@@ -330,6 +360,17 @@ watch(() => route.params.slug, load);
             >
               {{ outOfStock ? "Stok Habis" : "Tambah ke Keranjang" }}
             </UButton>
+
+            <a
+              v-if="product.shopeeUrl"
+              :href="product.shopeeUrl"
+              target="_blank"
+              rel="noopener"
+              class="flex items-center justify-center gap-2 w-full py-3.5 bg-orange-600 text-white font-bold rounded-full shadow-lg shadow-orange-600/20 hover:bg-orange-500 hover:shadow-orange-600/30 transform hover:scale-[1.01] transition-all duration-300 text-sm"
+            >
+              <UIcon name="i-simple-icons-shopee" class="w-5 h-5" />
+              Beli di Shopee
+            </a>
           </div>
 
           <!-- Trust Badges -->

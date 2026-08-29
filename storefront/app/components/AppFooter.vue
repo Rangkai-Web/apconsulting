@@ -19,9 +19,23 @@ const settings = computed(() => {
       whatsapp_number: "",
       instagram_url: "",
       operating_hours: "",
+      socials: [],
     }
   );
 });
+
+const getSocialIcon = (platform: string) => {
+  const icons: Record<string, string> = {
+    instagram: "i-simple-icons-instagram",
+    tiktok: "i-simple-icons-tiktok",
+    facebook: "i-simple-icons-facebook",
+    twitter: "i-simple-icons-x",
+    whatsapp: "i-simple-icons-whatsapp",
+    line: "i-simple-icons-line",
+    youtube: "i-simple-icons-youtube",
+  };
+  return icons[platform.toLowerCase()] || "i-heroicons-globe-alt";
+};
 
 const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
 </script>
@@ -59,30 +73,45 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
           Pre Order.
         </p>
         <div class="flex items-center gap-3 pt-2">
-          <a
-            v-if="settings.instagram_url"
-            :href="settings.instagram_url"
-            target="_blank"
-            rel="noopener"
-            class="w-8.5 h-8.5 rounded-full bg-primary-700/60 border border-primary-600/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
-            aria-label="Instagram"
-          >
-            <UIcon name="i-simple-icons-instagram" class="w-4.5 h-4.5" />
-          </a>
-          <a
-            v-if="settings.whatsapp_number"
-            :href="
-              'https://api.whatsapp.com/send/?phone=' +
-              settings.whatsapp_number +
-              '&text&type=phone_number&app_absent=0'
-            "
-            target="_blank"
-            rel="noopener"
-            class="w-8.5 h-8.5 rounded-full bg-primary-700/60 border border-primary-600/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
-            aria-label="WhatsApp"
-          >
-            <UIcon name="i-simple-icons-whatsapp" class="w-4.5 h-4.5" />
-          </a>
+          <template v-if="settings.socials && settings.socials.length > 0">
+            <a
+              v-for="(social, index) in settings.socials"
+              :key="index"
+              :href="social.url"
+              target="_blank"
+              rel="noopener"
+              class="w-8.5 h-8.5 rounded-full bg-primary-700/60 border border-primary-600/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 capitalize"
+              :aria-label="social.platform"
+            >
+              <UIcon :name="getSocialIcon(social.platform)" class="w-4.5 h-4.5" />
+            </a>
+          </template>
+          <template v-else>
+            <a
+              v-if="settings.instagram_url"
+              :href="settings.instagram_url"
+              target="_blank"
+              rel="noopener"
+              class="w-8.5 h-8.5 rounded-full bg-primary-700/60 border border-primary-600/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+              aria-label="Instagram"
+            >
+              <UIcon name="i-simple-icons-instagram" class="w-4.5 h-4.5" />
+            </a>
+            <a
+              v-if="settings.whatsapp_number"
+              :href="
+                'https://api.whatsapp.com/send/?phone=' +
+                settings.whatsapp_number +
+                '&text&type=phone_number&app_absent=0'
+              "
+              target="_blank"
+              rel="noopener"
+              class="w-8.5 h-8.5 rounded-full bg-primary-700/60 border border-primary-600/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+              aria-label="WhatsApp"
+            >
+              <UIcon name="i-simple-icons-whatsapp" class="w-4.5 h-4.5" />
+            </a>
+          </template>
         </div>
       </div>
 

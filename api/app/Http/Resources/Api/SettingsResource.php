@@ -19,6 +19,8 @@ class SettingsResource extends JsonResource
             'line_url' => $this->line_url,
             'instagram_url' => $this->instagram_url,
             'operating_hours' => $this->operating_hours,
+            'socials' => $this->socials ?? [],
+            'dp_rules' => $this->dp_rules ?? [],
         ];
     }
 }
