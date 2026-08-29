@@ -28,7 +28,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
 
 <template>
   <footer
-    class="bg-[#0B0C0E] text-gray-300 relative overflow-hidden mt-20 border-t border-primary-950/20"
+    class="bg-primary-500 relative overflow-hidden mt-20 border-t border-primary-200"
   >
     <!-- Glowing Top Border Indicator -->
     <div
@@ -53,8 +53,8 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
             />
           </div>
         </NuxtLink>
-        <p class="text-xs text-gray-400 leading-relaxed max-w-sm">
-          {{ settings.store_name }} — jasa pembelian barang dari Indonesia,
+        <p class="text-xs text-black leading-relaxed max-w-sm">
+          {{ settings.store_name }} - jasa pembelian barang dari Indonesia,
           Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock &amp;
           Pre Order.
         </p>
@@ -64,7 +64,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
             :href="settings.instagram_url"
             target="_blank"
             rel="noopener"
-            class="w-8.5 h-8.5 rounded-full bg-gray-900/60 border border-gray-800/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300 hover:scale-110"
+            class="w-8.5 h-8.5 rounded-full bg-primary-700/60 border border-primary-600/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
             aria-label="Instagram"
           >
             <UIcon name="i-simple-icons-instagram" class="w-4.5 h-4.5" />
@@ -78,7 +78,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
             "
             target="_blank"
             rel="noopener"
-            class="w-8.5 h-8.5 rounded-full bg-gray-900/60 border border-gray-800/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300 hover:scale-110"
+            class="w-8.5 h-8.5 rounded-full bg-primary-700/60 border border-primary-600/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
             aria-label="WhatsApp"
           >
             <UIcon name="i-simple-icons-whatsapp" class="w-4.5 h-4.5" />
@@ -89,7 +89,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
       <!-- Quick Links (2 cols) -->
       <div class="md:col-span-2 space-y-4">
         <h4
-          class="text-xs font-bold tracking-widest uppercase text-primary-400/90 border-l-2 border-primary-500 pl-2.5"
+          class="text-xs font-bold tracking-widest uppercase text-white border-l-2 border-white pl-2.5"
         >
           Tautan
         </h4>
@@ -102,11 +102,11 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
             ]"
             :key="link.to"
             :to="link.to"
-            class="text-xs text-gray-400 hover:text-white flex items-center gap-1 group transition-all duration-200 hover:translate-x-1"
+            class="text-xs text-black hover:text-white flex items-center gap-1 group transition-all duration-200 hover:translate-x-1"
           >
             <UIcon
               name="i-heroicons-chevron-right"
-              class="w-3 h-3 opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 text-primary-500"
+              class="w-3 h-3 opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 text-white"
             />
             {{ link.label }}
           </NuxtLink>
@@ -116,25 +116,25 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
       <!-- Contacts (4 cols) -->
       <div class="md:col-span-4 space-y-4">
         <h4
-          class="text-xs font-bold tracking-widest uppercase text-primary-400/90 border-l-2 border-primary-500 pl-2.5"
+          class="text-xs font-bold tracking-widest uppercase text-white border-l-2 border-white pl-2.5"
         >
           Hubungi Kami
         </h4>
-        <ul class="flex flex-col gap-3 text-xs text-gray-400">
+        <ul class="flex flex-col gap-3 text-xs text-black">
           <li
             v-if="settings.address"
             class="flex items-start gap-2.5 leading-relaxed"
           >
             <UIcon
               name="i-heroicons-map-pin"
-              class="w-4.5 h-4.5 text-primary-500 shrink-0 mt-0.5"
+              class="w-4.5 h-4.5 text-white shrink-0 mt-0.5"
             />
             <span>{{ settings.address }}</span>
           </li>
           <li v-if="settings.phone" class="flex items-center gap-2.5">
             <UIcon
               name="i-heroicons-phone"
-              class="w-4.5 h-4.5 text-primary-500 shrink-0"
+              class="w-4.5 h-4.5 text-white shrink-0"
             />
             <a
               :href="'tel:' + settings.phone"
@@ -142,10 +142,10 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
               >{{ settings.phone }}</a
             >
           </li>
-          <li v-if="settings.operating_hours" class="flex items-start gap-2.5">
+          <li v-if="settings.operating_hours" class="flex items-center gap-2.5">
             <UIcon
               name="i-heroicons-clock"
-              class="w-4.5 h-4.5 text-primary-500 shrink-0 mt-0.5"
+              class="w-4.5 h-4.5 text-white shrink-0 mt-0.5"
             />
             <span class="whitespace-pre-line">{{
               settings.operating_hours
@@ -158,7 +158,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
       <div class="md:col-span-2 space-y-5">
         <div class="space-y-3">
           <h4
-            class="text-xs font-bold tracking-widest uppercase text-primary-400/90 border-l-2 border-primary-500 pl-2.5"
+            class="text-xs font-bold tracking-widest uppercase text-white border-l-2 border-white pl-2.5"
           >
             Metode Pembayaran
           </h4>
@@ -166,19 +166,19 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
             <div
               v-for="method in paymentMethods"
               :key="method.id"
-              class="flex items-center gap-2 px-2.5 py-1.5 bg-gray-100 border border-gray-300/60 rounded-lg hover:border-primary-600/60 transition-colors duration-200"
+              class="flex items-center gap-2 px-2 py-1 bg-gray-100 border border-gray-300/60 rounded-lg hover:border-primary-600/60 transition-colors duration-200"
             >
               <img
                 v-if="method.qr_image"
                 :src="method.qr_image"
                 :alt="method.label"
-                class="w-8 h-8 object-contain rounded"
+                class="w-12 h-12 object-contain rounded"
               />
-              <span
-                class="text-xs text-gray-700 font-semibold hover:text-primary-600 transition-colors duration-200"
+              <!-- <span
+                class="text-xs text-gray-700 font-semibold transition-colors duration-200"
               >
                 {{ method.label }}
-              </span>
+              </span> -->
             </div>
           </div>
         </div>
@@ -187,7 +187,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
 
     <!-- Copyright -->
     <div
-      class="border-t border-gray-900/80 bg-gray-950/20 py-6 text-xs text-gray-500"
+      class="border-t border-primary-600 bg-primary-800/20 py-6 text-xs text-white backdrop-blur-sm"
     >
       <div
         class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-3 text-center sm:text-left"

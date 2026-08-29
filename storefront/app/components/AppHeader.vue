@@ -99,7 +99,7 @@ async function handleMobileLogout() {
 
 <template>
   <header
-    class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100/80 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.04)] transition-all duration-300"
+    class="sticky top-0 z-40 bg-primary-500 backdrop-blur-md border-b border-primary-500/80 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.04)] transition-all duration-300"
   >
     <!-- Main Top Row -->
     <div
@@ -120,7 +120,7 @@ async function handleMobileLogout() {
             class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
           >
             <NuxtImg
-              :src="settings.logo || '/BbystarGO_1.jpg'"
+              :src="settings.logo || '/BbystarGO__1.png'"
               alt="Logo BbystarGO"
               width="40"
               height="40"
@@ -143,13 +143,13 @@ async function handleMobileLogout() {
             class="relative py-2 text-sm font-semibold transition-colors duration-300 group"
             :class="
               route.path === link.to
-                ? 'text-primary-700 font-bold'
-                : 'text-gray-600 hover:text-primary-600'
+                ? 'text-black font-bold'
+                : 'text-white hover:text-black/80 hover:font-semibold'
             "
           >
             {{ link.label }}
             <span
-              class="absolute bottom-0 left-0 h-[2px] bg-primary-600 transition-all duration-300 rounded-full"
+              class="absolute bottom-0 left-0 h-0.5 bg-black transition-all duration-300 rounded-full"
               :class="
                 route.path === link.to ? 'w-full' : 'w-0 group-hover:w-full'
               "
@@ -167,7 +167,7 @@ async function handleMobileLogout() {
               icon="i-heroicons-magnifying-glass"
               placeholder="Cari produk yang Anda butuhkan..."
               size="md"
-              class="w-full transition-all duration-300 border border-gray-200 rounded-full"
+              class="w-full transition-all duration-300 border border-primary-200 rounded-full"
               :ui="{
                 base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
               }"
@@ -182,14 +182,14 @@ async function handleMobileLogout() {
               icon="i-heroicons-heart"
               color="neutral"
               variant="ghost"
-              class="text-gray-600 cursor-pointer hover:text-red-500 hover:bg-red-50/60 transition-all duration-300 rounded-xl p-2.5"
+              class="text-black cursor-pointer hover:text-red-500 hover:bg-red-50/60 transition-all duration-300 rounded-xl p-2.5"
               aria-label="Wishlist"
             />
             <UBadge
               v-if="wishlist.count > 0"
               color="error"
               size="sm"
-              class="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center px-1 rounded-full text-[10px] font-extrabold ring-2 ring-white animate-pulse"
+              class="absolute -top-1 -right-1 min-w-4.5 h-4.5 flex items-center justify-center px-1 rounded-full text-[10px] font-extrabold ring-2 ring-white animate-pulse"
             >
               {{ wishlist.count }}
             </UBadge>
@@ -200,14 +200,14 @@ async function handleMobileLogout() {
               icon="i-heroicons-shopping-cart"
               color="neutral"
               variant="ghost"
-              class="text-gray-600 hover:text-primary-600 cursor-pointer hover:bg-primary-50/60 transition-all duration-300 rounded-xl p-2.5"
+              class="text-black hover:text-primary-600 cursor-pointer hover:bg-primary-50/60 transition-all duration-300 rounded-xl p-2.5"
               aria-label="Keranjang Belanja"
             />
             <UBadge
               v-if="cart.totalQty > 0"
-              color="primary"
+              color="error"
               size="sm"
-              class="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center px-1 rounded-full text-[10px] font-extrabold ring-2 ring-white animate-bounce"
+              class="absolute -top-1 -right-1 min-w-4.5 h-4.5 flex items-center justify-center px-1 rounded-full text-[10px] font-extrabold ring-2 ring-white animate-pulse"
             >
               {{ cart.totalQty }}
             </UBadge>
@@ -224,10 +224,10 @@ async function handleMobileLogout() {
                 icon="i-heroicons-user"
                 color="neutral"
                 variant="ghost"
-                class="text-gray-600 hover:text-primary-600 hover:bg-primary-50/60 transition-all duration-300 rounded-xl p-2.5 flex items-center gap-1 cursor-pointer"
+                class="text-black hover:text-primary-600 hover:bg-primary-50/60 transition-all duration-300 rounded-xl p-2.5 flex items-center gap-1 cursor-pointer"
               >
                 <span
-                  class="hidden md:inline text-xs font-semibold text-gray-700 truncate max-w-[100px]"
+                  class="hidden md:inline text-xs font-semibold text-gray-700 truncate max-w-25"
                 >
                   {{ authStore.user?.name.split(" ")[0] }}
                 </span>
@@ -257,7 +257,7 @@ async function handleMobileLogout() {
         icon="i-heroicons-magnifying-glass"
         placeholder="Cari produk yang Anda butuhkan..."
         size="lg"
-        class="w-full transition-all duration-300 border border-gray-200 rounded-full"
+        class="w-full transition-all duration-300 border border-primary-200 rounded-full"
         :ui="{
           base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
         }"
@@ -283,7 +283,7 @@ async function handleMobileLogout() {
                   class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
                 >
                   <NuxtImg
-                    :src="settings.logo || '/BbystarGO_1.jpg'"
+                    :src="settings.logo || '/BbystarGO__1.png'"
                     alt="Logo BbystarGO"
                     width="40"
                     height="40"
