@@ -219,7 +219,7 @@ async function handleMobileLogout() {
           </NuxtLink>
 
           <!-- User Profile Dropdown or Login Button -->
-          <div class="ml-1 shrink-0 flex items-center">
+          <div class="shrink-0 flex items-center">
             <UDropdownMenu
               v-if="authStore.isLoggedIn"
               :items="userDropdownItems"
