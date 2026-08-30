@@ -83,7 +83,7 @@ watch(() => wishlist.productIds.length, load);
       <!-- Empty State -->
       <div
         v-if="!loading && products.length === 0"
-        class="max-w-md mx-auto bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-8 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
+        class="max-w-md mx-auto bg-white backdrop-blur-xs border-2 border-primary-300/40 rounded-3xl p-8 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
       >
         <EmptyState
           icon="i-heroicons-heart"

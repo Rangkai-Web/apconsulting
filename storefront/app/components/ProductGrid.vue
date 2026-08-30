@@ -16,7 +16,7 @@ defineEmits<{
   <div>
     <div
       v-if="loading && products.length === 0"
-      class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
     >
       <div v-for="n in 8" :key="n" class="space-y-3">
         <USkeleton class="aspect-square rounded-xl" />
@@ -34,7 +34,7 @@ defineEmits<{
 
     <template v-else>
       <div
-        class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
       >
         <ProductCard
           v-for="product in products"

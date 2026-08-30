@@ -46,6 +46,8 @@ export interface CartItem {
   qty: number;
   stock: number;
   weight: number;
+  fulfillmentType?: string;
+  originalPrice?: number;
 }
 
 export interface Address {

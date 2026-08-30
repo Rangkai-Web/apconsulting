@@ -923,12 +923,26 @@ async function handleCheckout() {
                   <p class="text-xs font-extrabold text-gray-900 truncate">
                     {{ item.productName }}
                   </p>
-                  <p class="text-[10px] text-gray-400 font-semibold mt-0.5">
-                    Varian: {{ item.variantName }} (x{{ item.qty }})
+                  <p class="text-[10px] text-gray-400 font-semibold mt-0.5 flex flex-wrap items-center gap-1.5">
+                    <span>Varian: {{ item.variantName }} (x{{ item.qty }})</span>
+                    <span
+                      v-if="item.fulfillmentType === 'pre_order'"
+                      class="px-1 py-0.5 bg-orange-100 text-orange-700 text-[8px] font-black rounded"
+                    >
+                      DP
+                    </span>
                   </p>
-                  <p class="text-xs font-black text-gray-700 mt-1">
-                    {{ format(item.price * item.qty) }}
-                  </p>
+                  <div class="flex items-baseline gap-1.5 mt-1">
+                    <p class="text-xs font-black text-gray-700">
+                      {{ format(item.price * item.qty) }}
+                    </p>
+                    <span
+                      v-if="item.fulfillmentType === 'pre_order' && item.originalPrice"
+                      class="text-[9px] text-gray-400 font-semibold line-through"
+                    >
+                      {{ format(item.originalPrice * item.qty) }}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

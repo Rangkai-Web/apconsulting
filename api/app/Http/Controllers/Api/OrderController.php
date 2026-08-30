@@ -167,7 +167,9 @@ class OrderController extends Controller
                     // Decrement stock
                     $variant->decrement('stock', $itemInput['qty']);
 
-                    $itemPrice = $variant->price;
+                    $itemPrice = ($variant->fulfillment_type === 'pre_order' && $variant->getDpAmount() > 0)
+                        ? $variant->getDpAmount()
+                        : $variant->price;
                     $itemSubtotal = $itemPrice * $itemInput['qty'];
                     $subtotal += $itemSubtotal;
                     $totalWeight += $variant->weight * $itemInput['qty'];
@@ -237,10 +239,9 @@ class OrderController extends Controller
     {
         $order = Order::where('order_number', $orderNumber)->firstOrFail();
 
-        $user = $request->user('sanctum');
-
-        if ($user) {
-            abort_if($order->user_id !== $user->id, 403, 'Unauthorized.');
+        if ($order->user_id !== null) {
+            $user = $request->user('sanctum');
+            abort_if(! $user || $order->user_id !== $user->id, 403, 'Unauthorized.');
         } else {
             $validatedEmail = $request->validate(['guest_email' => ['required', 'email']]);
             abort_if($order->guest_email !== $validatedEmail['guest_email'], 403, 'Unauthorized.');

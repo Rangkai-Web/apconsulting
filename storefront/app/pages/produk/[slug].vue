@@ -126,7 +126,7 @@ watch(() => route.params.slug, load);
       <!-- Loading State -->
       <div
         v-if="loading"
-        class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white/40 backdrop-blur-sm border border-gray-100 rounded-3xl p-6 md:p-8 shadow-sm"
+        class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white backdrop-blur-sm border border-primary-100 rounded-3xl p-6 md:p-8 shadow-sm"
       >
         <USkeleton class="aspect-square rounded-2xl w-full" />
         <div class="space-y-4">
@@ -140,7 +140,7 @@ watch(() => route.params.slug, load);
       <!-- Load Error State (network/500 — not a real 404) -->
       <div
         v-else-if="loadError"
-        class="max-w-md mx-auto bg-white/60 backdrop-blur-sm border border-gray-100 rounded-3xl p-8 shadow-sm"
+        class="max-w-md mx-auto bg-white backdrop-blur-sm border border-primary-100 rounded-3xl p-8 shadow-sm"
       >
         <EmptyState
           icon="i-heroicons-wifi"
@@ -154,7 +154,7 @@ watch(() => route.params.slug, load);
       <!-- Not Found State -->
       <div
         v-else-if="!product"
-        class="max-w-md mx-auto bg-white/60 backdrop-blur-sm border border-gray-100 rounded-3xl p-8 shadow-sm"
+        class="max-w-md mx-auto bg-white backdrop-blur-sm border border-primary-100 rounded-3xl p-8 shadow-sm"
       >
         <EmptyState
           icon="i-heroicons-exclamation-triangle"
@@ -169,7 +169,7 @@ watch(() => route.params.slug, load);
       <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         <!-- Left: Product Image Carousel -->
         <div
-          class="bg-white/80 border border-gray-100/80 rounded-3xl p-4 md:p-6 shadow-sm shadow-primary-900/5 self-start"
+          class="bg-white border border-primary-100 rounded-3xl p-4 md:p-6 shadow-sm shadow-primary-900/5 self-start"
         >
           <UCarousel
             ref="carouselRef"
@@ -218,12 +218,11 @@ watch(() => route.params.slug, load);
 
         <!-- Right: Details -->
         <div
-          class="bg-white/80 backdrop-blur-sm border border-gray-100 rounded-3xl p-6 md:p-8 shadow-sm space-y-6 relative overflow-hidden self-start"
+          class="bg-white backdrop-blur-sm border border-primary-300/40 rounded-3xl p-6 md:p-8 shadow-sm space-y-6 relative overflow-hidden self-start"
         >
-
           <!-- Title & Rating & Wishlist -->
           <div
-            class="flex items-start justify-between gap-4 border-b border-gray-100 pb-5"
+            class="flex items-start justify-between gap-4 border-b border-primary-100 pb-5"
           >
             <div>
               <span
@@ -289,7 +288,10 @@ watch(() => route.params.slug, load);
                   v-else
                   class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-700 border border-emerald-200"
                 >
-                  <UIcon name="i-heroicons-check-circle-solid" class="w-3.5 h-3.5" />
+                  <UIcon
+                    name="i-heroicons-check-circle-solid"
+                    class="w-3.5 h-3.5"
+                  />
                   Ready Stock
                 </span>
               </div>
@@ -297,11 +299,16 @@ watch(() => route.params.slug, load);
 
             <!-- DP Info for PO -->
             <div
-              v-if="selectedVariant && selectedVariant.fulfillmentType === 'pre_order'"
+              v-if="
+                selectedVariant &&
+                selectedVariant.fulfillmentType === 'pre_order'
+              "
               class="border-t border-primary-100/60 pt-2 flex items-center justify-between text-xs font-extrabold text-primary-850"
             >
               <span>Uang Muka (DP):</span>
-              <span class="text-sm font-black text-primary-700">{{ format(selectedVariant.dpAmount) }}</span>
+              <span class="text-sm font-black text-primary-700">{{
+                format(selectedVariant.dpAmount)
+              }}</span>
             </div>
           </div>
 
@@ -375,7 +382,7 @@ watch(() => route.params.slug, load);
 
           <!-- Trust Badges -->
           <div
-            class="grid grid-cols-3 gap-2.5 pt-4 border-t border-gray-100 text-center"
+            class="grid grid-cols-3 gap-2.5 pt-4 border-t border-primary-100 text-center"
           >
             <div
               class="flex flex-col items-center p-2 rounded-xl bg-gray-50/30 hover:bg-primary-50/30 transition-colors duration-200"

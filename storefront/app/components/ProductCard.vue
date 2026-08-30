@@ -29,10 +29,12 @@ function toggleWishlist(event: MouseEvent) {
 <template>
   <NuxtLink
     :to="`/produk/${product.slug}`"
-    class="block group bg-white/70 backdrop-blur-xs border border-primary-100/35 rounded-2xl p-2.5 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.03)] hover:shadow-[0_8px_30px_-6px_rgba(255,116,108,0.12)] hover:-translate-y-1 transition-all duration-300"
+    class="block group bg-white backdrop-blur-xs border border-primary-300/40 rounded-2xl p-2.5 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.03)] hover:shadow-[0_8px_30px_-6px_rgba(255,116,108,0.12)] hover:-translate-y-1 transition-all duration-300"
     :class="outOfStock ? 'opacity-60' : ''"
   >
-    <div class="relative aspect-square rounded-xl overflow-hidden bg-primary-50/20 border border-primary-50/40">
+    <div
+      class="relative aspect-square rounded-xl overflow-hidden bg-primary-50/20 border border-primary-50/40"
+    >
       <img
         :src="product.images[0]"
         :alt="product.name"
@@ -55,21 +57,25 @@ function toggleWishlist(event: MouseEvent) {
       >
         <UIcon
           :name="wishlisted ? 'i-heroicons-heart-solid' : 'i-heroicons-heart'"
-          :class="wishlisted ? 'text-primary-500 scale-105' : 'text-gray-400 group-hover:text-primary-400'"
+          :class="
+            wishlisted
+              ? 'text-primary-500 scale-105'
+              : 'text-gray-400 group-hover:text-primary-400'
+          "
           class="w-4 h-4 transition-colors duration-250"
         />
       </button>
     </div>
     <div class="mt-2.5 space-y-1">
-      <h3 class="text-xs font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-primary-600 transition-colors min-h-[32px]">
+      <h3
+        class="text-xs font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-primary-600 transition-colors min-h-[32px]"
+      >
         {{ product.name }}
       </h3>
       <p class="text-sm font-black text-primary-500">
         {{ format(startingPrice) }}
       </p>
-      <div
-        class="flex flex-wrap items-center justify-between gap-1.5 pt-0.5"
-      >
+      <div class="flex flex-wrap items-center justify-between gap-1.5 pt-0.5">
         <RatingStars :rating="product.ratingAvg" :count="product.ratingCount" />
         <span
           v-if="!outOfStock"

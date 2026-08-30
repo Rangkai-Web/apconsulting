@@ -142,7 +142,8 @@ watch(() => route.query, syncFromRoute);
         <p
           class="text-xs md:text-sm text-white/95 mt-2 max-w-md leading-relaxed font-medium"
         >
-          Temukan koleksi merchandise yang lucu, unik, dan menggemaskan pilihan terbaik kami.
+          Temukan koleksi merchandise yang lucu, unik, dan menggemaskan pilihan
+          terbaik kami.
         </p>
       </div>
 
@@ -162,7 +163,11 @@ watch(() => route.query, syncFromRoute);
           color="primary"
           variant="soft"
           class="font-semibold"
-          @click="() => { filterOpen = true }"
+          @click="
+            () => {
+              filterOpen = true;
+            }
+          "
         >
           Filter
         </UButton>
@@ -172,11 +177,11 @@ watch(() => route.query, syncFromRoute);
       <div class="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-8">
         <!-- Filter sidebar (desktop) -->
         <aside
-          class="hidden lg:block space-y-6 self-start bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.03)]"
+          class="hidden lg:block space-y-6 self-start bg-white backdrop-blur-xs border-2 border-primary-300/40 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.03)]"
         >
           <div>
             <h3
-              class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-b border-gray-100 pb-2 mb-3"
+              class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-b border-primary-100 pb-2 mb-3"
             >
               Kategori
             </h3>
@@ -220,7 +225,7 @@ watch(() => route.query, syncFromRoute);
 
           <div>
             <h3
-              class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-b border-gray-100 pb-2 mb-3"
+              class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-b border-primary-100 pb-2 mb-3"
             >
               Rentang Harga
             </h3>
@@ -254,7 +259,7 @@ watch(() => route.query, syncFromRoute);
           <template #content>
             <div class="p-6 space-y-6 bg-white rounded-t-3xl">
               <div
-                class="flex items-center justify-between border-b border-gray-100 pb-3"
+                class="flex items-center justify-between border-b border-primary-100 pb-3"
               >
                 <h3
                   class="text-sm font-extrabold text-gray-900 uppercase tracking-wider"
@@ -267,7 +272,11 @@ watch(() => route.query, syncFromRoute);
                   variant="ghost"
                   aria-label="Tutup filter"
                   class="rounded-lg"
-                  @click="() => { filterOpen = false }"
+                  @click="
+                    () => {
+                      filterOpen = false;
+                    }
+                  "
                 />
               </div>
 
@@ -346,7 +355,11 @@ watch(() => route.query, syncFromRoute);
                   color="primary"
                   size="md"
                   class="font-semibold rounded-full py-2"
-                  @click="() => { filterOpen = false }"
+                  @click="
+                    () => {
+                      filterOpen = false;
+                    }
+                  "
                 >
                   Terapkan Filter
                 </UButton>
@@ -358,7 +371,7 @@ watch(() => route.query, syncFromRoute);
         <!-- Product section -->
         <div class="space-y-6">
           <div
-            class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/50 backdrop-blur-sm border border-gray-100 rounded-2xl p-4 shadow-sm"
+            class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white backdrop-blur-sm border-2 border-primary-300/40 rounded-2xl p-4"
           >
             <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">
               {{ catalog.total }} Produk Ditemukan
@@ -380,7 +393,7 @@ watch(() => route.query, syncFromRoute);
 
           <!-- Product card container -->
           <div
-            class="bg-white/60 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
+            class="bg-white/60 backdrop-blur-xs border-2 border-primary-300/40 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
           >
             <ProductGrid
               :products="catalog.products"

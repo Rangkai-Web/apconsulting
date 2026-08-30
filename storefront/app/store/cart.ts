@@ -40,6 +40,9 @@ export const useCartStore = defineStore("cart", {
 
     addItem(product: Product, variant: ProductVariant, qty: number) {
       const existing = this.items.find((item) => item.variantId === variant.id);
+      const priceToCharge = variant.fulfillmentType === "pre_order" && variant.dpAmount > 0
+        ? variant.dpAmount
+        : variant.price;
 
       if (existing) {
         existing.qty = Math.min(existing.qty + qty, variant.stock);
@@ -50,11 +53,13 @@ export const useCartStore = defineStore("cart", {
           productName: product.name,
           productSlug: product.slug,
           variantName: variant.name,
-          price: variant.price,
+          price: priceToCharge,
           image: variant.image ?? product.images[0] ?? null,
           qty: Math.min(qty, variant.stock),
           stock: variant.stock,
           weight: variant.weight,
+          fulfillmentType: variant.fulfillmentType,
+          originalPrice: variant.price,
         });
       }
 

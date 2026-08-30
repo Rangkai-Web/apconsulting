@@ -31,11 +31,36 @@ const loading = ref(false);
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
 
-watch(() => state.name, () => { fieldErrors.name = ""; });
-watch(() => state.email, () => { fieldErrors.email = ""; });
-watch(() => state.phone, () => { fieldErrors.phone = ""; });
-watch(() => state.password, () => { fieldErrors.password = ""; });
-watch(() => state.password_confirmation, () => { fieldErrors.password_confirmation = ""; });
+watch(
+  () => state.name,
+  () => {
+    fieldErrors.name = "";
+  },
+);
+watch(
+  () => state.email,
+  () => {
+    fieldErrors.email = "";
+  },
+);
+watch(
+  () => state.phone,
+  () => {
+    fieldErrors.phone = "";
+  },
+);
+watch(
+  () => state.password,
+  () => {
+    fieldErrors.password = "";
+  },
+);
+watch(
+  () => state.password_confirmation,
+  () => {
+    fieldErrors.password_confirmation = "";
+  },
+);
 
 // Normalize phone to international format 628XXXXXXXXXX
 function normalizePhone(phone: string): string {
@@ -120,24 +145,24 @@ async function onSubmit() {
 
 <template>
   <div
-    class="relative overflow-hidden bg-linear-to-b from-primary-50/15 via-white to-white min-h-screen py-16 flex items-center justify-center"
+    class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-16 flex items-center justify-center"
   >
+    <!-- Background cute decor spanning whole page -->
+    <AppCuteDecor />
+
     <!-- Ambient Background Glows -->
     <div
-      class="absolute top-12 -left-40 w-96 h-96 bg-primary-100/10 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"
     ></div>
     <div
-      class="absolute top-[400px] -right-40 w-96 h-96 bg-secondary-100/10 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-[400px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
     ></div>
 
-    <div class="max-w-md w-full px-4 relative">
+    <div class="max-w-md w-full px-4 relative z-20">
       <!-- Premium Register Card -->
       <div
         class="relative bg-white/80 backdrop-blur-sm border border-primary-100/60 rounded-3xl p-8 md:p-10 shadow-xl shadow-primary-950/5 overflow-hidden"
       >
-        <!-- Background Glow & Cute Motif -->
-        <AppCuteDecor />
-
         <!-- Title Block -->
         <div class="text-center mb-6 relative">
           <div
@@ -172,7 +197,10 @@ async function onSubmit() {
           <UFormField
             label="Nama Lengkap"
             :error="fieldErrors.name || undefined"
-            :ui="{ label: 'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1' }"
+            :ui="{
+              label:
+                'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1',
+            }"
           >
             <UInput
               id="register-name"
@@ -191,7 +219,10 @@ async function onSubmit() {
           <UFormField
             label="Alamat Email"
             :error="fieldErrors.email || undefined"
-            :ui="{ label: 'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1' }"
+            :ui="{
+              label:
+                'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1',
+            }"
           >
             <UInput
               id="register-email"
@@ -210,7 +241,10 @@ async function onSubmit() {
           <UFormField
             label="No. Telepon / WhatsApp"
             :error="fieldErrors.phone || undefined"
-            :ui="{ label: 'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1' }"
+            :ui="{
+              label:
+                'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1',
+            }"
           >
             <UInput
               id="register-phone"
@@ -229,7 +263,10 @@ async function onSubmit() {
           <UFormField
             label="Kata Sandi"
             :error="fieldErrors.password || undefined"
-            :ui="{ label: 'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1' }"
+            :ui="{
+              label:
+                'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1',
+            }"
           >
             <UInput
               id="register-password"
@@ -250,9 +287,7 @@ async function onSubmit() {
                   tabindex="-1"
                   class="text-gray-400 hover:text-primary-600 transition-colors cursor-pointer p-1"
                   :aria-label="
-                    showPassword
-                      ? 'Sembunyikan password'
-                      : 'Tampilkan password'
+                    showPassword ? 'Sembunyikan password' : 'Tampilkan password'
                   "
                   @click="showPassword = !showPassword"
                 >
@@ -270,7 +305,10 @@ async function onSubmit() {
           <UFormField
             label="Konfirmasi Kata Sandi"
             :error="fieldErrors.password_confirmation || undefined"
-            :ui="{ label: 'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1' }"
+            :ui="{
+              label:
+                'block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1',
+            }"
           >
             <UInput
               id="register-password-confirmation"
@@ -326,7 +364,7 @@ async function onSubmit() {
 
         <!-- Redirect to Login -->
         <div
-          class="text-center mt-6 pt-4 border-t border-gray-100 text-xs text-gray-500 font-medium"
+          class="text-center mt-6 pt-4 border-t border-primary-100 text-xs text-gray-500 font-medium"
         >
           Sudah memiliki akun member?
           <NuxtLink

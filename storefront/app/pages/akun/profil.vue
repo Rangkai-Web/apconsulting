@@ -79,15 +79,21 @@ async function savePassword() {
 </script>
 
 <template>
-  <div class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-10">
+  <div
+    class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-10"
+  >
     <!-- Ambient Background Glows -->
-    <div class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute top-[400px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div
+      class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"
+    ></div>
+    <div
+      class="absolute top-[400px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
+    ></div>
     <AppCuteDecor />
 
     <div class="max-w-2xl mx-auto px-4 relative z-20">
       <!-- Tab nav -->
-      <div class="flex gap-2 mb-8 border-b border-primary-100/40">
+      <div class="flex gap-2 mb-8 border-b border-primary-100">
         <NuxtLink
           v-for="tab in tabs"
           :key="tab.to"
@@ -104,19 +110,34 @@ async function savePassword() {
       </div>
 
       <!-- Info Profil -->
-      <UCard class="mb-6 bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]" :ui="{ header: 'border-b border-primary-100/30' }">
+      <UCard
+        class="mb-6 bg-white/80 backdrop-blur-xs border border-primary-100 rounded-3xl shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
+        :ui="{ header: 'border-b border-primary-100' }"
+      >
         <template #header>
           <h2 class="font-bold text-gray-900">Info Profil</h2>
         </template>
         <div class="space-y-4">
           <UFormField label="Email" hint="Tidak dapat diubah">
-            <UInput :model-value="authStore.user?.email ?? ''" disabled class="w-full" />
+            <UInput
+              :model-value="authStore.user?.email ?? ''"
+              disabled
+              class="w-full"
+            />
           </UFormField>
           <UFormField label="Nama" required>
-            <UInput v-model="profileForm.name" placeholder="Nama lengkap" class="w-full" />
+            <UInput
+              v-model="profileForm.name"
+              placeholder="Nama lengkap"
+              class="w-full"
+            />
           </UFormField>
           <UFormField label="Telepon">
-            <UInput v-model="profileForm.phone" placeholder="08xxxxxxxxxx" class="w-full" />
+            <UInput
+              v-model="profileForm.phone"
+              placeholder="08xxxxxxxxxx"
+              class="w-full"
+            />
           </UFormField>
           <UButton
             color="primary"
@@ -131,7 +152,10 @@ async function savePassword() {
       </UCard>
 
       <!-- Ganti Password -->
-      <UCard class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]" :ui="{ header: 'border-b border-primary-100/30' }">
+      <UCard
+        class="bg-white/80 backdrop-blur-xs border border-primary-100 rounded-3xl shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
+        :ui="{ header: 'border-b border-primary-100' }"
+      >
         <template #header>
           <h2 class="font-bold text-gray-900">Ganti Password</h2>
         </template>

@@ -113,7 +113,11 @@ async function handleMobileLogout() {
           variant="ghost"
           class="lg:hidden hover:bg-gray-100/80 rounded-xl p-2 shrink-0"
           aria-label="Buka Menu"
-          @click="() => { mobileNavOpen = true }"
+          @click="
+            () => {
+              mobileNavOpen = true;
+            }
+          "
         />
         <NuxtLink to="/" class="flex items-center gap-2.5 group">
           <div
@@ -131,11 +135,12 @@ async function handleMobileLogout() {
       </div>
 
       <!-- Center: Wide Search Input (Desktop Only - lg:flex) -->
-      <div
-        class="flex items-center justify-between grow ml-6"
-      >
+      <div class="flex items-center justify-between grow ml-6">
         <!-- Navigation links (Desktop Only - lg:flex) -->
-        <nav class="hidden lg:flex items-center gap-6" aria-label="Navigasi Utama">
+        <nav
+          class="hidden lg:flex items-center gap-6"
+          aria-label="Navigasi Utama"
+        >
           <NuxtLink
             v-for="link in navLinks"
             :key="link.to"
@@ -176,7 +181,7 @@ async function handleMobileLogout() {
         </div>
 
         <!-- Action Icons (Always visible on all screens) -->
-        <div class="flex items-center gap-2 shrink-0">
+        <div class="flex items-center sm:gap-2 shrink-0">
           <NuxtLink to="/wishlist" class="relative group">
             <UButton
               icon="i-heroicons-heart"
@@ -238,7 +243,7 @@ async function handleMobileLogout() {
                 color="primary"
                 variant="solid"
                 icon="i-heroicons-user"
-                class="font-bold text-xs rounded-full px-4 py-2 cursor-pointer shadow-md shadow-primary-600/10 hover:scale-102 transition-all duration-300"
+                class="font-bold text-xs rounded-full sm:px-4 py-2 cursor-pointer shadow-md shadow-primary-600/10 hover:scale-102 transition-all duration-300"
               >
                 Masuk
               </UButton>
@@ -250,7 +255,7 @@ async function handleMobileLogout() {
 
     <!-- Mobile Search Row (Only visible on mobile - lg:hidden) -->
     <div
-      class="lg:hidden px-4 pb-3 pt-1.5 border-t border-gray-100/50 bg-white/95"
+      class="lg:hidden px-4 pb-3 pt-1.5 border-t border-primary-100 bg-white"
     >
       <UInput
         v-model="searchQuery"
@@ -272,7 +277,7 @@ async function handleMobileLogout() {
         >
           <div class="space-y-6">
             <div
-              class="flex items-center justify-between pb-4 border-b border-gray-100"
+              class="flex items-center justify-between pb-4 border-b border-primary-100"
             >
               <NuxtLink
                 to="/"
@@ -297,7 +302,11 @@ async function handleMobileLogout() {
                 variant="ghost"
                 aria-label="Tutup menu"
                 class="hover:bg-gray-100 rounded-lg"
-                @click="() => { mobileNavOpen = false }"
+                @click="
+                  () => {
+                    mobileNavOpen = false;
+                  }
+                "
               />
             </div>
 
@@ -324,7 +333,7 @@ async function handleMobileLogout() {
             </nav>
 
             <!-- Mobile User Section -->
-            <div class="pt-4 border-t border-gray-100">
+            <div class="pt-4 border-t border-primary-100">
               <div v-if="authStore.isLoggedIn" class="space-y-3">
                 <div class="flex items-center gap-3 px-4 py-2">
                   <div

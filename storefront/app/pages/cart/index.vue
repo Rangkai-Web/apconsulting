@@ -60,7 +60,7 @@ function confirmRemove() {
       <!-- Empty State -->
       <div
         v-if="cart.items.length === 0"
-        class="max-w-md mx-auto bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-8 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
+        class="max-w-md mx-auto bg-white backdrop-blur-xs border-2 border-primary-300/40 rounded-3xl p-8 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
       >
         <EmptyState
           icon="i-heroicons-shopping-cart"
@@ -78,12 +78,12 @@ function confirmRemove() {
           class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)] space-y-4"
         >
           <h2
-            class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-b border-gray-100 pb-3 mb-4"
+            class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-b border-primary-100 pb-3 mb-4"
           >
             Daftar Item ({{ cart.totalQty }} produk)
           </h2>
 
-          <div class="divide-y divide-gray-100">
+          <div class="divide-y divide-primary-100">
             <div
               v-for="item in cart.items"
               :key="item.variantId"
@@ -112,14 +112,30 @@ function confirmRemove() {
                 >
                   {{ item.productName }}
                 </NuxtLink>
-                <span
-                  class="inline-block px-2 py-0.5 bg-gray-100 text-[10px] text-gray-500 rounded font-semibold mt-1"
-                >
-                  Varian: {{ item.variantName }}
-                </span>
-                <p class="text-sm font-extrabold text-primary-700 mt-2">
-                  {{ format(item.price) }}
-                </p>
+                <div class="flex flex-wrap items-center gap-1.5 mt-1">
+                  <span
+                    class="inline-block px-2 py-0.5 bg-gray-100 text-[10px] text-gray-500 rounded font-semibold"
+                  >
+                    Varian: {{ item.variantName }}
+                  </span>
+                  <span
+                    v-if="item.fulfillmentType === 'pre_order'"
+                    class="inline-block px-2 py-0.5 bg-orange-100 text-[9px] text-orange-700 rounded font-bold"
+                  >
+                    DP / Pre-Order
+                  </span>
+                </div>
+                <div class="flex items-baseline gap-2 mt-2">
+                  <p class="text-sm font-extrabold text-primary-700">
+                    {{ format(item.price) }}
+                  </p>
+                  <span
+                    v-if="item.fulfillmentType === 'pre_order' && item.originalPrice"
+                    class="text-[10px] text-gray-400 font-semibold line-through"
+                  >
+                    {{ format(item.originalPrice) }}
+                  </span>
+                </div>
               </div>
 
               <!-- Item Quantity Stepper -->
@@ -157,9 +173,8 @@ function confirmRemove() {
         <div
           class="bg-linear-to-b from-primary-50/50 via-white/80 to-white/95 backdrop-blur-xs border border-primary-100/40 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)] h-fit space-y-5 relative overflow-hidden"
         >
-
           <h2
-            class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-b border-primary-100/50 pb-2.5"
+            class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-b border-primary-100 pb-2.5"
           >
             Ringkasan Belanja
           </h2>
@@ -185,7 +200,7 @@ function confirmRemove() {
           </div>
 
           <div
-            class="bg-white/60 border border-primary-100/30 rounded-xl p-3 text-[10px] text-gray-500 leading-relaxed font-medium"
+            class="bg-white/60 border border-primary-100 rounded-xl p-3 text-[10px] text-gray-500 leading-relaxed font-medium"
           >
             <UIcon
               name="i-heroicons-information-circle"
@@ -228,7 +243,11 @@ function confirmRemove() {
               color="neutral"
               variant="outline"
               class="rounded-xl cursor-pointer"
-              @click="() => { confirmOpen = false }"
+              @click="
+                () => {
+                  confirmOpen = false;
+                }
+              "
               >Batal</UButton
             >
             <UButton

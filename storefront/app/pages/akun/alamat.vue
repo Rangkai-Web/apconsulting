@@ -270,15 +270,21 @@ async function confirmDelete(id: number) {
 </script>
 
 <template>
-  <div class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-10">
+  <div
+    class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-10"
+  >
     <!-- Ambient Background Glows -->
-    <div class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute top-[400px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div
+      class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"
+    ></div>
+    <div
+      class="absolute top-[400px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
+    ></div>
     <AppCuteDecor />
 
     <div class="max-w-2xl mx-auto px-4 relative z-20">
       <!-- Tab nav -->
-      <div class="flex gap-2 mb-8 border-b border-primary-100/40">
+      <div class="flex gap-2 mb-8 border-b border-primary-100">
         <NuxtLink
           v-for="tab in tabs"
           :key="tab.to"
@@ -322,7 +328,11 @@ async function confirmDelete(id: number) {
 
       <!-- List -->
       <div v-else class="space-y-3">
-        <UCard v-for="address in addresses" :key="address.id" class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]">
+        <UCard
+          v-for="address in addresses"
+          :key="address.id"
+          class="bg-white backdrop-blur-xs border border-primary-100 rounded-3xl shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
+        >
           <div class="flex items-start justify-between gap-4">
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-1">
@@ -372,7 +382,11 @@ async function confirmDelete(id: number) {
                   variant="outline"
                   color="error"
                   class="cursor-pointer"
-                  @click="() => { deleteConfirmId = address.id }"
+                  @click="
+                    () => {
+                      deleteConfirmId = address.id;
+                    }
+                  "
                 >
                   Hapus
                 </UButton>
@@ -392,7 +406,11 @@ async function confirmDelete(id: number) {
                   variant="ghost"
                   color="neutral"
                   class="cursor-pointer"
-                  @click="() => { deleteConfirmId = null }"
+                  @click="
+                    () => {
+                      deleteConfirmId = null;
+                    }
+                  "
                 >
                   Batal
                 </UButton>
@@ -410,11 +428,7 @@ async function confirmDelete(id: number) {
         <template #body>
           <div class="space-y-3">
             <UFormField label="Label (opsional)" hint="Contoh: Rumah, Kantor">
-              <UInput
-                v-model="form.label"
-                placeholder="Rumah"
-                class="w-full"
-              />
+              <UInput v-model="form.label" placeholder="Rumah" class="w-full" />
             </UFormField>
             <UFormField label="Nama Penerima" required>
               <UInput
@@ -451,9 +465,7 @@ async function confirmDelete(id: number) {
             <UFormField label="Kecamatan" required>
               <USelect
                 v-model="form.districtId"
-                :items="
-                  districts.map((d) => ({ label: d.name, value: d.id }))
-                "
+                :items="districts.map((d) => ({ label: d.name, value: d.id }))"
                 placeholder="Pilih kecamatan"
                 class="w-full"
                 :disabled="!form.cityId"
@@ -483,7 +495,11 @@ async function confirmDelete(id: number) {
               variant="outline"
               color="neutral"
               class="cursor-pointer"
-              @click="() => { modalOpen = false }"
+              @click="
+                () => {
+                  modalOpen = false;
+                }
+              "
             >
               Batal
             </UButton>

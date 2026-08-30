@@ -112,7 +112,7 @@ onMounted(async () => {
               <span
                 class="text-[9px] sm:text-xs uppercase tracking-widest text-primary-400 font-extrabold mb-1"
                 >BbystarGO</span
-                >
+              >
               <h2
                 class="text-lg sm:text-2xl md:text-4xl font-extrabold max-w-xs sm:max-w-lg tracking-tight leading-snug sm:leading-tight line-clamp-2"
               >
@@ -142,7 +142,9 @@ onMounted(async () => {
           class="text-[10px] text-primary-500 uppercase font-extrabold tracking-wider"
           >BbystarGO</span
         >
-        <p class="text-sm md:text-base text-gray-600 font-medium mt-2 leading-relaxed">
+        <p
+          class="text-sm md:text-base text-gray-600 font-medium mt-2 leading-relaxed"
+        >
           Toko online sejak 2023 yang menyediakan jasa pembelian barang dari
           Indonesia, Korea, China, Jepang, dan negara lain.
         </p>
@@ -150,7 +152,7 @@ onMounted(async () => {
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <div
-          class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] flex items-start gap-4 hover:shadow-[0_8px_30px_-6px_rgba(255,116,108,0.08)] transition-all duration-300"
+          class="bg-white backdrop-blur-xs border border-primary-300/40 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] flex items-start gap-4 hover:shadow-[0_8px_30px_-6px_rgba(255,116,108,0.08)] transition-all duration-300"
         >
           <div
             class="w-11 h-11 shrink-0 rounded-2xl bg-primary-50/80 text-primary-500 border border-primary-100/50 flex items-center justify-center"
@@ -166,7 +168,7 @@ onMounted(async () => {
           </div>
         </div>
         <div
-          class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] flex items-start gap-4 hover:shadow-[0_8px_30px_-6px_rgba(255,116,108,0.08)] transition-all duration-300"
+          class="bg-white backdrop-blur-xs border border-primary-300/40 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] flex items-start gap-4 hover:shadow-[0_8px_30px_-6px_rgba(255,116,108,0.08)] transition-all duration-300"
         >
           <div
             class="w-11 h-11 shrink-0 rounded-2xl bg-primary-50/80 text-primary-500 border border-primary-100/50 flex items-center justify-center"
@@ -184,25 +186,31 @@ onMounted(async () => {
       </div>
 
       <div
-        class="bg-white/70 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-center"
+        class="bg-white backdrop-blur-xs border border-primary-300/40 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-center"
       >
         <div>
           <p class="text-lg font-black text-primary-500">100+</p>
-          <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">
+          <p
+            class="text-[10px] text-gray-400 font-bold uppercase tracking-wide"
+          >
             Customer Terlayani
           </p>
         </div>
-        <div class="h-8 w-px bg-primary-100/60 hidden sm:block"></div>
+        <div class="h-8 w-px bg-primary-300 hidden sm:block"></div>
         <div>
           <p class="text-lg font-black text-primary-500">5.0 ★</p>
-          <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">
+          <p
+            class="text-[10px] text-gray-400 font-bold uppercase tracking-wide"
+          >
             Rating Shopee
           </p>
         </div>
-        <div class="h-8 w-px bg-primary-100/60 hidden sm:block"></div>
+        <div class="h-8 w-px bg-primary-300 hidden sm:block"></div>
         <div>
           <p class="text-lg font-black text-primary-500">2.500+</p>
-          <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">
+          <p
+            class="text-[10px] text-gray-400 font-bold uppercase tracking-wide"
+          >
             Penilaian
           </p>
         </div>
@@ -211,9 +219,8 @@ onMounted(async () => {
 
     <!-- Featured Products Section -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
-
       <div
-        class="flex items-end justify-between mb-8 border-b border-gray-100 pb-4"
+        class="flex items-start sm:items-center justify-between flex-col sm:flex-row gap-4 mb-8"
       >
         <div>
           <h2
@@ -239,7 +246,7 @@ onMounted(async () => {
 
       <!-- Main product grid inside a styled card container for depth -->
       <div
-        class="bg-white/70 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
+        class="bg-white backdrop-blur-xs border-2 border-primary-300/40 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
       >
         <ProductGrid
           :products="featured"

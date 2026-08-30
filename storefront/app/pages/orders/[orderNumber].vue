@@ -95,16 +95,68 @@ async function submitRating() {
   }
 }
 
+const qrisModalOpen = ref(false);
+
+function openQrisModal() {
+  qrisModalOpen.value = true;
+}
+
+const fileInput = ref<HTMLInputElement | null>(null);
+const filePreviewUrl = ref<string>();
+
+function triggerFileSelect() {
+  fileInput.value?.click();
+}
+
+function onFileDrop(e: DragEvent) {
+  const file = e.dataTransfer?.files?.[0] ?? null;
+  handleFile(file);
+}
+
 function onProofFileChange(e: Event) {
   const file = (e.target as HTMLInputElement).files?.[0] ?? null;
+  handleFile(file);
+}
+
+function handleFile(file: File | null) {
   proofError.value = "";
-  if (file && file.size > 2 * 1024 * 1024) {
+  if (!file) return;
+
+  if (file.size > 2 * 1024 * 1024) {
     proofError.value = "Ukuran file maksimal 2MB.";
     proofFile.value = null;
+    filePreviewUrl.value = undefined;
     return;
   }
+
   proofFile.value = file;
+  filePreviewUrl.value = URL.createObjectURL(file);
 }
+
+function clearSelectedFile() {
+  proofFile.value = null;
+  if (filePreviewUrl.value) {
+    URL.revokeObjectURL(filePreviewUrl.value);
+    filePreviewUrl.value = undefined;
+  }
+  if (fileInput.value) {
+    fileInput.value.value = "";
+  }
+}
+
+function formatFileSize(bytes: number): string {
+  if (bytes === 0) return "0 B";
+  const k = 1024;
+  const sizes = ["B", "KB", "MB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+}
+
+onBeforeUnmount(() => {
+  if (filePreviewUrl.value) {
+    URL.revokeObjectURL(filePreviewUrl.value);
+  }
+});
 
 async function submitProof() {
   if (!proofFile.value || !order.value) return;
@@ -115,7 +167,7 @@ async function submitProof() {
       proofFile.value,
       guestEmail.value || undefined,
     );
-    proofFile.value = null;
+    clearSelectedFile();
     toast.add({
       title: "Bukti Terkirim",
       description: "Bukti pembayaran berhasil diunggah, menunggu verifikasi admin.",
@@ -257,51 +309,214 @@ function formatDate(dateStr: string): string {
         </div>
 
         <!-- Detail Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-8 items-start">
           
-          <!-- Left side: Items Table -->
-          <div class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 md:p-8 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] space-y-6">
-            <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-500 border-b border-primary-100/30 pb-3">
-              Rincian Item Belanja
-            </h2>
+          <!-- Left side: Items Table & Payment Instructions -->
+          <div class="space-y-8">
+            <!-- Rincian Item Belanja -->
+            <div class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 md:p-8 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] space-y-6">
+              <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-500 border-b border-primary-100/30 pb-3">
+                Rincian Item Belanja
+              </h2>
 
-            <div class="divide-y divide-gray-100">
-              <div v-for="item in order.items" :key="item.id" class="py-4 first:pt-0 last:pb-0 flex items-center justify-between gap-4">
-                <div class="min-w-0 flex-1">
-                  <p class="text-xs font-extrabold text-gray-900 truncate">{{ item.productName }}</p>
-                  <p class="text-[10px] text-gray-400 font-semibold mt-0.5">Varian: {{ item.variantName }} (x{{ item.qty }})</p>
-                  <p class="text-xs font-black text-gray-700 mt-2">{{ format(item.price) }} / pcs</p>
-                </div>
-                
-                <div class="text-right shrink-0 flex flex-col items-end gap-2.5">
-                  <span class="text-xs font-black text-gray-800">{{ format(item.subtotal) }}</span>
+              <div class="divide-y divide-gray-100">
+                <div v-for="item in order.items" :key="item.id" class="py-4 first:pt-0 last:pb-0 flex items-center justify-between gap-4">
+                  <div class="min-w-0 flex-1">
+                    <p class="text-xs font-extrabold text-gray-900 truncate">{{ item.productName }}</p>
+                    <p class="text-[10px] text-gray-400 font-semibold mt-0.5">Varian: {{ item.variantName }} (x{{ item.qty }})</p>
+                    <p class="text-xs font-black text-gray-700 mt-2">{{ format(item.price) }} / pcs</p>
+                  </div>
                   
-                  <!-- Star rating trigger -->
-                  <div v-if="order.orderStatus.toLowerCase() === 'completed'">
-                    <UButton
-                      v-if="!item.rated"
-                      icon="i-heroicons-star"
-                      color="warning"
-                      variant="subtle"
-                      size="xs"
-                      class="font-bold rounded-lg cursor-pointer"
-                      @click="openRatingModal(item)"
-                    >
-                      Beri Rating
-                    </UButton>
-                    <span v-else class="text-[10px] text-primary-600 font-extrabold flex items-center gap-1">
-                      <UIcon name="i-heroicons-check-circle" class="w-3.5 h-3.5" />
-                      Sudah Dirating
-                    </span>
+                  <div class="text-right shrink-0 flex flex-col items-end gap-2.5">
+                    <span class="text-xs font-black text-gray-800">{{ format(item.subtotal) }}</span>
+                    
+                    <!-- Star rating trigger -->
+                    <div v-if="order.orderStatus.toLowerCase() === 'completed'">
+                      <UButton
+                        v-if="!item.rated"
+                        icon="i-heroicons-star"
+                        color="warning"
+                        variant="subtle"
+                        size="xs"
+                        class="font-bold rounded-lg cursor-pointer"
+                        @click="openRatingModal(item)"
+                      >
+                        Beri Rating
+                      </UButton>
+                      <span v-else class="text-[10px] text-primary-600 font-extrabold flex items-center gap-1">
+                        <UIcon name="i-heroicons-check-circle" class="w-3.5 h-3.5" />
+                        Sudah Dirating
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
+
+            <!-- Payment Instructions & Proof Upload -->
+            <div
+              v-if="order.paymentStatus === 'unpaid' || order.paymentStatus === 'rejected'"
+              class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 md:p-8 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] space-y-6"
+            >
+              <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-500 border-b border-primary-100/30 pb-3">
+                Instruksi Pembayaran
+              </h2>
+
+              <p v-if="order.paymentStatus === 'rejected'" class="text-xs text-red-600 font-semibold bg-red-50 rounded-2xl p-4">
+                Bukti pembayaran sebelumnya ditolak{{ order.paymentRejectedReason ? ': ' + order.paymentRejectedReason : '' }}. Silakan unggah ulang.
+              </p>
+
+              <!-- Section 1: Choose Payment Method -->
+              <div class="space-y-4">
+                <p class="text-xs text-gray-400 font-bold">Pilih metode transfer di bawah ini:</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div v-for="method in paymentMethods" :key="method.id" class="text-xs border border-gray-100 rounded-2xl p-4.5 bg-white/50 shadow-2xs hover:shadow-xs transition-shadow duration-200">
+                    
+                    <!-- For QRIS method -->
+                    <div v-if="method.label.toLowerCase().includes('qris')" class="flex items-center justify-between gap-4">
+                      <div class="space-y-1">
+                        <p class="font-extrabold text-gray-955 text-xs tracking-wide uppercase">{{ method.label }}</p>
+                        <p v-if="method.account_holder" class="text-gray-400 font-bold text-[10px]">a/n {{ method.account_holder }}</p>
+                        <UButton
+                          color="primary"
+                          variant="subtle"
+                          size="xs"
+                          class="font-black rounded-lg cursor-pointer mt-1.5 px-2.5 py-1 text-[10px]"
+                          icon="i-heroicons-qr-code"
+                          @click="openQrisModal"
+                        >
+                          Lihat QR Code
+                        </UButton>
+                      </div>
+                      
+                      <!-- Small QR Code Thumbnail on the right -->
+                      <div class="shrink-0 cursor-pointer hover:opacity-85 transition-opacity" @click="openQrisModal">
+                        <img src="/qris.jpeg" alt="QRIS Thumbnail" class="w-16 h-16 object-cover rounded-xl border border-gray-100 p-0.5 bg-white shadow-xs" />
+                      </div>
+                    </div>
+
+                    <!-- For Bank Transfer methods (BCA, ShopeePay, Seabank, etc.) -->
+                    <div v-else class="flex items-center justify-between gap-4">
+                      <div class="space-y-1">
+                        <p class="font-extrabold text-gray-955 text-xs tracking-wide uppercase">{{ method.label }}</p>
+                        <p v-if="method.account_number" class="text-gray-800 font-black text-sm select-all tracking-wide mt-1">{{ method.account_number }}</p>
+                        <p v-if="method.account_holder" class="text-gray-400 font-bold text-[10px]">a/n {{ method.account_holder }}</p>
+                      </div>
+                      
+                      <!-- Bank Logo on the right -->
+                      <div v-if="method.qr_image" class="shrink-0">
+                        <img :src="method.qr_image" alt="Bank Logo" class="h-10 max-w-[80px] object-contain" />
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section 2: Upload Proof of Payment (Directly Below) -->
+              <div class="border-t border-gray-100/70 pt-6 space-y-4">
+                <p class="text-xs text-gray-400 font-bold">Unggah bukti transfer pembayaran:</p>
+                
+                <input ref="fileInput" type="file" accept="image/jpeg,image/png,image/webp" class="hidden" @change="onProofFileChange" />
+                
+                <div class="grid grid-cols-1 md:grid-cols-[1fr_200px] gap-4 items-center">
+                  <div
+                    class="border-2 border-dashed border-primary-250 hover:border-primary-400 bg-primary-50/5 hover:bg-primary-50/10 rounded-2xl p-6 transition-all duration-200 text-center cursor-pointer flex flex-col items-center justify-center gap-3 min-h-[140px] group"
+                    @click="triggerFileSelect"
+                    @dragover.prevent
+                    @drop.prevent="onFileDrop"
+                  >
+                    <!-- When no file is selected -->
+                    <div v-if="!proofFile" class="space-y-2 flex flex-col items-center">
+                      <div class="w-10 h-10 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center group-hover:scale-105 transition-transform duration-200 ring-4 ring-primary-50/50">
+                        <UIcon name="i-heroicons-cloud-arrow-up" class="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p class="text-xs font-black text-gray-800">Klik untuk Pilih File Bukti</p>
+                        <p class="text-[10px] text-gray-400 font-semibold mt-0.5">atau seret & lepas gambar ke sini</p>
+                      </div>
+                      <p class="text-[9px] text-gray-400 font-medium">Format: JPG, PNG, WEBP (Maks. 2MB)</p>
+                    </div>
+
+                    <!-- When file is selected -->
+                    <div v-else class="space-y-3 w-full flex flex-col items-center">
+                      <!-- Image preview container -->
+                      <div class="relative w-20 h-20 rounded-xl overflow-hidden border border-gray-150 shadow-sm shrink-0 bg-white group/preview">
+                        <img :src="filePreviewUrl" class="w-full h-full object-cover" alt="Preview bukti" />
+                        <button
+                          type="button"
+                          class="absolute top-1 right-1 w-5 h-5 rounded-full bg-red-500 hover:bg-red-650 text-white flex items-center justify-center shadow-md cursor-pointer transition-colors"
+                          @click.stop="clearSelectedFile"
+                          aria-label="Batalkan pilihan file"
+                        >
+                          <UIcon name="i-heroicons-x-mark" class="w-3 h-3" />
+                        </button>
+                      </div>
+                      <div class="min-w-0 text-center">
+                        <p class="text-xs font-bold text-gray-850 truncate max-w-[300px]">{{ proofFile.name }}</p>
+                        <p class="text-[10px] text-gray-400 font-semibold mt-0.5">{{ formatFileSize(proofFile.size) }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col gap-3">
+                    <UButton
+                      block
+                      color="primary"
+                      size="md"
+                      class="font-extrabold rounded-full py-3.5 cursor-pointer shadow-md shadow-primary-600/10 hover:scale-[1.01] transition-transform duration-200"
+                      :disabled="!proofFile"
+                      :loading="uploadingProof"
+                      @click="submitProof"
+                    >
+                      Unggah Bukti
+                    </UButton>
+                    <p v-if="proofError" class="text-[10px] text-red-500 font-bold text-center">{{ proofError }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Awaiting Verification status -->
+            <div
+              v-else-if="order.paymentStatus === 'awaiting_verification'"
+              class="bg-amber-50/60 border border-amber-100 rounded-3xl p-6 md:p-8 shadow-xs text-center space-y-2"
+            >
+              <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center mx-auto mb-1">
+                <UIcon name="i-heroicons-clock" class="w-6 h-6" />
+              </div>
+              <p class="text-sm font-black text-amber-800">Menunggu Verifikasi Admin</p>
+              <p class="text-xs text-amber-600 max-w-md mx-auto font-semibold leading-relaxed">
+                Bukti pembayaran Anda telah kami terima dan sedang dalam proses verifikasi oleh tim admin kami. Proses ini biasanya memakan waktu beberapa jam.
+              </p>
             </div>
           </div>
 
           <!-- Right side: Shipping & Payment Cost -->
           <div class="space-y-6">
             
+            <!-- Receipt Card -->
+            <div class="bg-linear-to-b from-primary-50/50 via-white/80 to-white/95 backdrop-blur-xs border border-primary-100/40 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)] space-y-4">
+              <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-500 border-b border-primary-100/30 pb-2">
+                Rincian Pembayaran
+              </h2>
+
+              <div class="space-y-3.5 text-xs font-semibold">
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-500 font-medium">Subtotal Produk</span>
+                  <span class="text-gray-800 font-extrabold">{{ format(order.subtotal) }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-500 font-medium">Ongkos Kirim</span>
+                  <span class="text-gray-800 font-extrabold">{{ format(order.shippingCost) }}</span>
+                </div>
+                <div class="flex items-center justify-between border-t border-primary-100 pt-3.5">
+                  <span class="text-gray-900 font-black text-sm">Total Bayar</span>
+                  <span class="text-base font-black text-primary-700">{{ format(order.total) }}</span>
+                </div>
+              </div>
+            </div>
+
             <!-- Shipping Details -->
             <div class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] space-y-4">
               <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-500 border-b border-primary-100/30 pb-2">
@@ -312,12 +527,12 @@ function formatDate(dateStr: string): string {
                 <div>
                   <span class="block text-gray-400 font-semibold">Penerima</span>
                   <span class="font-bold text-gray-800 block mt-0.5">{{ order.shippingAddress?.recipientName }}</span>
-                  <span class="text-gray-500 mt-0.5 block">{{ order.shippingAddress?.phone }}</span>
+                  <span class="text-gray-500 mt-0.5 block font-medium">{{ order.shippingAddress?.phone }}</span>
                 </div>
 
                 <div>
                   <span class="block text-gray-400 font-semibold">Alamat Lengkap</span>
-                  <span class="text-gray-600 font-medium block mt-0.5 leading-relaxed">
+                  <span class="text-gray-650 font-medium block mt-0.5 leading-relaxed">
                     {{ order.shippingAddress?.fullAddress }}<br>
                     {{ order.shippingAddress?.district }}, {{ order.shippingAddress?.city }}, {{ order.shippingAddress?.province }} - {{ order.shippingAddress?.postalCode }}
                   </span>
@@ -335,81 +550,14 @@ function formatDate(dateStr: string): string {
               </div>
             </div>
 
-            <!-- Receipt Card -->
-            <div class="bg-linear-to-b from-primary-50/50 via-white/80 to-white/95 backdrop-blur-xs border border-primary-100/40 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)] space-y-4">
-              <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-500 border-b border-primary-100/30 pb-2">
-                Rincian Pembayaran
-              </h2>
-
-              <div class="space-y-3 text-xs font-semibold">
-                <div class="flex items-center justify-between">
-                  <span class="text-gray-500 font-medium">Subtotal Produk</span>
-                  <span class="text-gray-800 font-extrabold">{{ format(order.subtotal) }}</span>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-gray-500 font-medium">Ongkos Kirim</span>
-                  <span class="text-gray-800 font-extrabold">{{ format(order.shippingCost) }}</span>
-                </div>
-                <div class="flex items-center justify-between border-t border-primary-100 pt-3">
-                  <span class="text-gray-900 font-extrabold">Total Bayar</span>
-                  <span class="text-sm font-black text-primary-800">{{ format(order.total) }}</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Payment Instructions & Proof Upload -->
-            <div
-              v-if="order.paymentStatus === 'unpaid' || order.paymentStatus === 'rejected'"
-              class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] space-y-4"
-            >
-              <h2 class="text-xs uppercase tracking-wider font-extrabold text-primary-500 border-b border-primary-100/30 pb-2">
-                Instruksi Pembayaran
-              </h2>
-
-              <p v-if="order.paymentStatus === 'rejected'" class="text-xs text-red-600 font-semibold bg-red-50 rounded-xl p-3">
-                Bukti pembayaran sebelumnya ditolak{{ order.paymentRejectedReason ? ': ' + order.paymentRejectedReason : '' }}. Silakan unggah ulang.
-              </p>
-
-              <div v-for="method in paymentMethods" :key="method.id" class="text-xs border border-gray-100 rounded-2xl p-3.5 space-y-1">
-                <p class="font-extrabold text-gray-900">{{ method.label }}</p>
-                <p v-if="method.account_number" class="text-gray-600 font-semibold select-all">{{ method.account_number }}</p>
-                <p v-if="method.account_holder" class="text-gray-400">a/n {{ method.account_holder }}</p>
-                <img v-if="method.qr_image" :src="method.qr_image" alt="QR" class="w-28 h-28 object-contain mt-2" />
-              </div>
-
-              <div class="space-y-2 pt-2">
-                <input type="file" accept="image/jpeg,image/png,image/webp" class="text-xs" @change="onProofFileChange" />
-                <p v-if="proofError" class="text-[10px] text-red-500 font-semibold">{{ proofError }}</p>
-                <UButton
-                  block
-                  color="primary"
-                  size="sm"
-                  class="font-bold rounded-xl cursor-pointer"
-                  :disabled="!proofFile"
-                  :loading="uploadingProof"
-                  @click="submitProof"
-                >
-                  Kirim Bukti Transfer
-                </UButton>
-              </div>
-            </div>
-
-            <div
-              v-else-if="order.paymentStatus === 'awaiting_verification'"
-              class="bg-amber-50 border border-amber-100 rounded-3xl p-6 shadow-xs text-center"
-            >
-              <p class="text-xs font-bold text-amber-700">Menunggu verifikasi admin.</p>
-              <p class="text-[10px] text-amber-600 mt-1">Bukti pembayaran sudah diterima, proses verifikasi biasanya memakan waktu beberapa jam.</p>
-            </div>
-
             <!-- WhatsApp/LINE Confirmation -->
-            <div v-if="order.paymentStatus !== 'unpaid'" class="grid grid-cols-1 gap-2.5">
+            <div class="grid grid-cols-1 gap-2.5">
               <a
                 v-if="settings.whatsapp_number"
                 :href="whatsappConfirmUrl()"
                 target="_blank"
                 rel="noopener"
-                class="flex items-center justify-center gap-2 text-xs font-bold rounded-xl px-4 py-3 border border-primary-200 text-primary-700 bg-primary-50/40 hover:bg-primary-50 transition-colors"
+                class="flex items-center justify-center gap-2 text-xs font-bold rounded-xl px-4 py-3.5 border border-primary-200 text-primary-700 bg-primary-50/40 hover:bg-primary-50 transition-colors shadow-xs"
               >
                 <UIcon name="i-simple-icons-whatsapp" class="w-4 h-4" />
                 Konfirmasi via WhatsApp
@@ -419,8 +567,9 @@ function formatDate(dateStr: string): string {
                 :href="settings.line_url"
                 target="_blank"
                 rel="noopener"
-                class="flex items-center justify-center gap-2 text-xs font-bold rounded-xl px-4 py-3 border border-gray-200 text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors"
+                class="flex items-center justify-center gap-2 text-xs font-bold rounded-xl px-4 py-3.5 border border-gray-200 text-gray-750 bg-gray-50 hover:bg-gray-100 transition-colors shadow-xs"
               >
+                <UIcon name="i-simple-icons-line" class="w-4 h-4" />
                 Konfirmasi via LINE
               </a>
             </div>
@@ -465,6 +614,47 @@ function formatDate(dateStr: string): string {
             @click="submitRating"
           >
             Kirim Ulasan
+          </UButton>
+        </div>
+      </template>
+    </UModal>
+
+    <!-- QRIS Modal Dialog -->
+    <UModal v-model:open="qrisModalOpen" title="Scan QRIS Untuk Bayar">
+      <template #body>
+        <div class="text-center py-2 space-y-4">
+          <p class="text-xs text-gray-500 font-semibold leading-relaxed">
+            Silakan scan kode QRIS di bawah ini menggunakan aplikasi e-wallet atau mobile banking Anda.
+          </p>
+          <div class="flex justify-center">
+            <img src="/qris.jpeg" class="w-64 h-auto object-contain rounded-2xl border border-gray-150 p-2.5 bg-white shadow-md" alt="QRIS BBYSTAR" />
+          </div>
+          <div class="bg-primary-50/50 rounded-xl p-3 border border-primary-100/40 w-fit mx-auto text-left space-y-0.5">
+            <p class="text-[10px] text-gray-400 font-bold uppercase leading-none">Nama Merchant</p>
+            <p class="text-xs font-black text-gray-800">BBYSTAR, NGLIPAR</p>
+            <p class="text-[9px] text-gray-400 font-semibold mt-1">NMID: ID1025372942546</p>
+          </div>
+        </div>
+      </template>
+      <template #footer>
+        <div class="flex items-center gap-3 w-full">
+          <UButton
+            color="neutral"
+            variant="outline"
+            class="flex-1 justify-center rounded-xl font-bold cursor-pointer"
+            @click="() => { qrisModalOpen = false }"
+          >
+            Tutup
+          </UButton>
+          <UButton
+            color="primary"
+            variant="solid"
+            class="flex-1 justify-center rounded-xl font-bold cursor-pointer"
+            icon="i-heroicons-arrow-down-tray"
+            href="/qris.jpeg"
+            download="qris-bbystar.jpeg"
+          >
+            Unduh QR
           </UButton>
         </div>
       </template>
