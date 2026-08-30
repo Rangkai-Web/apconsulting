@@ -179,6 +179,7 @@ class OrderController extends Controller
                         'product_name' => $variant->product->name,
                         'variant_name' => $variant->name,
                         'price' => $itemPrice,
+                        'full_price' => $variant->price,
                         'qty' => $itemInput['qty'],
                         'subtotal' => $itemSubtotal,
                     ];
@@ -271,6 +272,8 @@ class OrderController extends Controller
             'payment_status' => 'awaiting_verification',
             'payment_rejected_reason' => null,
         ]);
+
+        $order->load(['items.rating']);
 
         return response()->json(['data' => new OrderResource($order)]);
     }

@@ -114,6 +114,23 @@ class ViewOrder extends ViewRecord
                         $record->completed_at = now();
                     }
 
+                    // Pre-Order remaining balance billing trigger
+                    $isPreOrder = false;
+                    foreach ($record->items as $item) {
+                        if ($item->full_price && $item->full_price > $item->price) {
+                            $isPreOrder = true;
+                            break;
+                        }
+                    }
+
+                    if ($data['status'] === 'ready_to_ship' && $isPreOrder && $record->payment_status === 'paid') {
+                        $record->payment_status = 'unpaid';
+                        $record->dp_payment_proof = $record->payment_proof;
+                        $record->payment_proof = null;
+                        $record->payment_proof_uploaded_at = null;
+                        $record->payment_rejected_reason = null;
+                    }
+
                     $record->save();
                     $record->releaseStockIfApplicable($oldStatus, $data['status']);
 

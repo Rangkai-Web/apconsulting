@@ -34,6 +34,11 @@ class OrderResource extends Resource
         return match ($status) {
             'pending' => 'gray',
             'processing' => 'warning',
+            'ordered' => 'info',
+            'arrived_at_proxy' => 'info',
+            'shipped_to_indonesia' => 'warning',
+            'arrived_at_indonesia' => 'warning',
+            'ready_to_ship' => 'primary',
             'shipped' => 'primary',
             'completed' => 'success',
             'cancelled', 'expired' => 'danger',
@@ -46,6 +51,11 @@ class OrderResource extends Resource
         return [
             'pending' => 'Pending',
             'processing' => 'Processing',
+            'ordered' => 'Ordered (PO)',
+            'arrived_at_proxy' => 'Arrived at Warehouse Proxy',
+            'shipped_to_indonesia' => 'Shipped to Indonesia',
+            'arrived_at_indonesia' => 'Arrived at Warehouse Indonesia',
+            'ready_to_ship' => 'Ready to Ship (Pending Balance)',
             'shipped' => 'Shipped',
             'completed' => 'Completed',
             'cancelled' => 'Cancelled',
@@ -152,10 +162,46 @@ class OrderResource extends Resource
                     TextEntry::make('payment_rejected_reason')
                         ->label('Alasan Ditolak')
                         ->placeholder('-'),
-                    ImageEntry::make('payment_proof')
-                        ->label('Bukti Transfer')
+                    ImageEntry::make('dp_payment_proof')
+                        ->label('Bukti Transfer DP')
                         ->disk('public_uploads')
-                        ->visible(fn (Order $record): bool => filled($record->payment_proof)),
+                        ->height(250)
+                        ->visible(fn (Order $record): bool => filled($record->dp_payment_proof))
+                        ->action(
+                            \Filament\Actions\Action::make('view_dp_proof')
+                                ->modalHeading('Bukti Transfer DP')
+                                ->modalSubmitAction(false)
+                                ->modalCancelAction(false)
+                                ->modalWidth('lg')
+                                ->form([
+                                    \Filament\Forms\Components\Placeholder::make('dp_proof_image')
+                                        ->hiddenLabel()
+                                        ->columnSpanFull()
+                                        ->content(fn (Order $record) => new \Illuminate\Support\HtmlString(
+                                            '<div class="flex justify-center w-full"><img src="' . \Illuminate\Support\Facades\Storage::disk('public_uploads')->url($record->dp_payment_proof) . '" class="max-w-full max-h-[75vh] object-contain rounded-xl shadow-md border border-gray-100 mx-auto" /></div>'
+                                        ))
+                                ])
+                        ),
+                    ImageEntry::make('payment_proof')
+                        ->label(fn (Order $record): string => filled($record->dp_payment_proof) ? 'Bukti Transfer Pelunasan' : 'Bukti Transfer')
+                        ->disk('public_uploads')
+                        ->height(250)
+                        ->visible(fn (Order $record): bool => filled($record->payment_proof))
+                        ->action(
+                            \Filament\Actions\Action::make('view_proof')
+                                ->modalHeading(fn (Order $record): string => filled($record->dp_payment_proof) ? 'Bukti Transfer Pelunasan' : 'Bukti Transfer')
+                                ->modalSubmitAction(false)
+                                ->modalCancelAction(false)
+                                ->modalWidth('lg')
+                                ->form([
+                                    \Filament\Forms\Components\Placeholder::make('proof_image')
+                                        ->hiddenLabel()
+                                        ->columnSpanFull()
+                                        ->content(fn (Order $record) => new \Illuminate\Support\HtmlString(
+                                            '<div class="flex justify-center w-full"><img src="' . \Illuminate\Support\Facades\Storage::disk('public_uploads')->url($record->payment_proof) . '" class="max-w-full max-h-[75vh] object-contain rounded-xl shadow-md border border-gray-100 mx-auto" /></div>'
+                                        ))
+                                ])
+                        ),
                 ])
                 ->columns(2),
             Section::make('Pelanggan')

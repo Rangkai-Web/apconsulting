@@ -67,6 +67,11 @@ export interface Address {
 export type OrderStatus =
   | "pending"
   | "processing"
+  | "ordered"
+  | "arrived_at_proxy"
+  | "shipped_to_indonesia"
+  | "arrived_at_indonesia"
+  | "ready_to_ship"
   | "shipped"
   | "completed"
   | "cancelled"
@@ -85,6 +90,7 @@ export interface OrderItem {
   productName: string;
   variantName: string;
   price: number;
+  fullPrice: number;
   qty: number;
   subtotal: number;
   rated: boolean;
@@ -96,12 +102,14 @@ export interface Order {
   orderStatus: OrderStatus;
   paymentStatus: PaymentStatus;
   paymentProof: string | null;
+  dpPaymentProof: string | null;
   paymentRejectedReason: string | null;
   courier: string;
   courierService: string;
   shippingCost: number;
   subtotal: number;
   total: number;
+  remainingBalance: number;
   trackingNumber: string | null;
   createdAt: string;
   items: OrderItem[];

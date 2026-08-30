@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[Fillable([
-    'order_id', 'product_variant_id', 'product_name', 'variant_name', 'price', 'qty', 'subtotal',
+    'order_id', 'product_variant_id', 'product_name', 'variant_name', 'price', 'full_price', 'qty', 'subtotal',
 ])]
 class OrderItem extends Model
 {
@@ -21,6 +21,7 @@ class OrderItem extends Model
     {
         return [
             'price' => 'integer',
+            'full_price' => 'integer',
             'qty' => 'integer',
             'subtotal' => 'integer',
         ];

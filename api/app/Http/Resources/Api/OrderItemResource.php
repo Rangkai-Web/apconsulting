@@ -15,6 +15,7 @@ class OrderItemResource extends JsonResource
             'product_name' => $this->product_name,
             'variant_name' => $this->variant_name,
             'price' => $this->price,
+            'full_price' => $this->full_price ?? $this->price,
             'qty' => $this->qty,
             'subtotal' => $this->subtotal,
             'rating' => $this->whenLoaded('rating'),

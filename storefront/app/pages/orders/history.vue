@@ -109,6 +109,16 @@ function getStatusBadgeColor(
       return "primary";
     case "processing":
       return "info";
+    case "ordered":
+      return "info";
+    case "arrived_at_proxy":
+      return "info";
+    case "shipped_to_indonesia":
+      return "warning";
+    case "arrived_at_indonesia":
+      return "warning";
+    case "ready_to_ship":
+      return "primary";
     case "shipped":
       return "success";
     case "completed":
@@ -129,6 +139,16 @@ function getStatusLabel(status: string): string {
       return "Dibayar";
     case "processing":
       return "Diproses";
+    case "ordered":
+      return "Telah Dipesan";
+    case "arrived_at_proxy":
+      return "Tiba di Warehouse Proxy";
+    case "shipped_to_indonesia":
+      return "Pengiriman ke Indonesia";
+    case "arrived_at_indonesia":
+      return "Tiba di Warehouse Indonesia";
+    case "ready_to_ship":
+      return "Siap Dikirim (Menunggu Pelunasan)";
     case "shipped":
       return "Dikirim";
     case "completed":
@@ -170,7 +190,7 @@ function formatDate(dateStr: string): string {
     ></div>
     <AppCuteDecor />
 
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
       <!-- Title Block -->
       <div class="mb-8 flex items-center gap-3">
         <div
@@ -255,7 +275,7 @@ function formatDate(dateStr: string): string {
           <div
             v-for="order in ordersList"
             :key="order.id"
-            class="bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-md hover:shadow-primary-500/8 hover:border-primary-100/60 transition-all duration-250 cursor-pointer"
+            class="bg-white/80 backdrop-blur-xs border-2 border-primary-300/40 rounded-3xl p-6 shadow-[0_4px_20px_-4px_rgba(255,116,108,0.02)] flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-md hover:shadow-primary-500/8 hover:border-primary-100/60 transition-all duration-250 cursor-pointer hover:-translate-y-0.5"
             @click="router.push(`/orders/${order.orderNumber}`)"
           >
             <div class="space-y-3 flex-1 min-w-0">
@@ -281,7 +301,7 @@ function formatDate(dateStr: string): string {
                     <div
                       class="w-full h-full bg-primary-50 text-[10px] text-primary-700 font-extrabold flex items-center justify-center"
                     >
-                      {{ item.productName.slice(0, 2).toUpperCase() }}
+                      <UIcon name="i-heroicons-shopping-bag" class="w-6 h-6" />
                     </div>
                   </div>
                 </div>
@@ -332,7 +352,7 @@ function formatDate(dateStr: string): string {
       <!-- Tab Content: Guest Lookup Form -->
       <div
         v-else
-        class="max-w-md mx-auto bg-white/80 backdrop-blur-xs border border-primary-100/35 rounded-3xl p-8 md:p-10 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
+        class="max-w-md mx-auto bg-white/80 backdrop-blur-xs border-2 border-primary-300/40 rounded-3xl p-8 md:p-10 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
       >
         <div class="text-center mb-6">
           <UIcon
