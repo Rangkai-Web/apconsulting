@@ -25,10 +25,11 @@ jobs:
           script: |
             set -e
             export PATH="/opt/alt/php83/usr/bin:/usr/local/bin:$PATH"
-            cd /home/u309941630/domains/drplant.co.id/repo
+            cd /home/u497514044/domains/bbystargo.com/repo
             git pull origin main
             cd api
-            php $(command -v composer) install --no-dev --optimize-autoloader --no-interaction
+            composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+            php artisan package:discover --ansi
             php artisan migrate --force
             php artisan config:cache
             php artisan route:cache

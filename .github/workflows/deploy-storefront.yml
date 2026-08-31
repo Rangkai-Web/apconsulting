@@ -33,8 +33,6 @@ jobs:
         working-directory: storefront
         env:
           NUXT_PUBLIC_API_BASE: ${{ secrets.NUXT_PUBLIC_API_BASE }}
-          NUXT_PUBLIC_MIDTRANS_CLIENT_KEY: ${{ secrets.NUXT_PUBLIC_MIDTRANS_CLIENT_KEY }}
-          NUXT_PUBLIC_MIDTRANS_IS_PRODUCTION: ${{ secrets.NUXT_PUBLIC_MIDTRANS_IS_PRODUCTION }}
         run: npm run generate
 
       - name: Setup SSH key
@@ -54,6 +52,7 @@ jobs:
           rsync -avz --delete \
             --exclude='.git' \
             --exclude='api' \
+            --exclude='admin' \
             -e "ssh -p $SSH_PORT -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
             storefront/.output/public/ \
-            $SSH_USER@$SSH_HOST:/home/u309941630/domains/drplant.co.id/public_html/
+            $SSH_USER@$SSH_HOST:/home/u497514044/domains/bbystargo.com/public_html/
