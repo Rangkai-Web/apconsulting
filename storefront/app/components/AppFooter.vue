@@ -17,7 +17,6 @@ const settings = computed(() => {
       address: "",
       phone: "",
       whatsapp_number: "",
-      instagram_url: "",
       operating_hours: "",
       socials: [],
     }
@@ -87,16 +86,6 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
             </a>
           </template>
           <template v-else>
-            <a
-              v-if="settings.instagram_url"
-              :href="settings.instagram_url"
-              target="_blank"
-              rel="noopener"
-              class="w-8.5 h-8.5 rounded-full bg-primary-700/60 border border-primary-600/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
-              aria-label="Instagram"
-            >
-              <UIcon name="i-simple-icons-instagram" class="w-4.5 h-4.5" />
-            </a>
             <a
               v-if="settings.whatsapp_number"
               :href="

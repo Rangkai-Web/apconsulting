@@ -19,7 +19,6 @@ class SettingsApiTest extends TestCase
             'phone' => '+62 812-3456-7890',
             'whatsapp_number' => '6281234567890',
             'line_url' => 'https://line.me/ti/p/@bbystargo',
-            'instagram_url' => 'https://instagram.com/test_bbystargo',
             'operating_hours' => 'Senin - Jumat, 09.00 - 18.00 WIB',
             'rajaongkir_origin_district_id' => 151,
         ]);
@@ -35,7 +34,6 @@ class SettingsApiTest extends TestCase
                     'phone' => '+62 812-3456-7890',
                     'whatsapp_number' => '6281234567890',
                     'line_url' => 'https://line.me/ti/p/@bbystargo',
-                    'instagram_url' => 'https://instagram.com/test_bbystargo',
                     'operating_hours' => 'Senin - Jumat, 09.00 - 18.00 WIB',
                 ]
             ])

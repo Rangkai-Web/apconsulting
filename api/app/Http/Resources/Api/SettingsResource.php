@@ -17,7 +17,6 @@ class SettingsResource extends JsonResource
             'phone' => $this->phone,
             'whatsapp_number' => $this->whatsapp_number,
             'line_url' => $this->line_url,
-            'instagram_url' => $this->instagram_url,
             'operating_hours' => $this->operating_hours,
             'socials' => $this->socials ?? [],
             'dp_rules' => $this->dp_rules ?? [],

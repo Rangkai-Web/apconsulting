@@ -84,10 +84,6 @@ class SettingsPage extends Page implements HasForms
                     ->placeholder('https://line.me/ti/p/@namaakun')
                     ->maxLength(255)
                     ->helperText('Link resmi LINE Official Account toko, dipakai sebagai tombol konfirmasi pembayaran.'),
-                TextInput::make('instagram_url')
-                    ->label('Instagram URL')
-                    ->url()
-                    ->maxLength(255),
                 Repeater::make('socials')
                     ->label('Daftar Media Sosial Lainnya')
                     ->schema([

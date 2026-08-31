@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
             'address' => '',
             'phone' => '',
             'whatsapp_number' => '',
-            'instagram_url' => '',
             'operating_hours' => '',
             'rajaongkir_origin_district_id' => null,
         ]);
