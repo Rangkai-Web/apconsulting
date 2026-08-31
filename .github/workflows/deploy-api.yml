@@ -2,13 +2,11 @@ name: Deploy API
 
 on:
   workflow_dispatch:
-  # NOTE: Deploy dinonaktifkan sementara sampai domain & hosting bbystargo disiapkan.
-  # Aktifkan lagi dengan menghapus komentar blok `push` di bawah sebelum push ke main.
-  # push:
-  #   branches: [main]
-  #   paths:
-  #     - 'api/**'
-  #     - '.github/workflows/deploy-api.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'api/**'
+      - '.github/workflows/deploy-api.yml'
 
 jobs:
   deploy:
