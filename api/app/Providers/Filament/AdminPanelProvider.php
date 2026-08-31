@@ -26,7 +26,8 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->domain(app()->isProduction() ? 'admin.bbystargo.com' : null)
+            ->path(app()->isProduction() ? '' : 'admin')
             ->authGuard('admin')
             ->login()
             ->brandName('Admin Panel BbystarGO')
