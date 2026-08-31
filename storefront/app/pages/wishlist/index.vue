@@ -8,6 +8,8 @@ const products = ref<Product[]>([]);
 const loading = ref(true);
 const toast = useToast();
 
+useSeoMeta({ title: "Wishlist Saya", robots: "noindex, nofollow" });
+
 async function load() {
   loading.value = true;
   try {

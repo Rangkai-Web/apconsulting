@@ -68,6 +68,36 @@ function changeSort(sort: string) {
   updateQuery({ sort });
 }
 
+const activeCategoryName = computed(() => {
+  const slug = route.query.category as string | undefined;
+  return slug
+    ? (catalog.categories.find((c) => c.slug === slug)?.name ?? null)
+    : null;
+});
+
+const seoTitle = computed(() => {
+  if (route.query.q) return `Hasil pencarian "${route.query.q}"`;
+  if (activeCategoryName.value) return `Katalog ${activeCategoryName.value}`;
+  return "Katalog Produk";
+});
+
+const seoDescription = computed(() => {
+  if (route.query.q) {
+    return `Hasil pencarian produk "${route.query.q}" di BbystarGO — jasa titip beli & ready stock Korea, China, Jepang.`;
+  }
+  if (activeCategoryName.value) {
+    return `Koleksi produk ${activeCategoryName.value} di BbystarGO — ready stock & pre order, aman dan terpercaya.`;
+  }
+  return "Jelajahi katalog lengkap BbystarGO — merchandise dan produk titip beli ready stock & pre order dari Korea, China, Jepang.";
+});
+
+useSeoMeta({
+  title: seoTitle,
+  description: seoDescription,
+  ogTitle: seoTitle,
+  ogDescription: seoDescription,
+});
+
 async function handleLoadMore() {
   try {
     await catalog.loadMore();

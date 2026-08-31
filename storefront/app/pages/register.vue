@@ -10,6 +10,8 @@ const router = useRouter();
 const authStore = useAuthStore();
 const toast = useToast();
 
+useSeoMeta({ title: "Daftar Akun", robots: "noindex, nofollow" });
+
 const state = reactive({
   name: "",
   email: "",

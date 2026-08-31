@@ -11,6 +11,8 @@ const { format } = useCurrency();
 const toast = useToast();
 const router = useRouter();
 
+useSeoMeta({ title: "Riwayat Pesanan", robots: "noindex, nofollow" });
+
 const activeTab = ref(authStore.isLoggedIn ? "member" : "guest");
 
 // Member orders state

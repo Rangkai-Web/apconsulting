@@ -13,6 +13,8 @@ const orderNumber = computed(() => route.params.orderNumber as string);
 const guestEmail = computed(() => (route.query.email as string) || "");
 
 const api = useApi();
+
+useSeoMeta({ title: "Detail Pesanan", robots: "noindex, nofollow" });
 const { data: paymentMethodsResponse } = useAsyncData("payment-methods", () =>
   api.getPaymentMethods(),
 );

@@ -14,6 +14,8 @@ const { format } = useCurrency();
 const toast = useToast();
 const router = useRouter();
 
+useSeoMeta({ title: "Checkout", robots: "noindex, nofollow" });
+
 // Page states
 const loading = ref(false);
 const addresses = ref<Address[]>([]);

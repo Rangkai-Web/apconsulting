@@ -3,6 +3,7 @@ import { catalogService } from "~/services/catalogService";
 import { useCartStore } from "~/store/cart";
 import { useWishlistStore } from "~/store/wishlist";
 import { useCurrency } from "~/composables/useCurrency";
+import { useSeoText } from "~/composables/useSeoText";
 import type { Product, ProductVariant } from "~/types";
 
 const route = useRoute();
@@ -10,6 +11,8 @@ const cart = useCartStore();
 const wishlist = useWishlistStore();
 const toast = useToast();
 const { format } = useCurrency();
+const { toPlainText, toSafeJsonLd } = useSeoText();
+const config = useRuntimeConfig();
 
 const product = ref<Product | null>(null);
 const loading = ref(true);
@@ -94,6 +97,63 @@ function addToCart() {
 
 onMounted(load);
 watch(() => route.params.slug, load);
+
+const plainDescription = computed(() =>
+  product.value ? toPlainText(product.value.description) : "",
+);
+
+const productUrl = computed(
+  () => `${config.public.siteUrl}/produk/${route.params.slug}`,
+);
+
+useSeoMeta({
+  title: () => product.value?.name,
+  description: () => plainDescription.value,
+  ogTitle: () => product.value?.name,
+  ogDescription: () => plainDescription.value,
+  ogImage: () => product.value?.images[0],
+  ogUrl: () => productUrl.value,
+});
+
+useHead(() => ({
+  link: [{ rel: "canonical", href: productUrl.value }],
+  // og:type "product" isn't in unhead's typed ogType union, set it directly.
+  meta: [{ property: "og:type", content: "product" }],
+  script: product.value
+    ? [
+        {
+          type: "application/ld+json",
+          innerHTML: toSafeJsonLd({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product.value.name,
+            image: product.value.images,
+            description: plainDescription.value,
+            sku: product.value.variants[0]?.sku,
+            offers: product.value.variants.map((v) => ({
+              "@type": "Offer",
+              price: v.price,
+              priceCurrency: "IDR",
+              availability:
+                v.stock > 0
+                  ? "https://schema.org/InStock"
+                  : "https://schema.org/OutOfStock",
+              url: productUrl.value,
+            })),
+            ...(product.value.ratingCount > 0
+              ? {
+                  aggregateRating: {
+                    "@type": "AggregateRating",
+                    ratingValue: product.value.ratingAvg,
+                    reviewCount: product.value.ratingCount,
+                  },
+                }
+              : {}),
+          }),
+        },
+      ]
+    : [],
+}));
 </script>
 
 <template>

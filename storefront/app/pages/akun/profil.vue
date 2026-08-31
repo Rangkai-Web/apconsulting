@@ -7,6 +7,8 @@ definePageMeta({ middleware: "auth" });
 const authStore = useAuthStore();
 const toast = useToast();
 
+useSeoMeta({ title: "Profil Saya", robots: "noindex, nofollow" });
+
 const tabs = [
   { label: "Profil", to: "/akun/profil" },
   { label: "Alamat", to: "/akun/alamat" },

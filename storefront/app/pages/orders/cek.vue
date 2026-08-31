@@ -3,6 +3,8 @@ definePageMeta({ middleware: "auth" });
 
 const router = useRouter();
 
+useSeoMeta({ title: "Cek Pesanan", robots: "noindex, nofollow" });
+
 const form = reactive({
   orderNumber: "",
   email: "",

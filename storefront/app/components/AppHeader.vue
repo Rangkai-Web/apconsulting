@@ -229,6 +229,7 @@ async function handleMobileLogout() {
                 icon="i-heroicons-user"
                 color="neutral"
                 variant="ghost"
+                aria-label="Menu Akun"
                 class="text-black hover:text-primary-600 hover:bg-primary-50/60 transition-all duration-300 rounded-xl p-2.5 flex items-center gap-1 cursor-pointer"
               >
                 <span

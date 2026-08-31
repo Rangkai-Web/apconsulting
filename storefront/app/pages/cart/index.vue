@@ -6,6 +6,8 @@ import type { CartItem } from "~/types";
 const cart = useCartStore();
 const { format } = useCurrency();
 
+useSeoMeta({ title: "Keranjang Belanja", robots: "noindex, nofollow" });
+
 const itemToRemove = ref<CartItem | null>(null);
 const confirmOpen = ref(false);
 

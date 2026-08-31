@@ -52,6 +52,17 @@ const banners = computed<BannerItem[]>(() => {
 });
 
 const toast = useToast();
+const config = useRuntimeConfig();
+
+useSeoMeta({
+  title: "Jasa Titip Beli & Ready Stock Korea, China, Jepang",
+  description:
+    "BbystarGO — jasa pembelian barang dari Indonesia, Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock & Pre Order, aman dan terpercaya.",
+  ogTitle: "BbystarGO - Jasa Titip Beli & Ready Stock Korea, China, Jepang",
+  ogDescription:
+    "Belanja Ready Stock & Pre Order dari Korea, China, Jepang, dan negara lain — aman sampai ke tanganmu.",
+  ogImage: `${config.public.siteUrl}/BbystarGO_1.jpg`,
+});
 
 onMounted(async () => {
   try {
