@@ -25,7 +25,7 @@ const defaultBanners: BannerItem[] = [
   {
     title: "Temukan Merchandise Favoritmu",
     subtitle:
-      "Titip beli produk favoritmu dari Korea, China, Jepang, dan negara lain — aman sampai ke tanganmu.",
+      "Penyedia jasa pembelian barang favoritmu dari Korea, China, Jepang, dan negara lain — aman sampai ke tanganmu.",
     image: "/redesign_hero.jpg",
     link: "/katalog",
   },
@@ -56,10 +56,10 @@ const toast = useToast();
 const config = useRuntimeConfig();
 
 useSeoMeta({
-  title: "Jasa Titip Beli & Ready Stock Korea, China, Jepang",
+  title: "Jasa Pembelian Barang & Ready Stock Korea, China, Jepang",
   description:
-    "BbystarGO — jasa pembelian barang dari Indonesia, Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock & Pre Order, aman dan terpercaya.",
-  ogTitle: "BbystarGO - Jasa Titip Beli & Ready Stock Korea, China, Jepang",
+    "BbystarGO — toko online yang menyediakan jasa pembelian barang dari Indonesia, Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock & Pre Order, aman dan terpercaya.",
+  ogTitle: "BbystarGO - Jasa Pembelian Barang & Ready Stock Korea, China, Jepang",
   ogDescription:
     "Belanja Ready Stock & Pre Order dari Korea, China, Jepang, dan negara lain — aman sampai ke tanganmu.",
   ogImage: `${config.public.siteUrl}/BbystarGO_1.jpg`,
@@ -67,7 +67,7 @@ useSeoMeta({
 
 const faqs = [
   {
-    label: "Bagaimana cara melakukan pemesanan Jastip?",
+    label: "Bagaimana cara melakukan pemesanan di BbystarGO?",
     content:
       "Pilih produk yang Anda inginkan melalui menu Katalog, masukkan ke keranjang belanja, lalu selesaikan proses checkout dengan mengisi detail alamat dan melakukan pembayaran sesuai metode yang dipilih.",
   },
@@ -255,7 +255,7 @@ onMounted(async () => {
                 Pesan Sekarang
               </UButton>
               <UButton
-                to="/#faq"
+                to="/faq"
                 color="primary"
                 variant="outline"
                 class="font-extrabold text-xs sm:text-sm px-6 py-3 rounded-full hover:bg-primary-50/50 transition-all duration-300 cursor-pointer"
@@ -312,6 +312,225 @@ onMounted(async () => {
           </div>
         </div>
       </UCarousel>
+    </section>
+
+    <!-- Brand Overview & Service Highlights Section ("BBYSTARGO") -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative z-20">
+      <div
+        class="bg-white/85 backdrop-blur-md border border-primary-100/70 rounded-[2.5rem] p-6 sm:p-10 md:p-14 shadow-xs relative overflow-hidden space-y-10"
+      >
+        <!-- Ambient Decor Orbs inside card -->
+        <div
+          class="absolute -top-20 -right-20 w-72 h-72 bg-primary-100/30 rounded-full blur-3xl pointer-events-none"
+        ></div>
+        <div
+          class="absolute -bottom-20 -left-20 w-72 h-72 bg-secondary-100/25 rounded-full blur-3xl pointer-events-none"
+        ></div>
+
+        <!-- 1. Header: Brand Title & Description (Client Brief) -->
+        <div class="text-center max-w-3xl mx-auto space-y-3 relative z-10">
+          <UBadge
+            color="primary"
+            variant="subtle"
+            size="sm"
+            class="font-extrabold uppercase tracking-widest px-3.5 py-1.5 rounded-full shadow-xs inline-flex items-center gap-1.5"
+          >
+            <UIcon name="i-heroicons-sparkles" class="w-4 h-4 text-primary-500" />
+            Toko Online Sejak 2023
+          </UBadge>
+
+          <h2
+            class="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 tracking-tight font-heading"
+          >
+            BBYSTARGO
+          </h2>
+
+          <p
+            class="text-xs sm:text-sm md:text-base text-gray-600 font-semibold leading-relaxed max-w-2xl mx-auto"
+          >
+            BbystarGO adalah toko online yang berdiri sejak tahun 2023 yang
+            menyediakan jasa pembelian barang dari Indonesia, Korea, China, Jepang,
+            dan negara lain.
+          </p>
+        </div>
+
+        <!-- 2. Two Pillars: Ready Stock & Pre Order Cards -->
+        <div class="space-y-4 max-w-4xl mx-auto relative z-10">
+          <p
+            class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-primary-600 text-center"
+          >
+            Kami menyediakan 2 layanan utama:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- 1. Ready Stock Card -->
+            <div
+              class="bg-linear-to-br from-white via-primary-50/20 to-primary-50/40 border border-primary-100/80 rounded-3xl p-6 sm:p-7 shadow-xs hover:shadow-md transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden"
+            >
+              <div class="flex items-start justify-between gap-4 mb-4">
+                <div
+                  class="w-12 h-12 rounded-2xl bg-primary-500 text-white flex items-center justify-center shadow-md shadow-primary-500/20 group-hover:scale-110 transition-transform duration-300"
+                >
+                  <UIcon name="i-heroicons-bolt" class="w-6 h-6" />
+                </div>
+                <UBadge
+                  color="primary"
+                  variant="subtle"
+                  size="xs"
+                  class="font-extrabold rounded-full px-2.5 py-1"
+                >
+                  Layanan Utama
+                </UBadge>
+              </div>
+
+              <h3
+                class="text-lg sm:text-xl font-black text-gray-900 tracking-tight mb-2 flex items-center gap-2"
+              >
+                1. Ready Stock
+              </h3>
+
+              <p
+                class="text-xs sm:text-sm text-gray-600 font-semibold leading-relaxed"
+              >
+                Barang tersedia di gudang kami, siap diproses tanpa menunggu impor.
+              </p>
+            </div>
+
+            <!-- 2. Pre Order Card -->
+            <div
+              class="bg-linear-to-br from-white via-indigo-50/20 to-indigo-50/40 border border-indigo-100/80 rounded-3xl p-6 sm:p-7 shadow-xs hover:shadow-md transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden"
+            >
+              <div class="flex items-start justify-between gap-4 mb-4">
+                <div
+                  class="w-12 h-12 rounded-2xl bg-indigo-500 text-white flex items-center justify-center shadow-md shadow-indigo-500/20 group-hover:scale-110 transition-transform duration-300"
+                >
+                  <UIcon name="i-heroicons-globe-americas" class="w-6 h-6" />
+                </div>
+                <UBadge
+                  color="neutral"
+                  variant="subtle"
+                  size="xs"
+                  class="font-extrabold rounded-full px-2.5 py-1 text-indigo-600 bg-indigo-50"
+                >
+                  Layanan Utama
+                </UBadge>
+              </div>
+
+              <h3
+                class="text-lg sm:text-xl font-black text-gray-900 tracking-tight mb-2 flex items-center gap-2"
+              >
+                2. Pre Order
+              </h3>
+
+              <p
+                class="text-xs sm:text-sm text-gray-600 font-semibold leading-relaxed"
+              >
+                Pemesanan langsung dari negara asal dan diurus bersih sampai ke
+                tangan customer.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Social Proof & Statistics Counters -->
+        <div class="space-y-3 max-w-4xl mx-auto pt-2 relative z-10">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <!-- Stat 1: 100+ Customer Terlayani -->
+            <div
+              class="bg-white border border-primary-100/70 rounded-2xl p-5 text-center shadow-xs hover:border-primary-300 hover:shadow-md transition-all duration-300 hover:scale-102"
+            >
+              <div
+                class="w-9 h-9 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center mx-auto mb-2.5"
+              >
+                <UIcon name="i-heroicons-user-group" class="w-5 h-5" />
+              </div>
+              <div
+                class="text-3xl md:text-4xl font-black text-primary-500 font-heading tracking-tight"
+              >
+                100+
+              </div>
+              <span
+                class="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-widest block mt-1.5"
+              >
+                CUSTOMER TERLAYANI
+              </span>
+            </div>
+
+            <!-- Stat 2: 5.0 * Rating Shopee -->
+            <div
+              class="bg-white border border-amber-100/80 rounded-2xl p-5 text-center shadow-xs hover:border-amber-300 hover:shadow-md transition-all duration-300 hover:scale-102"
+            >
+              <div
+                class="w-9 h-9 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center mx-auto mb-2.5"
+              >
+                <UIcon
+                  name="i-heroicons-star-solid"
+                  class="w-5 h-5 text-amber-400 fill-amber-400"
+                />
+              </div>
+              <div
+                class="flex items-center justify-center gap-1.5 text-3xl md:text-4xl font-black text-amber-500 font-heading tracking-tight"
+              >
+                <span>5.0</span>
+                <UIcon
+                  name="i-heroicons-star-solid"
+                  class="w-6 h-6 text-amber-400 fill-amber-400"
+                />
+              </div>
+              <span
+                class="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-widest block mt-1.5"
+              >
+                RATING SHOPEE
+              </span>
+            </div>
+
+            <!-- Stat 3: 2.500+ Penilaian -->
+            <div
+              class="bg-white border border-emerald-100/80 rounded-2xl p-5 text-center shadow-xs hover:border-emerald-300 hover:shadow-md transition-all duration-300 hover:scale-102"
+            >
+              <div
+                class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center mx-auto mb-2.5"
+              >
+                <UIcon
+                  name="i-heroicons-chat-bubble-bottom-center-text"
+                  class="w-5 h-5"
+                />
+              </div>
+              <div
+                class="text-3xl md:text-4xl font-black text-emerald-500 font-heading tracking-tight"
+              >
+                2.500+
+              </div>
+              <span
+                class="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-widest block mt-1.5"
+              >
+                PENILAIAN SHOPEE
+              </span>
+            </div>
+          </div>
+
+          <p
+            class="text-[11px] text-gray-400 font-semibold text-center mt-2"
+          >
+            Kami sudah melayani 100+ customer dan mendapatkan rating 5.0 dari
+            2.500 penilaian di Shopee.
+          </p>
+        </div>
+
+        <!-- Extra CTA to Tentang Kami -->
+        <div class="text-center pt-2 relative z-10">
+          <NuxtLink to="/tentang-kami">
+            <UButton
+              color="primary"
+              variant="soft"
+              class="font-extrabold text-xs sm:text-sm px-6 py-2.5 rounded-full hover:scale-105 transition-all duration-300 cursor-pointer inline-flex items-center gap-1.5"
+            >
+              Pelajari Lebih Lanjut Tentang Kami
+              <UIcon name="i-heroicons-arrow-right" class="w-4 h-4" />
+            </UButton>
+          </NuxtLink>
+        </div>
+      </div>
     </section>
 
     <!-- Categories Section -->
@@ -435,41 +654,7 @@ onMounted(async () => {
       </div>
     </section>
 
-    <!-- Feature Spotlight Column ("Little Things, Big Happiness") -->
-    <!--
-    <section id="tentang-kami" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 relative z-20">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <div class="lg:col-span-5 relative flex justify-center">
-          <div class="w-full max-w-sm aspect-4/5 rounded-[2rem] overflow-hidden shadow-2xl shadow-primary-900/5 border-4 border-white relative group">
-            <img
-              src="/redesign_spotlight.jpg"
-              alt="Tentang BbystarGO"
-              class="w-full h-full object-cover group-hover:scale-103 transition-all duration-750"
-            />
-          </div>
-        </div>
 
-        <div class="lg:col-span-7 space-y-6 text-left">
-          <h2 class="text-2xl md:text-3xl font-black text-gray-900 tracking-tight leading-tight">
-            Little Things, Big Happiness
-          </h2>
-          <p class="text-xs sm:text-sm md:text-base text-gray-500 font-semibold leading-relaxed">
-            Sejak tahun 2023, kami berkomitmen untuk membantu para kolektor dan pecinta merchandise mendapatkan barang impian mereka secara langsung dari Korea, China, dan Jepang. Dari gantungan kunci kecil hingga barang koleksi terbatas, kami melayani dengan transparansi dan pengiriman aman.
-          </p>
-          <div class="pt-2">
-            <UButton
-              to="/#hubungi-kami"
-              color="primary"
-              variant="solid"
-              class="font-extrabold text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg shadow-primary-500/10 hover:scale-105 transition-all duration-300 cursor-pointer"
-            >
-              Tentang Kami
-            </UButton>
-          </div>
-        </div>
-      </div>
-    </section>
-    -->
 
     <!-- Trust & USPs Section -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-20">
@@ -629,6 +814,18 @@ onMounted(async () => {
               'py-4 px-5 text-xs text-gray-500 leading-relaxed font-semibold bg-white border-t border-primary-50/30',
           }"
         />
+
+        <div class="mt-6 text-center">
+          <UButton
+            to="/faq"
+            color="primary"
+            variant="soft"
+            class="font-extrabold text-xs sm:text-sm px-6 py-2.5 rounded-full hover:scale-105 transition-all duration-300 cursor-pointer inline-flex items-center gap-1.5"
+          >
+            Lihat Semua Pertanyaan & Panduan (FAQ)
+            <UIcon name="i-heroicons-arrow-right" class="w-4 h-4" />
+          </UButton>
+        </div>
       </div>
     </section>
 

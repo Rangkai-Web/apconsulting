@@ -9,8 +9,33 @@ const toast = useToast();
 
 const filterOpen = ref(false);
 
+const searchInput = ref(typeof route.query.q === "string" ? route.query.q : "");
 const minPriceInput = ref<number | null>(null);
 const maxPriceInput = ref<number | null>(null);
+
+const debouncedSearch = useDebounceFn((value: string) => {
+  const trimmed = value.trim();
+  updateQuery({ q: trimmed ? trimmed : undefined });
+}, 400);
+
+watch(searchInput, (newVal) => {
+  debouncedSearch(newVal);
+});
+
+watch(
+  () => route.query.q,
+  (newQ) => {
+    const val = typeof newQ === "string" ? newQ : "";
+    if (val !== searchInput.value) {
+      searchInput.value = val;
+    }
+  },
+);
+
+function clearSearch() {
+  searchInput.value = "";
+  updateQuery({ q: undefined });
+}
 
 const sortOptions = [
   { label: "Terbaru", value: "newest" },
@@ -106,11 +131,13 @@ function isParentActive(parent: any) {
 }
 
 function resetFilters() {
+  searchInput.value = "";
   minPriceInput.value = null;
   maxPriceInput.value = null;
   router.push({
     query: {
       ...route.query,
+      q: undefined,
       category: undefined,
       min: undefined,
       max: undefined,
@@ -126,12 +153,12 @@ const seoTitle = computed(() => {
 
 const seoDescription = computed(() => {
   if (route.query.q) {
-    return `Hasil pencarian produk "${route.query.q}" di BbystarGO — jasa titip beli & ready stock Korea, China, Jepang.`;
+    return `Hasil pencarian produk "${route.query.q}" di BbystarGO — jasa pembelian barang & ready stock Korea, China, Jepang.`;
   }
   if (activeCategoryName.value) {
     return `Koleksi produk ${activeCategoryName.value} di BbystarGO — ready stock & pre order, aman dan terpercaya.`;
   }
-  return "Jelajahi katalog lengkap BbystarGO — merchandise dan produk titip beli ready stock & pre order dari Korea, China, Jepang.";
+  return "Jelajahi katalog lengkap BbystarGO — merchandise dan produk resmi ready stock & pre order dari Korea, China, Jepang.";
 });
 
 useSeoMeta({
@@ -189,12 +216,20 @@ watch(() => route.query, syncFromRoute);
       <div
         class="bg-linear-to-r from-pink-400 to-primary-500 text-white rounded-[2rem] p-8 md:p-12 mb-8 relative overflow-hidden shadow-lg shadow-primary-500/10 border border-white/10"
       >
-        <div class="absolute -top-10 -left-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
-        <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent)]"></div>
+        <div
+          class="absolute -top-10 -left-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"
+        ></div>
+        <div
+          class="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"
+        ></div>
+        <div
+          class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent)]"
+        ></div>
 
         <!-- Floating decorations -->
-        <div class="absolute right-16 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-6 pointer-events-none z-0">
+        <div
+          class="absolute right-16 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-6 pointer-events-none z-0"
+        >
           <UIcon
             name="i-heroicons-star-solid"
             class="w-10 h-10 text-white/20 animate-float"
@@ -220,8 +255,37 @@ watch(() => route.query, syncFromRoute);
           <p
             class="text-xs md:text-sm text-white/90 mt-2 max-w-md leading-relaxed font-semibold"
           >
-            Temukan koleksi merchandise yang lucu, unik, dan menggemaskan pilihan terbaik kami.
+            Temukan koleksi merchandise yang lucu, unik, dan menggemaskan
+            pilihan terbaik kami.
           </p>
+
+          <!-- Search Form inside Catalog Banner -->
+          <div class="mt-6 max-w-xl">
+            <div class="relative group">
+              <UInput
+                v-model="searchInput"
+                icon="i-heroicons-magnifying-glass"
+                placeholder="Cari nama produk, merchandise, karakter..."
+                size="lg"
+                class="w-full shadow-lg shadow-black/10 transition-all duration-300"
+                :ui="{
+                  base: 'rounded-full bg-white text-gray-850 border-2 border-white/80 focus:border-white focus-visible:ring-2 focus-visible:ring-white/40 py-3.5 px-4 text-xs sm:text-sm font-semibold placeholder:text-primary-500 text-primary-500',
+                }"
+              >
+                <template #trailing>
+                  <button
+                    v-if="searchInput"
+                    type="button"
+                    class="p-1 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+                    aria-label="Hapus pencarian"
+                    @click="clearSearch"
+                  >
+                    <UIcon name="i-heroicons-x-mark" class="w-4 h-4" />
+                  </button>
+                </template>
+              </UInput>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -252,14 +316,45 @@ watch(() => route.query, syncFromRoute);
       </div>
 
       <!-- Main Layout -->
-      <div class="space-y-8">
+      <div class="space-y-6">
+        <!-- Active Search Tag Indicator -->
+        <div
+          v-if="route.query.q"
+          class="flex items-center justify-between bg-white/90 backdrop-blur-xs border border-primary-100/70 rounded-2xl px-5 py-3 shadow-xs"
+        >
+          <div
+            class="flex items-center gap-2.5 text-xs font-bold text-gray-700"
+          >
+            <div
+              class="w-7 h-7 rounded-lg bg-primary-50 text-primary-500 flex items-center justify-center"
+            >
+              <UIcon name="i-heroicons-magnifying-glass" class="w-4 h-4" />
+            </div>
+            <span>
+              Menampilkan hasil untuk:
+              <span class="text-primary-600 font-black"
+                >"{{ route.query.q }}"</span
+              >
+            </span>
+          </div>
+          <button
+            type="button"
+            class="text-xs font-bold text-primary-600 hover:text-primary-700 hover:underline flex items-center gap-1 cursor-pointer"
+            @click="clearSearch"
+          >
+            <UIcon name="i-heroicons-x-mark" class="w-3.5 h-3.5" />
+            Hapus Pencarian
+          </button>
+        </div>
         <!-- Horizontal Desktop Filter Bar -->
         <div
           class="hidden lg:block bg-white/95 backdrop-blur-xs border border-primary-100/50 rounded-3xl p-6 shadow-xs space-y-5"
         >
           <!-- Row 1: Parent Categories -->
           <div class="space-y-2.5">
-            <span class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest block pl-1">
+            <span
+              class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest block pl-1"
+            >
               Kategori
             </span>
             <div class="flex flex-wrap gap-2.5">
@@ -299,10 +394,14 @@ watch(() => route.query, syncFromRoute);
 
           <!-- Row 2: Sub Categories -->
           <div
-            v-if="activeParentId && getChildCategories(activeParentId).length > 0"
+            v-if="
+              activeParentId && getChildCategories(activeParentId).length > 0
+            "
             class="space-y-2 border-t border-primary-100/30 pt-4"
           >
-            <span class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest block pl-1">
+            <span
+              class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest block pl-1"
+            >
               Sub Kategori
             </span>
             <div class="flex flex-wrap gap-2">
@@ -324,12 +423,22 @@ watch(() => route.query, syncFromRoute);
           </div>
 
           <!-- Row 3: Price and Sort Controls -->
-          <div class="flex flex-wrap items-center justify-between gap-4 border-t border-primary-100/30 pt-4">
+          <div
+            class="flex flex-wrap items-center justify-between gap-4 border-t border-primary-100/30 pt-4"
+          >
             <div class="flex items-center gap-4">
               <!-- Inline Price Filter -->
-              <div class="flex items-center gap-2 bg-primary-50/10 border border-primary-100/40 rounded-full px-4 py-1.5 shadow-xs">
-                <UIcon name="i-heroicons-banknotes" class="w-4.5 h-4.5 text-primary-500 shrink-0" />
-                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider shrink-0">Harga:</span>
+              <div
+                class="flex items-center gap-2 bg-primary-50/10 border border-primary-100/40 rounded-full px-4 py-1.5 shadow-xs"
+              >
+                <UIcon
+                  name="i-heroicons-banknotes"
+                  class="w-4.5 h-4.5 text-primary-500 shrink-0"
+                />
+                <span
+                  class="text-[10px] font-bold text-gray-400 uppercase tracking-wider shrink-0"
+                  >Harga:</span
+                >
                 <input
                   v-model.number="minPriceInput"
                   type="number"
@@ -351,7 +460,12 @@ watch(() => route.query, syncFromRoute);
 
               <!-- Reset Filters Button -->
               <UButton
-                v-if="route.query.category || route.query.min || route.query.max"
+                v-if="
+                  route.query.category ||
+                  route.query.min ||
+                  route.query.max ||
+                  route.query.q
+                "
                 icon="i-heroicons-arrow-path"
                 color="neutral"
                 variant="ghost"
@@ -364,11 +478,15 @@ watch(() => route.query, syncFromRoute);
 
             <!-- Sort Select & Total Count -->
             <div class="flex items-center gap-4">
-              <span class="text-xs font-bold text-gray-500 uppercase tracking-wider bg-primary-50/55 border border-primary-100/30 rounded-full px-3.5 py-1.5 shadow-xs">
+              <span
+                class="text-xs font-bold text-gray-500 uppercase tracking-wider bg-primary-50/55 border border-primary-100/30 rounded-full px-3.5 py-1.5 shadow-xs"
+              >
                 {{ catalog.total }} Produk
               </span>
               <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-gray-400 whitespace-nowrap">Urutkan:</span>
+                <span class="text-xs font-bold text-gray-400 whitespace-nowrap"
+                  >Urutkan:</span
+                >
                 <USelect
                   :model-value="(route.query.sort as string) || 'newest'"
                   :items="sortOptions"
@@ -435,7 +553,11 @@ watch(() => route.query, syncFromRoute);
                   </button>
 
                   <!-- Root Categories -->
-                  <div v-for="parent in rootCategories" :key="parent.id" class="space-y-1">
+                  <div
+                    v-for="parent in rootCategories"
+                    :key="parent.id"
+                    class="space-y-1"
+                  >
                     <button
                       type="button"
                       class="text-xs font-black w-full text-left px-4 py-2.5 rounded-xl border transition-all duration-200 cursor-pointer"
@@ -452,7 +574,10 @@ watch(() => route.query, syncFromRoute);
                       {{ parent.name }}
                     </button>
                     <!-- Nested Child Categories -->
-                    <div v-if="getChildCategories(parent.id).length > 0" class="pl-4 border-l border-primary-100/50 ml-4 space-y-1.5 py-1">
+                    <div
+                      v-if="getChildCategories(parent.id).length > 0"
+                      class="pl-4 border-l border-primary-100/50 ml-4 space-y-1.5 py-1"
+                    >
                       <button
                         v-for="child in getChildCategories(parent.id)"
                         :key="child.id"
@@ -538,8 +663,7 @@ watch(() => route.query, syncFromRoute);
               {{ catalog.total }} Produk Ditemukan
             </p>
             <div class="flex items-center gap-2">
-              <span
-                class="text-xs font-bold text-gray-400 whitespace-nowrap"
+              <span class="text-xs font-bold text-gray-400 whitespace-nowrap"
                 >Urutkan:</span
               >
               <USelect

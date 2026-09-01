@@ -116,7 +116,7 @@ const accordionItems = computed(() => {
       slot: "shipping",
     },
     {
-      label: "Kebijakan Jastip (Ready & PO)",
+      label: "Ketentuan Layanan (Ready & PO)",
       icon: "i-heroicons-bookmark-square",
       slot: "policies",
     },

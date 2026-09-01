@@ -68,7 +68,7 @@ function toggleWishlist(event: MouseEvent) {
     </div>
     <div class="mt-2.5 space-y-1">
       <h3
-        class="text-xs font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-primary-600 transition-colors min-h-[32px]"
+        class="text-xs font-bold text-gray-800 line-clamp-2 leading-snug group-hover:text-primary-600 transition-colors min-h-10"
       >
         {{ product.name }}
       </h3>

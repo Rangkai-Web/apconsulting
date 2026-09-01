@@ -5,8 +5,16 @@ html {
   scroll-behavior: smooth;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
 @theme static {
-  --font-sans: "Outfit", sans-serif;
+  --font-sans: "Quicksand", sans-serif;
+  --font-heading: "Fredoka", sans-serif;
+
+  --text-xs: 0.875rem;
+  --text-xs--line-height: calc(1.25 / 0.875);
 
   --color-primary-50: #fff1f0;
   --color-primary-100: #ffe1df;

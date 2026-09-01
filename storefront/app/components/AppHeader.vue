@@ -25,22 +25,15 @@ const wishlist = useWishlistStore();
 const authStore = useAuthStore();
 const toast = useToast();
 
-const searchQuery = ref(typeof route.query.q === "string" ? route.query.q : "");
 const mobileNavOpen = ref(false);
 
 const navLinks = [
   { label: "Home", to: "/" },
   { label: "Katalog", to: "/katalog" },
   { label: "Tentang Kami", to: "/tentang-kami" },
-  { label: "Pertanyaan Populer", to: "/#faq" },
+  { label: "Pertanyaan Populer", to: "/faq" },
   // { label: "Hubungi Kami", to: "/#hubungi-kami" },
 ];
-
-const runSearch = useDebounceFn((value: string) => {
-  router.push({ path: "/katalog", query: { q: value || undefined } });
-}, 400);
-
-watch(searchQuery, (value) => runSearch(value));
 
 const userDropdownItems = computed(() => [
   [
@@ -136,143 +129,106 @@ async function handleMobileLogout() {
         </NuxtLink>
       </div>
 
-      <!-- Center: Navigation links -->
-      <div class="flex items-center justify-between grow ml-6">
-        <!-- Navigation links (Desktop Only - lg:flex) -->
-        <nav
-          class="hidden lg:flex items-center gap-6"
-          aria-label="Navigasi Utama"
+      <!-- Center: Navigation links (Desktop Only - lg:flex) -->
+      <nav
+        class="hidden lg:flex items-center gap-7"
+        aria-label="Navigasi Utama"
+      >
+        <NuxtLink
+          v-for="link in navLinks"
+          :key="link.to"
+          :to="link.to"
+          class="relative py-2 text-xs font-bold transition-all duration-300 group"
+          :class="
+            route.path === link.to ||
+            (link.to.startsWith('/#') && route.hash === link.to.substring(1))
+              ? 'text-white font-black'
+              : 'text-white/80 hover:text-white'
+          "
         >
-          <NuxtLink
-            v-for="link in navLinks"
-            :key="link.to"
-            :to="link.to"
-            class="relative py-2 text-xs font-bold transition-all duration-300 group"
+          {{ link.label }}
+          <span
+            class="absolute bottom-0 left-0 h-0.5 bg-white transition-all duration-300 rounded-full"
             :class="
               route.path === link.to ||
-              (link.to.startsWith('/#') && route.hash === link.to.substring(1))
-                ? 'text-white font-black'
-                : 'text-white/80 hover:text-white'
+              (link.to.startsWith('/#') &&
+                route.hash === link.to.substring(1))
+                ? 'w-full'
+                : 'w-0 group-hover:w-full'
             "
+          />
+        </NuxtLink>
+      </nav>
+
+      <!-- Right: Action Icons (Always visible on all screens) -->
+      <div class="flex items-center sm:gap-2 shrink-0">
+        <NuxtLink to="/wishlist" class="relative group">
+          <UButton
+            icon="i-heroicons-heart"
+            color="neutral"
+            variant="ghost"
+            class="!text-white hover:!bg-white/10 transition-all duration-300 rounded-xl p-2 cursor-pointer"
+            aria-label="Wishlist"
+          />
+          <UBadge
+            v-if="wishlist.count > 0"
+            size="sm"
+            class="absolute -top-1 -right-1 min-w-4.5 h-4.5 flex items-center justify-center px-1 rounded-full text-[9px] font-extrabold ring-2 ring-primary-500 bg-white text-primary-500 animate-pulse"
           >
-            {{ link.label }}
-            <span
-              class="absolute bottom-0 left-0 h-0.5 bg-white transition-all duration-300 rounded-full"
-              :class="
-                route.path === link.to ||
-                (link.to.startsWith('/#') &&
-                  route.hash === link.to.substring(1))
-                  ? 'w-full'
-                  : 'w-0 group-hover:w-full'
-              "
-            />
-          </NuxtLink>
-        </nav>
-      </div>
+            {{ wishlist.count }}
+          </UBadge>
+        </NuxtLink>
 
-      <!-- Right: Desktop Navigation Menu & Action Icons -->
-      <div class="flex items-center justify-end grow gap-6">
-        <div class="hidden lg:flex w-full max-w-md">
-          <div class="relative w-full">
-            <UInput
-              v-model="searchQuery"
-              icon="i-heroicons-magnifying-glass"
-              placeholder="Cari produk..."
-              size="sm"
-              class="w-full"
-              :ui="{
-                base: 'rounded-full bg-white text-primary-600 border border-white focus-visible:ring-1 focus-visible:ring-white focus-visible:outline-none placeholder-primary-300',
-              }"
-            />
-          </div>
-        </div>
+        <NuxtLink to="/cart" class="relative group">
+          <UButton
+            icon="i-heroicons-shopping-cart"
+            color="neutral"
+            variant="ghost"
+            class="!text-white hover:!bg-white/10 transition-all duration-300 rounded-xl p-2 cursor-pointer"
+            aria-label="Keranjang Belanja"
+          />
+          <UBadge
+            v-if="cart.totalQty > 0"
+            size="sm"
+            class="absolute -top-1 -right-1 min-w-4.5 h-4.5 flex items-center justify-center px-1 rounded-full text-[9px] font-extrabold ring-2 ring-primary-500 bg-white text-primary-500 animate-pulse"
+          >
+            {{ cart.totalQty }}
+          </UBadge>
+        </NuxtLink>
 
-        <!-- Action Icons (Always visible on all screens) -->
-        <div class="flex items-center sm:gap-1.5 shrink-0">
-          <NuxtLink to="/wishlist" class="relative group">
+        <!-- User Profile Dropdown or Login Button -->
+        <div class="shrink-0 flex items-center">
+          <UDropdownMenu
+            v-if="authStore.isLoggedIn"
+            :items="userDropdownItems"
+            :ui="{ content: 'w-48' }"
+          >
             <UButton
-              icon="i-heroicons-heart"
+              icon="i-heroicons-user"
               color="neutral"
               variant="ghost"
-              class="!text-white hover:!bg-white/10 transition-all duration-300 rounded-xl p-2 cursor-pointer"
-              aria-label="Wishlist"
-            />
-            <UBadge
-              v-if="wishlist.count > 0"
-              size="sm"
-              class="absolute -top-1 -right-1 min-w-4.5 h-4.5 flex items-center justify-center px-1 rounded-full text-[9px] font-extrabold ring-2 ring-primary-500 bg-white text-primary-500 animate-pulse"
+              aria-label="Menu Akun"
+              class="!text-white hover:!bg-white/10 transition-all duration-300 rounded-xl p-2 flex items-center gap-1 cursor-pointer"
             >
-              {{ wishlist.count }}
-            </UBadge>
-          </NuxtLink>
-
-          <NuxtLink to="/cart" class="relative group">
+              <span
+                class="hidden md:inline text-xs font-bold text-white truncate max-w-25"
+              >
+                {{ authStore.user?.name.split(" ")[0] }}
+              </span>
+            </UButton>
+          </UDropdownMenu>
+          <NuxtLink v-else to="/login">
             <UButton
-              icon="i-heroicons-shopping-cart"
               color="neutral"
-              variant="ghost"
-              class="!text-white hover:!bg-white/10 transition-all duration-300 rounded-xl p-2 cursor-pointer"
-              aria-label="Keranjang Belanja"
-            />
-            <UBadge
-              v-if="cart.totalQty > 0"
-              size="sm"
-              class="absolute -top-1 -right-1 min-w-4.5 h-4.5 flex items-center justify-center px-1 rounded-full text-[9px] font-extrabold ring-2 ring-primary-500 bg-white text-primary-500 animate-pulse"
+              variant="solid"
+              icon="i-heroicons-user"
+              class="!bg-white !text-primary-500 hover:!bg-gray-50 font-extrabold text-[11px] rounded-full px-4 py-2 cursor-pointer shadow-md shadow-black/10 hover:scale-105 transition-all duration-300"
             >
-              {{ cart.totalQty }}
-            </UBadge>
+              Masuk
+            </UButton>
           </NuxtLink>
-
-          <!-- User Profile Dropdown or Login Button -->
-          <div class="shrink-0 flex items-center">
-            <UDropdownMenu
-              v-if="authStore.isLoggedIn"
-              :items="userDropdownItems"
-              :ui="{ content: 'w-48' }"
-            >
-              <UButton
-                icon="i-heroicons-user"
-                color="neutral"
-                variant="ghost"
-                aria-label="Menu Akun"
-                class="!text-white hover:!bg-white/10 transition-all duration-300 rounded-xl p-2 flex items-center gap-1 cursor-pointer"
-              >
-                <span
-                  class="hidden md:inline text-xs font-bold text-white truncate max-w-25"
-                >
-                  {{ authStore.user?.name.split(" ")[0] }}
-                </span>
-              </UButton>
-            </UDropdownMenu>
-            <NuxtLink v-else to="/login">
-              <UButton
-                color="neutral"
-                variant="solid"
-                icon="i-heroicons-user"
-                class="!bg-white !text-primary-500 hover:!bg-gray-50 font-extrabold text-[11px] rounded-full px-4 py-2 cursor-pointer shadow-md shadow-black/10 hover:scale-105 transition-all duration-300"
-              >
-                Masuk
-              </UButton>
-            </NuxtLink>
-          </div>
         </div>
       </div>
-    </div>
-
-    <!-- Mobile Search Row (Only visible on mobile - lg:hidden) -->
-    <div
-      class="lg:hidden px-4 pb-3 pt-1.5 border-t border-primary-400/30 bg-primary-500"
-    >
-      <UInput
-        v-model="searchQuery"
-        icon="i-heroicons-magnifying-glass"
-        placeholder="Cari produk..."
-        size="md"
-        class="w-full"
-        :ui="{
-          base: 'rounded-full bg-white text-primary-600 border border-white focus-visible:ring-1 focus-visible:ring-white focus-visible:outline-none placeholder-primary-300',
-        }"
-      />
     </div>
 
     <!-- Mobile Slideover Navigation (Burger drawer) -->

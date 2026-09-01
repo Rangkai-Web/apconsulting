@@ -23,7 +23,7 @@ const settings = computed(() => {
 useSeoMeta({
   title: "Tentang Kami",
   description:
-    "Kenali lebih dekat BbystarGO, penyedia jasa jastip tepercaya untuk merchandise resmi dari Korea, China, Jepang, dan Indonesia sejak 2023.",
+    "Kenali lebih dekat BbystarGO, toko online yang menyediakan jasa pembelian barang dari Indonesia, Korea, China, Jepang, dan negara lain sejak 2023.",
 });
 </script>
 
@@ -56,8 +56,8 @@ useSeoMeta({
         <p
           class="text-xs sm:text-sm text-gray-400 font-semibold max-w-xl mx-auto leading-relaxed"
         >
-          Penyedia jasa jastip terpercaya untuk memenuhi kebutuhan koleksi,
-          hobi, dan merchandise resmi luar negeri Anda.
+          Toko online terpercaya untuk memenuhi kebutuhan koleksi, hobi, dan
+          merchandise resmi luar negeri Anda.
         </p>
       </div>
     </section>
@@ -99,8 +99,8 @@ useSeoMeta({
               </p>
               <p>
                 Dengan komitmen tinggi pada keaslian produk and kepuasan
-                pelanggan, kami siap mendampingi proses belanja jastip Anda dari
-                awal pencarian hingga barang mendarat dengan selamat di pelukan
+                pelanggan, kami siap mendampingi proses belanja Anda dari
+                awal pemesanan hingga barang mendarat dengan selamat di pelukan
                 Anda.
               </p>
             </div>
