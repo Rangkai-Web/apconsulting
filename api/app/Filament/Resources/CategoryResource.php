@@ -52,6 +52,24 @@ class CategoryResource extends Resource
                 )
                 ->searchable()
                 ->nullable(),
+            Select::make('icon')
+                ->label('Ikon Kategori')
+                ->options([
+                    'i-heroicons-squares-2x2' => 'Default / Grid',
+                    'i-heroicons-key' => 'Gantungan Kunci / Keychain',
+                    'i-heroicons-sparkles' => 'Stiker / Sticker',
+                    'i-heroicons-shopping-bag' => 'Tas / Bag',
+                    'i-heroicons-user' => 'Pakaian / Shirt / Baju',
+                    'i-heroicons-gift' => 'Aksesoris / Gift',
+                    'i-heroicons-pencil-square' => 'Alat Tulis / Stationery',
+                    'i-heroicons-heart' => 'Koleksi / Fandom / Love',
+                    'i-heroicons-star' => 'Bintang / Favorit',
+                    'i-heroicons-tag' => 'Label / Tag',
+                    'i-heroicons-bookmark' => 'Buku / Bookmark',
+                ])
+                ->searchable()
+                ->nullable()
+                ->helperText('Pilih ikon yang sesuai untuk kategori ini. Tampil di halaman utama.'),
         ]);
     }
 
@@ -62,6 +80,7 @@ class CategoryResource extends Resource
                 TextColumn::make('name')->label('Nama')->searchable()->sortable(),
                 TextColumn::make('slug')->label('Slug')->searchable(),
                 TextColumn::make('parent.name')->label('Induk')->default('—'),
+                TextColumn::make('icon')->label('Ikon')->default('—'),
                 TextColumn::make('products_count')->label('Jumlah Produk')->counts('products'),
             ])
             ->defaultSort('created_at', 'desc')

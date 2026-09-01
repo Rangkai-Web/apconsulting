@@ -50,7 +50,7 @@ function toggleWishlist(event: MouseEvent) {
       </UBadge>
       <button
         type="button"
-        class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/95 flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-transform cursor-pointer"
+        class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/95 border border-primary-300 flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-transform cursor-pointer"
         :aria-label="wishlisted ? 'Hapus dari wishlist' : 'Tambah ke wishlist'"
         :aria-pressed="wishlisted"
         @click="toggleWishlist"

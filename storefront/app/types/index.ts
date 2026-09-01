@@ -3,6 +3,7 @@ export interface Category {
   name: string;
   slug: string;
   parentId: number | null;
+  icon?: string | null;
 }
 
 export interface ProductVariant {

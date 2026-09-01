@@ -28,7 +28,6 @@ class BannerApiTest extends TestCase
             'title' => 'Banner First',
             'subtitle' => 'This should be first',
             'image' => 'banners/first.jpg',
-            'image_mobile' => 'banners/first-mobile.jpg',
             'link' => '/katalog',
             'sort_order' => 1,
             'is_active' => true,
@@ -57,8 +56,6 @@ class BannerApiTest extends TestCase
             ->assertJsonPath('data.0.title', 'Banner First')
             ->assertJsonPath('data.1.title', 'Banner Second')
             ->assertJsonPath('data.0.image', url('uploads/banners/first.jpg'))
-            ->assertJsonPath('data.0.image_mobile', url('uploads/banners/first-mobile.jpg'))
-            ->assertJsonPath('data.1.image', url('uploads/banners/second.jpg'))
-            ->assertJsonPath('data.1.image_mobile', null);
+            ->assertJsonPath('data.1.image', url('uploads/banners/second.jpg'));
     }
 }

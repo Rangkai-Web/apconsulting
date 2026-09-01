@@ -45,6 +45,7 @@ function mapCategory(raw: any): Category {
     name: raw.name,
     slug: raw.slug,
     parentId: raw.parent_id,
+    icon: raw.icon,
   };
 }
 

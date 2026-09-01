@@ -31,7 +31,9 @@ const mobileNavOpen = ref(false);
 const navLinks = [
   { label: "Home", to: "/" },
   { label: "Katalog", to: "/katalog" },
-  // { label: "Keranjang", to: "/cart" },
+  { label: "Tentang Kami", to: "/tentang-kami" },
+  { label: "Pertanyaan Populer", to: "/#faq" },
+  // { label: "Hubungi Kami", to: "/#hubungi-kami" },
 ];
 
 const runSearch = useDebounceFn((value: string) => {
@@ -99,7 +101,7 @@ async function handleMobileLogout() {
 
 <template>
   <header
-    class="sticky top-0 z-40 bg-primary-500 backdrop-blur-md border-b border-primary-500/80 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.04)] transition-all duration-300"
+    class="sticky top-0 z-45 bg-primary-500/90 backdrop-blur-md border-b border-primary-400/30 shadow-[0_4px_20px_-6px_rgba(255,116,108,0.12)] transition-all duration-300"
   >
     <!-- Main Top Row -->
     <div
@@ -111,7 +113,7 @@ async function handleMobileLogout() {
           icon="i-heroicons-bars-3"
           color="neutral"
           variant="ghost"
-          class="lg:hidden hover:bg-gray-100/80 rounded-xl p-2 shrink-0"
+          class="lg:hidden hover:!bg-white/10 rounded-xl p-2 shrink-0 !text-white"
           aria-label="Buka Menu"
           @click="
             () => {
@@ -134,7 +136,7 @@ async function handleMobileLogout() {
         </NuxtLink>
       </div>
 
-      <!-- Center: Wide Search Input (Desktop Only - lg:flex) -->
+      <!-- Center: Navigation links -->
       <div class="flex items-center justify-between grow ml-6">
         <!-- Navigation links (Desktop Only - lg:flex) -->
         <nav
@@ -145,18 +147,23 @@ async function handleMobileLogout() {
             v-for="link in navLinks"
             :key="link.to"
             :to="link.to"
-            class="relative py-2 text-sm font-semibold transition-colors duration-300 group"
+            class="relative py-2 text-xs font-bold transition-all duration-300 group"
             :class="
-              route.path === link.to
-                ? 'text-black font-bold'
-                : 'text-white hover:text-black/80 hover:font-semibold'
+              route.path === link.to ||
+              (link.to.startsWith('/#') && route.hash === link.to.substring(1))
+                ? 'text-white font-black'
+                : 'text-white/80 hover:text-white'
             "
           >
             {{ link.label }}
             <span
-              class="absolute bottom-0 left-0 h-0.5 bg-black transition-all duration-300 rounded-full"
+              class="absolute bottom-0 left-0 h-0.5 bg-white transition-all duration-300 rounded-full"
               :class="
-                route.path === link.to ? 'w-full' : 'w-0 group-hover:w-full'
+                route.path === link.to ||
+                (link.to.startsWith('/#') &&
+                  route.hash === link.to.substring(1))
+                  ? 'w-full'
+                  : 'w-0 group-hover:w-full'
               "
             />
           </NuxtLink>
@@ -165,36 +172,35 @@ async function handleMobileLogout() {
 
       <!-- Right: Desktop Navigation Menu & Action Icons -->
       <div class="flex items-center justify-end grow gap-6">
-        <div class="hidden lg:flex w-full max-w-lg">
+        <div class="hidden lg:flex w-full max-w-md">
           <div class="relative w-full">
             <UInput
               v-model="searchQuery"
               icon="i-heroicons-magnifying-glass"
-              placeholder="Cari produk yang Anda butuhkan..."
-              size="md"
-              class="w-full transition-all duration-300 border border-primary-200 rounded-full"
+              placeholder="Cari produk..."
+              size="sm"
+              class="w-full"
               :ui="{
-                base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
+                base: 'rounded-full bg-white text-primary-600 border border-white focus-visible:ring-1 focus-visible:ring-white focus-visible:outline-none placeholder-primary-300',
               }"
             />
           </div>
         </div>
 
         <!-- Action Icons (Always visible on all screens) -->
-        <div class="flex items-center sm:gap-2 shrink-0">
+        <div class="flex items-center sm:gap-1.5 shrink-0">
           <NuxtLink to="/wishlist" class="relative group">
             <UButton
               icon="i-heroicons-heart"
               color="neutral"
               variant="ghost"
-              class="text-black cursor-pointer hover:text-red-500 hover:bg-red-50/60 transition-all duration-300 rounded-xl p-2.5"
+              class="!text-white hover:!bg-white/10 transition-all duration-300 rounded-xl p-2 cursor-pointer"
               aria-label="Wishlist"
             />
             <UBadge
               v-if="wishlist.count > 0"
-              color="error"
               size="sm"
-              class="absolute -top-1 -right-1 min-w-4.5 h-4.5 flex items-center justify-center px-1 rounded-full text-[10px] font-extrabold ring-2 ring-white animate-pulse"
+              class="absolute -top-1 -right-1 min-w-4.5 h-4.5 flex items-center justify-center px-1 rounded-full text-[9px] font-extrabold ring-2 ring-primary-500 bg-white text-primary-500 animate-pulse"
             >
               {{ wishlist.count }}
             </UBadge>
@@ -205,14 +211,13 @@ async function handleMobileLogout() {
               icon="i-heroicons-shopping-cart"
               color="neutral"
               variant="ghost"
-              class="text-black hover:text-primary-600 cursor-pointer hover:bg-primary-50/60 transition-all duration-300 rounded-xl p-2.5"
+              class="!text-white hover:!bg-white/10 transition-all duration-300 rounded-xl p-2 cursor-pointer"
               aria-label="Keranjang Belanja"
             />
             <UBadge
               v-if="cart.totalQty > 0"
-              color="error"
               size="sm"
-              class="absolute -top-1 -right-1 min-w-4.5 h-4.5 flex items-center justify-center px-1 rounded-full text-[10px] font-extrabold ring-2 ring-white animate-pulse"
+              class="absolute -top-1 -right-1 min-w-4.5 h-4.5 flex items-center justify-center px-1 rounded-full text-[9px] font-extrabold ring-2 ring-primary-500 bg-white text-primary-500 animate-pulse"
             >
               {{ cart.totalQty }}
             </UBadge>
@@ -230,10 +235,10 @@ async function handleMobileLogout() {
                 color="neutral"
                 variant="ghost"
                 aria-label="Menu Akun"
-                class="text-black hover:text-primary-600 hover:bg-primary-50/60 transition-all duration-300 rounded-xl p-2.5 flex items-center gap-1 cursor-pointer"
+                class="!text-white hover:!bg-white/10 transition-all duration-300 rounded-xl p-2 flex items-center gap-1 cursor-pointer"
               >
                 <span
-                  class="hidden md:inline text-xs font-semibold text-gray-700 truncate max-w-25"
+                  class="hidden md:inline text-xs font-bold text-white truncate max-w-25"
                 >
                   {{ authStore.user?.name.split(" ")[0] }}
                 </span>
@@ -241,10 +246,10 @@ async function handleMobileLogout() {
             </UDropdownMenu>
             <NuxtLink v-else to="/login">
               <UButton
-                color="primary"
+                color="neutral"
                 variant="solid"
                 icon="i-heroicons-user"
-                class="font-bold text-xs rounded-full sm:px-4 py-2 cursor-pointer shadow-md shadow-primary-600/10 hover:scale-102 transition-all duration-300"
+                class="!bg-white !text-primary-500 hover:!bg-gray-50 font-extrabold text-[11px] rounded-full px-4 py-2 cursor-pointer shadow-md shadow-black/10 hover:scale-105 transition-all duration-300"
               >
                 Masuk
               </UButton>
@@ -256,16 +261,16 @@ async function handleMobileLogout() {
 
     <!-- Mobile Search Row (Only visible on mobile - lg:hidden) -->
     <div
-      class="lg:hidden px-4 pb-3 pt-1.5 border-t border-primary-100 bg-white"
+      class="lg:hidden px-4 pb-3 pt-1.5 border-t border-primary-400/30 bg-primary-500"
     >
       <UInput
         v-model="searchQuery"
         icon="i-heroicons-magnifying-glass"
-        placeholder="Cari produk yang Anda butuhkan..."
-        size="lg"
-        class="w-full transition-all duration-300 border border-primary-200 rounded-full"
+        placeholder="Cari produk..."
+        size="md"
+        class="w-full"
         :ui="{
-          base: 'rounded-full focus-visible:ring-1 focus-visible:ring-primary-200 focus-visible:outline-none',
+          base: 'rounded-full bg-white text-primary-600 border border-white focus-visible:ring-1 focus-visible:ring-white focus-visible:outline-none placeholder-primary-300',
         }"
       />
     </div>

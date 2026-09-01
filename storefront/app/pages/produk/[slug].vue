@@ -102,6 +102,27 @@ const plainDescription = computed(() =>
   product.value ? toPlainText(product.value.description) : "",
 );
 
+const accordionItems = computed(() => {
+  return [
+    {
+      label: "Deskripsi Produk",
+      icon: "i-heroicons-document-text",
+      slot: "description",
+      defaultOpen: true,
+    },
+    {
+      label: "Jaminan & Informasi Pengiriman",
+      icon: "i-heroicons-shield-check",
+      slot: "shipping",
+    },
+    {
+      label: "Kebijakan Jastip (Ready & PO)",
+      icon: "i-heroicons-bookmark-square",
+      slot: "policies",
+    },
+  ];
+});
+
 const productUrl = computed(
   () => `${config.public.siteUrl}/produk/${route.params.slug}`,
 );
@@ -226,44 +247,25 @@ useHead(() => ({
       </div>
 
       <!-- Product Content -->
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-        <!-- Left: Product Image Carousel -->
+      <div v-else class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+        <!-- Left: Sticky Product Image Gallery -->
         <div
-          class="bg-white border border-primary-100 rounded-3xl p-4 md:p-6 shadow-sm shadow-primary-900/5 self-start"
+          class="lg:col-span-6 lg:sticky self-start flex flex-col-reverse md:flex-row gap-4"
         >
-          <UCarousel
-            ref="carouselRef"
-            v-slot="{ item }"
-            :items="gallery"
-            arrows
-            class="relative w-full"
-            :ui="{
-              viewport:
-                'rounded-2xl overflow-hidden bg-gray-50 border border-gray-100/40',
-            }"
-            @select="onSelect"
-          >
-            <img
-              :src="item"
-              :alt="product.name"
-              class="w-full aspect-square object-cover hover:scale-102 transition-transform duration-500"
-            />
-          </UCarousel>
-
-          <!-- Thumbnail Navigation Row -->
+          <!-- Thumbnail navigation (desktop vertical, mobile horizontal) -->
           <div
             v-if="gallery.length > 1"
-            class="flex flex-wrap gap-2 mt-4 justify-center"
+            class="flex md:flex-col gap-2.5 overflow-x-auto md:overflow-x-visible md:overflow-y-auto shrink-0 pb-2 md:pb-0 justify-start max-h-[450px] scrollbar-none"
           >
             <button
               v-for="(item, index) in gallery"
               :key="index"
               type="button"
-              class="w-14 h-14 rounded-xl overflow-hidden bg-gray-50 border-2 transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none shadow-sm shrink-0"
+              class="w-14 h-14 rounded-xl overflow-hidden bg-gray-50 border-2 transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none shadow-xs shrink-0"
               :class="
                 activeIndex === index
-                  ? 'border-primary-600 opacity-100 scale-102 shadow-md shadow-primary-600/10'
-                  : 'border-transparent opacity-50 hover:opacity-80'
+                  ? 'border-primary-500 opacity-100 scale-102 shadow-md shadow-primary-500/10'
+                  : 'border-transparent opacity-60 hover:opacity-90'
               "
               @click="selectImage(index)"
             >
@@ -274,211 +276,290 @@ useHead(() => ({
               />
             </button>
           </div>
+
+          <!-- Main Large Image Carousel -->
+          <div
+            class="grow bg-white border border-primary-100/50 rounded-3xl p-4 shadow-xs"
+          >
+            <UCarousel
+              ref="carouselRef"
+              v-slot="{ item }"
+              :items="gallery"
+              arrows
+              class="relative w-full"
+              :ui="{
+                viewport:
+                  'rounded-2xl overflow-hidden bg-gray-50 border border-gray-100/40',
+              }"
+              @select="onSelect"
+            >
+              <img
+                :src="item"
+                :alt="product.name"
+                class="w-full aspect-square object-cover hover:scale-102 transition-transform duration-500"
+              />
+            </UCarousel>
+          </div>
         </div>
 
-        <!-- Right: Details -->
-        <div
-          class="bg-white backdrop-blur-sm border border-primary-300/40 rounded-3xl p-6 md:p-8 shadow-sm space-y-6 relative overflow-hidden self-start"
-        >
-          <!-- Title & Rating & Wishlist -->
+        <!-- Right: Details & Checkout Actions -->
+        <div class="lg:col-span-6 space-y-6">
+          <!-- Main Purchase card -->
           <div
-            class="flex items-start justify-between gap-4 border-b border-primary-100 pb-5"
+            class="bg-white border border-primary-100/50 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6 relative overflow-hidden"
           >
-            <div>
-              <span
-                class="text-[10px] text-primary-600 uppercase font-extrabold tracking-widest"
-                >Detail Produk</span
-              >
-              <h1
-                class="text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight leading-tight mt-0.5"
-              >
-                {{ product.name }}
-              </h1>
-              <RatingStars
-                :rating="product.ratingAvg"
-                :count="product.ratingCount"
-                size="md"
-                class="mt-2"
-              />
-            </div>
-            <UButton
-              :icon="
-                wishlist.isWishlisted(product.id)
-                  ? 'i-heroicons-heart-solid'
-                  : 'i-heroicons-heart'
-              "
-              :color="wishlist.isWishlisted(product.id) ? 'error' : 'neutral'"
-              variant="subtle"
-              class="rounded-2xl shadow-sm p-3 group transition-transform duration-300 hover:scale-105 active:scale-95 shrink-0"
-              :aria-label="
-                wishlist.isWishlisted(product.id)
-                  ? 'Hapus dari wishlist'
-                  : 'Tambah ke wishlist'
-              "
-              :aria-pressed="wishlist.isWishlisted(product.id)"
-              @click="wishlist.toggle(product.id)"
-            />
-          </div>
-
-          <!-- Price Display & Fulfillment Info -->
-          <div
-            class="bg-primary-50/40 border border-primary-100/50 rounded-2xl p-4 flex flex-col gap-2.5 justify-center"
-          >
-            <div class="flex items-center justify-between gap-4">
+            <!-- Title & Rating & Wishlist -->
+            <div
+              class="flex items-start justify-between gap-4 border-b border-primary-50 pb-5"
+            >
               <div>
                 <span
-                  class="text-[10px] text-primary-700 font-extrabold uppercase tracking-wider"
-                  >Harga Varian</span
+                  class="text-[10px] text-primary-600 uppercase font-extrabold tracking-widest"
                 >
-                <p
-                  class="text-2xl md:text-3xl font-black text-primary-700 tracking-tight mt-0.5"
-                >
-                  {{ selectedVariant ? format(selectedVariant.price) : "-" }}
-                </p>
-              </div>
-              <div v-if="selectedVariant" class="text-right">
-                <span
-                  v-if="selectedVariant.fulfillmentType === 'pre_order'"
-                  class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-orange-100 text-orange-700 border border-orange-200"
-                >
-                  <UIcon name="i-heroicons-clock-solid" class="w-3.5 h-3.5" />
-                  PO {{ selectedVariant.poDays }} Hari
+                  Detail Produk
                 </span>
-                <span
-                  v-else
-                  class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-700 border border-emerald-200"
+                <h1
+                  class="text-xl md:text-2xl font-black text-gray-900 tracking-tight leading-tight mt-0.5"
                 >
-                  <UIcon
-                    name="i-heroicons-check-circle-solid"
-                    class="w-3.5 h-3.5"
-                  />
-                  Ready Stock
+                  {{ product.name }}
+                </h1>
+                <RatingStars
+                  :rating="product.ratingAvg"
+                  :count="product.ratingCount"
+                  size="md"
+                  class="mt-2"
+                />
+              </div>
+              <UButton
+                :icon="
+                  wishlist.isWishlisted(product.id)
+                    ? 'i-heroicons-heart-solid'
+                    : 'i-heroicons-heart'
+                "
+                :color="wishlist.isWishlisted(product.id) ? 'error' : 'neutral'"
+                variant="subtle"
+                class="rounded-2xl shadow-xs p-3 group transition-transform duration-300 hover:scale-105 active:scale-95 shrink-0 cursor-pointer"
+                :aria-label="
+                  wishlist.isWishlisted(product.id)
+                    ? 'Hapus dari wishlist'
+                    : 'Tambah ke wishlist'
+                "
+                :aria-pressed="wishlist.isWishlisted(product.id)"
+                @click="wishlist.toggle(product.id)"
+              />
+            </div>
+
+            <!-- Price Display & Fulfillment Info -->
+            <div
+              class="bg-primary-50/20 border border-primary-100/40 rounded-2xl p-4 flex flex-col gap-2.5 justify-center"
+            >
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <span
+                    class="text-[10px] text-primary-700 font-extrabold uppercase tracking-wider"
+                  >
+                    Harga Varian
+                  </span>
+                  <p
+                    class="text-2xl md:text-3xl font-black text-primary-600 tracking-tight mt-0.5"
+                  >
+                    {{ selectedVariant ? format(selectedVariant.price) : "-" }}
+                  </p>
+                </div>
+                <div v-if="selectedVariant" class="text-right">
+                  <span
+                    v-if="selectedVariant.fulfillmentType === 'pre_order'"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black bg-orange-50 text-orange-600 border border-orange-100"
+                  >
+                    <UIcon name="i-heroicons-clock-solid" class="w-3.5 h-3.5" />
+                    PO {{ selectedVariant.poDays }} Hari
+                  </span>
+                  <span
+                    v-else
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black bg-emerald-50 text-emerald-600 border border-emerald-100"
+                  >
+                    <UIcon
+                      name="i-heroicons-check-circle-solid"
+                      class="w-3.5 h-3.5"
+                    />
+                    Ready Stock
+                  </span>
+                </div>
+              </div>
+
+              <!-- DP Info for PO -->
+              <div
+                v-if="
+                  selectedVariant &&
+                  selectedVariant.fulfillmentType === 'pre_order'
+                "
+                class="border-t border-primary-100/40 pt-2.5 flex items-center justify-between text-xs font-extrabold text-primary-800"
+              >
+                <span>Uang Muka (DP):</span>
+                <span class="text-sm font-black text-primary-600">
+                  {{ format(selectedVariant.dpAmount) }}
                 </span>
               </div>
             </div>
 
-            <!-- DP Info for PO -->
-            <div
-              v-if="
-                selectedVariant &&
-                selectedVariant.fulfillmentType === 'pre_order'
-              "
-              class="border-t border-primary-100/60 pt-2 flex items-center justify-between text-xs font-extrabold text-primary-850"
-            >
-              <span>Uang Muka (DP):</span>
-              <span class="text-sm font-black text-primary-700">{{
-                format(selectedVariant.dpAmount)
-              }}</span>
-            </div>
-          </div>
-
-          <!-- Description -->
-          <div class="space-y-2">
-            <h3
-              class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-l-2 border-primary-500 pl-2"
-            >
-              Deskripsi
-            </h3>
-            <p
-              class="text-xs md:text-sm text-gray-600 leading-relaxed font-medium"
-              v-html="product.description"
-            ></p>
-          </div>
-
-          <!-- Variant Selector -->
-          <div class="space-y-3">
-            <h3
-              class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-l-2 border-primary-500 pl-2"
-            >
-              Pilih Varian
-            </h3>
-            <VariantSelector
-              v-model="selectedVariantId"
-              :variants="product.variants"
-            />
-          </div>
-
-          <!-- Quantity Stepper -->
-          <div
-            v-if="!outOfStock"
-            class="flex items-center gap-4 bg-gray-50/50 border border-gray-100 rounded-2xl p-3 w-fit"
-          >
-            <span class="text-xs font-bold text-gray-500 pl-1">Jumlah:</span>
-            <QtyStepper v-model="qty" :max="selectedVariant?.stock ?? 1" />
-            <span
-              class="text-xs font-semibold text-gray-400 border-l border-gray-200 pl-3"
-              >Stok:
-              <strong class="text-gray-700">{{
-                selectedVariant?.stock
-              }}</strong></span
-            >
-          </div>
-
-          <!-- Buy Button & Shopee Link Button -->
-          <div class="pt-2 space-y-3">
-            <UButton
-              block
-              color="primary"
-              size="lg"
-              icon="i-heroicons-shopping-cart"
-              :disabled="outOfStock"
-              class="font-semibold py-3.5 rounded-full cursor-pointer shadow-lg shadow-primary-600/20 hover:shadow-primary-600/30 transform hover:scale-[1.01] transition-all duration-300"
-              @click="addToCart"
-            >
-              {{ outOfStock ? "Stok Habis" : "Tambah ke Keranjang" }}
-            </UButton>
-
-            <a
-              v-if="product.shopeeUrl"
-              :href="product.shopeeUrl"
-              target="_blank"
-              rel="noopener"
-              class="flex items-center justify-center gap-2 w-full py-3.5 bg-orange-600 text-white font-bold rounded-full shadow-lg shadow-orange-600/20 hover:bg-orange-500 hover:shadow-orange-600/30 transform hover:scale-[1.01] transition-all duration-300 text-sm"
-            >
-              <UIcon name="i-simple-icons-shopee" class="w-5 h-5" />
-              Beli di Shopee
-            </a>
-          </div>
-
-          <!-- Trust Badges -->
-          <div
-            class="grid grid-cols-3 gap-2.5 pt-4 border-t border-primary-100 text-center"
-          >
-            <div
-              class="flex flex-col items-center p-2 rounded-xl bg-gray-50/30 hover:bg-primary-50/30 transition-colors duration-200"
-            >
-              <UIcon
-                name="i-heroicons-shield-check"
-                class="w-5 h-5 text-primary-600 mb-1"
-              />
-              <span class="text-[9px] font-extrabold text-gray-800"
-                >100% Asli</span
+            <!-- Variant Selector -->
+            <div class="space-y-3">
+              <h3
+                class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-l-2 border-primary-500 pl-2"
               >
-            </div>
-            <div
-              class="flex flex-col items-center p-2 rounded-xl bg-gray-50/30 hover:bg-primary-50/30 transition-colors duration-200"
-            >
-              <UIcon
-                name="i-heroicons-truck"
-                class="w-5 h-5 text-primary-600 mb-1"
+                Pilih Varian
+              </h3>
+              <VariantSelector
+                v-slot:default="_"
+                v-model="selectedVariantId"
+                :variants="product.variants"
               />
-              <span class="text-[9px] font-extrabold text-gray-800"
-                >Kirim Cepat</span
-              >
             </div>
+
+            <!-- Quantity Stepper -->
             <div
-              class="flex flex-col items-center p-2 rounded-xl bg-gray-50/30 hover:bg-primary-50/30 transition-colors duration-200"
+              v-if="!outOfStock"
+              class="flex items-center gap-4 bg-gray-50/50 border border-gray-100/50 rounded-2xl p-3 w-fit"
             >
-              <UIcon
-                name="i-heroicons-chat-bubble-left-right"
-                class="w-5 h-5 text-primary-600 mb-1"
-              />
-              <span class="text-[9px] font-extrabold text-gray-800"
-                >Konsultasi</span
+              <span class="text-xs font-bold text-gray-500 pl-1">Jumlah:</span>
+              <QtyStepper v-model="qty" :max="selectedVariant?.stock ?? 1" />
+              <span
+                class="text-xs font-semibold text-gray-400 border-l border-gray-200 pl-3"
               >
+                Stok:
+                <strong class="text-gray-700">{{
+                  selectedVariant?.stock
+                }}</strong>
+              </span>
+            </div>
+
+            <!-- Buy Button & Shopee Link Button -->
+            <div class="pt-2 space-y-3">
+              <UButton
+                block
+                color="primary"
+                size="lg"
+                icon="i-heroicons-shopping-cart"
+                :disabled="outOfStock"
+                class="font-extrabold py-3.5 rounded-full cursor-pointer shadow-lg shadow-primary-600/20 hover:shadow-primary-600/30 transform hover:scale-[1.01] transition-all duration-300"
+                @click="addToCart"
+              >
+                {{ outOfStock ? "Stok Habis" : "Tambah ke Keranjang" }}
+              </UButton>
+
+              <a
+                v-if="product.shopeeUrl"
+                :href="product.shopeeUrl"
+                target="_blank"
+                rel="noopener"
+                class="flex items-center justify-center gap-2 w-full py-3.5 bg-orange-600 text-white font-bold rounded-full shadow-lg shadow-orange-600/20 hover:bg-orange-500 hover:shadow-orange-600/30 transform hover:scale-[1.01] transition-all duration-300 text-sm"
+              >
+                <UIcon name="i-simple-icons-shopee" class="w-5 h-5" />
+                Beli di Shopee
+              </a>
             </div>
           </div>
         </div>
+
+        <!-- Product Details Accordion (Description, Shipping Info, Jastip Policies) -->
+        <div
+          class="lg:col-span-12 bg-white border border-primary-100/40 rounded-3xl p-5 shadow-xs mt-2 lg:mt-6"
+        >
+            <UAccordion
+              :items="accordionItems"
+              :ui="{
+                root: 'w-full space-y-2',
+                item: 'border border-primary-50 rounded-2xl overflow-hidden shadow-xs bg-primary-50/5',
+                trigger:
+                  'py-3.5 px-5 text-left text-xs font-bold text-gray-800 hover:text-primary-500 focus-visible:outline-none flex justify-between items-center transition-colors',
+                content:
+                  'px-5 text-xs text-gray-655 leading-relaxed font-medium bg-white border-t border-primary-50/30 py-0',
+              }"
+            >
+              <template #description>
+                <div class="py-4 space-y-2" v-html="product.description"></div>
+              </template>
+              <template #shipping>
+                <div class="py-4">
+                  <ul class="space-y-2.5">
+                    <li class="flex items-start gap-2">
+                      <UIcon
+                        name="i-heroicons-shield-check"
+                        class="w-4 h-4 text-primary-500 shrink-0 mt-0.5"
+                      />
+                      <span
+                        ><strong>100% Produk Resmi &amp; Asli</strong>: Kami jamin
+                        semua barang diimpor langsung dari official store resmi
+                        asal negara masing-masing.</span
+                      >
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <UIcon
+                        name="i-heroicons-gift"
+                        class="w-4 h-4 text-primary-500 shrink-0 mt-0.5"
+                      />
+                      <span
+                        ><strong>Free Safety Packing</strong>: Proteksi tebal
+                        menggunakan bubble wrap berkualitas dan kardus ekstra kuat
+                        secara gratis.</span
+                      >
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <UIcon
+                        name="i-heroicons-truck"
+                        class="w-4 h-4 text-primary-500 shrink-0 mt-0.5"
+                      />
+                      <span
+                        ><strong>Pengiriman Aman</strong>: Pengiriman diproses
+                        sesegera mungkin dengan nomor resi pelacakan yang
+                        valid.</span
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </template>
+              <template #policies>
+                <div class="py-4">
+                  <ul class="space-y-2.5">
+                    <li class="flex items-start gap-2">
+                      <UIcon
+                        name="i-heroicons-check-circle"
+                        class="w-4 h-4 text-primary-500 shrink-0 mt-0.5"
+                      />
+                      <span
+                        ><strong>Ready Stock</strong>: Barang langsung dikirim
+                        dari gudang kami di hari yang sama untuk transaksi sebelum
+                        jam operasional berakhir.</span
+                      >
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <UIcon
+                        name="i-heroicons-clock"
+                        class="w-4 h-4 text-primary-500 shrink-0 mt-0.5"
+                      />
+                      <span
+                        ><strong>Pre Order (PO)</strong>: Barang akan dipesan
+                        terlebih dahulu dengan estimasi waktu pengiriman berkisar
+                        antara jumlah hari yang tertera.</span
+                      >
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <UIcon
+                        name="i-heroicons-banknotes"
+                        class="w-4 h-4 text-primary-500 shrink-0 mt-0.5"
+                      />
+                      <span
+                        ><strong>Sistem Uang Muka (DP)</strong>: Pembayaran awal
+                        sesuai nominal DP. Setelah barang tiba di gudang
+                        Indonesia, Anda dapat melunasinya untuk pengiriman
+                        lokal.</span
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </template>
+            </UAccordion>
+          </div>
       </div>
     </div>
   </div>

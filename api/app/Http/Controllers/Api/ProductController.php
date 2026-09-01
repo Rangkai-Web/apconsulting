@@ -25,8 +25,16 @@ class ProductController extends Controller
         }
 
         if ($request->filled('category')) {
-            $categoryId = Category::query()->where('slug', $request->string('category'))->value('id');
-            $query->where('category_id', $categoryId ?? 0);
+            $category = Category::query()->where('slug', $request->string('category'))->first();
+            if ($category) {
+                $categoryIds = Category::query()
+                    ->where('parent_id', $category->id)
+                    ->pluck('id')
+                    ->push($category->id);
+                $query->whereIn('category_id', $categoryIds);
+            } else {
+                $query->where('category_id', 0);
+            }
         }
 
         if ($request->filled('search')) {
@@ -44,7 +52,7 @@ class ProductController extends Controller
         match ($request->string('sort')->toString()) {
             'price_asc' => $query->orderBy('variants_min_price', 'asc'),
             'price_desc' => $query->orderBy('variants_min_price', 'desc'),
-            'rating' => $query->orderBy('rating_avg', 'desc'),
+            'rating' => $query->orderBy('rating_avg', 'desc')->orderBy('created_at', 'desc'),
             default => $query->orderBy('created_at', 'desc'),
         };
 

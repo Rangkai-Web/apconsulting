@@ -1,7 +1,13 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+html {
+  scroll-behavior: smooth;
+}
+
 @theme static {
+  --font-sans: "Outfit", sans-serif;
+
   --color-primary-50: #fff1f0;
   --color-primary-100: #ffe1df;
   --color-primary-200: #ffc7c3;

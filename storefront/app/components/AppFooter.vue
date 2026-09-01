@@ -5,8 +5,9 @@ const api = useApi();
 const { data: settingsResponse } = useAsyncData("store-settings", () =>
   api.getSettings(),
 );
-const { data: paymentMethodsResponse } = useAsyncData("footer-payment-methods", () =>
-  api.getPaymentMethods(),
+const { data: paymentMethodsResponse } = useAsyncData(
+  "footer-payment-methods",
+  () => api.getPaymentMethods(),
 );
 
 const settings = computed(() => {
@@ -41,11 +42,12 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
 
 <template>
   <footer
-    class="bg-primary-500 relative overflow-hidden mt-20 border-t border-primary-200"
+    id="hubungi-kami"
+    class="bg-primary-500 relative overflow-hidden mt-20 border-t border-primary-400"
   >
     <!-- Glowing Top Border Indicator -->
     <div
-      class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-px bg-linear-to-r from-transparent via-primary-500/30 to-transparent"
+      class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-px bg-linear-to-r from-transparent via-primary-400/40 to-transparent"
     ></div>
 
     <div
@@ -66,7 +68,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
             />
           </div>
         </NuxtLink>
-        <p class="text-xs text-black leading-relaxed max-w-sm">
+        <p class="text-xs text-white/90 font-semibold leading-relaxed max-w-sm">
           {{ settings.store_name }} - jasa pembelian barang dari Indonesia,
           Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock &amp;
           Pre Order.
@@ -79,10 +81,13 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
               :href="social.url"
               target="_blank"
               rel="noopener"
-              class="w-8.5 h-8.5 rounded-full bg-primary-700/60 border border-primary-600/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 capitalize"
+              class="w-8.5 h-8.5 rounded-full bg-white/10 border border-white/20 hover:bg-white/25 hover:border-white/40 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 shadow-sm capitalize"
               :aria-label="social.platform"
             >
-              <UIcon :name="getSocialIcon(social.platform)" class="w-4.5 h-4.5" />
+              <UIcon
+                :name="getSocialIcon(social.platform)"
+                class="w-4.5 h-4.5"
+              />
             </a>
           </template>
           <template v-else>
@@ -95,7 +100,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
               "
               target="_blank"
               rel="noopener"
-              class="w-8.5 h-8.5 rounded-full bg-primary-700/60 border border-primary-600/80 hover:bg-primary-600 hover:border-primary-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+              class="w-8.5 h-8.5 rounded-full bg-white/10 border border-white/20 hover:bg-white/25 hover:border-white/40 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 shadow-sm"
               aria-label="WhatsApp"
             >
               <UIcon name="i-simple-icons-whatsapp" class="w-4.5 h-4.5" />
@@ -107,7 +112,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
       <!-- Quick Links (2 cols) -->
       <div class="md:col-span-2 space-y-4">
         <h4
-          class="text-xs font-bold tracking-widest uppercase text-white border-l-2 border-white pl-2.5"
+          class="text-xs font-extrabold tracking-widest uppercase text-white border-l-2 border-white/80 pl-2.5"
         >
           Tautan
         </h4>
@@ -120,7 +125,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
             ]"
             :key="link.to"
             :to="link.to"
-            class="text-xs text-black hover:text-white flex items-center gap-1 group transition-all duration-200 hover:translate-x-1"
+            class="text-xs text-white/90 hover:text-white flex items-center gap-1 group transition-all duration-200 hover:translate-x-1 font-semibold"
           >
             <UIcon
               name="i-heroicons-chevron-right"
@@ -134,11 +139,11 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
       <!-- Contacts (4 cols) -->
       <div class="md:col-span-4 space-y-4">
         <h4
-          class="text-xs font-bold tracking-widest uppercase text-white border-l-2 border-white pl-2.5"
+          class="text-xs font-extrabold tracking-widest uppercase text-white border-l-2 border-white/80 pl-2.5"
         >
           Hubungi Kami
         </h4>
-        <ul class="flex flex-col gap-3 text-xs text-black">
+        <ul class="flex flex-col gap-3 text-xs text-white/90 font-semibold">
           <li
             v-if="settings.address"
             class="flex items-start gap-2.5 leading-relaxed"
@@ -155,7 +160,13 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
               class="w-4.5 h-4.5 text-white shrink-0"
             />
             <a
-              :href="'tel:' + settings.phone"
+              target="_blank"
+              rel="noopener"
+              :href="
+                'https://wa.me/' +
+                settings.whatsapp_number +
+                '?text=Halo Kak, Saya ingin bertanya tentang produk...'
+              "
               class="hover:text-white transition-colors"
               >{{ settings.phone }}</a
             >
@@ -176,7 +187,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
       <div class="md:col-span-2 space-y-5">
         <div class="space-y-3">
           <h4
-            class="text-xs font-bold tracking-widest uppercase text-white border-l-2 border-white pl-2.5"
+            class="text-xs font-extrabold tracking-widest uppercase text-white border-l-2 border-white/80 pl-2.5"
           >
             Metode Pembayaran
           </h4>
@@ -184,7 +195,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
             <div
               v-for="method in paymentMethods"
               :key="method.id"
-              class="flex items-center gap-2 px-2 py-1 bg-gray-100 border border-gray-300/60 rounded-lg hover:border-primary-600/60 transition-colors duration-200"
+              class="flex items-center gap-2 px-2 py-1 bg-white/60 border border-white/20 rounded-lg hover:border-white/30 transition-colors duration-200 shadow-xs"
             >
               <img
                 v-if="method.qr_image"
@@ -192,11 +203,6 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
                 :alt="method.label"
                 class="w-12 h-12 object-contain rounded"
               />
-              <!-- <span
-                class="text-xs text-gray-700 font-semibold transition-colors duration-200"
-              >
-                {{ method.label }}
-              </span> -->
             </div>
           </div>
         </div>
@@ -205,10 +211,10 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
 
     <!-- Copyright -->
     <div
-      class="border-t border-primary-600 bg-primary-800/20 py-6 text-xs text-white backdrop-blur-sm"
+      class="border-t border-white/10 bg-black/10 py-6 text-xs text-white/80 backdrop-blur-sm"
     >
       <div
-        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-3 text-center sm:text-left"
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-3 text-center sm:text-left font-semibold"
       >
         <span
           >&copy; {{ new Date().getFullYear() }} {{ settings.store_name }}. Hak
