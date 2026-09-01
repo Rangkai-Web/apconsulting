@@ -58,15 +58,14 @@ const faqs = [
     categoryLabel: "Cara Order & Layanan",
     question: "Bagaimana cara melakukan pemesanan di BbystarGO?",
     answer:
-      "Cukup telusuri produk yang Anda inginkan di menu Katalog, pilih variasi yang tersedia (warna/member/ukuran), lalu klik 'Tambah ke Keranjang'. Setelah selesai memilih, buka Keranjang dan lanjutkan ke halaman Checkout untuk mengisi alamat lengkap serta menyelesaikan pembayaran sesuai metode pilihan Anda.",
-    badge: "Paling Populer",
+      "Cukup telusuri produk yang Anda inginkan di menu Katalog, pilih variasi yang tersedia, lalu klik 'Tambah ke Keranjang'. Setelah selesai memilih, buka Keranjang dan lanjutkan ke halaman Checkout untuk mengisi alamat lengkap serta menyelesaikan pembayaran sesuai metode pilihan Anda.",
+    // badge: "Paling Populer",
   },
   {
     id: 2,
     category: "order",
     categoryLabel: "Cara Order & Layanan",
-    question:
-      "Bisakah saya melakukan request produk di luar katalog?",
+    question: "Bisakah saya melakukan request produk di luar katalog?",
     answer:
       "Tentu saja bisa! Kami dengan senang hati melayani pembelian untuk berbagai produk dari Korea, China, Jepang, maupun merchant lainnya. Cukup hubungi kami via WhatsApp dengan menyertakan foto atau tautan produk yang Anda cari. Kami akan segera mengecek ketersediaan dan memberikan rincian estimasi harganya.",
   },
@@ -85,7 +84,7 @@ const faqs = [
     question: "Apa perbedaan antara produk Ready Stock dan Pre Order (PO)?",
     answer:
       "Produk Ready Stock adalah barang yang sudah berada di gudang kami di Indonesia dan siap dikirim dalam 1-2 hari kerja setelah pembayaran. Sedangkan produk Pre Order (PO) adalah barang yang baru dibelikan langsung dari official store luar negeri mengikuti periode rilis serta membutuhkan waktu pengiriman internasional ke Indonesia.",
-    badge: "Penting",
+    // badge: "Penting",
   },
   {
     id: 5,
@@ -109,8 +108,8 @@ const faqs = [
     categoryLabel: "Pembayaran & DP",
     question: "Metode pembayaran apa saja yang didukung?",
     answer:
-      "Kami mendukung pembayaran cepat dan terverifikasi otomatis via QRIS (dapat dipindai melalui BCA, Mandiri, BRI, BNI, GoPay, OVO, DANA, ShopeePay, dan aplikasi perbankan lainnya) serta transfer bank langsung.",
-    badge: "Instan & Aman",
+      "Kami hanya menyediakan 4 metode pembayaran resmi: BCA, ShopeePay, SeaBank, dan QRIS. Tidak ada metode pembayaran lain selain keempat metode ini. Semua transaksi diproses secara aman dan diverifikasi langsung.",
+    // badge: "Hanya 4 Metode Resmi",
   },
   {
     id: 8,
@@ -118,7 +117,7 @@ const faqs = [
     categoryLabel: "Pembayaran & DP",
     question: "Apakah tersedia opsi pembayaran Down Payment (DP)?",
     answer:
-      "Ya, untuk rilisan Pre Order tertentu dengan nominal yang lebih tinggi, kami menyediakan opsi Down Payment (DP). Anda cukup membayar uang muka terlebih dahulu saat checkout, kemudian melunasi sisanya ketika barang telah mendarat di gudang kami di Indonesia sebelum pengiriman lokal.",
+      "Ya, untuk rilisan Pre Order tertentu kami menyediakan opsi Down Payment (DP). Anda dapat membayar uang muka terlebih dahulu melalui 4 metode pembayaran kami (BCA, ShopeePay, SeaBank, atau QRIS), kemudian melunasi sisanya ketika barang telah mendarat di gudang kami di Indonesia sebelum pengiriman lokal.",
   },
   {
     id: 9,
@@ -142,8 +141,8 @@ const faqs = [
     categoryLabel: "Pengiriman & Packing",
     question: "Bagaimana standar packing barang dari BbystarGO?",
     answer:
-      "Kami sangat mengutamakan keamanan barang koleksi Anda. Setiap paket akan dikemas dengan bubble wrap tebal berlapis serta kardus karton kuat secara gratis tanpa pungutan biaya proteksi ekstra.",
-    badge: "Free Box & Bubble Wrap",
+      "Kami sangat mengutamakan keamanan barang pesanan Anda. Setiap paket dikemas secara rapi dan aman sesuai standar pengiriman untuk memastikan barang sampai dalam kondisi baik.",
+    // badge: "Free Box & Bubble Wrap",
   },
   {
     id: 12,
@@ -152,7 +151,7 @@ const faqs = [
     question: "Apakah semua produk dijamin 100% original?",
     answer:
       "100% Dijamin Asli (Authentic Guaranteed). Kami hanya membeli produk langsung dari official store, Weverse Shop, pop-up store resmi, Sanrio, Line Friends, dan authorized retailer terpercaya di negara asalnya. Kami tidak pernah menjual barang tiruan/KW.",
-    badge: "100% Original",
+    // badge: "100% Original",
   },
   {
     id: 13,
@@ -248,7 +247,7 @@ function resetFilters() {
             <UInput
               v-model="searchQuery"
               icon="i-heroicons-magnifying-glass"
-              placeholder="Cari pertanyaan... (contoh: PO, estimasi, ongkir, QRIS)"
+              placeholder="Cari pertanyaan... (contoh: PO, estimasi, ongkir, QRIS, BCA)"
               size="lg"
               class="w-full shadow-md shadow-primary-500/5 transition-all duration-300"
               :ui="{
@@ -267,69 +266,6 @@ function resetFilters() {
                 </button>
               </template>
             </UInput>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Top Key Advantages Cards -->
-    <section class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <!-- Advantage 1 -->
-        <div
-          class="bg-white/80 backdrop-blur-sm border border-primary-100/60 rounded-2xl p-5 shadow-xs hover:shadow-md transition-all duration-300 flex items-start gap-3.5 group hover:border-primary-200"
-        >
-          <div
-            class="w-10 h-10 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300"
-          >
-            <UIcon name="i-heroicons-shield-check" class="w-5 h-5" />
-          </div>
-          <div class="space-y-1">
-            <h3 class="text-xs font-black text-gray-900 tracking-tight">
-              100% Produk Original
-            </h3>
-            <p class="text-[11px] text-gray-500 font-semibold leading-normal">
-              Semua produk dibeli langsung dari official store resmi luar
-              negeri.
-            </p>
-          </div>
-        </div>
-
-        <!-- Advantage 2 -->
-        <div
-          class="bg-white/80 backdrop-blur-sm border border-primary-100/60 rounded-2xl p-5 shadow-xs hover:shadow-md transition-all duration-300 flex items-start gap-3.5 group hover:border-primary-200"
-        >
-          <div
-            class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300"
-          >
-            <UIcon name="i-heroicons-gift" class="w-5 h-5" />
-          </div>
-          <div class="space-y-1">
-            <h3 class="text-xs font-black text-gray-900 tracking-tight">
-              Packing Aman & Gratis Box
-            </h3>
-            <p class="text-[11px] text-gray-500 font-semibold leading-normal">
-              Bubble wrap tebal berlapis dan dus kokoh melindungi paket Anda.
-            </p>
-          </div>
-        </div>
-
-        <!-- Advantage 3 -->
-        <div
-          class="bg-white/80 backdrop-blur-sm border border-primary-100/60 rounded-2xl p-5 shadow-xs hover:shadow-md transition-all duration-300 flex items-start gap-3.5 group hover:border-primary-200"
-        >
-          <div
-            class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-500 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300"
-          >
-            <UIcon name="i-heroicons-arrow-path" class="w-5 h-5" />
-          </div>
-          <div class="space-y-1">
-            <h3 class="text-xs font-black text-gray-900 tracking-tight">
-              Update Status Berkala
-            </h3>
-            <p class="text-[11px] text-gray-500 font-semibold leading-normal">
-              Informasi pelacakan batch kedatangan barang jelas & transparan.
-            </p>
           </div>
         </div>
       </div>
@@ -483,12 +419,12 @@ function resetFilters() {
                     >
                       {{ item.categoryLabel }}
                     </span>
-                    <span
-                      v-if="item.badge"
+                    <!-- <span
+                      v-if="item?.badge"
                       class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-primary-100 text-primary-700"
                     >
-                      {{ item.badge }}
-                    </span>
+                      {{ item?.badge }}
+                    </span> -->
                   </div>
 
                   <!-- Question Text -->

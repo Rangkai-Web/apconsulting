@@ -42,5 +42,10 @@ export const useWishlistStore = defineStore("wishlist", {
         : [...this.productIds, productId];
       this.persist();
     },
+
+    clear() {
+      this.productIds = [];
+      this.persist();
+    },
   },
 });

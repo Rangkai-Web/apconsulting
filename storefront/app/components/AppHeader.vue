@@ -31,8 +31,7 @@ const navLinks = [
   { label: "Home", to: "/" },
   { label: "Katalog", to: "/katalog" },
   { label: "Tentang Kami", to: "/tentang-kami" },
-  { label: "Pertanyaan Populer", to: "/faq" },
-  // { label: "Hubungi Kami", to: "/#hubungi-kami" },
+  { label: "FAQ", to: "/faq" },
 ];
 
 const userDropdownItems = computed(() => [
@@ -131,32 +130,22 @@ async function handleMobileLogout() {
 
       <!-- Center: Navigation links (Desktop Only - lg:flex) -->
       <nav
-        class="hidden lg:flex items-center gap-7"
+        class="hidden lg:flex items-center gap-1.5"
         aria-label="Navigasi Utama"
       >
         <NuxtLink
           v-for="link in navLinks"
           :key="link.to"
           :to="link.to"
-          class="relative py-2 text-xs font-bold transition-all duration-300 group"
+          class="px-3.5 py-1.5 rounded-full text-xs transition-all duration-200"
           :class="
             route.path === link.to ||
             (link.to.startsWith('/#') && route.hash === link.to.substring(1))
-              ? 'text-white font-black'
-              : 'text-white/80 hover:text-white'
+              ? 'bg-white text-primary-600 font-black shadow-xs'
+              : 'text-white/90 hover:text-white hover:bg-white/15 font-bold'
           "
         >
           {{ link.label }}
-          <span
-            class="absolute bottom-0 left-0 h-0.5 bg-white transition-all duration-300 rounded-full"
-            :class="
-              route.path === link.to ||
-              (link.to.startsWith('/#') &&
-                route.hash === link.to.substring(1))
-                ? 'w-full'
-                : 'w-0 group-hover:w-full'
-            "
-          />
         </NuxtLink>
       </nav>
 

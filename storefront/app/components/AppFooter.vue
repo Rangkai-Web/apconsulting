@@ -121,7 +121,7 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
             v-for="link in [
               { label: 'Katalog Produk', to: '/katalog' },
               { label: 'Tentang Kami', to: '/tentang-kami' },
-              { label: 'Pertanyaan Populer (FAQ)', to: '/faq' },
+              { label: 'FAQ', to: '/faq' },
               { label: 'Wishlist Saya', to: '/wishlist' },
               { label: 'Keranjang', to: '/cart' },
             ]"

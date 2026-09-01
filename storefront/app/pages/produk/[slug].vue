@@ -495,13 +495,13 @@ useHead(() => ({
                     </li>
                     <li class="flex items-start gap-2">
                       <UIcon
-                        name="i-heroicons-gift"
+                        name="i-heroicons-shield-check"
                         class="w-4 h-4 text-primary-500 shrink-0 mt-0.5"
                       />
                       <span
-                        ><strong>Free Safety Packing</strong>: Proteksi tebal
-                        menggunakan bubble wrap berkualitas dan kardus ekstra kuat
-                        secara gratis.</span
+                        ><strong>Pengemasan Aman</strong>: Setiap paket dikemas
+                        dengan rapi dan aman untuk melindungi barang pesanan
+                        Anda selama proses pengiriman.</span
                       >
                     </li>
                     <li class="flex items-start gap-2">

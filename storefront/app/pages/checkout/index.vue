@@ -77,18 +77,21 @@ const guestFieldErrors = reactive({
 watch(
   guestForm,
   () => {
-    for (const key of Object.keys(guestFieldErrors) as (keyof typeof guestFieldErrors)[]) {
+    for (const key of Object.keys(
+      guestFieldErrors,
+    ) as (keyof typeof guestFieldErrors)[]) {
       if (guestForm[key]) guestFieldErrors[key] = "";
     }
   },
   { deep: true },
 );
 
-// Validate every guest field so the user sees exactly which one is wrong,
-// instead of just a disabled submit button with no explanation.
+// Validate every guest field so the user sees exactly which one is wrong
 function validateGuestForm(): boolean {
   (Object.keys(guestFieldErrors) as (keyof typeof guestFieldErrors)[]).forEach(
-    (key) => { guestFieldErrors[key] = ""; },
+    (key) => {
+      guestFieldErrors[key] = "";
+    },
   );
 
   if (!guestForm.name) guestFieldErrors.name = "Nama wajib diisi.";
@@ -115,8 +118,8 @@ function validateGuestForm(): boolean {
 
 // Shipping courier options
 const couriersList = [
-  { code: "jne", name: "JNE" },
-  { code: "jnt", name: "J&T" },
+  { code: "jne", name: "JNE Express" },
+  { code: "jnt", name: "J&T Express" },
   { code: "sicepat", name: "SiCepat" },
   { code: "pos", name: "POS Indonesia" },
 ];
@@ -143,9 +146,6 @@ const isSubmitDisabled = computed(() => {
   if (isLoggedIn.value) {
     if (!selectedAddressId.value) return true;
   }
-  // Guest field completeness is validated on submit (validateGuestForm),
-  // with per-field error messages — a disabled button gave no feedback on
-  // which field was missing.
 
   if (!selectedCourier.value || !selectedService.value) return true;
 
@@ -305,7 +305,6 @@ async function loadAddresses() {
   const def = addresses.value.find((a) => a.isDefault);
   if (def) {
     selectedAddressId.value = def.id;
-    // Auto load shipping costs if default address exists
     if (selectedCourier.value) fetchShippingCost();
   } else if (addresses.value.length > 0) {
     selectedAddressId.value = addresses.value[0]?.id || null;
@@ -446,7 +445,10 @@ async function saveAddress() {
 }
 
 // Build order detail URL with guest email if not logged in
-function orderUrl(orderNumber: string, extra: Record<string, string> = {}): string {
+function orderUrl(
+  orderNumber: string,
+  extra: Record<string, string> = {},
+): string {
   const params = new URLSearchParams(extra);
   if (!isLoggedIn.value && guestForm.email) {
     params.set("email", guestForm.email);
@@ -514,114 +516,187 @@ async function handleCheckout() {
     loading.value = false;
   }
 }
+
+function openAddressSlideover() {
+  addressSlideoverOpen.value = true;
+}
+
+function closeAddressSlideover() {
+  addressSlideoverOpen.value = false;
+}
 </script>
 
 <template>
   <div
-    class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-10"
+    class="relative overflow-hidden bg-linear-to-b from-primary-50/40 via-white to-gray-50/50 min-h-screen py-8 md:py-12"
   >
-    <!-- Background cute decor spanning whole page -->
-    <AppCuteDecor />
-
-    <!-- Ambient Background Glows -->
+    <!-- Background Decor Elements -->
     <div
       class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"
     ></div>
     <div
-      class="absolute top-[400px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
+      class="absolute top-[450px] -right-40 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl pointer-events-none"
     ></div>
+    <AppCuteDecor />
 
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-      <!-- Title Block -->
-      <div class="mb-8 flex items-center gap-3">
-        <div
-          class="w-10 h-10 rounded-2xl bg-primary-50/80 flex items-center justify-center text-primary-500 shadow-sm border border-primary-100/50"
-        >
-          <UIcon name="i-heroicons-credit-card" class="w-5 h-5" />
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 space-y-8">
+      <!-- Breadcrumb & Step Navigation Header -->
+      <div
+        class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/80 backdrop-blur-md border border-gray-200/80 rounded-2xl p-4 shadow-xs"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl bg-linear-to-tr from-primary-600 to-primary-400 flex items-center justify-center text-white shadow-md shadow-primary-500/20 shrink-0"
+          >
+            <UIcon name="i-heroicons-credit-card" class="w-5 h-5" />
+          </div>
+          <div>
+            <div
+              class="flex items-center gap-2 text-xs font-semibold text-gray-500"
+            >
+              <NuxtLink to="/" class="hover:text-primary-600">Beranda</NuxtLink>
+              <span>/</span>
+              <NuxtLink to="/cart" class="hover:text-primary-600"
+                >Keranjang</NuxtLink
+              >
+              <span>/</span>
+              <span class="text-primary-600 font-bold">Checkout</span>
+            </div>
+            <h1
+              class="text-lg md:text-xl font-black text-gray-900 tracking-tight"
+            >
+              Penyelesaian Pesanan
+            </h1>
+          </div>
         </div>
-        <div>
-          <span
-            class="text-[10px] text-primary-500 uppercase font-extrabold tracking-wider"
-            >Penyelesaian Pesanan</span
+
+        <!-- Checkout Steps Progress -->
+        <div class="flex items-center gap-2 sm:gap-4 text-xs font-bold">
+          <NuxtLink
+            to="/cart"
+            class="flex items-center gap-2 text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200/60 shadow-2xs hover:bg-emerald-100 transition-colors"
           >
-          <h1
-            class="text-xl md:text-2xl font-black text-gray-900 tracking-tight leading-none mt-0.5"
+            <span
+              class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-black"
+              >✓</span
+            >
+            <span>Keranjang</span>
+          </NuxtLink>
+          <UIcon
+            name="i-heroicons-chevron-right"
+            class="w-4 h-4 text-gray-300 shrink-0"
+          />
+          <div
+            class="flex items-center gap-2 text-primary-600 bg-primary-50 px-3 py-1.5 rounded-full border border-primary-200/60 shadow-2xs"
           >
-            Checkout
-          </h1>
+            <span
+              class="w-5 h-5 rounded-full bg-primary-600 text-white flex items-center justify-center text-[10px] font-black"
+              >2</span
+            >
+            <span>Checkout</span>
+          </div>
+          <UIcon
+            name="i-heroicons-chevron-right"
+            class="w-4 h-4 text-gray-300 shrink-0 hidden sm:block"
+          />
+          <div class="hidden sm:flex items-center gap-2 text-gray-400">
+            <span
+              class="w-5 h-5 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-[10px] font-black"
+              >3</span
+            >
+            <span>Pembayaran</span>
+          </div>
         </div>
       </div>
 
       <!-- Empty State Fallback -->
       <div
         v-if="cart.items.length === 0"
-        class="max-w-md mx-auto bg-white/70 backdrop-blur-sm border border-gray-100 rounded-3xl p-8 shadow-sm"
+        class="max-w-lg mx-auto bg-white/90 backdrop-blur-md border border-gray-200/80 rounded-3xl p-8 sm:p-12 shadow-xl shadow-gray-900/5 text-center"
       >
         <EmptyState
           icon="i-heroicons-shopping-cart"
-          title="Keranjang Belanja Kosong"
-          description="Tambahkan beberapa produk pilihan kami ke keranjang belanja Anda terlebih dahulu."
-          action-label="Mulai Belanja"
+          title="Keranjang Belanja Masih Kosong"
+          description="Tambahkan beberapa produk pilihan BbystarGO ke keranjang belanja Anda terlebih dahulu untuk diproses."
+          action-label="Mulai Belanja Sekarang"
           action-to="/katalog"
         />
       </div>
 
-      <!-- Main Grid -->
-      <div v-else class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8">
-        <!-- Left Column: Address, Courier Options -->
-        <div class="space-y-8">
-          <!-- Step 1: Address Section -->
+      <!-- Main Layout Grid -->
+      <div v-else class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Left Column: Steps (Address & Shipping Courier) -->
+        <div class="lg:col-span-7 xl:col-span-8 space-y-6">
+          <!-- STEP 1: Alamat Pengiriman -->
           <div
-            class="bg-white border border-gray-100 rounded-3xl p-6 md:p-8 shadow-xs"
+            class="bg-white/90 backdrop-blur-md border border-gray-200/80 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6"
           >
             <div
-              class="flex items-center justify-between border-b border-gray-100 pb-4 mb-6"
+              class="flex items-center justify-between border-b border-gray-100 pb-4"
             >
               <div class="flex items-center gap-3">
                 <span
-                  class="w-7 h-7 rounded-full bg-primary-50 text-primary-700 flex items-center justify-center text-xs font-bold ring-4 ring-primary-50/50"
-                  >1</span
+                  class="w-8 h-8 rounded-full bg-linear-to-tr from-primary-600 to-primary-400 text-white flex items-center justify-center text-xs font-black shadow-md shadow-primary-500/20"
                 >
-                <h2 class="text-base font-extrabold text-gray-900">
-                  Alamat Pengiriman
-                </h2>
+                  1
+                </span>
+                <div>
+                  <h2
+                    class="text-base font-extrabold text-gray-900 leading-tight"
+                  >
+                    Alamat Pengiriman
+                  </h2>
+                  <p class="text-xs text-gray-500">
+                    Pilih atau isi lokasi pengiriman paket Anda
+                  </p>
+                </div>
               </div>
+
               <UButton
                 v-if="isLoggedIn"
                 icon="i-heroicons-plus"
                 color="primary"
-                variant="ghost"
-                class="rounded-xl font-bold cursor-pointer"
-                @click="() => { addressSlideoverOpen = true }"
+                variant="solid"
+                class="rounded-xl font-bold cursor-pointer shadow-sm text-xs"
+                @click="openAddressSlideover"
               >
                 Tambah Alamat
               </UButton>
             </div>
 
-            <!-- Member View: Address Selection -->
+            <!-- Member View: Address Cards Grid -->
             <div v-if="isLoggedIn" class="space-y-4">
-              <div v-if="loadingInitial" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <USkeleton v-for="n in 2" :key="n" class="h-28 rounded-2xl" />
+              <div
+                v-if="loadingInitial"
+                class="grid grid-cols-1 md:grid-cols-2 gap-4"
+              >
+                <USkeleton v-for="n in 2" :key="n" class="h-32 rounded-2xl" />
               </div>
 
               <div
                 v-else-if="addresses.length === 0"
-                class="text-center py-8 bg-gray-55/30 rounded-2xl border border-dashed border-gray-200"
+                class="text-center py-10 bg-gray-50/80 rounded-2xl border border-dashed border-gray-200 space-y-3"
               >
-                <UIcon
-                  name="i-heroicons-map-pin"
-                  class="w-8 h-8 text-gray-300 mx-auto mb-2"
-                />
-                <p class="text-xs text-gray-400 font-semibold mb-3">
-                  Anda belum memiliki alamat tersimpan.
-                </p>
+                <div
+                  class="w-12 h-12 rounded-full bg-primary-50 text-primary-500 flex items-center justify-center mx-auto"
+                >
+                  <UIcon name="i-heroicons-map-pin" class="w-6 h-6" />
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-gray-800">
+                    Belum Ada Alamat Tersimpan
+                  </p>
+                  <p class="text-xs text-gray-400 mt-0.5">
+                    Tambahkan alamat utama untuk memudahkan pengiriman.
+                  </p>
+                </div>
                 <UButton
                   color="primary"
                   variant="solid"
-                  class="rounded-xl font-semibold cursor-pointer"
-                  @click="() => { addressSlideoverOpen = true }"
+                  class="rounded-xl font-bold cursor-pointer text-xs"
+                  @click="openAddressSlideover"
                 >
-                  Tambah Alamat Baru
+                  + Tambah Alamat Baru
                 </UButton>
               </div>
 
@@ -629,39 +704,58 @@ async function handleCheckout() {
                 <div
                   v-for="addr in addresses"
                   :key="addr.id"
-                  class="relative p-5 rounded-2xl border cursor-pointer transition-all duration-200"
+                  class="relative p-5 rounded-2xl border cursor-pointer transition-all duration-300 space-y-2"
                   :class="
                     selectedAddressId === addr.id
-                      ? 'border-primary-500 bg-primary-50/10 shadow-md shadow-primary-950/5'
-                      : 'border-gray-100 hover:border-gray-250 hover:bg-gray-50/20'
+                      ? 'border-primary-500 bg-primary-50/20 shadow-md shadow-primary-900/5 ring-2 ring-primary-500/20'
+                      : 'border-gray-200/80 hover:border-gray-300 hover:bg-gray-50/50'
                   "
                   @click="selectedAddressId = addr.id"
                 >
-                  <!-- Badge default -->
-                  <div class="flex items-center justify-between mb-3.5">
-                    <span
-                      class="text-xs font-black text-gray-900 leading-none"
-                      >{{ addr.label }}</span
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="text-xs font-black text-gray-900">{{
+                        addr.label
+                      }}</span>
+                      <span
+                        v-if="addr.isDefault"
+                        class="px-2 py-0.5 bg-primary-100 text-[9px] text-primary-700 font-extrabold rounded-full border border-primary-200/60"
+                      >
+                        Utama
+                      </span>
+                    </div>
+
+                    <div
+                      class="w-5 h-5 rounded-full border flex items-center justify-center transition-colors"
+                      :class="
+                        selectedAddressId === addr.id
+                          ? 'border-primary-600 bg-primary-600 text-white'
+                          : 'border-gray-300 bg-white'
+                      "
                     >
-                    <span
-                      v-if="addr.isDefault"
-                      class="px-2 py-0.5 bg-primary-100 text-[9px] text-primary-700 font-bold rounded-full"
-                      >Utama</span
-                    >
+                      <UIcon
+                        v-if="selectedAddressId === addr.id"
+                        name="i-heroicons-check"
+                        class="w-3 h-3 stroke-[3]"
+                      />
+                    </div>
                   </div>
 
-                  <p class="text-xs font-bold text-gray-800">
-                    {{ addr.recipientName }}
-                  </p>
-                  <p class="text-xs text-gray-400 font-medium mt-0.5">
-                    {{ addr.phone }}
-                  </p>
+                  <div class="space-y-0.5">
+                    <p class="text-xs font-bold text-gray-800">
+                      {{ addr.recipientName }}
+                    </p>
+                    <p class="text-xs text-gray-500 font-medium">
+                      {{ addr.phone }}
+                    </p>
+                  </div>
+
                   <p
-                    class="text-xs text-gray-500 font-medium mt-2.5 line-clamp-2"
+                    class="text-xs text-gray-600 font-normal leading-relaxed line-clamp-2 pt-1 border-t border-gray-100"
                   >
                     {{ addr.fullAddress }}
                   </p>
-                  <p class="text-xs text-gray-400 font-semibold mt-1">
+                  <p class="text-[11px] text-gray-400 font-semibold">
                     {{ addr.district }}, {{ addr.city }}, {{ addr.province }} -
                     {{ addr.postalCode }}
                   </p>
@@ -669,71 +763,100 @@ async function handleCheckout() {
               </div>
             </div>
 
-            <!-- Guest View: Details & Shipping Address Form -->
+            <!-- Guest View: Contact & Address Input Form -->
             <div v-else class="space-y-6">
-              <!-- Guest Info -->
               <div
-                class="bg-primary-50/10 border border-primary-100/50 rounded-2xl p-5 space-y-4"
+                class="bg-primary-50/30 border border-primary-100/80 rounded-2xl p-5 space-y-4"
               >
                 <h3
-                  class="text-xs uppercase font-extrabold tracking-wider text-primary-800"
+                  class="text-xs uppercase font-extrabold tracking-wider text-primary-800 flex items-center gap-1.5"
                 >
-                  Informasi Pemesan (Guest)
+                  <UIcon
+                    name="i-heroicons-user"
+                    class="w-4 h-4 text-primary-600"
+                  />
+                  <span>Informasi Pemesan (Guest)</span>
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <UFormField label="Nama Lengkap" required :error="guestFieldErrors.name || undefined">
+                  <UFormField
+                    label="Nama Lengkap"
+                    required
+                    :error="guestFieldErrors.name || undefined"
+                  >
                     <UInput
                       v-model="guestForm.name"
-                      placeholder="Masukkan nama lengkap Anda"
+                      placeholder="Masukkan nama Anda"
                       class="w-full"
                     />
                   </UFormField>
-                  <UFormField label="Email" required :error="guestFieldErrors.email || undefined">
+                  <UFormField
+                    label="Email Aktif"
+                    required
+                    :error="guestFieldErrors.email || undefined"
+                  >
                     <UInput
                       v-model="guestForm.email"
                       type="email"
-                      placeholder="Masukkan email aktif"
+                      placeholder="email@domain.com"
                       class="w-full"
                     />
                   </UFormField>
-                  <UFormField label="Nomor Telepon" required :error="guestFieldErrors.phone || undefined">
+                  <UFormField
+                    label="Nomor Telepon"
+                    required
+                    :error="guestFieldErrors.phone || undefined"
+                  >
                     <UInput
                       v-model="guestForm.phone"
-                      placeholder="Contoh: 0812345678"
+                      placeholder="0812345678"
                       class="w-full"
                     />
                   </UFormField>
                 </div>
               </div>
 
-              <!-- Shipping Address Info -->
-              <div class="space-y-4 pt-2">
+              <div class="space-y-4">
                 <h3
-                  class="text-xs uppercase font-extrabold tracking-wider text-primary-800"
+                  class="text-xs uppercase font-extrabold tracking-wider text-gray-800 flex items-center gap-1.5"
                 >
-                  Alamat Kiriman
+                  <UIcon
+                    name="i-heroicons-map-pin"
+                    class="w-4 h-4 text-primary-600"
+                  />
+                  <span>Alamat Lengkap Pengiriman</span>
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <UFormField label="Nama Penerima" required :error="guestFieldErrors.recipientName || undefined">
+                  <UFormField
+                    label="Nama Penerima"
+                    required
+                    :error="guestFieldErrors.recipientName || undefined"
+                  >
                     <UInput
                       v-model="guestForm.recipientName"
                       placeholder="Nama penerima paket"
                       class="w-full"
                     />
                   </UFormField>
-                  <UFormField label="No. Telp Penerima" required :error="guestFieldErrors.recipientPhone || undefined">
+                  <UFormField
+                    label="No. Telp Penerima"
+                    required
+                    :error="guestFieldErrors.recipientPhone || undefined"
+                  >
                     <UInput
                       v-model="guestForm.recipientPhone"
-                      placeholder="No. telp penerima paket"
+                      placeholder="No. HP penerima"
                       class="w-full"
                     />
                   </UFormField>
                 </div>
 
-                <!-- Dropdowns wilayah cascading -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <UFormField label="Provinsi" required :error="guestFieldErrors.provinceId || undefined">
+                  <UFormField
+                    label="Provinsi"
+                    required
+                    :error="guestFieldErrors.provinceId || undefined"
+                  >
                     <USelect
                       v-model="guestForm.provinceId"
                       :items="provinces"
@@ -743,7 +866,11 @@ async function handleCheckout() {
                       value-key="id"
                     />
                   </UFormField>
-                  <UFormField label="Kota / Kabupaten" required :error="guestFieldErrors.cityId || undefined">
+                  <UFormField
+                    label="Kota / Kabupaten"
+                    required
+                    :error="guestFieldErrors.cityId || undefined"
+                  >
                     <USelect
                       v-model="guestForm.cityId"
                       :items="guestCities"
@@ -754,7 +881,11 @@ async function handleCheckout() {
                       value-key="id"
                     />
                   </UFormField>
-                  <UFormField label="Kecamatan" required :error="guestFieldErrors.districtId || undefined">
+                  <UFormField
+                    label="Kecamatan"
+                    required
+                    :error="guestFieldErrors.districtId || undefined"
+                  >
                     <USelect
                       v-model="guestForm.districtId"
                       :items="guestDistricts"
@@ -768,14 +899,22 @@ async function handleCheckout() {
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-[1fr_160px] gap-4">
-                  <UFormField label="Alamat Lengkap" required :error="guestFieldErrors.fullAddress || undefined">
+                  <UFormField
+                    label="Alamat Jalan / Rumah"
+                    required
+                    :error="guestFieldErrors.fullAddress || undefined"
+                  >
                     <UTextarea
                       v-model="guestForm.fullAddress"
                       placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan"
                       class="w-full"
                     />
                   </UFormField>
-                  <UFormField label="Kode Pos" required :error="guestFieldErrors.postalCode || undefined">
+                  <UFormField
+                    label="Kode Pos"
+                    required
+                    :error="guestFieldErrors.postalCode || undefined"
+                  >
                     <UInput
                       v-model="guestForm.postalCode"
                       placeholder="Kode pos"
@@ -787,194 +926,250 @@ async function handleCheckout() {
             </div>
           </div>
 
-          <!-- Step 2: Shipping Options Section -->
+          <!-- STEP 2: Kurir & Layanan Pengiriman -->
           <div
-            class="bg-white border border-gray-100 rounded-3xl p-6 md:p-8 shadow-xs"
+            class="bg-white/90 backdrop-blur-md border border-gray-200/80 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6"
           >
-            <div
-              class="flex items-center gap-3 border-b border-gray-100 pb-4 mb-6"
-            >
+            <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
               <span
-                class="w-7 h-7 rounded-full bg-primary-50 text-primary-700 flex items-center justify-center text-xs font-bold ring-4 ring-primary-50/50"
-                >2</span
+                class="w-8 h-8 rounded-full bg-linear-to-tr from-primary-600 to-primary-400 text-white flex items-center justify-center text-xs font-black shadow-md shadow-primary-500/20"
               >
-              <h2 class="text-base font-extrabold text-gray-900">
-                Kurir & Paket Pengiriman
-              </h2>
+                2
+              </span>
+              <div>
+                <h2
+                  class="text-base font-extrabold text-gray-900 leading-tight"
+                >
+                  Kurir &amp; Paket Pengiriman
+                </h2>
+                <p class="text-xs text-gray-500">
+                  Pilih ekspedisi dan tarif ongkos kirim sesuai lokasi Anda
+                </p>
+              </div>
             </div>
 
-            <!-- Wait for destination area to be chosen -->
+            <!-- Lock Message if Address not selected -->
             <div
               v-if="isLoggedIn ? !selectedAddressId : !guestForm.districtId"
-              class="text-center py-6 text-gray-400 text-xs font-semibold"
+              class="text-center py-8 bg-gray-50/60 rounded-2xl border border-dashed border-gray-200 text-gray-400 text-xs font-semibold space-y-2"
             >
-              Silakan pilih/isi alamat pengiriman terlebih dahulu untuk
-              menghitung ongkos kirim.
+              <UIcon
+                name="i-heroicons-truck"
+                class="w-8 h-8 mx-auto text-gray-300"
+              />
+              <p>
+                Silakan tentukan alamat pengiriman di atas terlebih dahulu untuk
+                menghitung opsi ongkos kirim.
+              </p>
             </div>
 
             <div v-else class="space-y-6">
-              <!-- Select courier brand -->
+              <!-- Select Courier Brand Buttons -->
               <div>
-                <span class="block text-xs font-black text-gray-700 mb-3"
-                  >Pilih Kurir Eksplisit</span
+                <span
+                  class="block text-xs font-black text-gray-700 uppercase tracking-wider mb-3"
                 >
-                <div class="flex flex-wrap items-center gap-3">
+                  1. Pilih Ekspedisi Pengiriman
+                </span>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <button
                     v-for="c in couriersList"
                     :key="c.code"
                     type="button"
-                    class="px-5 py-3 rounded-xl border font-bold text-xs transition-all duration-200 cursor-pointer"
+                    class="p-3.5 rounded-2xl border font-black text-xs transition-all duration-300 cursor-pointer flex flex-col items-center justify-center gap-1.5"
                     :class="
                       selectedCourier === c.code
-                        ? 'border-primary-600 bg-primary-50/20 text-primary-700 shadow-sm'
-                        : 'border-gray-150 hover:bg-gray-50/50 text-gray-600'
+                        ? 'border-primary-600 bg-primary-50/30 text-primary-700 shadow-md shadow-primary-900/5 ring-2 ring-primary-500/20'
+                        : 'border-gray-200/80 hover:bg-gray-50 hover:border-gray-300 text-gray-700'
                     "
                     @click="selectedCourier = c.code"
                   >
-                    {{ c.name }}
+                    <UIcon
+                      name="i-heroicons-truck"
+                      class="w-5 h-5 text-primary-500"
+                    />
+                    <span>{{ c.name }}</span>
                   </button>
                 </div>
               </div>
 
-              <!-- Services list -->
-              <div
-                v-if="loadingShipping"
-                class="flex items-center gap-2 py-4 justify-center text-xs text-gray-400 font-bold"
-              >
-                <UIcon
-                  name="i-heroicons-arrow-path"
-                  class="w-4 h-4 animate-spin text-primary-600"
-                />
-                <span>Menghitung estimasi ongkir RajaOngkir...</span>
-              </div>
-
-              <div
-                v-else-if="selectedCourier && shippingServices.length > 0"
-                class="space-y-3"
-              >
-                <span class="block text-xs font-black text-gray-700 mb-2"
-                  >Layanan Pengiriman Tersedia</span
+              <!-- Shipping Services List -->
+              <div>
+                <span
+                  class="block text-xs font-black text-gray-700 uppercase tracking-wider mb-3"
                 >
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                  2. Pilih Layanan Tarif
+                </span>
+
+                <div
+                  v-if="loadingShipping"
+                  class="flex items-center justify-center gap-2 py-8 bg-gray-50/50 rounded-2xl border border-gray-100 text-xs text-gray-500 font-bold"
+                >
+                  <UIcon
+                    name="i-heroicons-arrow-path"
+                    class="w-5 h-5 animate-spin text-primary-600"
+                  />
+                  <span>Menghitung tarif ongkos kirim RajaOngkir...</span>
+                </div>
+
+                <div
+                  v-else-if="selectedCourier && shippingServices.length > 0"
+                  class="grid grid-cols-1 sm:grid-cols-2 gap-3.5"
+                >
                   <div
                     v-for="service in shippingServices"
                     :key="service.service"
-                    class="p-4 rounded-xl border cursor-pointer flex items-center justify-between transition-all duration-200"
+                    class="p-4 rounded-2xl border cursor-pointer flex items-center justify-between transition-all duration-300"
                     :class="
                       selectedService?.service === service.service
-                        ? 'border-primary-500 bg-primary-50/10'
-                        : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50/30'
+                        ? 'border-primary-500 bg-primary-50/20 shadow-md shadow-primary-900/5 ring-2 ring-primary-500/20'
+                        : 'border-gray-200/80 hover:border-gray-300 hover:bg-gray-50/50'
                     "
                     @click="selectService(service)"
                   >
-                    <div>
-                      <p class="text-xs font-extrabold text-gray-900 uppercase">
+                    <div class="space-y-1">
+                      <p class="text-xs font-black text-gray-900 uppercase">
                         {{ service.courier }} - {{ service.service }}
                       </p>
-                      <p class="text-[10px] text-gray-400 font-semibold mt-0.5">
+                      <p
+                        class="text-[11px] text-gray-500 font-semibold flex items-center gap-1"
+                      >
+                        <UIcon
+                          name="i-heroicons-clock"
+                          class="w-3.5 h-3.5 text-gray-400"
+                        />
                         Estimasi tiba:
                         {{
                           service.etd
-                            ? service.etd.replace(/\bday\b/gi, 'hari')
-                            : '-'
+                            ? service.etd.replace(/\bday\b/gi, "hari")
+                            : "-"
                         }}
                       </p>
                     </div>
-                    <span class="text-xs font-black text-primary-700">{{
-                      format(service.cost)
-                    }}</span>
+                    <span
+                      class="text-sm font-black text-primary-600 bg-white px-2.5 py-1 rounded-xl border border-gray-200/80 shadow-2xs"
+                    >
+                      {{ format(service.cost) }}
+                    </span>
                   </div>
                 </div>
-              </div>
 
-              <div
-                v-else-if="selectedCourier"
-                class="text-center py-4 text-xs text-gray-400 font-semibold"
-              >
-                Layanan pengantar kurir terpilih tidak ditemukan untuk rute ini.
+                <div
+                  v-else-if="selectedCourier"
+                  class="text-center py-6 bg-primary-100/50 rounded-2xl border border-primary-200/60 text-xs text-primary-600 font-semibold"
+                >
+                  Layanan ekspedisi {{ selectedCourier.toUpperCase() }} tidak
+                  tersedia untuk rute tujuan ini. Silakan coba pilih kurir
+                  lainnya.
+                </div>
+
+                <div
+                  v-else
+                  class="text-center py-6 bg-gray-100/50 rounded-2xl border border-gray-200 text-xs text-gray-400 font-semibold"
+                >
+                  Pilih salah satu jenis ekspedisi di atas untuk menampilkan
+                  tarif pengiriman.
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Right Column: Order Summary, Checkout Button -->
-        <div class="space-y-6">
+        <!-- Right Column: Order Summary Panel -->
+        <div class="lg:col-span-5 xl:col-span-4 sticky top-24">
           <div
-            class="bg-linear-to-b from-primary-50/50 via-white/80 to-white/95 backdrop-blur-xs border border-primary-100/40 rounded-3xl p-6 shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)] h-fit space-y-5 relative overflow-hidden"
+            class="bg-white/90 backdrop-blur-md border border-gray-200/80 rounded-3xl p-6 shadow-xl shadow-gray-900/5 space-y-6 relative overflow-hidden"
           >
-
-            <h2
-              class="text-xs uppercase tracking-wider font-extrabold text-primary-800 border-b border-primary-100/50 pb-2.5"
+            <!-- Panel Header -->
+            <div
+              class="flex items-center justify-between border-b border-gray-100 pb-4"
             >
-              Ringkasan Transaksi
-            </h2>
+              <h2
+                class="text-sm font-extrabold text-gray-900 uppercase tracking-wide"
+              >
+                Ringkasan Transaksi
+              </h2>
+              <span
+                class="text-xs font-bold text-primary-600 bg-primary-50 px-2.5 py-0.5 rounded-full border border-primary-200/60"
+              >
+                {{ cart.totalQty }} produk
+              </span>
+            </div>
 
-            <!-- Items list -->
-            <div class="max-h-56 overflow-y-auto space-y-3 pr-1">
+            <!-- Product Thumbnails List -->
+            <div
+              class="max-h-56 overflow-y-auto space-y-3 pr-1 divide-y divide-gray-100"
+            >
               <div
                 v-for="item in cart.items"
                 :key="item.variantId"
-                class="flex gap-3"
+                class="pt-3 first:pt-0 flex gap-3 items-center"
               >
                 <img
                   :src="item.image ?? 'https://picsum.photos/seed/cart/100/100'"
                   :alt="item.productName"
-                  class="w-12 h-12 object-cover rounded-lg border border-gray-100 shrink-0 bg-white"
+                  class="w-12 h-12 object-cover rounded-xl border border-gray-200/80 shrink-0 bg-gray-50"
                 />
-                <div class="min-w-0 flex-1">
-                  <p class="text-xs font-extrabold text-gray-900 truncate">
+                <div class="min-w-0 flex-1 space-y-0.5">
+                  <p class="text-xs font-bold text-gray-900 truncate">
                     {{ item.productName }}
                   </p>
-                  <p class="text-[10px] text-gray-400 font-semibold mt-0.5 flex flex-wrap items-center gap-1.5">
-                    <span>Varian: {{ item.variantName }} (x{{ item.qty }})</span>
+                  <div
+                    class="flex items-center gap-1.5 text-[10px] text-gray-500 font-semibold"
+                  >
+                    <span>{{ item.variantName }} (x{{ item.qty }})</span>
                     <span
                       v-if="item.fulfillmentType === 'pre_order'"
-                      class="px-1 py-0.5 bg-orange-100 text-orange-700 text-[8px] font-black rounded"
+                      class="px-1.5 py-0.2 bg-amber-100 text-amber-800 text-[8px] font-black rounded"
                     >
                       DP
                     </span>
-                  </p>
-                  <div class="flex items-baseline gap-1.5 mt-1">
-                    <p class="text-xs font-black text-gray-700">
-                      {{ format(item.price * item.qty) }}
-                    </p>
-                    <span
-                      v-if="item.fulfillmentType === 'pre_order' && item.originalPrice"
-                      class="text-[9px] text-gray-400 font-semibold line-through"
-                    >
-                      {{ format(item.originalPrice * item.qty) }}
-                    </span>
                   </div>
+                  <p class="text-xs font-black text-primary-600">
+                    {{ format(item.price * item.qty) }}
+                  </p>
                 </div>
               </div>
             </div>
 
-            <!-- Cost recap -->
+            <!-- Cost Recap -->
             <div
-              class="space-y-3.5 border-t border-primary-100/50 pt-4 text-xs font-semibold"
+              class="space-y-3 border-t border-gray-100 pt-4 text-xs font-semibold"
             >
-              <div class="flex items-center justify-between">
-                <span class="text-gray-500 font-medium">Subtotal Produk</span>
+              <div class="flex items-center justify-between text-gray-600">
+                <span>Subtotal Produk</span>
                 <span class="text-gray-900 font-extrabold">{{
                   format(cart.subtotal)
                 }}</span>
               </div>
-              <div class="flex items-center justify-between">
-                <span class="text-gray-500 font-medium">Ongkos Kirim</span>
+              <div class="flex items-center justify-between text-gray-600">
+                <span>Ongkos Kirim</span>
                 <span
-                  class="text-gray-900 font-extrabold"
                   v-if="selectedService"
-                  >{{ format(selectedService.cost) }}</span
+                  class="text-gray-900 font-extrabold"
                 >
-                <span class="text-primary-700 italic text-[11px]" v-else
-                  >Pilih kurir</span
+                  {{ format(selectedService.cost) }}
+                </span>
+                <span
+                  v-else
+                  class="text-amber-600 italic text-[11px] font-bold"
                 >
+                  Belum dipilih
+                </span>
               </div>
+
               <div
-                class="flex items-center justify-between border-t border-primary-150 pt-3"
+                class="border-t border-gray-100 pt-3 flex items-center justify-between"
               >
-                <span class="text-gray-900 font-extrabold">Total Bayar</span>
-                <span class="text-base font-black text-primary-800">
+                <div>
+                  <span class="text-sm font-black text-gray-900 block"
+                    >Total Tagihan</span
+                  >
+                  <span class="text-[10px] text-gray-400 font-normal"
+                    >Sudah termasuk produk &amp; ongkir</span
+                  >
+                </div>
+                <span class="text-lg font-black text-primary-600">
                   {{
                     format(
                       cart.subtotal +
@@ -985,18 +1180,31 @@ async function handleCheckout() {
               </div>
             </div>
 
+            <!-- Submit Order Button -->
             <div class="pt-2">
               <UButton
                 block
                 color="primary"
-                size="lg"
-                class="font-extrabold py-3.5 rounded-full cursor-pointer shadow-lg shadow-primary-600/20 hover:scale-[1.01] transition-transform duration-300"
+                size="xl"
+                class="font-black py-4 rounded-2xl cursor-pointer shadow-lg shadow-primary-500/25 hover:shadow-primary-500/35 hover:scale-[1.01] transition-all duration-300 flex items-center justify-center gap-2 text-sm"
                 :disabled="isSubmitDisabled"
                 :loading="loading"
                 @click="handleCheckout"
               >
-                Bayar Sekarang
+                <UIcon name="i-heroicons-lock-closed" class="w-4 h-4" />
+                <span>Bayar Sekarang</span>
               </UButton>
+            </div>
+
+            <!-- Security Assurance -->
+            <div
+              class="flex items-center justify-center gap-2 text-[10px] font-bold text-gray-400 text-center"
+            >
+              <UIcon
+                name="i-heroicons-shield-check"
+                class="w-4 h-4 text-emerald-500"
+              />
+              <span>Transaksi Aman &amp; Terverifikasi BbystarGO</span>
             </div>
           </div>
         </div>
@@ -1004,32 +1212,40 @@ async function handleCheckout() {
     </div>
 
     <!-- Member Address Creation Slideover -->
-    <USlideover v-model:open="addressSlideoverOpen" title="Tambah Alamat Baru">
+    <USlideover
+      v-model:open="addressSlideoverOpen"
+      title="Tambah Alamat Pengiriman Baru"
+    >
       <template #content>
         <div
-          class="p-6 space-y-5 h-full flex flex-col justify-between bg-white overflow-y-auto"
+          class="p-6 space-y-6 h-full flex flex-col justify-between bg-white overflow-y-auto"
         >
           <div class="space-y-4">
             <div
-              class="flex items-center justify-between pb-3 border-b border-gray-100 mb-3"
+              class="flex items-center justify-between pb-3 border-b border-gray-100"
             >
-              <h2 class="text-sm font-black text-gray-900">
-                Alamat Pengiriman Baru
-              </h2>
+              <div>
+                <h2 class="text-sm font-black text-gray-900">
+                  Alamat Pengiriman Baru
+                </h2>
+                <p class="text-xs text-gray-500">
+                  Isi rincian lokasi tujuan pengiriman paket Anda
+                </p>
+              </div>
               <UButton
                 icon="i-heroicons-x-mark"
                 color="neutral"
                 variant="ghost"
-                aria-label="Tutup formulir alamat"
+                aria-label="Tutup formulir"
                 class="hover:bg-gray-100 rounded-lg"
-                @click="() => { addressSlideoverOpen = false }"
+                @click="closeAddressSlideover"
               />
             </div>
 
             <UFormField label="Label Alamat (Contoh: Rumah, Kantor)">
               <UInput
                 v-model="addressForm.label"
-                placeholder="Masukkan label alamat"
+                placeholder="Rumah Saya"
                 class="w-full"
               />
             </UFormField>
@@ -1037,7 +1253,7 @@ async function handleCheckout() {
             <UFormField label="Nama Penerima" required>
               <UInput
                 v-model="addressForm.recipientName"
-                placeholder="Masukkan nama penerima paket"
+                placeholder="Nama penerima paket"
                 class="w-full"
               />
             </UFormField>
@@ -1045,7 +1261,7 @@ async function handleCheckout() {
             <UFormField label="Nomor Telepon" required>
               <UInput
                 v-model="addressForm.phone"
-                placeholder="Contoh: 0812345678"
+                placeholder="0812345678"
                 class="w-full"
               />
             </UFormField>
@@ -1099,7 +1315,7 @@ async function handleCheckout() {
             <UFormField label="Alamat Lengkap" required>
               <UTextarea
                 v-model="addressForm.fullAddress"
-                placeholder="Masukkan alamat lengkap (jalan, nomor, RT/RW)"
+                placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan"
                 class="w-full"
               />
             </UFormField>
@@ -1107,7 +1323,7 @@ async function handleCheckout() {
             <div class="pt-2">
               <UCheckbox
                 v-model="addressForm.isDefault"
-                label="Atur sebagai alamat utama/default"
+                label="Jadikan sebagai alamat utama/default"
               />
             </div>
           </div>
@@ -1116,16 +1332,18 @@ async function handleCheckout() {
             <UButton
               color="neutral"
               variant="outline"
-              class="flex-1 justify-center rounded-xl cursor-pointer"
-              @click="() => { addressSlideoverOpen = false }"
-              >Batal</UButton
+              class="flex-1 justify-center rounded-xl cursor-pointer font-bold"
+              @click="closeAddressSlideover"
             >
+              Batal
+            </UButton>
             <UButton
               color="primary"
-              class="flex-1 justify-center rounded-xl font-bold cursor-pointer"
+              class="flex-1 justify-center rounded-xl font-extrabold cursor-pointer"
               @click="saveAddress"
-              >Simpan Alamat</UButton
             >
+              Simpan Alamat
+            </UButton>
           </div>
         </div>
       </template>

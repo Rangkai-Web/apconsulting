@@ -99,9 +99,8 @@ useSeoMeta({
               </p>
               <p>
                 Dengan komitmen tinggi pada keaslian produk and kepuasan
-                pelanggan, kami siap mendampingi proses belanja Anda dari
-                awal pemesanan hingga barang mendarat dengan selamat di pelukan
-                Anda.
+                pelanggan, kami siap mendampingi proses belanja Anda dari awal
+                pemesanan hingga barang mendarat dengan selamat di pelukan Anda.
               </p>
             </div>
           </div>
@@ -149,8 +148,7 @@ useSeoMeta({
                 <p
                   class="text-[11px] text-gray-500 font-semibold leading-normal"
                 >
-                  Proteksi gratis kardus kuat dan bubble wrap berlapis tanpa
-                  biaya tambahan.
+                  Packing aman barang sampai tanpa cacat.
                 </p>
               </div>
 
@@ -172,8 +170,8 @@ useSeoMeta({
                 <p
                   class="text-[11px] text-gray-500 font-semibold leading-normal"
                 >
-                  Customer service ramah dan siap membantu menjawab kendala Anda
-                  dengan responsif.
+                  Admin ramah dan siap membantu menjawab kendala Anda dengan
+                  responsif.
                 </p>
               </div>
             </div>

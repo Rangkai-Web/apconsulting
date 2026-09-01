@@ -348,12 +348,12 @@ watch(() => route.query, syncFromRoute);
         </div>
         <!-- Horizontal Desktop Filter Bar -->
         <div
-          class="hidden lg:block bg-white/95 backdrop-blur-xs border border-primary-100/50 rounded-3xl p-6 shadow-xs space-y-5"
+          class="hidden lg:block bg-white border border-gray-100 rounded-3xl p-6 shadow-sm space-y-5"
         >
           <!-- Row 1: Parent Categories -->
           <div class="space-y-2.5">
             <span
-              class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest block pl-1"
+              class="text-xs font-black text-gray-700 uppercase tracking-wider block pl-1"
             >
               Kategori
             </span>
@@ -363,8 +363,8 @@ watch(() => route.query, syncFromRoute);
                 class="px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer border"
                 :class="
                   !route.query.category
-                    ? 'bg-primary-500 border-primary-500 text-white shadow-md shadow-primary-500/20'
-                    : 'bg-white border border-primary-100/50 text-gray-600 hover:bg-primary-50/50 hover:border-primary-300'
+                    ? 'bg-primary-500 border-primary-500 text-white shadow-md shadow-primary-500/25 font-black'
+                    : 'bg-gray-50/90 border-gray-200 text-gray-700 hover:bg-primary-50 hover:border-primary-300 hover:text-primary-600 hover:-translate-y-0.5 shadow-2xs'
                 "
                 @click="selectCategory(null)"
               >
@@ -377,8 +377,8 @@ watch(() => route.query, syncFromRoute);
                 class="px-4 py-2 rounded-full text-xs font-extrabold transition-all duration-200 cursor-pointer border flex items-center gap-1.5"
                 :class="
                   route.query.category === parent.slug || isParentActive(parent)
-                    ? 'bg-primary-500 border-primary-500 text-white shadow-md shadow-primary-500/20'
-                    : 'bg-white border border-primary-100/50 text-gray-700 hover:bg-primary-50/50 hover:border-primary-300'
+                    ? 'bg-primary-500 border-primary-500 text-white shadow-md shadow-primary-500/25 font-black'
+                    : 'bg-gray-50/90 border-gray-200 text-gray-700 hover:bg-primary-50 hover:border-primary-300 hover:text-primary-600 hover:-translate-y-0.5 shadow-2xs'
                 "
                 @click="selectCategory(parent.slug)"
               >
@@ -397,10 +397,10 @@ watch(() => route.query, syncFromRoute);
             v-if="
               activeParentId && getChildCategories(activeParentId).length > 0
             "
-            class="space-y-2 border-t border-primary-100/30 pt-4"
+            class="space-y-2 border-t border-gray-100 pt-4"
           >
             <span
-              class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest block pl-1"
+              class="text-xs font-black text-gray-700 uppercase tracking-wider block pl-1"
             >
               Sub Kategori
             </span>
@@ -412,8 +412,8 @@ watch(() => route.query, syncFromRoute);
                 class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer border"
                 :class="
                   route.query.category === child.slug
-                    ? 'bg-primary-400 border-primary-400 text-white shadow-xs'
-                    : 'bg-white border border-primary-100/30 text-gray-500 hover:bg-primary-50/50 hover:border-primary-200'
+                    ? 'bg-primary-500 border-primary-500 text-white font-black shadow-xs'
+                    : 'bg-gray-50/90 border-gray-200 text-gray-650 hover:bg-primary-50 hover:border-primary-300 hover:text-primary-600 shadow-2xs'
                 "
                 @click="selectCategory(child.slug)"
               >
@@ -424,38 +424,51 @@ watch(() => route.query, syncFromRoute);
 
           <!-- Row 3: Price and Sort Controls -->
           <div
-            class="flex flex-wrap items-center justify-between gap-4 border-t border-primary-100/30 pt-4"
+            class="flex flex-wrap items-center justify-between gap-4 border-t border-gray-100 pt-4"
           >
             <div class="flex items-center gap-4">
-              <!-- Inline Price Filter -->
+              <!-- Inline Price Filter (Expanded and Clearer) -->
               <div
-                class="flex items-center gap-2 bg-primary-50/10 border border-primary-100/40 rounded-full px-4 py-1.5 shadow-xs"
+                class="flex items-center gap-2.5 bg-gray-50/90 border border-gray-200 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-500/15 rounded-2xl px-3.5 py-1.5 shadow-2xs transition-all"
               >
-                <UIcon
-                  name="i-heroicons-banknotes"
-                  class="w-4.5 h-4.5 text-primary-500 shrink-0"
-                />
-                <span
-                  class="text-[10px] font-bold text-gray-400 uppercase tracking-wider shrink-0"
-                  >Harga:</span
+                <div class="flex items-center gap-1.5 text-gray-700 shrink-0">
+                  <UIcon
+                    name="i-heroicons-banknotes"
+                    class="w-5 h-5 text-primary-500 shrink-0"
+                  />
+                  <span class="text-xs font-black uppercase tracking-wider"
+                    >Harga:</span
+                  >
+                </div>
+                <div
+                  class="flex items-center gap-1 bg-white border border-primary-300/40 focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-primary-500/20 rounded-xl px-2.5 py-1 shadow-2xs transition-all"
                 >
-                <input
-                  v-model.number="minPriceInput"
-                  type="number"
-                  min="0"
-                  placeholder="Min"
-                  class="w-20 text-xs font-bold text-gray-750 bg-transparent border-none outline-none focus:ring-0 placeholder-gray-400 focus:outline-none"
-                  @blur="applyPriceRange"
-                />
-                <span class="text-gray-350 font-bold">-</span>
-                <input
-                  v-model.number="maxPriceInput"
-                  type="number"
-                  min="0"
-                  placeholder="Max"
-                  class="w-20 text-xs font-bold text-gray-750 bg-transparent border-none outline-none focus:ring-0 placeholder-gray-400 focus:outline-none"
-                  @blur="applyPriceRange"
-                />
+                  <span class="text-[11px] font-bold text-gray-400">Rp</span>
+                  <input
+                    v-model.number="minPriceInput"
+                    type="number"
+                    min="0"
+                    placeholder="Min"
+                    class="w-24 sm:w-28 text-xs font-extrabold text-gray-800 bg-transparent border-none outline-none focus:ring-0 placeholder:text-gray-400 focus:outline-none"
+                    @blur="applyPriceRange"
+                    @keyup.enter="applyPriceRange"
+                  />
+                </div>
+                <span class="text-gray-400 font-black">-</span>
+                <div
+                  class="flex items-center gap-1 bg-white border border-primary-300/40 focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-primary-500/20 rounded-xl px-2.5 py-1 shadow-2xs transition-all"
+                >
+                  <span class="text-[11px] font-bold text-gray-400">Rp</span>
+                  <input
+                    v-model.number="maxPriceInput"
+                    type="number"
+                    min="0"
+                    placeholder="Max"
+                    class="w-24 sm:w-28 text-xs font-extrabold text-gray-800 bg-transparent border-none outline-none focus:ring-0 placeholder:text-gray-400 focus:outline-none"
+                    @blur="applyPriceRange"
+                    @keyup.enter="applyPriceRange"
+                  />
+                </div>
               </div>
 
               <!-- Reset Filters Button -->
@@ -479,21 +492,21 @@ watch(() => route.query, syncFromRoute);
             <!-- Sort Select & Total Count -->
             <div class="flex items-center gap-4">
               <span
-                class="text-xs font-bold text-gray-500 uppercase tracking-wider bg-primary-50/55 border border-primary-100/30 rounded-full px-3.5 py-1.5 shadow-xs"
+                class="text-xs font-extrabold text-primary-700 uppercase tracking-wider bg-primary-50 border border-primary-200/80 rounded-full px-3.5 py-1.5 shadow-2xs"
               >
                 {{ catalog.total }} Produk
               </span>
               <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-gray-400 whitespace-nowrap"
+                <span class="text-xs font-bold text-gray-500 whitespace-nowrap"
                   >Urutkan:</span
                 >
                 <USelect
                   :model-value="(route.query.sort as string) || 'newest'"
                   :items="sortOptions"
                   size="md"
-                  class="w-44 font-extrabold text-gray-700"
+                  class="w-44 font-extrabold text-gray-750"
                   :ui="{
-                    base: 'rounded-full bg-primary-50/20 border border-primary-100/50 focus:border-primary-400 focus:ring-1 focus:ring-primary-100 transition-all duration-200',
+                    base: 'rounded-full bg-gray-50 border border-gray-200 hover:border-primary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-200',
                   }"
                   @update:model-value="changeSort"
                 />

@@ -1,19 +1,29 @@
 <script setup lang="ts">
 import { addressService } from "~/services/addressService";
+import { useAuthStore } from "~/store/auth";
 import type { Address } from "~/types";
 
 definePageMeta({ middleware: "auth" });
 
+const authStore = useAuthStore();
 const toast = useToast();
 
 useSeoMeta({ title: "Alamat Saya", robots: "noindex, nofollow" });
 
 const tabs = [
-  { label: "Profil", to: "/akun/profil" },
-  { label: "Alamat", to: "/akun/alamat" },
+  {
+    label: "Informasi Profil",
+    to: "/akun/profil",
+    icon: "i-heroicons-user-circle",
+  },
+  {
+    label: "Alamat Pengiriman",
+    to: "/akun/alamat",
+    icon: "i-heroicons-map-pin",
+  },
 ];
 
-// ── Address list ──────────────────────────────────────────
+// Address list
 const addresses = ref<Address[]>([]);
 const loadingList = ref(true);
 
@@ -30,22 +40,21 @@ async function loadAddresses() {
 
 onMounted(loadAddresses);
 
-// ── Modal state ───────────────────────────────────────────
+// Modal state
 const modalOpen = ref(false);
 const modalMode = ref<"add" | "edit">("add");
 const editingId = ref<number | null>(null);
 const submitting = ref(false);
 
-// Province / city / district data (loaded once, cached in ref)
+// Province / city / district data
 const provinces = ref<any[]>([]);
 const cities = ref<any[]>([]);
 const districts = ref<any[]>([]);
 const loadingProvinces = ref(false);
 
-// Suppress cascade watchers during edit pre-fill to avoid race conditions
 const isPreFilling = ref(false);
 
-// ── Form state ────────────────────────────────────────────
+// Form state
 const form = reactive({
   label: "",
   recipientName: "",
@@ -99,8 +108,6 @@ async function openEdit(address: Address) {
   resetForm();
   await ensureProvinces();
 
-  // Suppress cascade watchers while pre-filling — otherwise setting
-  // provinceId triggers the watcher which clears cityId before we can set it.
   isPreFilling.value = true;
 
   form.label = address.label ?? "";
@@ -110,9 +117,6 @@ async function openEdit(address: Address) {
   form.fullAddress = address.fullAddress;
   form.isDefault = address.isDefault;
 
-  // Re-hydrate cascade: find province by name → load cities → find city → load districts → find district
-  // Province/city names are matched by string equality — safe because both
-  // come from the same RajaOngkir cache (stored on create, re-fetched here).
   const prov = provinces.value.find((p) => p.name === address.province);
   if (prov) {
     form.provinceName = prov.name;
@@ -135,9 +139,7 @@ async function openEdit(address: Address) {
   modalOpen.value = true;
 }
 
-// ── Cascade watchers ──────────────────────────────────────
-// isPreFilling suppresses these watchers during openEdit pre-fill to avoid
-// the watchers resetting city/district while we're explicitly setting them.
+// Cascade watchers
 watch(
   () => form.provinceId,
   async (newVal) => {
@@ -193,7 +195,7 @@ const formValid = computed(
     form.fullAddress.trim(),
 );
 
-// ── Submit add / edit ─────────────────────────────────────
+// Submit add / edit
 async function submitForm() {
   if (!formValid.value) return;
   submitting.value = true;
@@ -230,7 +232,7 @@ async function submitForm() {
   }
 }
 
-// ── Set default ───────────────────────────────────────────
+// Set default
 async function setDefault(address: Address) {
   try {
     await addressService.updateAddress(address.id, {
@@ -252,7 +254,7 @@ async function setDefault(address: Address) {
   }
 }
 
-// ── Delete ────────────────────────────────────────────────
+// Delete
 const deleteConfirmId = ref<number | null>(null);
 const deleting = ref(false);
 
@@ -269,13 +271,25 @@ async function confirmDelete(id: number) {
     deleting.value = false;
   }
 }
+
+function closeModal() {
+  modalOpen.value = false;
+}
+
+function selectDeleteConfirm(id: number) {
+  deleteConfirmId.value = id;
+}
+
+function cancelDeleteConfirm() {
+  deleteConfirmId.value = null;
+}
 </script>
 
 <template>
   <div
-    class="relative overflow-hidden bg-linear-to-b from-primary-50/45 via-primary-50/15 to-white min-h-screen py-10"
+    class="relative overflow-hidden bg-linear-to-b from-primary-50/40 via-white to-gray-50/50 min-h-screen py-8 md:py-12"
   >
-    <!-- Ambient Background Glows -->
+    <!-- Background Decor Elements -->
     <div
       class="absolute top-12 -left-40 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl pointer-events-none"
     ></div>
@@ -284,235 +298,348 @@ async function confirmDelete(id: number) {
     ></div>
     <AppCuteDecor />
 
-    <div class="max-w-2xl mx-auto px-4 relative z-20">
-      <!-- Tab nav -->
-      <div class="flex gap-2 mb-8 border-b border-primary-100">
-        <NuxtLink
-          v-for="tab in tabs"
-          :key="tab.to"
-          :to="tab.to"
-          class="px-4 py-2 text-sm font-semibold transition-colors"
-          :class="
-            $route.path === tab.to
-              ? 'text-primary-500 border-b-2 border-primary-500 font-bold'
-              : 'text-gray-400 hover:text-primary-500'
-          "
-        >
-          {{ tab.label }}
-        </NuxtLink>
-      </div>
-
-      <!-- Header row -->
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="font-extrabold text-gray-900 text-base">Alamat Tersimpan</h2>
-        <UButton
-          icon="i-heroicons-plus"
-          color="primary"
-          class="cursor-pointer font-bold rounded-full px-4 py-2"
-          @click="openAdd"
-        >
-          Tambah Alamat
-        </UButton>
-      </div>
-
-      <!-- Loading -->
-      <div v-if="loadingList" class="text-center py-16 text-gray-400">
-        Memuat alamat...
-      </div>
-
-      <!-- Empty -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 space-y-8">
+      <!-- Breadcrumb & User Header Banner Card -->
       <div
-        v-else-if="addresses.length === 0"
-        class="text-center py-16 text-gray-400"
+        class="bg-white/90 backdrop-blur-md border border-gray-200/80 rounded-3xl p-6 sm:p-8 shadow-sm relative overflow-hidden space-y-6"
       >
-        Belum ada alamat tersimpan.
+        <div
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+        >
+          <div class="flex items-center gap-4">
+            <div
+              class="w-16 h-16 rounded-2xl bg-linear-to-tr from-primary-600 via-primary-500 to-primary-400 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-primary-500/20 shrink-0"
+            >
+              {{ (authStore.user?.name || "M").charAt(0).toUpperCase() }}
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h1
+                  class="text-lg sm:text-xl font-black text-gray-900 leading-tight"
+                >
+                  {{ authStore.user?.name }}
+                </h1>
+                <span
+                  class="px-2.5 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-black rounded-full border border-emerald-200/60"
+                >
+                  Member Terverifikasi
+                </span>
+              </div>
+              <p
+                class="text-xs text-gray-500 font-semibold flex items-center gap-1.5"
+              >
+                <UIcon
+                  name="i-heroicons-envelope"
+                  class="w-3.5 h-3.5 text-gray-400"
+                />
+                {{ authStore.user?.email }}
+              </p>
+            </div>
+          </div>
+
+          <UButton
+            icon="i-heroicons-plus"
+            color="primary"
+            class="rounded-xl font-extrabold text-xs px-4 py-2 cursor-pointer shadow-md shadow-primary-500/20"
+            @click="openAdd"
+          >
+            Tambah Alamat Baru
+          </UButton>
+        </div>
+
+        <!-- Account Tab Navigation Bar -->
+        <div class="flex items-center gap-2 border-t border-gray-100 pt-4">
+          <NuxtLink
+            v-for="tab in tabs"
+            :key="tab.to"
+            :to="tab.to"
+            class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-300 cursor-pointer shadow-2xs border"
+            :class="
+              $route.path === tab.to
+                ? 'bg-primary-500 text-white border-primary-600 shadow-md shadow-primary-500/20'
+                : 'bg-gray-50/80 text-gray-600 border-gray-200/80 hover:bg-gray-100 hover:text-gray-900'
+            "
+          >
+            <UIcon :name="tab.icon" class="w-4 h-4" />
+            <span>{{ tab.label }}</span>
+          </NuxtLink>
+        </div>
       </div>
 
-      <!-- List -->
-      <div v-else class="space-y-3">
-        <UCard
-          v-for="address in addresses"
-          :key="address.id"
-          class="bg-white backdrop-blur-xs border border-primary-100 rounded-3xl shadow-[0_4px_25px_-6px_rgba(255,116,108,0.03)]"
+      <!-- Address Cards Section -->
+      <div class="space-y-4">
+        <!-- Loading Spinner -->
+        <div
+          v-if="loadingList"
+          class="flex flex-col items-center justify-center py-20 bg-white/90 backdrop-blur-md rounded-3xl border border-gray-200/80 gap-3"
         >
-          <div class="flex items-start justify-between gap-4">
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-gray-900 text-sm">
-                  {{ address.label || "Alamat" }}
-                </span>
-                <UBadge v-if="address.isDefault" color="primary" size="xs">
-                  Utama
-                </UBadge>
+          <UIcon
+            name="i-heroicons-arrow-path"
+            class="w-8 h-8 animate-spin text-primary-600"
+          />
+          <span class="text-xs text-gray-500 font-extrabold">
+            Memuat daftar alamat tersimpan...
+          </span>
+        </div>
+
+        <!-- Empty State -->
+        <div
+          v-else-if="addresses.length === 0"
+          class="max-w-lg mx-auto bg-white/90 backdrop-blur-md border border-gray-200/80 rounded-3xl p-8 sm:p-12 shadow-xl shadow-gray-900/5 text-center space-y-4"
+        >
+          <div
+            class="w-16 h-16 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center mx-auto shadow-xs border border-primary-100"
+          >
+            <UIcon name="i-heroicons-map-pin" class="w-8 h-8" />
+          </div>
+          <div>
+            <h2 class="text-base font-extrabold text-gray-900">
+              Belum Ada Alamat Tersimpan
+            </h2>
+            <p
+              class="text-xs text-gray-500 mt-1 max-w-sm mx-auto leading-relaxed"
+            >
+              Tambahkan alamat pengiriman utama Anda untuk mempermudah dan
+              mempercepat proses checkout.
+            </p>
+          </div>
+          <UButton
+            color="primary"
+            size="lg"
+            class="rounded-2xl font-black px-6 py-3 cursor-pointer shadow-md shadow-primary-500/20"
+            @click="openAdd"
+          >
+            + Tambah Alamat Baru
+          </UButton>
+        </div>
+
+        <!-- Address Cards Grid -->
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div
+            v-for="address in addresses"
+            :key="address.id"
+            class="bg-white/90 backdrop-blur-md border rounded-3xl p-6 shadow-xs flex flex-col justify-between transition-all duration-300 space-y-4"
+            :class="
+              address.isDefault
+                ? 'border-primary-500 bg-primary-50/20 shadow-md shadow-primary-900/5 ring-2 ring-primary-500/20'
+                : 'border-gray-200/80 hover:border-gray-300 hover:bg-gray-50/50'
+            "
+          >
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-black text-gray-900">{{
+                    address.label || "Alamat Saya"
+                  }}</span>
+                  <span
+                    v-if="address.isDefault"
+                    class="px-2.5 py-0.5 bg-primary-100 text-primary-700 text-[10px] font-black rounded-full border border-primary-200/60"
+                  >
+                    Alamat Utama
+                  </span>
+                </div>
               </div>
-              <p class="text-sm text-gray-700">
-                {{ address.recipientName }} · {{ address.phone }}
-              </p>
-              <p class="text-sm text-gray-500 mt-0.5">
-                {{ address.district }}, {{ address.city }},
-                {{ address.province }} {{ address.postalCode }}
-              </p>
-              <p class="text-xs text-gray-400 mt-0.5 line-clamp-2">
+
+              <div class="space-y-0.5">
+                <p class="text-xs font-bold text-gray-800">
+                  {{ address.recipientName }}
+                </p>
+                <p class="text-xs text-gray-500 font-semibold">
+                  {{ address.phone }}
+                </p>
+              </div>
+
+              <p
+                class="text-xs text-gray-600 font-normal leading-relaxed pt-2 border-t border-gray-100"
+              >
                 {{ address.fullAddress }}
+              </p>
+              <p class="text-[11px] text-gray-400 font-semibold">
+                {{ address.district }}, {{ address.city }},
+                {{ address.province }} - {{ address.postalCode }}
               </p>
             </div>
 
-            <!-- Actions -->
-            <div class="flex flex-col gap-2 shrink-0">
-              <UButton
-                v-if="!address.isDefault"
-                size="xs"
-                variant="outline"
-                color="primary"
-                class="cursor-pointer"
-                @click="setDefault(address)"
-              >
-                Jadikan Utama
-              </UButton>
-              <UButton
-                size="xs"
-                variant="outline"
-                color="neutral"
-                class="cursor-pointer"
-                @click="openEdit(address)"
-              >
-                Edit
-              </UButton>
-              <template v-if="deleteConfirmId !== address.id">
+            <!-- Address Action Buttons -->
+            <div
+              class="flex items-center justify-between gap-2 pt-3 border-t border-gray-100"
+            >
+              <div>
+                <UButton
+                  v-if="!address.isDefault"
+                  size="xs"
+                  variant="ghost"
+                  color="primary"
+                  class="font-extrabold cursor-pointer rounded-xl hover:bg-primary-50"
+                  @click="setDefault(address)"
+                >
+                  Jadikan Utama
+                </UButton>
+              </div>
+
+              <div class="flex items-center gap-2">
                 <UButton
                   size="xs"
                   variant="outline"
-                  color="error"
-                  class="cursor-pointer"
-                  @click="
-                    () => {
-                      deleteConfirmId = address.id;
-                    }
-                  "
-                >
-                  Hapus
-                </UButton>
-              </template>
-              <template v-else>
-                <UButton
-                  size="xs"
-                  color="error"
-                  :loading="deleting"
-                  class="cursor-pointer"
-                  @click="confirmDelete(address.id)"
-                >
-                  Ya, Hapus
-                </UButton>
-                <UButton
-                  size="xs"
-                  variant="ghost"
                   color="neutral"
-                  class="cursor-pointer"
-                  @click="
-                    () => {
-                      deleteConfirmId = null;
-                    }
-                  "
+                  icon="i-heroicons-pencil-square"
+                  class="rounded-xl font-bold cursor-pointer"
+                  @click="openEdit(address)"
                 >
-                  Batal
+                  Edit
                 </UButton>
-              </template>
+
+                <template v-if="deleteConfirmId !== address.id">
+                  <UButton
+                    size="xs"
+                    variant="outline"
+                    color="error"
+                    icon="i-heroicons-trash"
+                    class="rounded-xl font-bold cursor-pointer hover:bg-red-50"
+                    @click="selectDeleteConfirm(address.id)"
+                  >
+                    Hapus
+                  </UButton>
+                </template>
+                <template v-else>
+                  <UButton
+                    size="xs"
+                    color="error"
+                    class="rounded-xl font-extrabold cursor-pointer"
+                    :loading="deleting"
+                    @click="confirmDelete(address.id)"
+                  >
+                    Ya, Hapus
+                  </UButton>
+                  <UButton
+                    size="xs"
+                    variant="ghost"
+                    color="neutral"
+                    class="rounded-xl font-bold cursor-pointer"
+                    @click="cancelDeleteConfirm"
+                  >
+                    Batal
+                  </UButton>
+                </template>
+              </div>
             </div>
           </div>
-        </UCard>
+        </div>
       </div>
 
       <!-- Add / Edit Modal -->
       <UModal
         v-model:open="modalOpen"
-        :title="modalMode === 'add' ? 'Tambah Alamat' : 'Edit Alamat'"
+        :title="
+          modalMode === 'add' ? 'Tambah Alamat Baru' : 'Edit Alamat Pengiriman'
+        "
       >
         <template #body>
-          <div class="space-y-3">
-            <UFormField label="Label (opsional)" hint="Contoh: Rumah, Kantor">
-              <UInput v-model="form.label" placeholder="Rumah" class="w-full" />
+          <div class="space-y-4 py-1">
+            <UFormField label="Label Alamat (Contoh: Rumah, Kantor)">
+              <UInput
+                v-model="form.label"
+                placeholder="Rumah Saya"
+                class="w-full"
+              />
             </UFormField>
+
             <UFormField label="Nama Penerima" required>
               <UInput
                 v-model="form.recipientName"
-                placeholder="Nama lengkap penerima"
+                placeholder="Nama penerima paket"
                 class="w-full"
               />
             </UFormField>
-            <UFormField label="Telepon" required>
+
+            <UFormField label="Nomor Telepon" required>
               <UInput
                 v-model="form.phone"
-                placeholder="08xxxxxxxxxx"
+                placeholder="0812345678"
                 class="w-full"
               />
             </UFormField>
-            <UFormField label="Provinsi" required>
-              <USelect
-                v-model="form.provinceId"
-                :items="provinces.map((p) => ({ label: p.name, value: p.id }))"
-                placeholder="Pilih provinsi"
-                class="w-full"
-                :loading="loadingProvinces"
-              />
-            </UFormField>
-            <UFormField label="Kota/Kabupaten" required>
-              <USelect
-                v-model="form.cityId"
-                :items="cities.map((c) => ({ label: c.name, value: c.id }))"
-                placeholder="Pilih kota"
-                class="w-full"
-                :disabled="!form.provinceId"
-              />
-            </UFormField>
-            <UFormField label="Kecamatan" required>
-              <USelect
-                v-model="form.districtId"
-                :items="districts.map((d) => ({ label: d.name, value: d.id }))"
-                placeholder="Pilih kecamatan"
-                class="w-full"
-                :disabled="!form.cityId"
-              />
-            </UFormField>
-            <UFormField label="Kode Pos" required>
-              <UInput
-                v-model="form.postalCode"
-                placeholder="12345"
-                class="w-full"
-              />
-            </UFormField>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <UFormField label="Provinsi" required>
+                <USelect
+                  v-model="form.provinceId"
+                  :items="
+                    provinces.map((p) => ({ label: p.name, value: p.id }))
+                  "
+                  placeholder="Pilih provinsi"
+                  class="w-full"
+                  :loading="loadingProvinces"
+                />
+              </UFormField>
+              <UFormField label="Kota / Kabupaten" required>
+                <USelect
+                  v-model="form.cityId"
+                  :items="cities.map((c) => ({ label: c.name, value: c.id }))"
+                  placeholder="Pilih kota"
+                  class="w-full"
+                  :disabled="!form.provinceId"
+                />
+              </UFormField>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <UFormField label="Kecamatan" required>
+                <USelect
+                  v-model="form.districtId"
+                  :items="
+                    districts.map((d) => ({ label: d.name, value: d.id }))
+                  "
+                  placeholder="Pilih kecamatan"
+                  class="w-full"
+                  :disabled="!form.cityId"
+                />
+              </UFormField>
+              <UFormField label="Kode Pos" required>
+                <UInput
+                  v-model="form.postalCode"
+                  placeholder="Kode pos"
+                  class="w-full"
+                />
+              </UFormField>
+            </div>
+
             <UFormField label="Alamat Lengkap" required>
               <UTextarea
                 v-model="form.fullAddress"
-                placeholder="Nama jalan, nomor, RT/RW, dll."
+                placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan"
                 class="w-full"
                 :rows="3"
               />
             </UFormField>
-            <UCheckbox v-model="form.isDefault" label="Jadikan alamat utama" />
+
+            <div class="pt-1">
+              <UCheckbox
+                v-model="form.isDefault"
+                label="Jadikan sebagai alamat utama/default"
+              />
+            </div>
           </div>
         </template>
         <template #footer>
-          <div class="flex gap-2 justify-end">
+          <div class="flex items-center justify-end gap-3 w-full">
             <UButton
               variant="outline"
               color="neutral"
-              class="cursor-pointer"
-              @click="
-                () => {
-                  modalOpen = false;
-                }
-              "
+              class="rounded-xl font-bold cursor-pointer"
+              @click="closeModal"
             >
               Batal
             </UButton>
             <UButton
               color="primary"
+              class="rounded-xl font-extrabold px-5 cursor-pointer"
               :loading="submitting"
               :disabled="!formValid"
-              class="cursor-pointer"
               @click="submitForm"
             >
-              {{ modalMode === "add" ? "Tambah" : "Simpan" }}
+              {{ modalMode === "add" ? "Tambah Alamat" : "Simpan Perubahan" }}
             </UButton>
           </div>
         </template>

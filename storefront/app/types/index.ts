@@ -95,6 +95,7 @@ export interface OrderItem {
   qty: number;
   subtotal: number;
   rated: boolean;
+  image?: string | null;
 }
 
 export interface Order {
