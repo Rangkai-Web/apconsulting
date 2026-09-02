@@ -2,13 +2,31 @@
 import { useApi } from "~/services/api";
 
 const api = useApi();
-const { data: settingsResponse } = useAsyncData("store-settings", () =>
-  api.getSettings(),
+const { data: settingsResponse, status: settingsStatus } = useAsyncData<any>(
+  "store-settings",
+  () => api.getSettings(),
 );
-const { data: paymentMethodsResponse } = useAsyncData(
+const { data: paymentMethodsResponse } = useAsyncData<any>(
   "footer-payment-methods",
   () => api.getPaymentMethods(),
 );
+
+const logoSrc = ref<string>("");
+
+watchEffect(() => {
+  if (settingsResponse.value?.data?.logo) {
+    logoSrc.value = settingsResponse.value.data.logo;
+  } else {
+    logoSrc.value = "/BbystarGO_1.jpg";
+  }
+});
+
+function handleLogoError(e: Event) {
+  const target = e.target as HTMLImageElement;
+  if (target) {
+    target.src = "/BbystarGO_1.jpg";
+  }
+}
 
 const settings = computed(() => {
   return (
@@ -23,7 +41,6 @@ const settings = computed(() => {
     }
   );
 });
-
 const getSocialIcon = (platform: string) => {
   const icons: Record<string, string> = {
     instagram: "i-simple-icons-instagram",
@@ -59,12 +76,15 @@ const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
           <div
             class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
           >
-            <NuxtImg
-              :src="settings.logo || '/BbystarGO_1.jpg'"
+            <USkeleton v-if="settingsStatus === 'pending'" class="w-24 h-8 rounded-lg bg-white/20" />
+            <img
+              v-else
+              :src="logoSrc"
               alt="Logo BbystarGO"
-              width="40"
+              width="120"
               height="40"
               class="w-full h-full object-contain"
+              @error="handleLogoError"
             />
           </div>
         </NuxtLink>

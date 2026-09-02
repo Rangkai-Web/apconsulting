@@ -2,7 +2,7 @@
 import { useApi } from "~/services/api";
 
 const api = useApi();
-const { data: settingsResponse } = useAsyncData("store-settings", () =>
+const { data: settingsResponse } = useAsyncData<any>("store-settings", () =>
   api.getSettings(),
 );
 

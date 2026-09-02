@@ -23,6 +23,7 @@ export const useCatalogStore = defineStore("catalog", {
 
   actions: {
     async loadCategories() {
+      if (this.categories.length > 0) return;
       this.categories = await catalogService.getCategories();
     },
 

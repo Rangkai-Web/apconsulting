@@ -48,6 +48,10 @@ function unmapAddress(address: Partial<Address>): any {
   };
 }
 
+let cachedProvinces: any[] | null = null;
+const cachedCities = new Map<number, any[]>();
+const cachedDistricts = new Map<number, any[]>();
+
 export const addressService = {
   async getAddresses(): Promise<Address[]> {
     try {
@@ -91,25 +95,33 @@ export const addressService = {
   },
 
   async getProvinces(): Promise<any[]> {
+    if (cachedProvinces) return cachedProvinces;
     const response = await $fetch<{ data: any[] }>("/shipping/provinces", {
       baseURL: apiBase(),
     });
-    return response.data ?? [];
+    cachedProvinces = response.data ?? [];
+    return cachedProvinces;
   },
 
   async getCities(provinceId: number): Promise<any[]> {
+    if (cachedCities.has(provinceId)) return cachedCities.get(provinceId)!;
     const response = await $fetch<{ data: any[] }>("/shipping/cities", {
       baseURL: apiBase(),
       query: { province_id: provinceId },
     });
-    return response.data ?? [];
+    const data = response.data ?? [];
+    cachedCities.set(provinceId, data);
+    return data;
   },
 
   async getDistricts(cityId: number): Promise<any[]> {
+    if (cachedDistricts.has(cityId)) return cachedDistricts.get(cityId)!;
     const response = await $fetch<{ data: any[] }>("/shipping/districts", {
       baseURL: apiBase(),
       query: { city_id: cityId },
     });
-    return response.data ?? [];
+    const data = response.data ?? [];
+    cachedDistricts.set(cityId, data);
+    return data;
   },
 };

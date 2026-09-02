@@ -16,6 +16,8 @@ class SettingsController extends Controller
 
         $settings->wasRecentlyCreated = false;
 
-        return new SettingsResource($settings);
+        return (new SettingsResource($settings))
+            ->response()
+            ->header('Cache-Control', 'public, max-age=300');
     }
 }

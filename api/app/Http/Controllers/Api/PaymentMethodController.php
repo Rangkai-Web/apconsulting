@@ -15,6 +15,8 @@ class PaymentMethodController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        return PaymentMethodResource::collection($methods);
+        return PaymentMethodResource::collection($methods)
+            ->response()
+            ->header('Cache-Control', 'public, max-age=300');
     }
 }

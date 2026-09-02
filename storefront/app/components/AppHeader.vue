@@ -5,9 +5,27 @@ import { useAuthStore } from "~/store/auth";
 import { useApi } from "~/services/api";
 
 const api = useApi();
-const { data: settingsResponse } = useAsyncData("store-settings", () =>
-  api.getSettings(),
+const { data: settingsResponse, status: settingsStatus } = useAsyncData<any>(
+  "store-settings",
+  () => api.getSettings(),
 );
+
+const logoSrc = ref<string>("");
+
+watchEffect(() => {
+  if (settingsResponse.value?.data?.logo) {
+    logoSrc.value = settingsResponse.value.data.logo;
+  } else {
+    logoSrc.value = "/BbystarGO__1.png";
+  }
+});
+
+function handleLogoError(e: Event) {
+  const target = e.target as HTMLImageElement;
+  if (target) {
+    target.src = "/BbystarGO__1.png";
+  }
+}
 
 const settings = computed(() => {
   return (
@@ -117,12 +135,15 @@ async function handleMobileLogout() {
           <div
             class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
           >
-            <NuxtImg
-              :src="settings.logo || '/BbystarGO__1.png'"
+            <USkeleton v-if="settingsStatus === 'pending'" class="w-24 h-8 rounded-lg bg-white/20" />
+            <img
+              v-else
+              :src="logoSrc"
               alt="Logo BbystarGO"
-              width="40"
+              width="120"
               height="40"
               class="w-full h-full object-contain"
+              @error="handleLogoError"
             />
           </div>
         </NuxtLink>
@@ -238,12 +259,15 @@ async function handleMobileLogout() {
                 <div
                   class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
                 >
-                  <NuxtImg
-                    :src="settings.logo || '/BbystarGO__1.png'"
+                  <USkeleton v-if="settingsStatus === 'pending'" class="w-24 h-8 rounded-lg" />
+                  <img
+                    v-else
+                    :src="logoSrc"
                     alt="Logo BbystarGO"
-                    width="40"
+                    width="120"
                     height="40"
                     class="w-full h-full object-contain"
+                    @error="handleLogoError"
                   />
                 </div>
               </NuxtLink>

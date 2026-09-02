@@ -15,6 +15,8 @@ class BannerController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return BannerResource::collection($banners);
+        return BannerResource::collection($banners)
+            ->response()
+            ->header('Cache-Control', 'public, max-age=300');
     }
 }
