@@ -390,37 +390,39 @@ function closeAddressSlideover() {
         </div>
 
         <!-- Checkout Steps Progress -->
-        <div class="flex items-center gap-2 sm:gap-4 text-xs font-bold">
+        <div
+          class="flex items-center gap-1.5 sm:gap-3 text-[11px] sm:text-xs font-bold overflow-x-auto no-scrollbar py-0.5 shrink-0"
+        >
           <NuxtLink
             to="/cart"
-            class="flex items-center gap-2 text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200/60 shadow-2xs hover:bg-emerald-100 transition-colors"
+            class="flex items-center gap-1.5 text-emerald-600 bg-emerald-50 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-emerald-200/60 shadow-2xs hover:bg-emerald-100 transition-colors shrink-0"
           >
             <span
-              class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-black"
+              class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[9px] sm:text-[10px] font-black"
               >✓</span
             >
             <span>Keranjang</span>
           </NuxtLink>
           <UIcon
             name="i-heroicons-chevron-right"
-            class="w-4 h-4 text-gray-300 shrink-0"
+            class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-300 shrink-0"
           />
           <div
-            class="flex items-center gap-2 text-primary-600 bg-primary-50 px-3 py-1.5 rounded-full border border-primary-200/60 shadow-2xs"
+            class="flex items-center gap-1.5 text-primary-600 bg-primary-50 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-primary-200/60 shadow-2xs shrink-0"
           >
             <span
-              class="w-5 h-5 rounded-full bg-primary-600 text-white flex items-center justify-center text-[10px] font-black"
+              class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-primary-600 text-white flex items-center justify-center text-[9px] sm:text-[10px] font-black"
               >2</span
             >
             <span>Checkout</span>
           </div>
           <UIcon
             name="i-heroicons-chevron-right"
-            class="w-4 h-4 text-gray-300 shrink-0 hidden sm:block"
+            class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-300 shrink-0"
           />
-          <div class="hidden sm:flex items-center gap-2 text-gray-400">
+          <div class="flex items-center gap-1.5 text-gray-400 shrink-0">
             <span
-              class="w-5 h-5 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-[10px] font-black"
+              class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-[9px] sm:text-[10px] font-black"
               >3</span
             >
             <span>Pembayaran</span>

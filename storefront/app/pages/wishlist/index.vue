@@ -59,7 +59,7 @@ watch(() => wishlist.productIds.length, load);
       <div
         class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/80 backdrop-blur-md border border-gray-200/80 rounded-2xl p-4 shadow-xs"
       >
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 w-full">
           <div
             class="w-10 h-10 rounded-xl bg-linear-to-tr from-primary-600 to-primary-400 flex items-center justify-center text-white shadow-md shadow-primary-500/20 shrink-0"
           >
@@ -83,7 +83,7 @@ watch(() => wishlist.productIds.length, load);
 
         <!-- Wishlist Actions / Badges -->
         <div
-          class="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full"
+          class="flex flex-col sm:flex-row items-start sm:items-center justify-end gap-3 w-full"
         >
           <div
             class="flex items-center gap-2 bg-primary-50 border border-primary-200/60 px-3.5 py-1.5 rounded-full text-xs font-extrabold text-primary-700"
