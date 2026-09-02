@@ -31,7 +31,7 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: { lang: "id" },
       title: "BbystarGO — Jasa Pembelian Barang & Ready Stock",
-      titleTemplate: "%s | BbystarGO",
+      titleTemplate: "BbystarGO",
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
       meta: [
         {
@@ -39,24 +39,36 @@ export default defineNuxtConfig({
           content:
             "BbystarGO — jasa pembelian barang dari Indonesia, Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock & Pre Order, aman dan terpercaya.",
         },
-        { property: "og:title", content: "BbystarGO — Jasa Pembelian Barang & Ready Stock" },
+        {
+          property: "og:title",
+          content: "BbystarGO — Jasa Pembelian Barang & Ready Stock",
+        },
         {
           property: "og:description",
           content:
             "BbystarGO — jasa pembelian barang dari Indonesia, Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock & Pre Order, aman dan terpercaya.",
         },
-        { property: "og:image", content: "https://bbystargo.com/BbystarGO_1.jpg" },
+        {
+          property: "og:image",
+          content: "https://bbystargo.com/BbystarGO_1.jpg",
+        },
         { property: "og:site_name", content: "BbystarGO" },
         { property: "og:type", content: "website" },
         { property: "og:locale", content: "id_ID" },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: "BbystarGO — Jasa Pembelian Barang & Ready Stock" },
+        {
+          name: "twitter:title",
+          content: "BbystarGO — Jasa Pembelian Barang & Ready Stock",
+        },
         {
           name: "twitter:description",
           content:
             "BbystarGO — jasa pembelian barang dari Indonesia, Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock & Pre Order, aman dan terpercaya.",
         },
-        { name: "twitter:image", content: "https://bbystargo.com/BbystarGO_1.jpg" },
+        {
+          name: "twitter:image",
+          content: "https://bbystargo.com/BbystarGO_1.jpg",
+        },
       ],
     },
   },
