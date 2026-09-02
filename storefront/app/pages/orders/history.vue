@@ -327,7 +327,9 @@ function copyOrderNumber(orderNum: string) {
             <div
               class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-3.5"
             >
-              <div class="flex items-center gap-3">
+              <div
+                class="flex flex-col sm:flex-row items-start sm:items-center sm:gap-3"
+              >
                 <div class="flex items-center gap-2">
                   <span class="text-xs font-black text-gray-900 tracking-tight">
                     {{ order.orderNumber }}
@@ -344,7 +346,9 @@ function copyOrderNumber(orderNum: string) {
                     />
                   </button>
                 </div>
-                <span class="text-gray-300 text-xs font-bold">•</span>
+                <span class="text-gray-300 text-xs font-bold hidden sm:block">
+                  •</span
+                >
                 <span class="text-xs text-gray-500 font-semibold">
                   {{ formatDate(order.createdAt) }}
                 </span>
@@ -371,7 +375,11 @@ function copyOrderNumber(orderNum: string) {
                     :alt="order.items[0].productName"
                     class="w-full h-full object-cover"
                   />
-                  <UIcon v-else name="i-heroicons-shopping-bag" class="w-6 h-6" />
+                  <UIcon
+                    v-else
+                    name="i-heroicons-shopping-bag"
+                    class="w-6 h-6"
+                  />
                 </div>
 
                 <div class="min-w-0 space-y-1">

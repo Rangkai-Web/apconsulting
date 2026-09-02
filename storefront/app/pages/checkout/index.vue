@@ -43,79 +43,6 @@ const addressForm = reactive({
   isDefault: false,
 });
 
-// Guest checkout form state
-const guestForm = reactive({
-  name: "",
-  email: "",
-  phone: "",
-  recipientName: "",
-  recipientPhone: "",
-  provinceId: null as number | null,
-  provinceName: "",
-  cityId: null as number | null,
-  cityName: "",
-  districtId: null as number | null,
-  districtName: "",
-  postalCode: "",
-  fullAddress: "",
-});
-
-const guestFieldErrors = reactive({
-  name: "",
-  email: "",
-  phone: "",
-  recipientName: "",
-  recipientPhone: "",
-  provinceId: "",
-  cityId: "",
-  districtId: "",
-  postalCode: "",
-  fullAddress: "",
-});
-
-// Clear a field's error as soon as the user fills it in
-watch(
-  guestForm,
-  () => {
-    for (const key of Object.keys(
-      guestFieldErrors,
-    ) as (keyof typeof guestFieldErrors)[]) {
-      if (guestForm[key]) guestFieldErrors[key] = "";
-    }
-  },
-  { deep: true },
-);
-
-// Validate every guest field so the user sees exactly which one is wrong
-function validateGuestForm(): boolean {
-  (Object.keys(guestFieldErrors) as (keyof typeof guestFieldErrors)[]).forEach(
-    (key) => {
-      guestFieldErrors[key] = "";
-    },
-  );
-
-  if (!guestForm.name) guestFieldErrors.name = "Nama wajib diisi.";
-  if (!guestForm.email) guestFieldErrors.email = "Email wajib diisi.";
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(guestForm.email))
-    guestFieldErrors.email = "Format email tidak valid.";
-  if (!guestForm.phone) guestFieldErrors.phone = "No. telepon wajib diisi.";
-  if (!guestForm.recipientName)
-    guestFieldErrors.recipientName = "Nama penerima wajib diisi.";
-  if (!guestForm.recipientPhone)
-    guestFieldErrors.recipientPhone = "No. telp penerima wajib diisi.";
-  if (!guestForm.provinceId)
-    guestFieldErrors.provinceId = "Provinsi wajib dipilih.";
-  if (!guestForm.cityId) guestFieldErrors.cityId = "Kota wajib dipilih.";
-  if (!guestForm.districtId)
-    guestFieldErrors.districtId = "Kecamatan wajib dipilih.";
-  if (!guestForm.postalCode)
-    guestFieldErrors.postalCode = "Kode pos wajib diisi.";
-  if (!guestForm.fullAddress)
-    guestFieldErrors.fullAddress = "Alamat lengkap wajib diisi.";
-
-  return Object.values(guestFieldErrors).every((e) => !e);
-}
-
 // Shipping courier options
 const couriersList = [
   { code: "jne", name: "JNE Express" },
@@ -129,24 +56,16 @@ const loadingShipping = ref(false);
 const selectedService = ref<any | null>(null);
 
 // Getters
-const isLoggedIn = computed(() => authStore.isLoggedIn);
 const selectedAddress = computed(() => {
-  if (isLoggedIn.value) {
-    return (
-      addresses.value.find((a) => a.id === selectedAddressId.value) || null
-    );
-  }
-  return null;
+  return (
+    addresses.value.find((a) => a.id === selectedAddressId.value) || null
+  );
 });
 
 const isSubmitDisabled = computed(() => {
   if (cart.items.length === 0) return true;
   if (loading.value) return true;
-
-  if (isLoggedIn.value) {
-    if (!selectedAddressId.value) return true;
-  }
-
+  if (!selectedAddressId.value) return true;
   if (!selectedCourier.value || !selectedService.value) return true;
 
   return false;
@@ -210,71 +129,6 @@ watch(
   },
 );
 
-// Watchers for cascading dropdowns - Guest Address Form
-const guestCities = ref<any[]>([]);
-const guestDistricts = ref<any[]>([]);
-
-watch(
-  () => guestForm.provinceId,
-  async (newVal) => {
-    guestCities.value = [];
-    guestDistricts.value = [];
-    guestForm.cityId = null;
-    guestForm.cityName = "";
-    guestForm.districtId = null;
-    guestForm.districtName = "";
-    if (newVal) {
-      const prov = provinces.value.find((p) => p.id === newVal);
-      guestForm.provinceName = prov ? prov.name : "";
-      try {
-        guestCities.value = await addressService.getCities(newVal);
-      } catch {
-        toast.add({
-          title: "Gagal memuat daftar kota",
-          description: "Terjadi kesalahan, coba pilih ulang provinsi.",
-          color: "error",
-        });
-      }
-    }
-  },
-);
-
-watch(
-  () => guestForm.cityId,
-  async (newVal) => {
-    guestDistricts.value = [];
-    guestForm.districtId = null;
-    guestForm.districtName = "";
-    if (newVal) {
-      const city = guestCities.value.find((c) => c.id === newVal);
-      guestForm.cityName = city ? city.name : "";
-      try {
-        guestDistricts.value = await addressService.getDistricts(newVal);
-      } catch {
-        toast.add({
-          title: "Gagal memuat daftar kecamatan",
-          description: "Terjadi kesalahan, coba pilih ulang kota.",
-          color: "error",
-        });
-      }
-    }
-  },
-);
-
-watch(
-  () => guestForm.districtId,
-  (newVal) => {
-    if (newVal) {
-      const dist = guestDistricts.value.find((d) => d.id === newVal);
-      guestForm.districtName = dist ? dist.name : "";
-      // Reset selected courier service as destination district changed
-      selectedService.value = null;
-      shippingServices.value = [];
-      if (selectedCourier.value) fetchShippingCost();
-    }
-  },
-);
-
 // Initial load
 const loadingInitial = ref(false);
 
@@ -285,10 +139,7 @@ onMounted(async () => {
   try {
     // Load provinces for forms
     provinces.value = await addressService.getProvinces();
-
-    if (isLoggedIn.value) {
-      await loadAddresses();
-    }
+    await loadAddresses();
   } catch {
     toast.add({
       title: "Gagal memuat data checkout",
@@ -321,9 +172,7 @@ watch(selectedAddressId, () => {
 
 // Fetch shipping costs from RajaOngkir API proxy
 async function fetchShippingCost() {
-  const destinationId = isLoggedIn.value
-    ? selectedAddress.value?.rajaongkirDistrictId
-    : guestForm.districtId;
+  const destinationId = selectedAddress.value?.rajaongkirDistrictId;
 
   if (!destinationId) return;
 
@@ -444,15 +293,11 @@ async function saveAddress() {
   }
 }
 
-// Build order detail URL with guest email if not logged in
 function orderUrl(
   orderNumber: string,
   extra: Record<string, string> = {},
 ): string {
   const params = new URLSearchParams(extra);
-  if (!isLoggedIn.value && guestForm.email) {
-    params.set("email", guestForm.email);
-  }
   const qs = params.toString();
   return `/orders/${orderNumber}${qs ? `?${qs}` : ""}`;
 }
@@ -461,42 +306,16 @@ function orderUrl(
 async function handleCheckout() {
   if (isSubmitDisabled.value) return;
 
-  if (!isLoggedIn.value && !validateGuestForm()) {
-    toast.add({
-      title: "Lengkapi Data Pengiriman",
-      description: "Mohon periksa kembali field yang ditandai merah.",
-      color: "error",
-    });
-    return;
-  }
-
   loading.value = true;
 
   try {
-    let orderPayload: any = {
+    const orderPayload = {
       items: cart.items.map((i) => ({ variantId: i.variantId, qty: i.qty })),
+      addressId: selectedAddressId.value,
       courier: selectedCourier.value,
       courierService: selectedService.value.service,
       shippingCost: selectedService.value.cost,
     };
-
-    if (isLoggedIn.value) {
-      orderPayload.addressId = selectedAddressId.value;
-    } else {
-      orderPayload.guestName = guestForm.name;
-      orderPayload.guestEmail = guestForm.email;
-      orderPayload.guestPhone = guestForm.phone;
-      orderPayload.shippingAddress = {
-        recipientName: guestForm.recipientName,
-        phone: guestForm.recipientPhone,
-        province: guestForm.provinceName,
-        city: guestForm.cityName,
-        district: guestForm.districtName,
-        postalCode: guestForm.postalCode,
-        fullAddress: guestForm.fullAddress,
-        rajaongkirDistrictId: guestForm.districtId,
-      };
-    }
 
     // Submit Order
     const { orderNumber } = await orderService.createOrder(orderPayload);
@@ -632,9 +451,9 @@ function closeAddressSlideover() {
             class="bg-white/90 backdrop-blur-md border border-gray-200/80 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6"
           >
             <div
-              class="flex items-center justify-between border-b border-gray-100 pb-4"
+              class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-gray-100 pb-4"
             >
-              <div class="flex items-center gap-3">
+              <div class="flex items-center gap-3 mt-4 sm:mt-0">
                 <span
                   class="w-8 h-8 rounded-full bg-linear-to-tr from-primary-600 to-primary-400 text-white flex items-center justify-center text-xs font-black shadow-md shadow-primary-500/20"
                 >
@@ -653,11 +472,10 @@ function closeAddressSlideover() {
               </div>
 
               <UButton
-                v-if="isLoggedIn"
                 icon="i-heroicons-plus"
                 color="primary"
                 variant="solid"
-                class="rounded-xl font-bold cursor-pointer shadow-sm text-xs"
+                class="rounded-xl font-bold cursor-pointer shadow-sm text-xs mt-4 sm:mt-0"
                 @click="openAddressSlideover"
               >
                 Tambah Alamat
@@ -665,7 +483,7 @@ function closeAddressSlideover() {
             </div>
 
             <!-- Member View: Address Cards Grid -->
-            <div v-if="isLoggedIn" class="space-y-4">
+            <div class="space-y-4">
               <div
                 v-if="loadingInitial"
                 class="grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -762,175 +580,15 @@ function closeAddressSlideover() {
                 </div>
               </div>
             </div>
-
-            <!-- Guest View: Contact & Address Input Form -->
-            <div v-else class="space-y-6">
-              <div
-                class="bg-primary-50/30 border border-primary-100/80 rounded-2xl p-5 space-y-4"
-              >
-                <h3
-                  class="text-xs uppercase font-extrabold tracking-wider text-primary-800 flex items-center gap-1.5"
-                >
-                  <UIcon
-                    name="i-heroicons-user"
-                    class="w-4 h-4 text-primary-600"
-                  />
-                  <span>Informasi Pemesan (Guest)</span>
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <UFormField
-                    label="Nama Lengkap"
-                    required
-                    :error="guestFieldErrors.name || undefined"
-                  >
-                    <UInput
-                      v-model="guestForm.name"
-                      placeholder="Masukkan nama Anda"
-                      class="w-full"
-                    />
-                  </UFormField>
-                  <UFormField
-                    label="Email Aktif"
-                    required
-                    :error="guestFieldErrors.email || undefined"
-                  >
-                    <UInput
-                      v-model="guestForm.email"
-                      type="email"
-                      placeholder="email@domain.com"
-                      class="w-full"
-                    />
-                  </UFormField>
-                  <UFormField
-                    label="Nomor Telepon"
-                    required
-                    :error="guestFieldErrors.phone || undefined"
-                  >
-                    <UInput
-                      v-model="guestForm.phone"
-                      placeholder="0812345678"
-                      class="w-full"
-                    />
-                  </UFormField>
-                </div>
-              </div>
-
-              <div class="space-y-4">
-                <h3
-                  class="text-xs uppercase font-extrabold tracking-wider text-gray-800 flex items-center gap-1.5"
-                >
-                  <UIcon
-                    name="i-heroicons-map-pin"
-                    class="w-4 h-4 text-primary-600"
-                  />
-                  <span>Alamat Lengkap Pengiriman</span>
-                </h3>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <UFormField
-                    label="Nama Penerima"
-                    required
-                    :error="guestFieldErrors.recipientName || undefined"
-                  >
-                    <UInput
-                      v-model="guestForm.recipientName"
-                      placeholder="Nama penerima paket"
-                      class="w-full"
-                    />
-                  </UFormField>
-                  <UFormField
-                    label="No. Telp Penerima"
-                    required
-                    :error="guestFieldErrors.recipientPhone || undefined"
-                  >
-                    <UInput
-                      v-model="guestForm.recipientPhone"
-                      placeholder="No. HP penerima"
-                      class="w-full"
-                    />
-                  </UFormField>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <UFormField
-                    label="Provinsi"
-                    required
-                    :error="guestFieldErrors.provinceId || undefined"
-                  >
-                    <USelect
-                      v-model="guestForm.provinceId"
-                      :items="provinces"
-                      placeholder="Pilih Provinsi"
-                      class="w-full"
-                      label-key="name"
-                      value-key="id"
-                    />
-                  </UFormField>
-                  <UFormField
-                    label="Kota / Kabupaten"
-                    required
-                    :error="guestFieldErrors.cityId || undefined"
-                  >
-                    <USelect
-                      v-model="guestForm.cityId"
-                      :items="guestCities"
-                      placeholder="Pilih Kota"
-                      class="w-full"
-                      :disabled="!guestForm.provinceId"
-                      label-key="name"
-                      value-key="id"
-                    />
-                  </UFormField>
-                  <UFormField
-                    label="Kecamatan"
-                    required
-                    :error="guestFieldErrors.districtId || undefined"
-                  >
-                    <USelect
-                      v-model="guestForm.districtId"
-                      :items="guestDistricts"
-                      placeholder="Pilih Kecamatan"
-                      class="w-full"
-                      :disabled="!guestForm.cityId"
-                      label-key="name"
-                      value-key="id"
-                    />
-                  </UFormField>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-[1fr_160px] gap-4">
-                  <UFormField
-                    label="Alamat Jalan / Rumah"
-                    required
-                    :error="guestFieldErrors.fullAddress || undefined"
-                  >
-                    <UTextarea
-                      v-model="guestForm.fullAddress"
-                      placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan"
-                      class="w-full"
-                    />
-                  </UFormField>
-                  <UFormField
-                    label="Kode Pos"
-                    required
-                    :error="guestFieldErrors.postalCode || undefined"
-                  >
-                    <UInput
-                      v-model="guestForm.postalCode"
-                      placeholder="Kode pos"
-                      class="w-full"
-                    />
-                  </UFormField>
-                </div>
-              </div>
-            </div>
           </div>
 
           <!-- STEP 2: Kurir & Layanan Pengiriman -->
           <div
             class="bg-white/90 backdrop-blur-md border border-gray-200/80 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6"
           >
-            <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
+            <div
+              class="flex flex-col sm:flex-row items-start sm:items-center gap-3 border-b border-gray-100 pb-4"
+            >
               <span
                 class="w-8 h-8 rounded-full bg-linear-to-tr from-primary-600 to-primary-400 text-white flex items-center justify-center text-xs font-black shadow-md shadow-primary-500/20"
               >
@@ -950,7 +608,7 @@ function closeAddressSlideover() {
 
             <!-- Lock Message if Address not selected -->
             <div
-              v-if="isLoggedIn ? !selectedAddressId : !guestForm.districtId"
+              v-if="!selectedAddressId"
               class="text-center py-8 bg-gray-50/60 rounded-2xl border border-dashed border-gray-200 text-gray-400 text-xs font-semibold space-y-2"
             >
               <UIcon

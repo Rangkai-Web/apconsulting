@@ -154,7 +154,9 @@ async function savePassword() {
         </div>
 
         <!-- Account Tab Navigation Bar -->
-        <div class="flex items-center gap-2 border-t border-gray-100 pt-4">
+        <div
+          class="flex flex-col sm:flex-row items-start sm:items-center gap-2 border-t border-gray-100 pt-4"
+        >
           <NuxtLink
             v-for="tab in tabs"
             :key="tab.to"

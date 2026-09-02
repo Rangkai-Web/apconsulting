@@ -9,6 +9,16 @@ const catalogStore = useCatalogStore();
 const featured = ref<Product[]>([]);
 const loadingFeatured = ref(true);
 const categoriesList = ref<any[]>([]);
+const categoriesContainer = ref<HTMLElement | null>(null);
+
+function scrollCategories(direction: "left" | "right") {
+  if (!categoriesContainer.value) return;
+  const scrollAmount = categoriesContainer.value.clientWidth * 0.75;
+  categoriesContainer.value.scrollBy({
+    left: direction === "left" ? -scrollAmount : scrollAmount,
+    behavior: "smooth",
+  });
+}
 
 const { data: bannersResponse } = useAsyncData("homepage-banners", () =>
   api.getBanners(),
@@ -538,21 +548,49 @@ onMounted(async () => {
       v-if="categoriesList.length > 0"
       class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-20"
     >
-      <div class="text-center max-w-xl mx-auto mb-8">
-        <h2 class="text-xl md:text-2xl font-black text-gray-900 tracking-tight">
-          Cari Favoritmu
-        </h2>
-        <p class="text-xs text-gray-400 font-semibold mt-1">
-          Pilih kategori merchandise yang paling Anda sukai
-        </p>
+      <div class="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4 mb-6">
+        <div class="text-center sm:text-left max-w-xl">
+          <h2 class="text-xl md:text-2xl font-black text-gray-900 tracking-tight">
+            Cari Favoritmu
+          </h2>
+          <p class="text-xs text-gray-400 font-semibold mt-1">
+            Pilih kategori merchandise yang paling Anda sukai
+          </p>
+        </div>
+
+        <!-- Scroll navigation buttons -->
+        <div class="flex items-center gap-2 shrink-0">
+          <UButton
+            icon="i-heroicons-chevron-left-20-solid"
+            color="neutral"
+            variant="soft"
+            size="sm"
+            aria-label="Scroll Kiri"
+            class="rounded-full cursor-pointer hover:bg-gray-200 transition-colors"
+            @click="scrollCategories('left')"
+          />
+          <UButton
+            icon="i-heroicons-chevron-right-20-solid"
+            color="neutral"
+            variant="soft"
+            size="sm"
+            aria-label="Scroll Kanan"
+            class="rounded-full cursor-pointer hover:bg-gray-200 transition-colors"
+            @click="scrollCategories('right')"
+          />
+        </div>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+      <!-- Slidable Container -->
+      <div
+        ref="categoriesContainer"
+        class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory py-2 px-1 scroll-smooth"
+      >
         <NuxtLink
           v-for="cat in categoriesList"
           :key="cat.name"
           :to="`/katalog?category=${cat.slug}`"
-          class="flex flex-col items-center justify-center p-5 bg-white border border-primary-100/50 rounded-2xl shadow-xs hover:border-primary-300/80 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group"
+          class="shrink-0 w-36 sm:w-44 md:w-48 flex flex-col items-center justify-center p-5 bg-white border border-primary-100/50 rounded-2xl shadow-xs hover:border-primary-300/80 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group snap-start cursor-pointer"
         >
           <div
             :class="cat.bg"
@@ -561,9 +599,10 @@ onMounted(async () => {
             <UIcon :name="cat.icon" class="w-6 h-6" />
           </div>
           <span
-            class="text-xs font-bold text-gray-700 group-hover:text-primary-500 transition-colors"
-            >{{ cat.name }}</span
+            class="text-xs font-bold text-gray-700 group-hover:text-primary-500 transition-colors text-center truncate max-w-full"
           >
+            {{ cat.name }}
+          </span>
         </NuxtLink>
       </div>
     </section>

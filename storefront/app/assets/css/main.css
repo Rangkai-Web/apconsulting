@@ -71,3 +71,11 @@ h1, h2, h3, h4, h5, h6 {
   animation: slow-spin 25s linear infinite;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

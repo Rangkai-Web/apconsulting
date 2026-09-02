@@ -66,19 +66,25 @@ watch(() => wishlist.productIds.length, load);
             <UIcon name="i-heroicons-heart" class="w-5 h-5" />
           </div>
           <div>
-            <div class="flex items-center gap-2 text-xs font-semibold text-gray-500">
+            <div
+              class="flex items-center gap-2 text-xs font-semibold text-gray-500"
+            >
               <NuxtLink to="/" class="hover:text-primary-600">Beranda</NuxtLink>
               <span>/</span>
               <span class="text-primary-600 font-bold">Wishlist Saya</span>
             </div>
-            <h1 class="text-lg md:text-xl font-black text-gray-900 tracking-tight">
+            <h1
+              class="text-lg md:text-xl font-black text-gray-900 tracking-tight"
+            >
               Koleksi Favorit Saya
             </h1>
           </div>
         </div>
 
         <!-- Wishlist Actions / Badges -->
-        <div class="flex items-center gap-3">
+        <div
+          class="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full"
+        >
           <div
             class="flex items-center gap-2 bg-primary-50 border border-primary-200/60 px-3.5 py-1.5 rounded-full text-xs font-extrabold text-primary-700"
           >
@@ -122,11 +128,16 @@ watch(() => wishlist.productIds.length, load);
           >
             Koleksi Produk Pilihan
           </span>
-          <h2 class="text-2xl md:text-3xl font-black tracking-tight leading-tight">
+          <h2
+            class="text-2xl md:text-3xl font-black tracking-tight leading-tight"
+          >
             Produk Impian Anda Dalam Satu Tempat
           </h2>
-          <p class="text-xs md:text-sm text-white/95 leading-relaxed font-medium pt-1">
-            Simpan produk Ready Stock &amp; Pre Order favoritmu dari Korea, China, Jepang, dan Indonesia untuk dibeli kapan saja.
+          <p
+            class="text-xs md:text-sm text-white/95 leading-relaxed font-medium pt-1"
+          >
+            Simpan produk Ready Stock &amp; Pre Order favoritmu dari Korea,
+            China, Jepang, dan Indonesia untuk dibeli kapan saja.
           </p>
         </div>
       </div>

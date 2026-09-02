@@ -341,7 +341,7 @@ function cancelDeleteConfirm() {
           <UButton
             icon="i-heroicons-plus"
             color="primary"
-            class="rounded-xl font-extrabold text-xs px-4 py-2 cursor-pointer shadow-md shadow-primary-500/20"
+            class="w-fit rounded-xl font-extrabold text-xs px-4 py-2 cursor-pointer shadow-md shadow-primary-500/20"
             @click="openAdd"
           >
             Tambah Alamat Baru
@@ -349,7 +349,9 @@ function cancelDeleteConfirm() {
         </div>
 
         <!-- Account Tab Navigation Bar -->
-        <div class="flex items-center gap-2 border-t border-gray-100 pt-4">
+        <div
+          class="flex flex-col sm:flex-row items-start sm:items-center gap-2 border-t border-gray-100 pt-4"
+        >
           <NuxtLink
             v-for="tab in tabs"
             :key="tab.to"
@@ -531,6 +533,7 @@ function cancelDeleteConfirm() {
       <!-- Add / Edit Modal -->
       <UModal
         v-model:open="modalOpen"
+        class="max-w-2xl"
         :title="
           modalMode === 'add' ? 'Tambah Alamat Baru' : 'Edit Alamat Pengiriman'
         "
