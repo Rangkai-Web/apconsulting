@@ -135,7 +135,10 @@ async function handleMobileLogout() {
           <div
             class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
           >
-            <USkeleton v-if="settingsStatus === 'pending'" class="w-24 h-8 rounded-lg bg-white/20" />
+            <USkeleton
+              v-if="settingsStatus === 'pending'"
+              class="w-24 h-8 rounded-lg bg-white/20"
+            />
             <img
               v-else
               :src="logoSrc"
@@ -244,12 +247,10 @@ async function handleMobileLogout() {
     <!-- Mobile Slideover Navigation (Burger drawer) -->
     <USlideover v-model:open="mobileNavOpen" side="left">
       <template #content>
-        <div
-          class="p-6 space-y-6 h-full flex flex-col justify-between bg-white"
-        >
+        <div class="p-6 space-y-6 h-full flex flex-col justify-between">
           <div class="space-y-6">
             <div
-              class="flex items-center justify-between pb-4 border-b border-primary-100"
+              class="flex items-center justify-between p-4 border-b border-primary-300 bg-primary-500"
             >
               <NuxtLink
                 to="/"
@@ -259,7 +260,10 @@ async function handleMobileLogout() {
                 <div
                   class="w-auto max-w-30 h-10 shrink-0 flex items-center justify-center"
                 >
-                  <USkeleton v-if="settingsStatus === 'pending'" class="w-24 h-8 rounded-lg" />
+                  <USkeleton
+                    v-if="settingsStatus === 'pending'"
+                    class="w-24 h-8 rounded-lg"
+                  />
                   <img
                     v-else
                     :src="logoSrc"
@@ -276,7 +280,7 @@ async function handleMobileLogout() {
                 color="neutral"
                 variant="ghost"
                 aria-label="Tutup menu"
-                class="hover:bg-gray-100 rounded-lg"
+                class="hover:bg-gray-100 rounded-lg text-white"
                 @click="
                   () => {
                     mobileNavOpen = false;
