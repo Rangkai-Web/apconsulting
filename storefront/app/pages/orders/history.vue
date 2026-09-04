@@ -121,6 +121,7 @@ async function handleGuestLookup() {
 
 function getStatusBadgeColor(
   status: string,
+  paymentStatus?: string,
 ):
   | "error"
   | "primary"
@@ -129,7 +130,16 @@ function getStatusBadgeColor(
   | "info"
   | "warning"
   | "neutral" {
-  switch (status.toLowerCase()) {
+  const st = status.toLowerCase();
+  const paySt = (paymentStatus || "").toLowerCase();
+
+  if (st === "ready_to_ship") {
+    if (paySt === "paid") return "success";
+    if (paySt === "awaiting_verification") return "info";
+    return "warning";
+  }
+
+  switch (st) {
     case "paid":
       return "primary";
     case "processing":
@@ -139,8 +149,6 @@ function getStatusBadgeColor(
     case "shipped_to_indonesia":
     case "arrived_at_indonesia":
       return "warning";
-    case "ready_to_ship":
-      return "primary";
     case "shipped":
     case "completed":
       return "success";
@@ -154,8 +162,17 @@ function getStatusBadgeColor(
   }
 }
 
-function getStatusLabel(status: string): string {
-  switch (status.toLowerCase()) {
+function getStatusLabel(status: string, paymentStatus?: string): string {
+  const st = status.toLowerCase();
+  const paySt = (paymentStatus || "").toLowerCase();
+
+  if (st === "ready_to_ship") {
+    if (paySt === "paid") return "Siap Dikirim";
+    if (paySt === "awaiting_verification") return "Menunggu Verifikasi Pelunasan";
+    return "Siap Dikirim (Perlu Pelunasan)";
+  }
+
+  switch (st) {
     case "paid":
       return "Terbayar";
     case "processing":
@@ -169,12 +186,13 @@ function getStatusLabel(status: string): string {
     case "arrived_at_indonesia":
       return "Tiba di Gudang Indonesia";
     case "ready_to_ship":
-      return "Siap Dikirim (Perlu Pelunasan)";
+      return "Siap Dikirim";
     case "shipped":
       return "Dalam Pengiriman";
     case "completed":
       return "Selesai";
     case "pending":
+      if (paySt === "awaiting_verification") return "Menunggu Verifikasi Pembayaran";
       return "Menunggu Pembayaran";
     case "cancelled":
       return "Dibatalkan";
@@ -355,11 +373,11 @@ function copyOrderNumber(orderNum: string) {
               </div>
 
               <UBadge
-                :color="getStatusBadgeColor(order.orderStatus)"
+                :color="getStatusBadgeColor(order.orderStatus, order.paymentStatus)"
                 size="md"
                 class="font-black w-fit rounded-full px-3 py-1 text-[11px]"
               >
-                {{ getStatusLabel(order.orderStatus) }}
+                {{ getStatusLabel(order.orderStatus, order.paymentStatus) }}
               </UBadge>
             </div>
 
@@ -416,12 +434,31 @@ function copyOrderNumber(orderNum: string) {
                 <div class="text-right">
                   <span
                     class="text-[10px] text-gray-400 font-semibold uppercase block"
-                    >Total Tagihan</span
+                    >Total Pesanan</span
                   >
                   <span
-                    class="text-base sm:text-lg font-black text-primary-600"
+                    class="text-base sm:text-lg font-black text-primary-600 block"
                   >
-                    {{ format(order.total) }}
+                    {{ format(order.total + (order.remainingBalance ?? 0)) }}
+                  </span>
+                  <span
+                    v-if="order.remainingBalance && order.remainingBalance > 0 && order.orderStatus === 'ready_to_ship'"
+                    class="text-[10px] font-bold block"
+                    :class="
+                      order.paymentStatus === 'paid'
+                        ? 'text-emerald-600'
+                        : order.paymentStatus === 'awaiting_verification'
+                          ? 'text-amber-600'
+                          : 'text-red-500'
+                    "
+                  >
+                    {{
+                      order.paymentStatus === 'paid'
+                        ? 'Lunas'
+                        : order.paymentStatus === 'awaiting_verification'
+                          ? 'Verifikasi Pelunasan (' + format(order.remainingBalance) + ')'
+                          : 'Sisa Pelunasan: ' + format(order.remainingBalance)
+                    }}
                   </span>
                 </div>
 

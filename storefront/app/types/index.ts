@@ -127,6 +127,16 @@ export interface Order {
   } | null;
 }
 
+export interface PaymentMethod {
+  id: number;
+  label: string;
+  account_number: string | null;
+  account_holder: string | null;
+  qr_image: string | null;
+  instructions: string | null;
+  sort_order: number;
+}
+
 export interface PaginatedResult<T> {
   data: T[];
   hasMore: boolean;

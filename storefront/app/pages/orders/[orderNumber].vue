@@ -2,7 +2,7 @@
 import { orderService } from "~/services/orderService";
 import { useCurrency } from "~/composables/useCurrency";
 import { useApi } from "~/services/api";
-import type { Order, OrderItem } from "~/types";
+import type { Order, OrderItem, PaymentMethod } from "~/types";
 
 const route = useRoute();
 const { format } = useCurrency();
@@ -19,6 +19,11 @@ const { data: paymentMethodsResponse } = useAsyncData("payment-methods", () =>
   api.getPaymentMethods(),
 );
 const paymentMethods = computed(() => paymentMethodsResponse.value?.data ?? []);
+const qrisMethod = computed<PaymentMethod | undefined>(() =>
+  paymentMethods.value.find((m: PaymentMethod) =>
+    m.label.toLowerCase().includes("qris"),
+  ),
+);
 
 const { data: settingsResponse } = useAsyncData("store-settings-order", () =>
   api.getSettings(),
@@ -217,6 +222,7 @@ function whatsappConfirmUrl(): string {
 
 function getStatusBadgeColor(
   status: string,
+  paymentStatus?: string,
 ):
   | "error"
   | "primary"
@@ -225,7 +231,16 @@ function getStatusBadgeColor(
   | "info"
   | "warning"
   | "neutral" {
-  switch (status.toLowerCase()) {
+  const st = status.toLowerCase();
+  const paySt = (paymentStatus || order.value?.paymentStatus || "").toLowerCase();
+
+  if (st === "ready_to_ship") {
+    if (paySt === "paid") return "success";
+    if (paySt === "awaiting_verification") return "info";
+    return "warning";
+  }
+
+  switch (st) {
     case "paid":
       return "primary";
     case "processing":
@@ -238,8 +253,6 @@ function getStatusBadgeColor(
       return "warning";
     case "arrived_at_indonesia":
       return "warning";
-    case "ready_to_ship":
-      return "primary";
     case "shipped":
       return "success";
     case "completed":
@@ -254,8 +267,17 @@ function getStatusBadgeColor(
   }
 }
 
-function getStatusLabel(status: string): string {
-  switch (status.toLowerCase()) {
+function getStatusLabel(status: string, paymentStatus?: string): string {
+  const st = status.toLowerCase();
+  const paySt = (paymentStatus || order.value?.paymentStatus || "").toLowerCase();
+
+  if (st === "ready_to_ship") {
+    if (paySt === "paid") return "Siap Dikirim";
+    if (paySt === "awaiting_verification") return "Menunggu Verifikasi Pelunasan";
+    return "Siap Dikirim (Perlu Pelunasan)";
+  }
+
+  switch (st) {
     case "processing":
       return "Diproses";
     case "ordered":
@@ -266,13 +288,12 @@ function getStatusLabel(status: string): string {
       return "Pengiriman ke Indonesia";
     case "arrived_at_indonesia":
       return "Tiba di Warehouse Indonesia";
-    case "ready_to_ship":
-      return "Siap Dikirim (Menunggu Pelunasan)";
     case "shipped":
       return "Dikirim";
     case "completed":
       return "Selesai";
     case "pending":
+      if (paySt === "awaiting_verification") return "Menunggu Verifikasi Pembayaran";
       return "Menunggu Pembayaran";
     case "cancelled":
       return "Dibatalkan";
@@ -427,13 +448,13 @@ function getTimelineStep(status: string): number {
                   />
                 </button>
                 <UBadge
-                  :color="getStatusBadgeColor(order.orderStatus)"
+                  :color="getStatusBadgeColor(order.orderStatus, order.paymentStatus)"
                   size="md"
                   class="font-extrabold px-3 py-1 rounded-full uppercase tracking-wider"
                 >
                   <span class="flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
-                    {{ getStatusLabel(order.orderStatus) }}
+                    {{ getStatusLabel(order.orderStatus, order.paymentStatus) }}
                   </span>
                 </UBadge>
               </div>
@@ -805,6 +826,20 @@ function getTimelineStep(status: string): number {
                           class="h-9 max-w-[70px] object-contain"
                         />
                       </div>
+                    </div>
+
+                    <!-- Instruksi Tambahan -->
+                    <div
+                      v-if="method.instructions"
+                      class="mt-3 pt-2.5 border-t border-gray-200/60 text-[11px] text-amber-900 bg-amber-50/70 border border-amber-200/70 rounded-xl p-2.5 flex items-start gap-1.5 leading-snug"
+                    >
+                      <UIcon
+                        name="i-heroicons-information-circle"
+                        class="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5"
+                      />
+                      <span class="font-medium whitespace-pre-line">{{
+                        method.instructions
+                      }}</span>
                     </div>
                   </div>
                 </div>
@@ -1247,6 +1282,18 @@ function getTimelineStep(status: string): number {
             <p class="text-[9px] text-gray-400 font-semibold mt-1">
               NMID: ID1025372942546
             </p>
+          </div>
+          <div
+            v-if="qrisMethod?.instructions"
+            class="bg-amber-50/70 border border-amber-200/70 rounded-xl p-2.5 max-w-xs mx-auto text-[11px] text-amber-900 font-medium text-left flex items-start gap-1.5"
+          >
+            <UIcon
+              name="i-heroicons-information-circle"
+              class="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5"
+            />
+            <span class="whitespace-pre-line">{{
+              qrisMethod.instructions
+            }}</span>
           </div>
         </div>
       </template>
