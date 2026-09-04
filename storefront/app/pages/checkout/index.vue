@@ -45,9 +45,7 @@ const addressForm = reactive({
 
 // Shipping courier options
 const couriersList = [
-  { code: "jne", name: "JNE Express" },
   { code: "jnt", name: "J&T Express" },
-  { code: "sicepat", name: "SiCepat" },
   { code: "pos", name: "POS Indonesia" },
 ];
 const selectedCourier = ref<string>("");

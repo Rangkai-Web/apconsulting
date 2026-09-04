@@ -62,6 +62,19 @@ const faqs = [
     // badge: "Paling Populer",
   },
   {
+    id: 14,
+    category: "pre-order",
+    categoryLabel: "Pre Order & Estimasi",
+    question:
+      "Jika mengikuti PO dimana kita bisa melihat proof pembelian barangnya?",
+    answer:
+      "Semua proof pembelian dan foto kedatangan barang akan di update di grup chat yang ada di LINE , untuk bergabung bisa klik link di bawah ini",
+    link: {
+      url: "https://line.me/ti/p/dnDnihESXV",
+      label: "https://line.me/ti/p/dnDnihESXV",
+    },
+  },
+  {
     id: 2,
     category: "order",
     categoryLabel: "Cara Order & Layanan",
@@ -455,8 +468,22 @@ function resetFilters() {
               v-show="openItems[idx]"
               class="px-4 sm:px-5 pb-5 pt-1 text-xs text-gray-600 font-semibold leading-relaxed border-t border-primary-50/50 bg-linear-to-b from-primary-50/20 to-transparent"
             >
-              <div class="pl-10 sm:pl-12">
+              <div class="pl-10 sm:pl-12 space-y-2">
                 <p>{{ item.answer }}</p>
+                <div v-if="item.link" class="pt-1">
+                  <a
+                    :href="item.link.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 font-bold text-primary-600 hover:text-primary-700 underline break-all"
+                  >
+                    <span>{{ item.link.label || item.link.url }}</span>
+                    <UIcon
+                      name="i-heroicons-arrow-top-right-on-square"
+                      class="w-3.5 h-3.5 shrink-0"
+                    />
+                  </a>
+                </div>
               </div>
             </div>
           </div>

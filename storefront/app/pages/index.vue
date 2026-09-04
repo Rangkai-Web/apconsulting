@@ -82,6 +82,15 @@ const faqs = [
       "Pilih produk yang Anda inginkan melalui menu Katalog, masukkan ke keranjang belanja, lalu selesaikan proses checkout dengan mengisi detail alamat dan melakukan pembayaran sesuai metode yang dipilih.",
   },
   {
+    label: "Jika mengikuti PO dimana kita bisa melihat proof pembelian barangnya?",
+    content:
+      "Semua proof pembelian dan foto kedatangan barang akan di update di grup chat yang ada di LINE , untuk bergabung bisa klik link di bawah ini",
+    link: {
+      url: "https://line.me/ti/p/dnDnihESXV",
+      label: "https://line.me/ti/p/dnDnihESXV",
+    },
+  },
+  {
     label: "Berapa lama estimasi pengiriman barang Pre Order?",
     content:
       "Pengiriman barang Pre Order (PO) bervariasi bergantung negara asal, umumnya memakan waktu 2-4 minggu sejak tanggal tutup PO. Informasi lengkap akan diupdate secara berkala.",
@@ -852,7 +861,27 @@ onMounted(async () => {
             content:
               'py-4 px-5 text-xs text-gray-500 leading-relaxed font-semibold bg-white border-t border-primary-50/30',
           }"
-        />
+        >
+          <template #content="{ item }">
+            <div class="space-y-2">
+              <p>{{ item.content }}</p>
+              <div v-if="item.link" class="pt-1">
+                <a
+                  :href="item.link.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 font-bold text-primary-600 hover:text-primary-700 underline break-all"
+                >
+                  <span>{{ item.link.label || item.link.url }}</span>
+                  <UIcon
+                    name="i-heroicons-arrow-top-right-on-square"
+                    class="w-3.5 h-3.5 shrink-0"
+                  />
+                </a>
+              </div>
+            </div>
+          </template>
+        </UAccordion>
 
         <div class="mt-6 text-center">
           <UButton

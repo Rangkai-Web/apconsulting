@@ -359,7 +359,7 @@ function closeConfirmModal() {
                 <span>Informasi Pengiriman</span>
               </div>
               <p class="text-gray-500">
-                Opsi kurir (JNE, J&amp;T, SiCepat, POS) serta ongkos kirim
+                Opsi kurir (J&amp;T, POS) serta ongkos kirim
                 otomatis dihitung sesuai alamat tujuan Anda pada tahap
                 berikutnya.
               </p>

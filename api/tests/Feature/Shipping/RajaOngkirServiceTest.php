@@ -17,6 +17,7 @@ class RajaOngkirServiceTest extends TestCase
                 'data' => [
                     ['code' => 'jne', 'service' => 'REG', 'description' => 'Layanan Reguler', 'cost' => 15000, 'etd' => '2-3'],
                     ['code' => 'jnt', 'service' => 'EZ', 'description' => 'Economy', 'cost' => 12000, 'etd' => '3-4'],
+                    ['code' => 'pos', 'service' => 'Pos Reguler', 'description' => 'Pos Reguler', 'cost' => 10000, 'etd' => '2-3'],
                 ],
             ], 200),
         ]);
@@ -26,6 +27,7 @@ class RajaOngkirServiceTest extends TestCase
         $this->assertEquals([
             ['courier' => 'jne', 'service' => 'REG', 'cost' => 15000, 'etd' => '2-3'],
             ['courier' => 'jnt', 'service' => 'EZ', 'cost' => 12000, 'etd' => '3-4'],
+            ['courier' => 'pos', 'service' => 'Pos Reguler', 'cost' => 10000, 'etd' => '2-3'],
         ], $result);
     }
 
