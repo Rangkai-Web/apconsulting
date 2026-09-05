@@ -305,28 +305,16 @@ onMounted(async () => {
           <!-- Hero Right Column -->
           <div class="lg:col-span-7 relative flex justify-center w-full">
             <div
-              class="w-full max-w-xl aspect-square sm:aspect-16/13 rounded-[2rem] overflow-hidden shadow-2xl shadow-primary-900/10 border-4 border-white relative group"
+              class="w-full max-w-xl aspect-square sm:aspect-16/13 rounded-2xl sm:rounded-[2rem] overflow-hidden shadow-2xl shadow-primary-900/10 border-2 sm:border-4 border-white relative group bg-white/30"
             >
               <img
                 :src="item.image"
                 :alt="item.title"
-                class="w-full h-full object-cover group-hover:scale-103 transition-all duration-700"
+                class="w-full h-full object-contain sm:object-cover group-hover:scale-103 transition-all duration-700"
               />
               <div
-                class="absolute inset-0 bg-linear-to-t from-black/25 via-transparent to-transparent"
+                class="absolute inset-0 bg-linear-to-t from-black/15 via-transparent to-transparent pointer-events-none"
               ></div>
-              <!-- Floating Badge -->
-              <!-- <div
-                class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-xs border border-primary-100/60 rounded-2xl py-2 px-4 shadow-lg flex items-center gap-2"
-              >
-                <span
-                  class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"
-                ></span>
-                <span
-                  class="text-[10px] font-extrabold text-gray-800 uppercase tracking-wider"
-                  >Ready Stock Tersedia</span
-                >
-              </div> -->
             </div>
           </div>
         </div>
