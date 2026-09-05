@@ -69,7 +69,8 @@ useSeoMeta({
   title: "Jasa Pembelian Barang & Ready Stock Korea, China, Jepang",
   description:
     "BbystarGO — toko online yang menyediakan jasa pembelian barang dari Indonesia, Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock & Pre Order, aman dan terpercaya.",
-  ogTitle: "BbystarGO - Jasa Pembelian Barang & Ready Stock Korea, China, Jepang",
+  ogTitle:
+    "BbystarGO - Jasa Pembelian Barang & Ready Stock Korea, China, Jepang",
   ogDescription:
     "Belanja Ready Stock & Pre Order dari Korea, China, Jepang, dan negara lain — aman sampai ke tanganmu.",
   ogImage: `${config.public.siteUrl}/BbystarGO_1.jpg`,
@@ -82,7 +83,8 @@ const faqs = [
       "Pilih produk yang Anda inginkan melalui menu Katalog, masukkan ke keranjang belanja, lalu selesaikan proses checkout dengan mengisi detail alamat dan melakukan pembayaran sesuai metode yang dipilih.",
   },
   {
-    label: "Jika mengikuti PO dimana kita bisa melihat proof pembelian barangnya?",
+    label:
+      "Jika mengikuti PO dimana kita bisa melihat proof pembelian barangnya?",
     content:
       "Semua proof pembelian dan foto kedatangan barang akan di update di grup chat yang ada di LINE , untuk bergabung bisa klik link di bawah ini",
     link: {
@@ -305,7 +307,7 @@ onMounted(async () => {
           <!-- Hero Right Column -->
           <div class="lg:col-span-7 relative flex justify-center w-full">
             <div
-              class="w-full max-w-xl aspect-square sm:aspect-16/13 rounded-2xl sm:rounded-[2rem] overflow-hidden shadow-2xl shadow-primary-900/10 border-2 sm:border-4 border-white relative group bg-white/30"
+              class="w-full max-w-xl sm:aspect-16/13 rounded-2xl sm:rounded-[2rem] overflow-hidden shadow-2xl shadow-primary-900/10 border-2 sm:border-4 border-white relative group bg-white/30"
             >
               <img
                 :src="item.image"
@@ -322,7 +324,9 @@ onMounted(async () => {
     </section>
 
     <!-- Brand Overview & Service Highlights Section ("BBYSTARGO") -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative z-20">
+    <section
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative z-20"
+    >
       <div
         class="bg-white/85 backdrop-blur-md border border-primary-100/70 rounded-[2.5rem] p-6 sm:p-10 md:p-14 shadow-xs relative overflow-hidden space-y-10"
       >
@@ -342,7 +346,10 @@ onMounted(async () => {
             size="sm"
             class="font-extrabold uppercase tracking-widest px-3.5 py-1.5 rounded-full shadow-xs inline-flex items-center gap-1.5"
           >
-            <UIcon name="i-heroicons-sparkles" class="w-4 h-4 text-primary-500" />
+            <UIcon
+              name="i-heroicons-sparkles"
+              class="w-4 h-4 text-primary-500"
+            />
             Toko Online Sejak 2023
           </UBadge>
 
@@ -356,8 +363,8 @@ onMounted(async () => {
             class="text-xs sm:text-sm md:text-base text-gray-600 font-semibold leading-relaxed max-w-2xl mx-auto"
           >
             BbystarGO adalah toko online yang berdiri sejak tahun 2023 yang
-            menyediakan jasa pembelian barang dari Indonesia, Korea, China, Jepang,
-            dan negara lain.
+            menyediakan jasa pembelian barang dari Indonesia, Korea, China,
+            Jepang, dan negara lain.
           </p>
         </div>
 
@@ -399,7 +406,8 @@ onMounted(async () => {
               <p
                 class="text-xs sm:text-sm text-gray-600 font-semibold leading-relaxed"
               >
-                Barang tersedia di gudang kami, siap diproses tanpa menunggu impor.
+                Barang tersedia di gudang kami, siap diproses tanpa menunggu
+                impor.
               </p>
             </div>
 
@@ -516,9 +524,7 @@ onMounted(async () => {
             </div>
           </div>
 
-          <p
-            class="text-[11px] text-gray-400 font-semibold text-center mt-2"
-          >
+          <p class="text-[11px] text-gray-400 font-semibold text-center mt-2">
             Kami sudah melayani 100+ customer dan mendapatkan rating 5.0 dari
             2.500 penilaian di Shopee.
           </p>
@@ -545,9 +551,13 @@ onMounted(async () => {
       v-if="categoriesList.length > 0"
       class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-20"
     >
-      <div class="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4 mb-6">
+      <div
+        class="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4 mb-6"
+      >
         <div class="text-center sm:text-left max-w-xl">
-          <h2 class="text-xl md:text-2xl font-black text-gray-900 tracking-tight">
+          <h2
+            class="text-xl md:text-2xl font-black text-gray-900 tracking-tight"
+          >
             Cari Favoritmu
           </h2>
           <p class="text-xs text-gray-400 font-semibold mt-1">
@@ -689,8 +699,6 @@ onMounted(async () => {
         </div>
       </div>
     </section>
-
-
 
     <!-- Trust & USPs Section -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-20">
