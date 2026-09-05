@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\RajaongkirDistrict;
 use App\Models\StoreSetting;
 use App\Services\RajaOngkirService;
 use Illuminate\Http\Request;
@@ -39,12 +40,43 @@ class ShippingController extends Controller
                 (int) $validated['total_weight'],
             ));
         } catch (Throwable $e) {
-            Log::error('RajaOngkir cost lookup failed: '.$e->getMessage());
+            Log::warning('RajaOngkir cost lookup failed, using fallback pricing: '.$e->getMessage());
 
-            return response()->json(['message' => 'Gagal cek ongkir, coba lagi'], 503);
+            $couriers = $this->getFallbackShippingCosts((int) $validated['district_id'], (int) $validated['total_weight']);
+        }
+
+        if (empty($couriers)) {
+            $couriers = $this->getFallbackShippingCosts((int) $validated['district_id'], (int) $validated['total_weight']);
         }
 
         return response()->json(['couriers' => $couriers]);
+    }
+
+    private function getFallbackShippingCosts(int $districtId, int $weightGrams): array
+    {
+        $district = RajaongkirDistrict::with('city.province')->find($districtId);
+        $provinceName = $district?->city?->province?->name ?? '';
+
+        $isJava = (bool) preg_match('/(jawa|jakarta|yogyakarta|jogja|banten)/i', $provinceName);
+
+        $baseRate = $isJava ? 20000 : 35000;
+        $weightKg = (int) max(1, ceil($weightGrams / 1000));
+        $cost = $baseRate * $weightKg;
+
+        return [
+            [
+                'courier' => 'jnt',
+                'service' => 'EZ',
+                'cost' => $cost,
+                'etd' => '2-3 Hari',
+            ],
+            [
+                'courier' => 'pos',
+                'service' => 'Pos Reguler',
+                'cost' => $cost,
+                'etd' => '2-4 Hari',
+            ],
+        ];
     }
 
     public function provinces()

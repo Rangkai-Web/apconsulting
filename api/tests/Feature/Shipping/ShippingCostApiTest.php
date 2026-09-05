@@ -81,16 +81,52 @@ class ShippingCostApiTest extends TestCase
             ->assertJsonPath('message', 'Toko belum mengatur lokasi asal pengiriman');
     }
 
-    public function test_returns_503_when_rajaongkir_call_fails(): void
+    public function test_returns_fallback_rates_for_java_when_rajaongkir_call_fails(): void
     {
         Http::fake(['*/calculate/district/domestic-cost' => Http::response(['message' => 'Unauthorized'], 401)]);
         StoreSetting::create(['store_name' => 'BbystarGO', 'rajaongkir_origin_district_id' => 501]);
-        $district = $this->seedDestinationDistrict();
+        $district = $this->seedDestinationDistrict(); // Java Barat
 
         $response = $this->postJson('/api/shipping/cost', ['district_id' => $district->id, 'total_weight' => 1000]);
 
-        $response->assertStatus(503)
-            ->assertJsonPath('message', 'Gagal cek ongkir, coba lagi');
+        $response->assertStatus(200)
+            ->assertJsonCount(2, 'couriers')
+            ->assertJsonPath('couriers.0.courier', 'jnt')
+            ->assertJsonPath('couriers.0.cost', 20000)
+            ->assertJsonPath('couriers.1.courier', 'pos')
+            ->assertJsonPath('couriers.1.cost', 20000);
+    }
+
+    public function test_returns_fallback_rates_for_outside_java_when_rajaongkir_call_fails(): void
+    {
+        Http::fake(['*/calculate/district/domestic-cost' => Http::response(['message' => 'Rate limit exceeded'], 429)]);
+        StoreSetting::create(['store_name' => 'BbystarGO', 'rajaongkir_origin_district_id' => 501]);
+
+        RajaongkirProvince::create(['id' => 2, 'name' => 'Bali']);
+        RajaongkirCity::create(['id' => 2, 'province_id' => 2, 'name' => 'Denpasar']);
+        $district = RajaongkirDistrict::create(['id' => 888, 'city_id' => 2, 'name' => 'Denpasar Barat']);
+
+        $response = $this->postJson('/api/shipping/cost', ['district_id' => $district->id, 'total_weight' => 1000]);
+
+        $response->assertStatus(200)
+            ->assertJsonCount(2, 'couriers')
+            ->assertJsonPath('couriers.0.courier', 'jnt')
+            ->assertJsonPath('couriers.0.cost', 35000)
+            ->assertJsonPath('couriers.1.courier', 'pos')
+            ->assertJsonPath('couriers.1.cost', 35000);
+    }
+
+    public function test_scales_fallback_rates_by_weight(): void
+    {
+        Http::fake(['*/calculate/district/domestic-cost' => Http::response(['message' => 'Error'], 500)]);
+        StoreSetting::create(['store_name' => 'BbystarGO', 'rajaongkir_origin_district_id' => 501]);
+        $district = $this->seedDestinationDistrict(); // Java Barat
+
+        $response = $this->postJson('/api/shipping/cost', ['district_id' => $district->id, 'total_weight' => 2000]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('couriers.0.cost', 40000)
+            ->assertJsonPath('couriers.1.cost', 40000);
     }
 
     public function test_throttles_after_10_requests_per_minute(): void
