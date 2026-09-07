@@ -51,7 +51,7 @@ The frontend is mid-pivot: `app/store/cart.ts`, `app/store/auth.ts`, `app/store/
 **Interfaces:**
 - Produces: a repo where `npm run typecheck` and `npm run test` both run cleanly (may still show `AppHeader`/`AppFooter`/`index.vue` as trivially empty — that's expected until Tasks 4/5/15).
 
-- [ ] **Step 1: Delete the files listed above**
+- [x] **Step 1: Delete the files listed above**
 
 ```bash
 cd storefront
@@ -73,7 +73,7 @@ git rm app/pages/tentang-kami.vue \
   tests/orderService.test.ts
 ```
 
-- [ ] **Step 2: Strip `app.vue` down to a placeholder (real content in Task 3)**
+- [x] **Step 2: Strip `app.vue` down to a placeholder (real content in Task 3)**
 
 ```vue
 <template>
@@ -87,7 +87,7 @@ git rm app/pages/tentang-kami.vue \
 <script setup lang="ts"></script>
 ```
 
-- [ ] **Step 3: Strip `index.vue`, `AppHeader.vue`, `AppFooter.vue` to empty placeholders**
+- [x] **Step 3: Strip `index.vue`, `AppHeader.vue`, `AppFooter.vue` to empty placeholders**
 
 `app/pages/index.vue`:
 ```vue
@@ -100,12 +100,12 @@ git rm app/pages/tentang-kami.vue \
 
 `app/components/AppHeader.vue` and `app/components/AppFooter.vue`: same empty-`<div />` placeholder as above.
 
-- [ ] **Step 4: Verify the repo builds clean**
+- [x] **Step 4: Verify the repo builds clean**
 
 Run: `cd storefront && npm run typecheck && npm run test`
 Expected: both PASS (no references to deleted modules remain; remaining tests are `health.test.ts`, `generate-sitemap.test.ts`, `useSeoText.test.ts`).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
