@@ -15,10 +15,10 @@
 
       <UButton
         to="/contact"
-        color="primary"
+        color="secondary"
         variant="solid"
         size="lg"
-        class="hidden font-bold md:inline-flex"
+        class="hidden font-bold md:inline-flex rounded-none"
       >
         Discuss Your Needs
       </UButton>
@@ -41,7 +41,7 @@
       <NuxtLink to="/insight" class="text-neutral-600 font-semibold" @click="mobileOpen = false">Insights</NuxtLink>
       <NuxtLink to="/about" class="text-neutral-600 font-semibold" @click="mobileOpen = false">About</NuxtLink>
       <NuxtLink to="/contact" class="text-neutral-600 font-semibold" @click="mobileOpen = false">Contact</NuxtLink>
-      <UButton to="/contact" color="primary" variant="solid" block class="font-bold">Discuss Your Needs</UButton>
+      <UButton to="/contact" color="secondary" variant="solid" block class="font-bold rounded-none">Discuss Your Needs</UButton>
     </div>
   </header>
 </template>

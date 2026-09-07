@@ -12,7 +12,7 @@
     </div>
 
     <div class="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
-      <div v-for="step in steps" :key="step.title" class="rounded-xl border border-neutral-200 bg-white p-8 text-center shadow-sm">
+      <div v-for="step in steps" :key="step.title" class="rounded-2xl border border-neutral-200 bg-white p-8 text-center shadow-sm">
         <img :src="step.icon" :alt="step.title" class="mx-auto size-16" />
         <h3 class="mt-4 text-lg font-bold text-secondary-700">{{ step.title }}</h3>
         <p class="mt-2 text-sm text-neutral-500 leading-relaxed">{{ step.body }}</p>

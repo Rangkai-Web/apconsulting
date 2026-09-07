@@ -14,7 +14,7 @@
           decisions. We turn complex information into clear, practical next steps, helping you
           stay compliant, improve performance, and plan for what comes next.
         </p>
-        <UButton color="primary" variant="solid" size="lg" class="mt-6 font-bold">
+        <UButton color="secondary" variant="solid" size="lg" class="mt-6 font-bold rounded-none">
           DISCOVER HOW WE HELP
         </UButton>
       </div>
@@ -25,7 +25,7 @@
       <img
         src="/images/homepage/About_Mobile.png"
         alt="PCG team reviewing financial documents"
-        class="w-full rounded-2xl object-cover shadow-sm"
+        class="w-full rounded-3xl object-cover shadow-sm"
       />
     </picture>
   </section>

@@ -19,8 +19,8 @@
           with a structured, professional approach tailored to their goals
         </p>
         <div class="mt-6 flex flex-col gap-3 sm:flex-row md:mt-8 md:gap-4">
-          <UButton color="secondary" variant="outline" size="lg" class="w-full justify-center font-bold sm:w-auto">EXPLORE OUR SERVICES</UButton>
-          <UButton color="primary" variant="solid" size="lg" class="w-full justify-center font-bold sm:w-auto">DISCUSS YOUR NEEDS</UButton>
+          <UButton color="secondary" variant="outline" size="lg" class="w-full justify-center font-bold sm:w-auto rounded-none">EXPLORE OUR SERVICES</UButton>
+          <UButton color="secondary" variant="solid" size="lg" class="w-full justify-center font-bold sm:w-auto rounded-none">DISCUSS YOUR NEEDS</UButton>
         </div>
       </div>
 

@@ -46,3 +46,9 @@ h1, h2, h3, h4, h5, h6 {
   scrollbar-width: none;
 }
 
+/* Ensure all buttons have zero border radius per Figma design spec (node 1-852) */
+button,
+[class*="u-button"] {
+  border-radius: 0px !important;
+}
+

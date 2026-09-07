@@ -13,8 +13,8 @@
     </div>
 
     <div class="mx-auto mt-12 grid max-w-7xl gap-6 md:grid-cols-3">
-      <article v-for="post in posts" :key="post.title" class="rounded-xl bg-white p-6 shadow-sm border border-neutral-200/80">
-        <img :src="post.image" :alt="post.title" class="h-48 w-full rounded-lg object-contain bg-secondary-50 p-6" />
+      <article v-for="post in posts" :key="post.title" class="rounded-2xl bg-white p-6 shadow-sm border border-neutral-200/80">
+        <img :src="post.image" :alt="post.title" class="h-48 w-full rounded-xl object-contain bg-secondary-50 p-6" />
         <p class="mt-4 text-xs font-bold text-primary-600 uppercase tracking-wide">{{ post.category }}</p>
         <h3 class="mt-1 font-bold text-secondary-700 leading-snug">{{ post.title }}</h3>
         <p class="mt-2 text-xs text-neutral-500 leading-relaxed">{{ post.excerpt }}</p>

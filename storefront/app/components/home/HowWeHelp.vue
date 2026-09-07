@@ -19,12 +19,12 @@
       <img
         src="/images/homepage/HowWeHelp_Mobile.png"
         alt="PCG team"
-        class="w-full rounded-2xl grayscale object-cover"
+        class="w-full rounded-3xl grayscale object-cover"
       />
     </picture>
 
     <div class="mx-auto mt-12 grid max-w-7xl gap-6 md:grid-cols-3">
-      <div v-for="card in cards" :key="card.title" class="rounded-xl border border-neutral-200 bg-gradient-to-b from-secondary-50 to-white p-6 shadow-sm">
+      <div v-for="card in cards" :key="card.title" class="rounded-2xl border border-neutral-200 bg-gradient-to-b from-secondary-50 to-white p-6 shadow-sm">
         <img :src="card.icon" :alt="card.title" class="size-14" />
         <h3 class="mt-4 text-lg font-bold text-secondary-700">{{ card.title }}</h3>
         <p class="mt-2 text-sm text-neutral-500 leading-relaxed">{{ card.body }}</p>

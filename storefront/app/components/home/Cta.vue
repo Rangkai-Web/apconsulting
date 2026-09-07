@@ -14,7 +14,7 @@
         Tell us about your tax, accounting, or financial needs. PCG will help you identify a
         practical starting point for your business.
       </p>
-      <UButton to="/contact" color="neutral" variant="solid" size="lg" class="mt-8 bg-white text-secondary-700 font-extrabold px-8 py-3.5 rounded-full hover:bg-neutral-100">
+      <UButton to="/contact" color="neutral" variant="solid" size="lg" class="mt-8 bg-white text-secondary-700 font-extrabold px-8 py-3.5 rounded-none hover:bg-neutral-100">
         Discuss Your Needs
       </UButton>
     </div>

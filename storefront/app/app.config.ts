@@ -5,6 +5,11 @@ export default defineAppConfig({
       secondary: "secondary",
       neutral: "neutral",
     },
+    button: {
+      slots: {
+        base: "rounded-none font-bold transition-colors shadow-none",
+      },
+    },
   },
 });
 
