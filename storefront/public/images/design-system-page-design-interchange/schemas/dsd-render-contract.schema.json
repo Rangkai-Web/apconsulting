@@ -1,0 +1,520 @@
+{
+  "$defs": {
+    "asset": {
+      "additionalProperties": false,
+      "properties": {
+        "available": {
+          "type": "boolean"
+        },
+        "byteLength": {
+          "type": "number"
+        },
+        "failureReason": {
+          "type": "string"
+        },
+        "filePath": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "imageHash": {
+          "type": "string"
+        },
+        "mediaType": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "type": {
+          "const": "image"
+        },
+        "usedBy": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "imageHash",
+        "usedBy",
+        "note"
+      ],
+      "type": "object"
+    },
+    "box": {
+      "additionalProperties": false,
+      "properties": {
+        "height": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "type": "object"
+    },
+    "capabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "a11yManifest": {
+          "type": "boolean"
+        },
+        "fonts": {
+          "type": "boolean"
+        },
+        "imageFillBinaries": {
+          "type": "boolean"
+        },
+        "instanceOverrides": {
+          "type": "boolean"
+        },
+        "interactionStates": {
+          "type": "boolean"
+        },
+        "perModeRenders": {
+          "type": "boolean"
+        },
+        "renderedImages": {
+          "type": "boolean"
+        },
+        "semanticManifest": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "renderedImages",
+        "fonts",
+        "semanticManifest",
+        "a11yManifest",
+        "interactionStates",
+        "instanceOverrides",
+        "perModeRenders",
+        "imageFillBinaries"
+      ],
+      "type": "object"
+    },
+    "component": {
+      "additionalProperties": false,
+      "properties": {
+        "defaultConfiguration": {
+          "type": "object"
+        },
+        "defaultVariantUid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nodeDefaults": {
+          "additionalProperties": false,
+          "properties": {
+            "blendMode": {
+              "const": "PASS_THROUGH"
+            },
+            "clipsContent": {
+              "const": false
+            },
+            "opacity": {
+              "const": 1
+            },
+            "radius": {
+              "const": 0
+            },
+            "strokeWeight": {
+              "const": 1
+            },
+            "visible": {
+              "const": true
+            }
+          },
+          "required": [
+            "visible",
+            "opacity",
+            "blendMode",
+            "clipsContent",
+            "strokeWeight",
+            "radius"
+          ],
+          "type": "object"
+        },
+        "properties": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "variants": {
+          "items": {
+            "$ref": "#/$defs/variant"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "uid",
+        "name",
+        "defaultVariantUid",
+        "properties",
+        "defaultConfiguration",
+        "nodeDefaults",
+        "variants"
+      ],
+      "type": "object"
+    },
+    "mode": {
+      "additionalProperties": false,
+      "properties": {
+        "collectionUid": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "isDefault": {
+          "type": "boolean"
+        },
+        "key": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "id",
+        "name",
+        "collectionUid",
+        "isDefault"
+      ],
+      "type": "object"
+    },
+    "node": {
+      "additionalProperties": false,
+      "properties": {
+        "bindings": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "blendMode": {
+          "type": "string"
+        },
+        "box": {
+          "$ref": "#/$defs/box"
+        },
+        "canvasBox": {
+          "$ref": "#/$defs/box"
+        },
+        "clipsContent": {
+          "type": "boolean"
+        },
+        "constraints": {
+          "type": "object"
+        },
+        "cornerSmoothing": {
+          "type": "number"
+        },
+        "dashPattern": {
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "effects": {
+          "type": "array"
+        },
+        "fills": {
+          "type": "array"
+        },
+        "id": {
+          "type": "string"
+        },
+        "layout": {
+          "type": "object"
+        },
+        "layoutChild": {
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        },
+        "opacity": {
+          "type": "number"
+        },
+        "parentId": {
+          "type": "string"
+        },
+        "radius": true,
+        "resolvedBindings": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "source": {
+          "additionalProperties": false,
+          "properties": {
+            "anatomyUid": {
+              "type": "string"
+            },
+            "componentName": {
+              "type": "string"
+            },
+            "componentUid": {
+              "type": "string"
+            },
+            "variantName": {
+              "type": "string"
+            },
+            "variantUid": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "componentUid",
+            "variantUid",
+            "componentName",
+            "variantName"
+          ],
+          "type": "object"
+        },
+        "strokeAlign": {
+          "type": "string"
+        },
+        "strokeCap": {
+          "type": "string"
+        },
+        "strokeJoin": {
+          "type": "string"
+        },
+        "strokeWeight": true,
+        "strokes": {
+          "type": "array"
+        },
+        "text": {
+          "type": "object"
+        },
+        "transform": true,
+        "type": {
+          "type": "string"
+        },
+        "vector": {
+          "type": "object"
+        },
+        "visible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "box",
+        "source"
+      ],
+      "type": "object"
+    },
+    "styleResource": {
+      "additionalProperties": false,
+      "properties": {
+        "bindings": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "value": true
+      },
+      "required": [
+        "uid",
+        "name",
+        "type",
+        "value",
+        "bindings"
+      ],
+      "type": "object"
+    },
+    "tokenResource": {
+      "additionalProperties": false,
+      "properties": {
+        "collectionUid": {
+          "type": "string"
+        },
+        "modes": {
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "path": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "type": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uid",
+        "name",
+        "path",
+        "type",
+        "collectionUid",
+        "modes"
+      ],
+      "type": "object"
+    },
+    "variant": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "nodes": {
+          "items": {
+            "$ref": "#/$defs/node"
+          },
+          "type": "array"
+        },
+        "properties": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "viewport": {
+          "$ref": "#/$defs/box"
+        }
+      },
+      "required": [
+        "uid",
+        "name",
+        "properties",
+        "viewport",
+        "nodes"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://design-system-documentation.local/schemas/dsd-render-contract-2.0.0.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assets": {
+      "items": {
+        "$ref": "#/$defs/asset"
+      },
+      "type": "array"
+    },
+    "capabilities": {
+      "$ref": "#/$defs/capabilities"
+    },
+    "components": {
+      "items": {
+        "$ref": "#/$defs/component"
+      },
+      "type": "array"
+    },
+    "contractVersion": {
+      "const": "2.0.0"
+    },
+    "generated": {
+      "type": "object"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "modes": {
+      "items": {
+        "$ref": "#/$defs/mode"
+      },
+      "type": "array"
+    },
+    "resources": {
+      "additionalProperties": false,
+      "properties": {
+        "styles": {
+          "items": {
+            "$ref": "#/$defs/styleResource"
+          },
+          "type": "array"
+        },
+        "tokens": {
+          "items": {
+            "$ref": "#/$defs/tokenResource"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "tokens",
+        "styles"
+      ],
+      "type": "object"
+    },
+    "sources": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "target": {
+      "const": "html-svg"
+    }
+  },
+  "required": [
+    "contractVersion",
+    "target",
+    "generated",
+    "sources",
+    "modes",
+    "capabilities",
+    "resources",
+    "components",
+    "assets",
+    "limitations"
+  ],
+  "title": "DSD Render Contract",
+  "type": "object"
+}

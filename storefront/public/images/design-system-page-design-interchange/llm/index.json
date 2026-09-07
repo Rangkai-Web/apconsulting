@@ -1,0 +1,78 @@
+{
+  "components": [
+    {
+      "a11yFile": "a11y/button-e0eg41.a11y.json",
+      "contextFile": "llm/components/button-e0eg41.context.json",
+      "guideFile": "llm/components/button-e0eg41.md",
+      "name": "Button",
+      "semanticFile": "llm/components/button-e0eg41.semantic.json",
+      "uid": "dsd:component:1:26"
+    },
+    {
+      "a11yFile": "a11y/checkbox-e0eg0o.a11y.json",
+      "contextFile": "llm/components/checkbox-e0eg0o.context.json",
+      "guideFile": "llm/components/checkbox-e0eg0o.md",
+      "name": "Checkbox",
+      "semanticFile": "llm/components/checkbox-e0eg0o.semantic.json",
+      "uid": "dsd:component:1:63"
+    },
+    {
+      "a11yFile": "a11y/option-85rftg.a11y.json",
+      "contextFile": "llm/components/option-85rftg.context.json",
+      "guideFile": "llm/components/option-85rftg.md",
+      "name": "Option",
+      "semanticFile": "llm/components/option-85rftg.semantic.json",
+      "uid": "dsd:component:1:788"
+    },
+    {
+      "a11yFile": "a11y/frame-37-e0efyx.a11y.json",
+      "contextFile": "llm/components/frame-37-e0efyx.context.json",
+      "guideFile": "llm/components/frame-37-e0efyx.md",
+      "name": "Frame 37",
+      "semanticFile": "llm/components/frame-37-e0efyx.semantic.json",
+      "uid": "dsd:component:1:84"
+    },
+    {
+      "a11yFile": "a11y/navbar-85rf5j.a11y.json",
+      "contextFile": "llm/components/navbar-85rf5j.context.json",
+      "guideFile": "llm/components/navbar-85rf5j.md",
+      "name": "Navbar",
+      "semanticFile": "llm/components/navbar-85rf5j.semantic.json",
+      "uid": "dsd:component:1:851"
+    }
+  ],
+  "counts": {
+    "collections": 0,
+    "components": 5,
+    "renderAssets": 1,
+    "styles": 75,
+    "tokens": 0,
+    "variants": 37
+  },
+  "files": {
+    "accessibilityOverlays": "a11y/*.a11y.json",
+    "agentInstructions": "AGENTS.md",
+    "componentGuides": "llm/components/*.md",
+    "componentSlices": "llm/components/*.context.json",
+    "fullManifest": "design-system.manifest.json",
+    "fullRenderContract": "render/render-contract.json",
+    "instanceOverrides": "render/overrides/component-instance-overrides.json",
+    "referenceImages": "render/images/manifest.json",
+    "semanticOverlays": "llm/components/*.semantic.json"
+  },
+  "generated": {
+    "at": "2026-09-05T03:31:01.955Z",
+    "generator": "Design System Documentation",
+    "generatorVersion": "2.0.0",
+    "scope": "page",
+    "scopeLabel": "Design"
+  },
+  "recommendedWorkflow": [
+    "Start with README.md and AGENTS.md.",
+    "Use this index to choose the component slice you need.",
+    "Pass one llm/components/*.md file for human-readable guidance and its matching *.context.json for structured data.",
+    "Use implementation.api for React/HTML props and render.variants for compact visual reconstruction.",
+    "Treat render/render-contract.json as the canonical structural and visual source.",
+    "Use design-system.manifest.json only for semantic audits or source details not represented by the render contract."
+  ]
+}

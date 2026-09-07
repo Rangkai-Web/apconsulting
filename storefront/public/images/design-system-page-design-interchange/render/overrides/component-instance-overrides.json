@@ -1,0 +1,125 @@
+{
+  "$schema": "https://design-system-documentation.local/schemas/dsd-instance-overrides-1.0.0.schema.json",
+  "overrides": {
+    "dsd:component:1:84[default]": {
+      "dsd:layer:1:86": {
+        "componentUid": "dsd:component:1:75",
+        "props": {},
+        "variant": {}
+      }
+    },
+    "dsd:component:1:851[default]": {
+      "dsd:layer:1:791": {
+        "componentUid": "dsd:component:1:788",
+        "props": {
+          "Property 1": {
+            "boundVariables": {},
+            "type": "VARIANT",
+            "value": "Default"
+          },
+          "Text#1:0": {
+            "type": "TEXT",
+            "value": "Home"
+          }
+        },
+        "variant": {
+          "Property 1": "Default"
+        }
+      },
+      "dsd:layer:1:793": {
+        "componentUid": "dsd:component:1:788",
+        "props": {
+          "Property 1": {
+            "boundVariables": {},
+            "type": "VARIANT",
+            "value": "Default"
+          },
+          "Text#1:0": {
+            "type": "TEXT",
+            "value": "Services"
+          }
+        },
+        "variant": {
+          "Property 1": "Default"
+        }
+      },
+      "dsd:layer:1:796": {
+        "componentUid": "dsd:component:1:788",
+        "props": {
+          "Property 1": {
+            "boundVariables": {},
+            "type": "VARIANT",
+            "value": "Default"
+          },
+          "Text#1:0": {
+            "type": "TEXT",
+            "value": "Insights"
+          }
+        },
+        "variant": {
+          "Property 1": "Default"
+        }
+      },
+      "dsd:layer:1:798": {
+        "componentUid": "dsd:component:1:788",
+        "props": {
+          "Property 1": {
+            "boundVariables": {},
+            "type": "VARIANT",
+            "value": "Default"
+          },
+          "Text#1:0": {
+            "type": "TEXT",
+            "value": "Contact"
+          }
+        },
+        "variant": {
+          "Property 1": "Default"
+        }
+      },
+      "dsd:layer:1:800": {
+        "componentUid": "dsd:component:1:788",
+        "props": {
+          "Property 1": {
+            "boundVariables": {},
+            "type": "VARIANT",
+            "value": "Default"
+          },
+          "Text#1:0": {
+            "type": "TEXT",
+            "value": "About"
+          }
+        },
+        "variant": {
+          "Property 1": "Default"
+        }
+      },
+      "dsd:layer:1:849": {
+        "componentUid": "dsd:component:1:26",
+        "props": {
+          "Size": {
+            "boundVariables": {},
+            "type": "VARIANT",
+            "value": "Large"
+          },
+          "State": {
+            "boundVariables": {},
+            "type": "VARIANT",
+            "value": "Default"
+          },
+          "Type": {
+            "boundVariables": {},
+            "type": "VARIANT",
+            "value": "Primary"
+          }
+        },
+        "variant": {
+          "Size": "Large",
+          "State": "Default",
+          "Type": "Primary"
+        }
+      }
+    }
+  },
+  "schemaVersion": "1.0.0"
+}

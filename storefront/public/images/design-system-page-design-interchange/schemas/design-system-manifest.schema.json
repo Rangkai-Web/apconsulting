@@ -1,0 +1,763 @@
+{
+  "$defs": {
+    "anatomy": {
+      "additionalProperties": false,
+      "properties": {
+        "bindings": {
+          "items": {
+            "$ref": "#/$defs/binding"
+          },
+          "type": "array"
+        },
+        "children": {
+          "items": {
+            "$ref": "#/$defs/anatomy"
+          },
+          "type": "array"
+        },
+        "componentUid": {
+          "type": "string"
+        },
+        "constraints": {
+          "type": "object"
+        },
+        "dimensions": {
+          "type": "object"
+        },
+        "geometry": {
+          "type": "object"
+        },
+        "instance": {
+          "type": "object"
+        },
+        "layout": {
+          "$ref": "#/$defs/layout"
+        },
+        "layoutChild": {
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nodeType": {
+          "type": "string"
+        },
+        "text": {
+          "type": "object"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "vector": {
+          "type": "object"
+        },
+        "visible": {
+          "type": "boolean"
+        },
+        "visual": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "uid",
+        "name",
+        "nodeType",
+        "visible",
+        "bindings",
+        "children"
+      ],
+      "type": "object"
+    },
+    "binding": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "type": "string"
+        },
+        "styleUid": {
+          "type": "string"
+        },
+        "tokenUid": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "field"
+      ],
+      "type": "object"
+    },
+    "capabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "a11yManifest": {
+          "type": "boolean"
+        },
+        "fonts": {
+          "type": "boolean"
+        },
+        "imageFillBinaries": {
+          "type": "boolean"
+        },
+        "instanceOverrides": {
+          "type": "boolean"
+        },
+        "interactionStates": {
+          "type": "boolean"
+        },
+        "perModeRenders": {
+          "type": "boolean"
+        },
+        "renderedImages": {
+          "type": "boolean"
+        },
+        "semanticManifest": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "renderedImages",
+        "fonts",
+        "semanticManifest",
+        "a11yManifest",
+        "interactionStates",
+        "instanceOverrides",
+        "perModeRenders",
+        "imageFillBinaries"
+      ],
+      "type": "object"
+    },
+    "collection": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entityBase"
+        },
+        {
+          "properties": {
+            "defaultModeId": {
+              "type": "string"
+            },
+            "kind": {
+              "const": "collection"
+            },
+            "modes": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "variableIds": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "kind",
+            "modes",
+            "variableIds"
+          ],
+          "type": "object"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "component": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entityBase"
+        },
+        {
+          "properties": {
+            "anatomy": {
+              "items": {
+                "$ref": "#/$defs/anatomy"
+              },
+              "type": "array"
+            },
+            "annotations": {
+              "type": "array"
+            },
+            "componentType": {
+              "enum": [
+                "COMPONENT",
+                "COMPONENT_SET"
+              ]
+            },
+            "defaultConfiguration": {
+              "type": "object"
+            },
+            "defaultVariantUid": {
+              "type": "string"
+            },
+            "devStatus": {
+              "type": "string"
+            },
+            "dimensions": {
+              "type": "object"
+            },
+            "documentationLinks": {
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "guidance": {
+              "type": "object"
+            },
+            "interactions": {
+              "type": "array"
+            },
+            "kind": {
+              "const": "component"
+            },
+            "layout": {
+              "$ref": "#/$defs/layout"
+            },
+            "properties": {
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "variants": {
+              "items": {
+                "$ref": "#/$defs/componentVariant"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "kind",
+            "componentType",
+            "documentationLinks",
+            "properties",
+            "variants",
+            "defaultVariantUid",
+            "defaultConfiguration",
+            "dimensions",
+            "layout",
+            "anatomy",
+            "annotations",
+            "interactions"
+          ],
+          "type": "object"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "componentVariant": {
+      "additionalProperties": false,
+      "properties": {
+        "anatomy": {
+          "items": {
+            "$ref": "#/$defs/anatomy"
+          },
+          "type": "array"
+        },
+        "description": {
+          "type": "string"
+        },
+        "devStatus": {
+          "type": "string"
+        },
+        "dimensions": {
+          "type": "object"
+        },
+        "layout": {
+          "$ref": "#/$defs/layout"
+        },
+        "name": {
+          "type": "string"
+        },
+        "properties": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "uid": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uid",
+        "name",
+        "properties",
+        "dimensions",
+        "layout",
+        "anatomy"
+      ],
+      "type": "object"
+    },
+    "diagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "details": {
+          "type": "object"
+        },
+        "entityUid": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error"
+          ]
+        },
+        "uid": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uid",
+        "severity",
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "entityBase": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "publicationState": {
+          "enum": [
+            "published",
+            "unpublished",
+            "hidden",
+            "unknown"
+          ]
+        },
+        "remote": {
+          "type": "boolean"
+        },
+        "source": {
+          "$ref": "#/$defs/locator"
+        },
+        "uid": {
+          "pattern": "^dsd:",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uid",
+        "name",
+        "source",
+        "remote",
+        "publicationState"
+      ],
+      "type": "object"
+    },
+    "layout": {
+      "additionalProperties": false,
+      "properties": {
+        "alignment": {
+          "type": "object"
+        },
+        "gap": {
+          "type": "object"
+        },
+        "grid": {
+          "type": "object"
+        },
+        "mode": {
+          "enum": [
+            "NONE",
+            "HORIZONTAL",
+            "VERTICAL",
+            "GRID"
+          ]
+        },
+        "padding": {
+          "type": "object"
+        },
+        "sizing": {
+          "type": "object"
+        },
+        "wrap": {
+          "enum": [
+            "NO_WRAP",
+            "WRAP"
+          ]
+        }
+      },
+      "required": [
+        "mode",
+        "sizing"
+      ],
+      "type": "object"
+    },
+    "locator": {
+      "additionalProperties": false,
+      "properties": {
+        "collectionId": {
+          "type": "string"
+        },
+        "fileKey": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "nodeId": {
+          "type": "string"
+        },
+        "pageId": {
+          "type": "string"
+        },
+        "styleId": {
+          "type": "string"
+        },
+        "variableId": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "relationship": {
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "metadata": {
+          "type": "object"
+        },
+        "to": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "contains",
+            "aliases",
+            "binds",
+            "uses",
+            "nests",
+            "instance-of",
+            "variant-of",
+            "documents"
+          ]
+        },
+        "uid": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uid",
+        "type",
+        "from",
+        "to"
+      ],
+      "type": "object"
+    },
+    "source": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entityBase"
+        },
+        {
+          "properties": {
+            "kind": {
+              "const": "source"
+            },
+            "sourceType": {
+              "enum": [
+                "figma-file",
+                "figma-page",
+                "figma-selection"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "sourceType"
+          ],
+          "type": "object"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "style": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entityBase"
+        },
+        {
+          "properties": {
+            "bindings": {
+              "items": {
+                "$ref": "#/$defs/binding"
+              },
+              "type": "array"
+            },
+            "kind": {
+              "const": "style"
+            },
+            "styleType": {
+              "enum": [
+                "paint",
+                "text",
+                "effect",
+                "grid"
+              ]
+            },
+            "value": true
+          },
+          "required": [
+            "kind",
+            "styleType",
+            "value",
+            "bindings"
+          ],
+          "type": "object"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "token": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entityBase"
+        },
+        {
+          "properties": {
+            "codeSyntax": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "collectionUid": {
+              "type": "string"
+            },
+            "deprecated": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "hiddenFromPublishing": {
+              "type": "boolean"
+            },
+            "kind": {
+              "const": "token"
+            },
+            "path": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            "scopes": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "tokenType": {
+              "enum": [
+                "color",
+                "dimension",
+                "number",
+                "boolean",
+                "string",
+                "typography",
+                "shadow",
+                "gradient",
+                "border",
+                "unknown"
+              ]
+            },
+            "values": {
+              "items": {
+                "$ref": "#/$defs/tokenValue"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "kind",
+            "path",
+            "tokenType",
+            "collectionUid",
+            "scopes",
+            "codeSyntax",
+            "values",
+            "hiddenFromPublishing"
+          ],
+          "type": "object"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "tokenValue": {
+      "additionalProperties": false,
+      "properties": {
+        "alias": {
+          "additionalProperties": false,
+          "properties": {
+            "aliasPath": {
+              "type": "string"
+            },
+            "aliasUid": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "aliasUid"
+          ],
+          "type": "object"
+        },
+        "modeId": {
+          "type": "string"
+        },
+        "modeName": {
+          "type": "string"
+        },
+        "raw": true,
+        "resolved": true
+      },
+      "required": [
+        "modeId",
+        "modeName"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://design-system-documentation.local/schemas/design-system-manifest-2.0.0.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "format": "uri-reference",
+      "type": "string"
+    },
+    "capabilities": {
+      "$ref": "#/$defs/capabilities"
+    },
+    "collections": {
+      "items": {
+        "$ref": "#/$defs/collection"
+      },
+      "type": "array"
+    },
+    "components": {
+      "items": {
+        "$ref": "#/$defs/component"
+      },
+      "type": "array"
+    },
+    "diagnostics": {
+      "items": {
+        "$ref": "#/$defs/diagnostic"
+      },
+      "type": "array"
+    },
+    "generated": {
+      "additionalProperties": false,
+      "properties": {
+        "at": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "generator": {
+          "const": "Design System Documentation"
+        },
+        "generatorVersion": {
+          "type": "string"
+        },
+        "scope": {
+          "enum": [
+            "selection",
+            "page",
+            "file"
+          ]
+        },
+        "scopeLabel": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "at",
+        "generator",
+        "generatorVersion",
+        "scope",
+        "scopeLabel"
+      ],
+      "type": "object"
+    },
+    "relationships": {
+      "items": {
+        "$ref": "#/$defs/relationship"
+      },
+      "type": "array"
+    },
+    "schemaVersion": {
+      "const": "2.0.0"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/source"
+      },
+      "type": "array"
+    },
+    "styles": {
+      "items": {
+        "$ref": "#/$defs/style"
+      },
+      "type": "array"
+    },
+    "tokens": {
+      "items": {
+        "$ref": "#/$defs/token"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "generated",
+    "sources",
+    "collections",
+    "tokens",
+    "styles",
+    "components",
+    "relationships",
+    "diagnostics",
+    "capabilities"
+  ],
+  "title": "Design System Documentation Manifest",
+  "type": "object"
+}

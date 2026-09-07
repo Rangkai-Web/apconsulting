@@ -1,0 +1,131 @@
+{
+  "$id": "https://design-system-documentation.local/schemas/dsd-semantic-1.0.0.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "behaviour": {
+      "additionalProperties": false,
+      "properties": {
+        "disabledFrom": {
+          "type": "object"
+        },
+        "focusable": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "const": "__TODO__"
+            }
+          ]
+        },
+        "interactive": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "const": "__TODO__"
+            }
+          ]
+        },
+        "keyboard": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "interactive",
+        "focusable",
+        "keyboard"
+      ],
+      "type": "object"
+    },
+    "candidates": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "nodeId": {
+            "type": "string"
+          },
+          "suggestedPurpose": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "nodeId",
+          "type",
+          "suggestedPurpose"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "componentUid": {
+      "type": "string"
+    },
+    "nodeOverrides": {
+      "items": {
+        "properties": {
+          "ariaHidden": {
+            "type": "boolean"
+          },
+          "element": {
+            "type": "string"
+          },
+          "nodeId": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "nodeId",
+          "element"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "rootElement": {
+      "type": "string"
+    },
+    "rootElementProps": {
+      "type": "object"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "__TODO__",
+        "authored"
+      ]
+    }
+  },
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "status",
+    "componentUid",
+    "rootElement",
+    "rootElementProps",
+    "nodeOverrides",
+    "behaviour",
+    "candidates"
+  ],
+  "title": "DSD Component Semantic Overlay",
+  "type": "object"
+}

@@ -1,0 +1,78 @@
+{
+  "$id": "https://design-system-documentation.local/schemas/dsd-a11y-1.0.0.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "componentUid": {
+      "type": "string"
+    },
+    "contrast": {
+      "properties": {
+        "checked": {
+          "type": "boolean"
+        },
+        "passesAA": {
+          "type": "boolean"
+        },
+        "ratio": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "checked",
+        "status"
+      ],
+      "type": "object"
+    },
+    "keyboard": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "name": {
+      "type": "object"
+    },
+    "role": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "sourceGuidance": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "states": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "__TODO__",
+        "authored"
+      ]
+    }
+  },
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "status",
+    "componentUid",
+    "role",
+    "name",
+    "states",
+    "contrast",
+    "keyboard",
+    "sourceGuidance"
+  ],
+  "title": "DSD Component Accessibility Overlay",
+  "type": "object"
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://design-system-documentation.local/schemas/dsd-semantic-1.0.0.schema.json",
+  "behaviour": {
+    "focusable": "__TODO__",
+    "interactive": "__TODO__",
+    "keyboard": []
+  },
+  "candidates": [
+    {
+      "name": "Option",
+      "nodeId": "dsd:layer:1:750",
+      "suggestedPurpose": "accessible-name",
+      "type": "TEXT"
+    }
+  ],
+  "componentUid": "dsd:component:1:788",
+  "nodeOverrides": [],
+  "rootElement": "__TODO__",
+  "rootElementProps": {},
+  "schemaVersion": "1.0.0",
+  "status": "__TODO__"
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://design-system-documentation.local/schemas/dsd-semantic-1.0.0.schema.json",
+  "behaviour": {
+    "focusable": "__TODO__",
+    "interactive": "__TODO__",
+    "keyboard": []
+  },
+  "candidates": [
+    {
+      "name": "Option",
+      "nodeId": "dsd:layer:1:791",
+      "suggestedPurpose": "nested-control",
+      "type": "INSTANCE"
+    },
+    {
+      "name": "Option",
+      "nodeId": "dsd:layer:i1:791_3b1:750",
+      "suggestedPurpose": "accessible-name",
+      "type": "TEXT"
+    },
+    {
+      "name": "Option",
+      "nodeId": "dsd:layer:1:793",
+      "suggestedPurpose": "nested-control",
+      "type": "INSTANCE"
+    },
+    {
+      "name": "Option",
+      "nodeId": "dsd:layer:i1:793_3b1:750",
+      "suggestedPurpose": "accessible-name",
+      "type": "TEXT"
+    },
+    {
+      "name": "Option",
+      "nodeId": "dsd:layer:1:796",
+      "suggestedPurpose": "nested-control",
+      "type": "INSTANCE"
+    },
+    {
+      "name": "Option",
+      "nodeId": "dsd:layer:i1:796_3b1:750",
+      "suggestedPurpose": "accessible-name",
+      "type": "TEXT"
+    },
+    {
+      "name": "Option",
+      "nodeId": "dsd:layer:1:800",
+      "suggestedPurpose": "nested-control",
+      "type": "INSTANCE"
+    },
+    {
+      "name": "Option",
+      "nodeId": "dsd:layer:i1:800_3b1:750",
+      "suggestedPurpose": "accessible-name",
+      "type": "TEXT"
+    },
+    {
+      "name": "Option",
+      "nodeId": "dsd:layer:1:798",
+      "suggestedPurpose": "nested-control",
+      "type": "INSTANCE"
+    },
+    {
+      "name": "Option",
+      "nodeId": "dsd:layer:i1:798_3b1:750",
+      "suggestedPurpose": "accessible-name",
+      "type": "TEXT"
+    },
+    {
+      "name": "Button",
+      "nodeId": "dsd:layer:1:849",
+      "suggestedPurpose": "nested-control",
+      "type": "INSTANCE"
+    },
+    {
+      "name": "Button",
+      "nodeId": "dsd:layer:i1:849_3b1:40",
+      "suggestedPurpose": "accessible-name",
+      "type": "TEXT"
+    }
+  ],
+  "componentUid": "dsd:component:1:851",
+  "nodeOverrides": [],
+  "rootElement": "__TODO__",
+  "rootElementProps": {},
+  "schemaVersion": "1.0.0",
+  "status": "__TODO__"
+}

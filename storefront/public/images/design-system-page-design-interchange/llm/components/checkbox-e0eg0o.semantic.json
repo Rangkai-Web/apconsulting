@@ -1,0 +1,15 @@
+{
+  "$schema": "https://design-system-documentation.local/schemas/dsd-semantic-1.0.0.schema.json",
+  "behaviour": {
+    "focusable": "__TODO__",
+    "interactive": "__TODO__",
+    "keyboard": []
+  },
+  "candidates": [],
+  "componentUid": "dsd:component:1:63",
+  "nodeOverrides": [],
+  "rootElement": "__TODO__",
+  "rootElementProps": {},
+  "schemaVersion": "1.0.0",
+  "status": "__TODO__"
+}

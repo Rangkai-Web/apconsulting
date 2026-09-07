@@ -1,0 +1,1271 @@
+{
+  "canonicalSource": "../../render/render-contract.json",
+  "capabilities": {
+    "a11yManifest": true,
+    "fonts": false,
+    "imageFillBinaries": true,
+    "instanceOverrides": true,
+    "interactionStates": true,
+    "perModeRenders": false,
+    "renderedImages": true,
+    "semanticManifest": true
+  },
+  "component": {
+    "annotations": [],
+    "defaultConfiguration": {
+      "Property 1": "Uncheck"
+    },
+    "defaultVariantUid": "dsd:variant:1:64",
+    "dimensions": {
+      "height": 64,
+      "maxHeight": null,
+      "maxWidth": null,
+      "minHeight": null,
+      "minWidth": null,
+      "width": 311
+    },
+    "documentationLinks": [],
+    "interactions": [],
+    "layout": {
+      "mode": "NONE",
+      "sizing": {
+        "horizontal": "AUTO",
+        "maxHeight": null,
+        "maxWidth": null,
+        "minHeight": null,
+        "minWidth": null,
+        "vertical": "FIXED"
+      },
+      "wrap": "NO_WRAP"
+    },
+    "name": "Checkbox",
+    "properties": [
+      {
+        "defaultValue": "Uncheck",
+        "id": "Property 1",
+        "name": "Property 1",
+        "type": "VARIANT",
+        "variantOptions": [
+          "Check",
+          "Uncheck",
+          "Checklist",
+          "Unchecklist",
+          "Checklist2"
+        ]
+      }
+    ],
+    "type": "COMPONENT_SET",
+    "uid": "dsd:component:1:63",
+    "variants": [
+      {
+        "dimensions": {
+          "height": 24,
+          "maxHeight": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "minWidth": null,
+          "width": 24
+        },
+        "layout": {
+          "mode": "NONE",
+          "sizing": {
+            "horizontal": "AUTO",
+            "maxHeight": null,
+            "maxWidth": null,
+            "minHeight": null,
+            "minWidth": null,
+            "vertical": "FIXED"
+          },
+          "wrap": "NO_WRAP"
+        },
+        "name": "Property 1=Uncheck",
+        "properties": {
+          "Property 1": "Uncheck"
+        },
+        "uid": "dsd:variant:1:64"
+      },
+      {
+        "dimensions": {
+          "height": 24,
+          "maxHeight": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "minWidth": null,
+          "width": 24
+        },
+        "layout": {
+          "mode": "NONE",
+          "sizing": {
+            "horizontal": "AUTO",
+            "maxHeight": null,
+            "maxWidth": null,
+            "minHeight": null,
+            "minWidth": null,
+            "vertical": "FIXED"
+          },
+          "wrap": "NO_WRAP"
+        },
+        "name": "Property 1=Unchecklist",
+        "properties": {
+          "Property 1": "Unchecklist"
+        },
+        "uid": "dsd:variant:1:66"
+      },
+      {
+        "dimensions": {
+          "height": 24,
+          "maxHeight": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "minWidth": null,
+          "width": 24
+        },
+        "layout": {
+          "mode": "NONE",
+          "sizing": {
+            "horizontal": "AUTO",
+            "maxHeight": null,
+            "maxWidth": null,
+            "minHeight": null,
+            "minWidth": null,
+            "vertical": "FIXED"
+          },
+          "wrap": "NO_WRAP"
+        },
+        "name": "Property 1=Check",
+        "properties": {
+          "Property 1": "Check"
+        },
+        "uid": "dsd:variant:1:68"
+      },
+      {
+        "dimensions": {
+          "height": 24,
+          "maxHeight": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "minWidth": null,
+          "width": 24
+        },
+        "layout": {
+          "mode": "NONE",
+          "sizing": {
+            "horizontal": "AUTO",
+            "maxHeight": null,
+            "maxWidth": null,
+            "minHeight": null,
+            "minWidth": null,
+            "vertical": "FIXED"
+          },
+          "wrap": "NO_WRAP"
+        },
+        "name": "Property 1=Checklist",
+        "properties": {
+          "Property 1": "Checklist"
+        },
+        "uid": "dsd:variant:1:70"
+      },
+      {
+        "dimensions": {
+          "height": 24,
+          "maxHeight": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "minWidth": null,
+          "width": 24
+        },
+        "layout": {
+          "mode": "NONE",
+          "sizing": {
+            "horizontal": "AUTO",
+            "maxHeight": null,
+            "maxWidth": null,
+            "minHeight": null,
+            "minWidth": null,
+            "vertical": "FIXED"
+          },
+          "wrap": "NO_WRAP"
+        },
+        "name": "Property 1=Checklist2",
+        "properties": {
+          "Property 1": "Checklist2"
+        },
+        "uid": "dsd:variant:1:72"
+      }
+    ]
+  },
+  "generated": {
+    "at": "2026-09-05T03:31:01.955Z",
+    "generator": "Design System Documentation",
+    "generatorVersion": "2.0.0",
+    "scope": "page",
+    "scopeLabel": "Design"
+  },
+  "implementation": {
+    "api": {
+      "componentName": "Checkbox",
+      "defaultProps": {
+        "property1": "Uncheck"
+      },
+      "properties": [
+        {
+          "defaultValue": "Uncheck",
+          "figmaName": "Property 1",
+          "options": [
+            "Check",
+            "Uncheck",
+            "Checklist",
+            "Unchecklist",
+            "Checklist2"
+          ],
+          "propName": "property1",
+          "type": "\"Check\" | \"Uncheck\" | \"Checklist\" | \"Unchecklist\" | \"Checklist2\""
+        }
+      ]
+    },
+    "fidelity": {
+      "fullManifestPath": "../../design-system.manifest.json",
+      "fullRenderContractPath": "../../render/render-contract.json",
+      "hasCompactRender": true,
+      "included": [
+        "component API and defaults",
+        "variant combinations and dimensions",
+        "layout and constraints",
+        "normalized render boxes",
+        "fills, strokes, effects, text metadata, and SVG paths",
+        "relevant tokens, styles, nested component references, and image assets"
+      ],
+      "intentionallyDeferred": [
+        "full vector networks",
+        "unrelated component usage relationships",
+        "font binaries"
+      ]
+    },
+    "strategy": [
+      "Create one reusable component rather than separate code for every variant.",
+      "Map component properties to public props or HTML attributes.",
+      "Use variant property combinations to select styles and optional anatomy.",
+      "Prefer CSS layout from the recorded auto-layout data; use fixed node boxes only where layout cannot reproduce the design.",
+      "Render vectorPaths as SVG paths and use related.assets for image fills."
+    ],
+    "targetGuidance": {
+      "htmlCss": {
+        "layout": "Translate HORIZONTAL/VERTICAL layout modes to flexbox and GRID to CSS grid.",
+        "rootAttribute": "data-dsd-component",
+        "variantAttributes": "Use data attributes named from implementation.api.properties for variant selectors."
+      },
+      "react": {
+        "componentName": "Checkbox",
+        "propModel": "Use implementation.api.properties as the public props contract.",
+        "variants": "Resolve implementation.variants against props and apply the matching render/layout data."
+      }
+    },
+    "targets": [
+      "react",
+      "html-css"
+    ],
+    "variants": [
+      {
+        "name": "Property 1=Uncheck",
+        "size": {
+          "height": 24,
+          "width": 24
+        },
+        "uid": "dsd:variant:1:64",
+        "when": {
+          "property1": "Uncheck"
+        }
+      },
+      {
+        "name": "Property 1=Unchecklist",
+        "size": {
+          "height": 24,
+          "width": 24
+        },
+        "uid": "dsd:variant:1:66",
+        "when": {
+          "property1": "Unchecklist"
+        }
+      },
+      {
+        "name": "Property 1=Check",
+        "size": {
+          "height": 24,
+          "width": 24
+        },
+        "uid": "dsd:variant:1:68",
+        "when": {
+          "property1": "Check"
+        }
+      },
+      {
+        "name": "Property 1=Checklist",
+        "size": {
+          "height": 24,
+          "width": 24
+        },
+        "uid": "dsd:variant:1:70",
+        "when": {
+          "property1": "Checklist"
+        }
+      },
+      {
+        "name": "Property 1=Checklist2",
+        "size": {
+          "height": 24,
+          "width": 24
+        },
+        "uid": "dsd:variant:1:72",
+        "when": {
+          "property1": "Checklist2"
+        }
+      }
+    ]
+  },
+  "instructions": [
+    "Use this file as the primary LLM input for implementing this component.",
+    "Read AGENTS.md first for bundle-level rules and file selection.",
+    "Build a reusable component API from implementation.api and implementation.variants.",
+    "Prefer related tokens and styles when bindings exist, then fall back to literal render values.",
+    "Use render.variants for normalized boxes, visual styling, text, SVG paths, and states.",
+    "Open the full render contract only for vector networks or other fidelity details intentionally omitted here."
+  ],
+  "interactionStates": {
+    "__TODO__": "No interaction-state variants were detected. Author mappings when this component is interactive."
+  },
+  "kind": "dsd-component-context",
+  "limitations": [
+    "Image paint binaries are embedded when available and recorded as asset references otherwise.",
+    "Font files are not embedded. Renderers should use installed fonts or project fallbacks.",
+    "Figma-specific effects, blend modes, and text layout may require renderer-specific approximation."
+  ],
+  "related": {
+    "assets": [],
+    "collections": [],
+    "relationships": [],
+    "styles": [
+      {
+        "bindings": [],
+        "kind": "style",
+        "name": "Blue/blue-500",
+        "publicationState": "unpublished",
+        "remote": false,
+        "source": {
+          "key": "1b9ca90244bdc99575a530c953271c29c900aa95",
+          "styleId": "S:1b9ca90244bdc99575a530c953271c29c900aa95,"
+        },
+        "styleType": "paint",
+        "uid": "dsd:style:s:1b9ca90244bdc99575a530c953271c29c900aa95_2c",
+        "value": [
+          {
+            "blendMode": "NORMAL",
+            "color": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.03137,
+                0.21176,
+                0.32549
+              ],
+              "hex": "#083653"
+            },
+            "type": "SOLID",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "bindings": [],
+        "kind": "style",
+        "name": "Blue/blue-100",
+        "publicationState": "unpublished",
+        "remote": false,
+        "source": {
+          "key": "7a3afc951828fe83ebc277f2845c4e082c61f6b4",
+          "styleId": "S:7a3afc951828fe83ebc277f2845c4e082c61f6b4,"
+        },
+        "styleType": "paint",
+        "uid": "dsd:style:s:7a3afc951828fe83ebc277f2845c4e082c61f6b4_2c",
+        "value": [
+          {
+            "blendMode": "NORMAL",
+            "color": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.69804,
+                0.75686,
+                0.79216
+              ],
+              "hex": "#B2C1CA"
+            },
+            "type": "SOLID",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "bindings": [],
+        "kind": "style",
+        "name": "Netral/02",
+        "publicationState": "published",
+        "remote": true,
+        "source": {
+          "key": "984e34ce070ff28ecbcc1d6af075791340946a10",
+          "styleId": "S:984e34ce070ff28ecbcc1d6af075791340946a10,32:166"
+        },
+        "styleType": "paint",
+        "uid": "dsd:style:s:984e34ce070ff28ecbcc1d6af075791340946a10_2c32:166",
+        "value": [
+          {
+            "blendMode": "NORMAL",
+            "color": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.83137,
+                0.83137,
+                0.83137
+              ],
+              "hex": "#D4D4D4"
+            },
+            "type": "SOLID",
+            "visible": true
+          }
+        ]
+      }
+    ],
+    "tokens": []
+  },
+  "render": {
+    "defaultVariantUid": "dsd:variant:1:64",
+    "name": "Checkbox",
+    "nodeDefaults": {
+      "blendMode": "PASS_THROUGH",
+      "clipsContent": false,
+      "opacity": 1,
+      "radius": 0,
+      "strokeWeight": 1,
+      "visible": true
+    },
+    "uid": "dsd:component:1:63",
+    "variants": [
+      {
+        "name": "Property 1=Uncheck",
+        "nodes": [
+          {
+            "box": {
+              "height": 24,
+              "width": 24,
+              "x": 0,
+              "y": 0
+            },
+            "canvasBox": {
+              "height": 24,
+              "width": 24,
+              "x": 20,
+              "y": 20
+            },
+            "clipsContent": true,
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "cornerSmoothing": 0,
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    1,
+                    1,
+                    1
+                  ],
+                  "hex": "#FFFFFF"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:64",
+            "layout": {
+              "mode": "NONE",
+              "sizing": {
+                "horizontal": "AUTO",
+                "maxHeight": null,
+                "maxWidth": null,
+                "minHeight": null,
+                "minWidth": null,
+                "vertical": "FIXED"
+              },
+              "wrap": "NO_WRAP"
+            },
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Property 1=Uncheck",
+            "radius": 4,
+            "resolvedBindings": [
+              {
+                "field": "strokeStyleId",
+                "styleUid": "dsd:style:s:984e34ce070ff28ecbcc1d6af075791340946a10_2c32:166"
+              }
+            ],
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "strokes": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.83137,
+                    0.83137,
+                    0.83137
+                  ],
+                  "hex": "#D4D4D4"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "type": "COMPONENT"
+          },
+          {
+            "box": {
+              "height": 16,
+              "width": 16,
+              "x": 4,
+              "y": 4
+            },
+            "clipsContent": true,
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "cornerSmoothing": 0,
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    1,
+                    1,
+                    1
+                  ],
+                  "hex": "#FFFFFF"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:65",
+            "layout": {
+              "mode": "NONE",
+              "sizing": {
+                "horizontal": "AUTO",
+                "maxHeight": null,
+                "maxWidth": null,
+                "minHeight": null,
+                "minWidth": null,
+                "vertical": "FIXED"
+              },
+              "wrap": "NO_WRAP"
+            },
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "parentId": "dsd:layer:1:64",
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "type": "FRAME"
+          }
+        ],
+        "properties": {
+          "Property 1": "Uncheck"
+        },
+        "uid": "dsd:variant:1:64",
+        "viewport": {
+          "height": 24,
+          "width": 24,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "name": "Property 1=Unchecklist",
+        "nodes": [
+          {
+            "box": {
+              "height": 24,
+              "width": 24,
+              "x": 0,
+              "y": 0
+            },
+            "canvasBox": {
+              "height": 24,
+              "width": 24,
+              "x": 208,
+              "y": 20
+            },
+            "clipsContent": true,
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "cornerSmoothing": 0,
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    1,
+                    1,
+                    1
+                  ],
+                  "hex": "#FFFFFF"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:66",
+            "layout": {
+              "mode": "NONE",
+              "sizing": {
+                "horizontal": "AUTO",
+                "maxHeight": null,
+                "maxWidth": null,
+                "minHeight": null,
+                "minWidth": null,
+                "vertical": "FIXED"
+              },
+              "wrap": "NO_WRAP"
+            },
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Property 1=Unchecklist",
+            "radius": 4,
+            "resolvedBindings": [
+              {
+                "field": "strokeStyleId",
+                "styleUid": "dsd:style:s:984e34ce070ff28ecbcc1d6af075791340946a10_2c32:166"
+              }
+            ],
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "strokes": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.83137,
+                    0.83137,
+                    0.83137
+                  ],
+                  "hex": "#D4D4D4"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "type": "COMPONENT"
+          },
+          {
+            "box": {
+              "height": 12.02,
+              "width": 16.3,
+              "x": 4,
+              "y": 6
+            },
+            "constraints": {
+              "horizontal": "SCALE",
+              "vertical": "SCALE"
+            },
+            "cornerSmoothing": 0,
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    1,
+                    1,
+                    1
+                  ],
+                  "hex": "#FFFFFF"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:67",
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Vector",
+            "parentId": "dsd:layer:1:66",
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "type": "VECTOR",
+            "vector": {
+              "vectorPaths": [
+                {
+                  "data": "M 5.700000286102295 12.024999618530273 L 0 6.325000286102295 L 1.4250001907348633 4.900000095367432 L 5.700000286102295 9.174999237060547 L 14.875 0 L 16.299999237060547 1.4250001907348633 L 5.700000286102295 12.024999618530273 Z",
+                  "windingRule": "NONZERO"
+                }
+              ]
+            }
+          }
+        ],
+        "properties": {
+          "Property 1": "Unchecklist"
+        },
+        "uid": "dsd:variant:1:66",
+        "viewport": {
+          "height": 24,
+          "width": 24,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "name": "Property 1=Check",
+        "nodes": [
+          {
+            "box": {
+              "height": 24,
+              "width": 24,
+              "x": 0,
+              "y": 0
+            },
+            "canvasBox": {
+              "height": 24,
+              "width": 24,
+              "x": 84,
+              "y": 20
+            },
+            "clipsContent": true,
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "cornerSmoothing": 0,
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    1,
+                    1,
+                    1
+                  ],
+                  "hex": "#FFFFFF"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:68",
+            "layout": {
+              "mode": "NONE",
+              "sizing": {
+                "horizontal": "AUTO",
+                "maxHeight": null,
+                "maxWidth": null,
+                "minHeight": null,
+                "minWidth": null,
+                "vertical": "FIXED"
+              },
+              "wrap": "NO_WRAP"
+            },
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Property 1=Check",
+            "radius": 4,
+            "resolvedBindings": [
+              {
+                "field": "strokeStyleId",
+                "styleUid": "dsd:style:s:7a3afc951828fe83ebc277f2845c4e082c61f6b4_2c"
+              }
+            ],
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "strokes": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.69804,
+                    0.75686,
+                    0.79216
+                  ],
+                  "hex": "#B2C1CA"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "type": "COMPONENT"
+          },
+          {
+            "box": {
+              "height": 16,
+              "width": 16,
+              "x": 4,
+              "y": 4
+            },
+            "clipsContent": true,
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "cornerSmoothing": 0,
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.03137,
+                    0.21176,
+                    0.32549
+                  ],
+                  "hex": "#083653"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:69",
+            "layout": {
+              "mode": "NONE",
+              "sizing": {
+                "horizontal": "AUTO",
+                "maxHeight": null,
+                "maxWidth": null,
+                "minHeight": null,
+                "minWidth": null,
+                "vertical": "FIXED"
+              },
+              "wrap": "NO_WRAP"
+            },
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "parentId": "dsd:layer:1:68",
+            "radius": 2,
+            "resolvedBindings": [
+              {
+                "field": "fillStyleId",
+                "styleUid": "dsd:style:s:1b9ca90244bdc99575a530c953271c29c900aa95_2c"
+              }
+            ],
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "type": "FRAME"
+          }
+        ],
+        "properties": {
+          "Property 1": "Check"
+        },
+        "uid": "dsd:variant:1:68",
+        "viewport": {
+          "height": 24,
+          "width": 24,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "name": "Property 1=Checklist",
+        "nodes": [
+          {
+            "box": {
+              "height": 24,
+              "width": 24,
+              "x": 0,
+              "y": 0
+            },
+            "canvasBox": {
+              "height": 24,
+              "width": 24,
+              "x": 272,
+              "y": 20
+            },
+            "clipsContent": true,
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "cornerSmoothing": 0,
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    1,
+                    1,
+                    1
+                  ],
+                  "hex": "#FFFFFF"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:70",
+            "layout": {
+              "mode": "NONE",
+              "sizing": {
+                "horizontal": "AUTO",
+                "maxHeight": null,
+                "maxWidth": null,
+                "minHeight": null,
+                "minWidth": null,
+                "vertical": "FIXED"
+              },
+              "wrap": "NO_WRAP"
+            },
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Property 1=Checklist",
+            "radius": 4,
+            "resolvedBindings": [
+              {
+                "field": "strokeStyleId",
+                "styleUid": "dsd:style:s:7a3afc951828fe83ebc277f2845c4e082c61f6b4_2c"
+              }
+            ],
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "strokes": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.69804,
+                    0.75686,
+                    0.79216
+                  ],
+                  "hex": "#B2C1CA"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "type": "COMPONENT"
+          },
+          {
+            "box": {
+              "height": 12.02,
+              "width": 16.3,
+              "x": 4,
+              "y": 6
+            },
+            "constraints": {
+              "horizontal": "SCALE",
+              "vertical": "SCALE"
+            },
+            "cornerSmoothing": 0,
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.03137,
+                    0.21176,
+                    0.32549
+                  ],
+                  "hex": "#083653"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:71",
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Vector",
+            "parentId": "dsd:layer:1:70",
+            "resolvedBindings": [
+              {
+                "field": "fillStyleId",
+                "styleUid": "dsd:style:s:1b9ca90244bdc99575a530c953271c29c900aa95_2c"
+              }
+            ],
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "type": "VECTOR",
+            "vector": {
+              "vectorPaths": [
+                {
+                  "data": "M 5.700000286102295 12.024999618530273 L 0 6.325000286102295 L 1.4250001907348633 4.900000095367432 L 5.700000286102295 9.174999237060547 L 14.875 0 L 16.299999237060547 1.4250001907348633 L 5.700000286102295 12.024999618530273 Z",
+                  "windingRule": "NONZERO"
+                }
+              ]
+            }
+          }
+        ],
+        "properties": {
+          "Property 1": "Checklist"
+        },
+        "uid": "dsd:variant:1:70",
+        "viewport": {
+          "height": 24,
+          "width": 24,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "name": "Property 1=Checklist2",
+        "nodes": [
+          {
+            "box": {
+              "height": 24,
+              "width": 24,
+              "x": 0,
+              "y": 0
+            },
+            "canvasBox": {
+              "height": 24,
+              "width": 24,
+              "x": 141,
+              "y": 20
+            },
+            "clipsContent": true,
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "cornerSmoothing": 0,
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.03137,
+                    0.21176,
+                    0.32549
+                  ],
+                  "hex": "#083653"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:72",
+            "layout": {
+              "mode": "NONE",
+              "sizing": {
+                "horizontal": "AUTO",
+                "maxHeight": null,
+                "maxWidth": null,
+                "minHeight": null,
+                "minWidth": null,
+                "vertical": "FIXED"
+              },
+              "wrap": "NO_WRAP"
+            },
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Property 1=Checklist2",
+            "radius": 4,
+            "resolvedBindings": [
+              {
+                "field": "fillStyleId",
+                "styleUid": "dsd:style:s:1b9ca90244bdc99575a530c953271c29c900aa95_2c"
+              }
+            ],
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "type": "COMPONENT"
+          },
+          {
+            "box": {
+              "height": 24,
+              "width": 24,
+              "x": 0,
+              "y": 0
+            },
+            "clipsContent": true,
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "cornerSmoothing": 0,
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    1,
+                    1,
+                    1
+                  ],
+                  "hex": "#FFFFFF"
+                },
+                "type": "SOLID",
+                "visible": false
+              }
+            ],
+            "id": "dsd:layer:1:73",
+            "layout": {
+              "mode": "NONE",
+              "sizing": {
+                "horizontal": "AUTO",
+                "maxHeight": null,
+                "maxWidth": null,
+                "minHeight": null,
+                "minWidth": null,
+                "vertical": "FIXED"
+              },
+              "wrap": "NO_WRAP"
+            },
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "material-symbols:check",
+            "parentId": "dsd:layer:1:72",
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "type": "FRAME"
+          },
+          {
+            "box": {
+              "height": 12.02,
+              "width": 16.3,
+              "x": 3.85,
+              "y": 5.97
+            },
+            "constraints": {
+              "horizontal": "SCALE",
+              "vertical": "SCALE"
+            },
+            "cornerSmoothing": 0,
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    1,
+                    0.99199,
+                    0.99199
+                  ],
+                  "hex": "#FFFDFD"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:74",
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Vector",
+            "parentId": "dsd:layer:1:73",
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "transform": [
+              [
+                1,
+                0,
+                3.8499999046325684
+              ],
+              [
+                0,
+                1,
+                5.974999904632568
+              ]
+            ],
+            "type": "VECTOR",
+            "vector": {
+              "vectorPaths": [
+                {
+                  "data": "M 5.700000286102295 12.024999618530273 L 0 6.325000286102295 L 1.4250001907348633 4.900000095367432 L 5.700000286102295 9.174999237060547 L 14.875 0 L 16.299999237060547 1.4250001907348633 L 5.700000286102295 12.024999618530273 Z",
+                  "windingRule": "NONZERO"
+                }
+              ]
+            }
+          }
+        ],
+        "properties": {
+          "Property 1": "Checklist2"
+        },
+        "uid": "dsd:variant:1:72",
+        "viewport": {
+          "height": 24,
+          "width": 24,
+          "x": 0,
+          "y": 0
+        }
+      }
+    ]
+  }
+}

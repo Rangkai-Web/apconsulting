@@ -1,0 +1,526 @@
+{
+  "$schema": "https://design-system-documentation.local/schemas/dsd-images-manifest-1.0.0.schema.json",
+  "entries": [
+    {
+      "bounds": {
+        "height": 37,
+        "width": 79,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-normal-state-default-type-primary@2x.png",
+        "svg": "button/size-normal-state-default-type-primary.svg"
+      },
+      "variantUid": "dsd:variant:1:27"
+    },
+    {
+      "bounds": {
+        "height": 37,
+        "width": 79,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-normal-state-default-type-secondary@2x.png",
+        "svg": "button/size-normal-state-default-type-secondary.svg"
+      },
+      "variantUid": "dsd:variant:1:29"
+    },
+    {
+      "bounds": {
+        "height": 37,
+        "width": 79,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-normal-state-default-type-outline@2x.png",
+        "svg": "button/size-normal-state-default-type-outline.svg"
+      },
+      "variantUid": "dsd:variant:1:31"
+    },
+    {
+      "bounds": {
+        "height": 37,
+        "width": 79,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-normal-state-pressed-type-primary@2x.png",
+        "svg": "button/size-normal-state-pressed-type-primary.svg"
+      },
+      "variantUid": "dsd:variant:1:33"
+    },
+    {
+      "bounds": {
+        "height": 37,
+        "width": 79,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-normal-state-pressed-type-secondary@2x.png",
+        "svg": "button/size-normal-state-pressed-type-secondary.svg"
+      },
+      "variantUid": "dsd:variant:1:35"
+    },
+    {
+      "bounds": {
+        "height": 37,
+        "width": 79,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-normal-state-pressed-type-outline@2x.png",
+        "svg": "button/size-normal-state-pressed-type-outline.svg"
+      },
+      "variantUid": "dsd:variant:1:37"
+    },
+    {
+      "bounds": {
+        "height": 56,
+        "width": 101,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-large-state-default-type-primary@2x.png",
+        "svg": "button/size-large-state-default-type-primary.svg"
+      },
+      "variantUid": "dsd:variant:1:39"
+    },
+    {
+      "bounds": {
+        "height": 56,
+        "width": 101,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-large-state-default-type-secondary@2x.png",
+        "svg": "button/size-large-state-default-type-secondary.svg"
+      },
+      "variantUid": "dsd:variant:1:41"
+    },
+    {
+      "bounds": {
+        "height": 56,
+        "width": 101,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-large-state-default-type-outline@2x.png",
+        "svg": "button/size-large-state-default-type-outline.svg"
+      },
+      "variantUid": "dsd:variant:1:43"
+    },
+    {
+      "bounds": {
+        "height": 56,
+        "width": 101,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-large-state-pressed-type-primary@2x.png",
+        "svg": "button/size-large-state-pressed-type-primary.svg"
+      },
+      "variantUid": "dsd:variant:1:45"
+    },
+    {
+      "bounds": {
+        "height": 56,
+        "width": 101,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-large-state-pressed-type-secondary@2x.png",
+        "svg": "button/size-large-state-pressed-type-secondary.svg"
+      },
+      "variantUid": "dsd:variant:1:47"
+    },
+    {
+      "bounds": {
+        "height": 56,
+        "width": 101,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-large-state-pressed-type-outline@2x.png",
+        "svg": "button/size-large-state-pressed-type-outline.svg"
+      },
+      "variantUid": "dsd:variant:1:49"
+    },
+    {
+      "bounds": {
+        "height": 30,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-small-state-default-type-primary@2x.png",
+        "svg": "button/size-small-state-default-type-primary.svg"
+      },
+      "variantUid": "dsd:variant:1:51"
+    },
+    {
+      "bounds": {
+        "height": 30,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-small-state-default-type-secondary@2x.png",
+        "svg": "button/size-small-state-default-type-secondary.svg"
+      },
+      "variantUid": "dsd:variant:1:53"
+    },
+    {
+      "bounds": {
+        "height": 30,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-small-state-default-type-outline@2x.png",
+        "svg": "button/size-small-state-default-type-outline.svg"
+      },
+      "variantUid": "dsd:variant:1:55"
+    },
+    {
+      "bounds": {
+        "height": 30,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-small-state-pressed-type-primary@2x.png",
+        "svg": "button/size-small-state-pressed-type-primary.svg"
+      },
+      "variantUid": "dsd:variant:1:57"
+    },
+    {
+      "bounds": {
+        "height": 30,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-small-state-pressed-type-secondary@2x.png",
+        "svg": "button/size-small-state-pressed-type-secondary.svg"
+      },
+      "variantUid": "dsd:variant:1:59"
+    },
+    {
+      "bounds": {
+        "height": 30,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-small-state-pressed-type-outline@2x.png",
+        "svg": "button/size-small-state-pressed-type-outline.svg"
+      },
+      "variantUid": "dsd:variant:1:61"
+    },
+    {
+      "bounds": {
+        "height": 37,
+        "width": 79,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-normal-state-hover-type-primary@2x.png",
+        "svg": "button/size-normal-state-hover-type-primary.svg"
+      },
+      "variantUid": "dsd:variant:1:810"
+    },
+    {
+      "bounds": {
+        "height": 37,
+        "width": 79,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-normal-state-hover-type-secondary@2x.png",
+        "svg": "button/size-normal-state-hover-type-secondary.svg"
+      },
+      "variantUid": "dsd:variant:1:812"
+    },
+    {
+      "bounds": {
+        "height": 37,
+        "width": 79,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-normal-state-hover-type-outline@2x.png",
+        "svg": "button/size-normal-state-hover-type-outline.svg"
+      },
+      "variantUid": "dsd:variant:1:814"
+    },
+    {
+      "bounds": {
+        "height": 56,
+        "width": 101,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-large-state-hover-type-primary@2x.png",
+        "svg": "button/size-large-state-hover-type-primary.svg"
+      },
+      "variantUid": "dsd:variant:1:804"
+    },
+    {
+      "bounds": {
+        "height": 56,
+        "width": 101,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-large-state-hover-type-secondary@2x.png",
+        "svg": "button/size-large-state-hover-type-secondary.svg"
+      },
+      "variantUid": "dsd:variant:1:806"
+    },
+    {
+      "bounds": {
+        "height": 56,
+        "width": 101,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-large-state-hover-type-outline@2x.png",
+        "svg": "button/size-large-state-hover-type-outline.svg"
+      },
+      "variantUid": "dsd:variant:1:808"
+    },
+    {
+      "bounds": {
+        "height": 30,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-small-state-hover-type-primary@2x.png",
+        "svg": "button/size-small-state-hover-type-primary.svg"
+      },
+      "variantUid": "dsd:variant:1:816"
+    },
+    {
+      "bounds": {
+        "height": 30,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-small-state-hover-type-secondary@2x.png",
+        "svg": "button/size-small-state-hover-type-secondary.svg"
+      },
+      "variantUid": "dsd:variant:1:818"
+    },
+    {
+      "bounds": {
+        "height": 30,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:26",
+      "files": {
+        "png@2x": "button/size-small-state-hover-type-outline@2x.png",
+        "svg": "button/size-small-state-hover-type-outline.svg"
+      },
+      "variantUid": "dsd:variant:1:820"
+    },
+    {
+      "bounds": {
+        "height": 24,
+        "width": 24,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:63",
+      "files": {
+        "png@2x": "checkbox/property-1-uncheck@2x.png",
+        "svg": "checkbox/property-1-uncheck.svg"
+      },
+      "variantUid": "dsd:variant:1:64"
+    },
+    {
+      "bounds": {
+        "height": 24,
+        "width": 24,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:63",
+      "files": {
+        "png@2x": "checkbox/property-1-unchecklist@2x.png",
+        "svg": "checkbox/property-1-unchecklist.svg"
+      },
+      "variantUid": "dsd:variant:1:66"
+    },
+    {
+      "bounds": {
+        "height": 24,
+        "width": 24,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:63",
+      "files": {
+        "png@2x": "checkbox/property-1-check@2x.png",
+        "svg": "checkbox/property-1-check.svg"
+      },
+      "variantUid": "dsd:variant:1:68"
+    },
+    {
+      "bounds": {
+        "height": 24,
+        "width": 24,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:63",
+      "files": {
+        "png@2x": "checkbox/property-1-checklist@2x.png",
+        "svg": "checkbox/property-1-checklist.svg"
+      },
+      "variantUid": "dsd:variant:1:70"
+    },
+    {
+      "bounds": {
+        "height": 24,
+        "width": 24,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:63",
+      "files": {
+        "png@2x": "checkbox/property-1-checklist2@2x.png",
+        "svg": "checkbox/property-1-checklist2.svg"
+      },
+      "variantUid": "dsd:variant:1:72"
+    },
+    {
+      "bounds": {
+        "height": 40,
+        "width": 86,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:788",
+      "files": {
+        "png@2x": "option/property-1-default@2x.png",
+        "svg": "option/property-1-default.svg"
+      },
+      "variantUid": "dsd:variant:1:787"
+    },
+    {
+      "bounds": {
+        "height": 40,
+        "width": 87,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:788",
+      "files": {
+        "png@2x": "option/property-1-hover@2x.png",
+        "svg": "option/property-1-hover.svg"
+      },
+      "variantUid": "dsd:variant:1:786"
+    },
+    {
+      "bounds": {
+        "height": 40,
+        "width": 87,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:788",
+      "files": {
+        "png@2x": "option/property-1-pressed@2x.png",
+        "svg": "option/property-1-pressed.svg"
+      },
+      "variantUid": "dsd:variant:1:785"
+    },
+    {
+      "bounds": {
+        "height": 42,
+        "width": 275,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:84",
+      "files": {
+        "png@2x": "frame-37/default@2x.png",
+        "svg": "frame-37/default.svg"
+      },
+      "variantUid": "dsd:variant:1:84"
+    },
+    {
+      "bounds": {
+        "height": 92,
+        "width": 1440,
+        "x": 0,
+        "y": 0
+      },
+      "componentUid": "dsd:component:1:851",
+      "files": {
+        "png@2x": "navbar/default@2x.png",
+        "svg": "navbar/default.svg"
+      },
+      "variantUid": "dsd:variant:1:851"
+    }
+  ],
+  "modes": [],
+  "scale": 2,
+  "schemaVersion": "1.0.0"
+}

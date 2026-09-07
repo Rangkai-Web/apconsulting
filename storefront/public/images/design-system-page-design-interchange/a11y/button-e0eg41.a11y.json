@@ -1,0 +1,17 @@
+{
+  "$schema": "https://design-system-documentation.local/schemas/dsd-a11y-1.0.0.schema.json",
+  "componentUid": "dsd:component:1:26",
+  "contrast": {
+    "checked": false,
+    "status": "__TODO__"
+  },
+  "keyboard": [],
+  "name": {
+    "from": "__TODO__"
+  },
+  "role": "__TODO__",
+  "schemaVersion": "1.0.0",
+  "sourceGuidance": [],
+  "states": {},
+  "status": "__TODO__"
+}

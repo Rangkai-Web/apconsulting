@@ -1,0 +1,114 @@
+{
+  "$id": "https://design-system-documentation.local/schemas/dsd-images-manifest-1.0.0.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "entries": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bounds": {
+            "additionalProperties": false,
+            "properties": {
+              "height": {
+                "type": "number"
+              },
+              "width": {
+                "type": "number"
+              },
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ],
+            "type": "object"
+          },
+          "componentUid": {
+            "type": "string"
+          },
+          "failures": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "files": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "variantUid": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "componentUid",
+          "variantUid",
+          "files",
+          "bounds"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "modes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "collectionUid": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "id",
+          "name",
+          "collectionUid",
+          "isDefault"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "scale": {
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    }
+  },
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "scale",
+    "modes",
+    "entries"
+  ],
+  "title": "DSD Rendered Images Manifest",
+  "type": "object"
+}

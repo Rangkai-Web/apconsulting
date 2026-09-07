@@ -1,0 +1,45 @@
+{
+  "$id": "https://design-system-documentation.local/schemas/dsd-instance-overrides-1.0.0.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "overrides": {
+      "additionalProperties": {
+        "additionalProperties": {
+          "additionalProperties": false,
+          "properties": {
+            "componentUid": {
+              "type": "string"
+            },
+            "props": {
+              "type": "object"
+            },
+            "variant": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "variant",
+            "props"
+          ],
+          "type": "object"
+        },
+        "type": "object"
+      },
+      "type": "object"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    }
+  },
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "overrides"
+  ],
+  "title": "DSD Component Instance Overrides",
+  "type": "object"
+}

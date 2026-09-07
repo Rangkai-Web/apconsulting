@@ -1,0 +1,1036 @@
+{
+  "canonicalSource": "../../render/render-contract.json",
+  "capabilities": {
+    "a11yManifest": true,
+    "fonts": false,
+    "imageFillBinaries": true,
+    "instanceOverrides": true,
+    "interactionStates": true,
+    "perModeRenders": false,
+    "renderedImages": true,
+    "semanticManifest": true
+  },
+  "component": {
+    "annotations": [],
+    "defaultConfiguration": {
+      "Property 1": "Default",
+      "Text": "Option"
+    },
+    "defaultVariantUid": "dsd:variant:1:787",
+    "dimensions": {
+      "height": 80,
+      "maxHeight": null,
+      "maxWidth": null,
+      "minHeight": null,
+      "minWidth": null,
+      "width": 324
+    },
+    "documentationLinks": [],
+    "interactions": [],
+    "layout": {
+      "mode": "NONE",
+      "sizing": {
+        "horizontal": "AUTO",
+        "maxHeight": null,
+        "maxWidth": null,
+        "minHeight": null,
+        "minWidth": null,
+        "vertical": "FIXED"
+      },
+      "wrap": "NO_WRAP"
+    },
+    "name": "Option",
+    "properties": [
+      {
+        "defaultValue": "Option",
+        "id": "Text#1:0",
+        "name": "Text",
+        "type": "TEXT"
+      },
+      {
+        "defaultValue": "Default",
+        "id": "Property 1",
+        "name": "Property 1",
+        "type": "VARIANT",
+        "variantOptions": [
+          "Default",
+          "Hover",
+          "Pressed"
+        ]
+      }
+    ],
+    "type": "COMPONENT_SET",
+    "uid": "dsd:component:1:788",
+    "variants": [
+      {
+        "dimensions": {
+          "height": 40,
+          "maxHeight": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "minWidth": null,
+          "width": 86
+        },
+        "layout": {
+          "alignment": {
+            "counter": "CENTER",
+            "primary": "CENTER"
+          },
+          "gap": {
+            "counterAxis": 0,
+            "item": 10
+          },
+          "mode": "HORIZONTAL",
+          "padding": {
+            "bottom": 8,
+            "left": 16,
+            "right": 16,
+            "top": 8
+          },
+          "sizing": {
+            "horizontal": "AUTO",
+            "maxHeight": null,
+            "maxWidth": null,
+            "minHeight": null,
+            "minWidth": null,
+            "vertical": "AUTO"
+          },
+          "wrap": "NO_WRAP"
+        },
+        "name": "Property 1=Default",
+        "properties": {
+          "Property 1": "Default"
+        },
+        "uid": "dsd:variant:1:787"
+      },
+      {
+        "dimensions": {
+          "height": 40,
+          "maxHeight": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "minWidth": null,
+          "width": 87
+        },
+        "layout": {
+          "alignment": {
+            "counter": "CENTER",
+            "primary": "CENTER"
+          },
+          "gap": {
+            "counterAxis": 0,
+            "item": 10
+          },
+          "mode": "HORIZONTAL",
+          "padding": {
+            "bottom": 8,
+            "left": 16,
+            "right": 16,
+            "top": 8
+          },
+          "sizing": {
+            "horizontal": "AUTO",
+            "maxHeight": null,
+            "maxWidth": null,
+            "minHeight": null,
+            "minWidth": null,
+            "vertical": "AUTO"
+          },
+          "wrap": "NO_WRAP"
+        },
+        "name": "Property 1=Hover",
+        "properties": {
+          "Property 1": "Hover"
+        },
+        "uid": "dsd:variant:1:786"
+      },
+      {
+        "dimensions": {
+          "height": 40,
+          "maxHeight": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "minWidth": null,
+          "width": 87
+        },
+        "layout": {
+          "alignment": {
+            "counter": "CENTER",
+            "primary": "CENTER"
+          },
+          "gap": {
+            "counterAxis": 0,
+            "item": 10
+          },
+          "mode": "HORIZONTAL",
+          "padding": {
+            "bottom": 8,
+            "left": 16,
+            "right": 16,
+            "top": 8
+          },
+          "sizing": {
+            "horizontal": "AUTO",
+            "maxHeight": null,
+            "maxWidth": null,
+            "minHeight": null,
+            "minWidth": null,
+            "vertical": "AUTO"
+          },
+          "wrap": "NO_WRAP"
+        },
+        "name": "Property 1=Pressed",
+        "properties": {
+          "Property 1": "Pressed"
+        },
+        "uid": "dsd:variant:1:785"
+      }
+    ]
+  },
+  "generated": {
+    "at": "2026-09-05T03:31:01.955Z",
+    "generator": "Design System Documentation",
+    "generatorVersion": "2.0.0",
+    "scope": "page",
+    "scopeLabel": "Design"
+  },
+  "implementation": {
+    "api": {
+      "componentName": "Option",
+      "defaultProps": {
+        "property1": "Default",
+        "text": "Option"
+      },
+      "properties": [
+        {
+          "defaultValue": "Option",
+          "figmaName": "Text",
+          "propName": "text",
+          "type": "string"
+        },
+        {
+          "defaultValue": "Default",
+          "figmaName": "Property 1",
+          "options": [
+            "Default",
+            "Hover",
+            "Pressed"
+          ],
+          "propName": "property1",
+          "type": "\"Default\" | \"Hover\" | \"Pressed\""
+        }
+      ]
+    },
+    "fidelity": {
+      "fullManifestPath": "../../design-system.manifest.json",
+      "fullRenderContractPath": "../../render/render-contract.json",
+      "hasCompactRender": true,
+      "included": [
+        "component API and defaults",
+        "variant combinations and dimensions",
+        "layout and constraints",
+        "normalized render boxes",
+        "fills, strokes, effects, text metadata, and SVG paths",
+        "relevant tokens, styles, nested component references, and image assets"
+      ],
+      "intentionallyDeferred": [
+        "full vector networks",
+        "unrelated component usage relationships",
+        "font binaries"
+      ]
+    },
+    "strategy": [
+      "Create one reusable component rather than separate code for every variant.",
+      "Map component properties to public props or HTML attributes.",
+      "Use variant property combinations to select styles and optional anatomy.",
+      "Prefer CSS layout from the recorded auto-layout data; use fixed node boxes only where layout cannot reproduce the design.",
+      "Render vectorPaths as SVG paths and use related.assets for image fills."
+    ],
+    "targetGuidance": {
+      "htmlCss": {
+        "layout": "Translate HORIZONTAL/VERTICAL layout modes to flexbox and GRID to CSS grid.",
+        "rootAttribute": "data-dsd-component",
+        "variantAttributes": "Use data attributes named from implementation.api.properties for variant selectors."
+      },
+      "react": {
+        "componentName": "Option",
+        "propModel": "Use implementation.api.properties as the public props contract.",
+        "variants": "Resolve implementation.variants against props and apply the matching render/layout data."
+      }
+    },
+    "targets": [
+      "react",
+      "html-css"
+    ],
+    "variants": [
+      {
+        "name": "Property 1=Default",
+        "size": {
+          "height": 40,
+          "width": 86
+        },
+        "uid": "dsd:variant:1:787",
+        "when": {
+          "property1": "Default"
+        }
+      },
+      {
+        "name": "Property 1=Hover",
+        "size": {
+          "height": 40,
+          "width": 87
+        },
+        "uid": "dsd:variant:1:786",
+        "when": {
+          "property1": "Hover"
+        }
+      },
+      {
+        "name": "Property 1=Pressed",
+        "size": {
+          "height": 40,
+          "width": 87
+        },
+        "uid": "dsd:variant:1:785",
+        "when": {
+          "property1": "Pressed"
+        }
+      }
+    ]
+  },
+  "instructions": [
+    "Use this file as the primary LLM input for implementing this component.",
+    "Read AGENTS.md first for bundle-level rules and file selection.",
+    "Build a reusable component API from implementation.api and implementation.variants.",
+    "Prefer related tokens and styles when bindings exist, then fall back to literal render values.",
+    "Use render.variants for normalized boxes, visual styling, text, SVG paths, and states.",
+    "Open the full render contract only for vector networks or other fidelity details intentionally omitted here."
+  ],
+  "interactionStates": {
+    "active": {
+      "set": {
+        "Property 1": "Pressed"
+      },
+      "via": "variant"
+    },
+    "hover": {
+      "set": {
+        "Property 1": "Hover"
+      },
+      "via": "variant"
+    }
+  },
+  "kind": "dsd-component-context",
+  "limitations": [
+    "Image paint binaries are embedded when available and recorded as asset references otherwise.",
+    "Font files are not embedded. Renderers should use installed fonts or project fallbacks.",
+    "Figma-specific effects, blend modes, and text layout may require renderer-specific approximation."
+  ],
+  "related": {
+    "assets": [],
+    "collections": [],
+    "relationships": [],
+    "styles": [
+      {
+        "bindings": [],
+        "kind": "style",
+        "name": "Mobile/Text L/Reguler",
+        "publicationState": "unpublished",
+        "remote": false,
+        "source": {
+          "key": "09e01b0603bd54949538767f15b8ffad404dfff9",
+          "styleId": "S:09e01b0603bd54949538767f15b8ffad404dfff9,"
+        },
+        "styleType": "text",
+        "uid": "dsd:style:s:09e01b0603bd54949538767f15b8ffad404dfff9_2c",
+        "value": {
+          "fontFamily": "Poppins",
+          "fontSize": 16,
+          "fontStyle": "Regular",
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          },
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "paragraphIndent": 0,
+          "paragraphSpacing": 0,
+          "textCase": "ORIGINAL",
+          "textDecoration": "NONE"
+        }
+      },
+      {
+        "bindings": [],
+        "kind": "style",
+        "name": "Mobile/Text L/Medium",
+        "publicationState": "unpublished",
+        "remote": false,
+        "source": {
+          "key": "298af3122f7fa217caee135939407cadebd1e1fa",
+          "styleId": "S:298af3122f7fa217caee135939407cadebd1e1fa,"
+        },
+        "styleType": "text",
+        "uid": "dsd:style:s:298af3122f7fa217caee135939407cadebd1e1fa_2c",
+        "value": {
+          "fontFamily": "Poppins",
+          "fontSize": 16,
+          "fontStyle": "Medium",
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          },
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "paragraphIndent": 0,
+          "paragraphSpacing": 0,
+          "textCase": "ORIGINAL",
+          "textDecoration": "NONE"
+        }
+      },
+      {
+        "bindings": [],
+        "kind": "style",
+        "name": "Blue/blue-600",
+        "publicationState": "unpublished",
+        "remote": false,
+        "source": {
+          "key": "824f7782f4c1e781bb23a9849d220530271bac1a",
+          "styleId": "S:824f7782f4c1e781bb23a9849d220530271bac1a,"
+        },
+        "styleType": "paint",
+        "uid": "dsd:style:s:824f7782f4c1e781bb23a9849d220530271bac1a_2c",
+        "value": [
+          {
+            "blendMode": "NORMAL",
+            "color": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.02745,
+                0.19216,
+                0.29804
+              ],
+              "hex": "#07314C"
+            },
+            "type": "SOLID",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "bindings": [],
+        "kind": "style",
+        "name": "Netral/03",
+        "publicationState": "unpublished",
+        "remote": false,
+        "source": {
+          "key": "e741d75fd4d509bf89e143775b407e9e060fda85",
+          "styleId": "S:e741d75fd4d509bf89e143775b407e9e060fda85,"
+        },
+        "styleType": "paint",
+        "uid": "dsd:style:s:e741d75fd4d509bf89e143775b407e9e060fda85_2c",
+        "value": [
+          {
+            "blendMode": "NORMAL",
+            "color": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.6,
+                0.6,
+                0.6
+              ],
+              "hex": "#999999"
+            },
+            "type": "SOLID",
+            "visible": true
+          }
+        ]
+      }
+    ],
+    "tokens": []
+  },
+  "render": {
+    "defaultVariantUid": "dsd:variant:1:787",
+    "name": "Option",
+    "nodeDefaults": {
+      "blendMode": "PASS_THROUGH",
+      "clipsContent": false,
+      "opacity": 1,
+      "radius": 0,
+      "strokeWeight": 1,
+      "visible": true
+    },
+    "uid": "dsd:component:1:788",
+    "variants": [
+      {
+        "name": "Property 1=Default",
+        "nodes": [
+          {
+            "box": {
+              "height": 40,
+              "width": 86,
+              "x": 0,
+              "y": 0
+            },
+            "canvasBox": {
+              "height": 40,
+              "width": 86,
+              "x": 20,
+              "y": 20
+            },
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "cornerSmoothing": 0,
+            "id": "dsd:layer:1:787",
+            "layout": {
+              "alignment": {
+                "counter": "CENTER",
+                "primary": "CENTER"
+              },
+              "gap": {
+                "counterAxis": 0,
+                "item": 10
+              },
+              "mode": "HORIZONTAL",
+              "padding": {
+                "bottom": 8,
+                "left": 16,
+                "right": 16,
+                "top": 8
+              },
+              "sizing": {
+                "horizontal": "AUTO",
+                "maxHeight": null,
+                "maxWidth": null,
+                "minHeight": null,
+                "minWidth": null,
+                "vertical": "AUTO"
+              },
+              "wrap": "NO_WRAP"
+            },
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Property 1=Default",
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "type": "COMPONENT"
+          },
+          {
+            "box": {
+              "height": 24,
+              "width": 54,
+              "x": 16,
+              "y": 8
+            },
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.6,
+                    0.6,
+                    0.6
+                  ],
+                  "hex": "#999999"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:750",
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Option",
+            "parentId": "dsd:layer:1:787",
+            "resolvedBindings": [
+              {
+                "field": "fillStyleId",
+                "styleUid": "dsd:style:s:e741d75fd4d509bf89e143775b407e9e060fda85_2c"
+              },
+              {
+                "field": "textStyleId",
+                "styleUid": "dsd:style:s:09e01b0603bd54949538767f15b8ffad404dfff9_2c"
+              }
+            ],
+            "strokeAlign": "OUTSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "text": {
+              "characters": "Option",
+              "fontFamily": "Poppins",
+              "fontSize": 16,
+              "fontStyle": "Regular",
+              "hangingList": false,
+              "hangingPunctuation": false,
+              "leadingTrim": "NONE",
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "lineHeight": {
+                "unit": "AUTO"
+              },
+              "listSpacing": 0,
+              "maxLines": null,
+              "paragraphIndent": 0,
+              "paragraphSpacing": 0,
+              "styledSegments": [
+                {
+                  "boundVariables": {},
+                  "characters": "Option",
+                  "end": 6,
+                  "fills": [
+                    {
+                      "blendMode": "NORMAL",
+                      "boundVariables": {},
+                      "color": {
+                        "b": 0.6000000238418579,
+                        "g": 0.6000000238418579,
+                        "r": 0.6000000238418579
+                      },
+                      "opacity": 1,
+                      "type": "SOLID",
+                      "visible": true
+                    }
+                  ],
+                  "fontName": {
+                    "family": "Poppins",
+                    "style": "Regular"
+                  },
+                  "fontSize": 16,
+                  "indentation": 0,
+                  "letterSpacing": {
+                    "unit": "PERCENT",
+                    "value": 0
+                  },
+                  "lineHeight": {
+                    "unit": "AUTO"
+                  },
+                  "listOptions": {
+                    "type": "NONE"
+                  },
+                  "listSpacing": 0,
+                  "start": 0,
+                  "textCase": "ORIGINAL",
+                  "textDecoration": "NONE",
+                  "textStyleId": "S:09e01b0603bd54949538767f15b8ffad404dfff9,"
+                }
+              ],
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "WIDTH_AND_HEIGHT",
+              "textCase": "ORIGINAL",
+              "textDecoration": "NONE",
+              "textTruncation": "DISABLED"
+            },
+            "type": "TEXT"
+          }
+        ],
+        "properties": {
+          "Property 1": "Default"
+        },
+        "uid": "dsd:variant:1:787",
+        "viewport": {
+          "height": 40,
+          "width": 86,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "name": "Property 1=Hover",
+        "nodes": [
+          {
+            "box": {
+              "height": 40,
+              "width": 87,
+              "x": 0,
+              "y": 0
+            },
+            "canvasBox": {
+              "height": 40,
+              "width": 87,
+              "x": 118,
+              "y": 20
+            },
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "cornerSmoothing": 0,
+            "id": "dsd:layer:1:786",
+            "layout": {
+              "alignment": {
+                "counter": "CENTER",
+                "primary": "CENTER"
+              },
+              "gap": {
+                "counterAxis": 0,
+                "item": 10
+              },
+              "mode": "HORIZONTAL",
+              "padding": {
+                "bottom": 8,
+                "left": 16,
+                "right": 16,
+                "top": 8
+              },
+              "sizing": {
+                "horizontal": "AUTO",
+                "maxHeight": null,
+                "maxWidth": null,
+                "minHeight": null,
+                "minWidth": null,
+                "vertical": "AUTO"
+              },
+              "wrap": "NO_WRAP"
+            },
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Property 1=Hover",
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "type": "COMPONENT"
+          },
+          {
+            "box": {
+              "height": 24,
+              "width": 55,
+              "x": 16,
+              "y": 8
+            },
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.31865,
+                    0.45904,
+                    0.54327
+                  ],
+                  "hex": "#51758B"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:751",
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Option",
+            "parentId": "dsd:layer:1:786",
+            "resolvedBindings": [
+              {
+                "field": "textStyleId",
+                "styleUid": "dsd:style:s:298af3122f7fa217caee135939407cadebd1e1fa_2c"
+              }
+            ],
+            "strokeAlign": "OUTSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "text": {
+              "characters": "Option",
+              "fontFamily": "Poppins",
+              "fontSize": 16,
+              "fontStyle": "Medium",
+              "hangingList": false,
+              "hangingPunctuation": false,
+              "leadingTrim": "NONE",
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "lineHeight": {
+                "unit": "AUTO"
+              },
+              "listSpacing": 0,
+              "maxLines": null,
+              "paragraphIndent": 0,
+              "paragraphSpacing": 0,
+              "styledSegments": [
+                {
+                  "boundVariables": {},
+                  "characters": "Option",
+                  "end": 6,
+                  "fills": [
+                    {
+                      "blendMode": "NORMAL",
+                      "boundVariables": {},
+                      "color": {
+                        "b": 0.5432692170143127,
+                        "g": 0.45903638005256653,
+                        "r": 0.3186483085155487
+                      },
+                      "opacity": 1,
+                      "type": "SOLID",
+                      "visible": true
+                    }
+                  ],
+                  "fontName": {
+                    "family": "Poppins",
+                    "style": "Medium"
+                  },
+                  "fontSize": 16,
+                  "indentation": 0,
+                  "letterSpacing": {
+                    "unit": "PERCENT",
+                    "value": 0
+                  },
+                  "lineHeight": {
+                    "unit": "AUTO"
+                  },
+                  "listOptions": {
+                    "type": "NONE"
+                  },
+                  "listSpacing": 0,
+                  "start": 0,
+                  "textCase": "ORIGINAL",
+                  "textDecoration": "NONE",
+                  "textStyleId": "S:298af3122f7fa217caee135939407cadebd1e1fa,"
+                }
+              ],
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "WIDTH_AND_HEIGHT",
+              "textCase": "ORIGINAL",
+              "textDecoration": "NONE",
+              "textTruncation": "DISABLED"
+            },
+            "type": "TEXT"
+          }
+        ],
+        "properties": {
+          "Property 1": "Hover"
+        },
+        "uid": "dsd:variant:1:786",
+        "viewport": {
+          "height": 40,
+          "width": 87,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "name": "Property 1=Pressed",
+        "nodes": [
+          {
+            "box": {
+              "height": 40,
+              "width": 87,
+              "x": 0,
+              "y": 0
+            },
+            "canvasBox": {
+              "height": 40,
+              "width": 87,
+              "x": 217,
+              "y": 20
+            },
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "cornerSmoothing": 0,
+            "id": "dsd:layer:1:785",
+            "layout": {
+              "alignment": {
+                "counter": "CENTER",
+                "primary": "CENTER"
+              },
+              "gap": {
+                "counterAxis": 0,
+                "item": 10
+              },
+              "mode": "HORIZONTAL",
+              "padding": {
+                "bottom": 8,
+                "left": 16,
+                "right": 16,
+                "top": 8
+              },
+              "sizing": {
+                "horizontal": "AUTO",
+                "maxHeight": null,
+                "maxWidth": null,
+                "minHeight": null,
+                "minWidth": null,
+                "vertical": "AUTO"
+              },
+              "wrap": "NO_WRAP"
+            },
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Property 1=Pressed",
+            "strokeAlign": "INSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "type": "COMPONENT"
+          },
+          {
+            "box": {
+              "height": 24,
+              "width": 55,
+              "x": 16,
+              "y": 8
+            },
+            "constraints": {
+              "horizontal": "MIN",
+              "vertical": "MIN"
+            },
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "color": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.02745,
+                    0.19216,
+                    0.29804
+                  ],
+                  "hex": "#07314C"
+                },
+                "type": "SOLID",
+                "visible": true
+              }
+            ],
+            "id": "dsd:layer:1:784",
+            "layoutChild": {
+              "align": "INHERIT",
+              "grow": 0,
+              "positioning": "AUTO"
+            },
+            "name": "Option",
+            "parentId": "dsd:layer:1:785",
+            "resolvedBindings": [
+              {
+                "field": "fillStyleId",
+                "styleUid": "dsd:style:s:824f7782f4c1e781bb23a9849d220530271bac1a_2c"
+              },
+              {
+                "field": "textStyleId",
+                "styleUid": "dsd:style:s:298af3122f7fa217caee135939407cadebd1e1fa_2c"
+              }
+            ],
+            "strokeAlign": "OUTSIDE",
+            "strokeCap": "NONE",
+            "strokeJoin": "MITER",
+            "text": {
+              "characters": "Option",
+              "fontFamily": "Poppins",
+              "fontSize": 16,
+              "fontStyle": "Medium",
+              "hangingList": false,
+              "hangingPunctuation": false,
+              "leadingTrim": "NONE",
+              "letterSpacing": {
+                "unit": "PERCENT",
+                "value": 0
+              },
+              "lineHeight": {
+                "unit": "AUTO"
+              },
+              "listSpacing": 0,
+              "maxLines": null,
+              "paragraphIndent": 0,
+              "paragraphSpacing": 0,
+              "styledSegments": [
+                {
+                  "boundVariables": {},
+                  "characters": "Option",
+                  "end": 6,
+                  "fills": [
+                    {
+                      "blendMode": "NORMAL",
+                      "boundVariables": {},
+                      "color": {
+                        "b": 0.2980392277240753,
+                        "g": 0.1921568661928177,
+                        "r": 0.027450980618596077
+                      },
+                      "opacity": 1,
+                      "type": "SOLID",
+                      "visible": true
+                    }
+                  ],
+                  "fontName": {
+                    "family": "Poppins",
+                    "style": "Medium"
+                  },
+                  "fontSize": 16,
+                  "indentation": 0,
+                  "letterSpacing": {
+                    "unit": "PERCENT",
+                    "value": 0
+                  },
+                  "lineHeight": {
+                    "unit": "AUTO"
+                  },
+                  "listOptions": {
+                    "type": "NONE"
+                  },
+                  "listSpacing": 0,
+                  "start": 0,
+                  "textCase": "ORIGINAL",
+                  "textDecoration": "NONE",
+                  "textStyleId": "S:298af3122f7fa217caee135939407cadebd1e1fa,"
+                }
+              ],
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "textAutoResize": "WIDTH_AND_HEIGHT",
+              "textCase": "ORIGINAL",
+              "textDecoration": "NONE",
+              "textTruncation": "DISABLED"
+            },
+            "type": "TEXT"
+          }
+        ],
+        "properties": {
+          "Property 1": "Pressed"
+        },
+        "uid": "dsd:variant:1:785",
+        "viewport": {
+          "height": 40,
+          "width": 87,
+          "x": 0,
+          "y": 0
+        }
+      }
+    ]
+  }
+}

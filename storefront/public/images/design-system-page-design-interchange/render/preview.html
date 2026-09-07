@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DSD Render Contract Preview</title>
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <style>
+    :root { color-scheme: light; }
+    body { margin: 0; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #111; background: #f6f6f6; }
+    main { max-width: 1200px; margin: 0 auto; padding: 32px; }
+    h1 { margin: 0 0 8px; font-size: 36px; line-height: 1.1; letter-spacing: -0.03em; }
+    h2 { margin: 0; font-size: 24px; line-height: 1.2; }
+    h3 { margin: 0 0 12px; font-size: 15px; line-height: 1.35; }
+    p { margin: 0; }
+    button, select, input::file-selector-button { min-height: 40px; padding: 8px 12px; border: 1px solid #d0d0d0; border-radius: 8px; background: #fff; color: #111; font: inherit; }
+    button.primary { border-color: #0d99ff; color: #fff; background: #0d99ff; }
+    select { min-width: 260px; }
+    textarea { box-sizing: border-box; width: 100%; min-height: 120px; margin: 12px 0; padding: 12px; border: 1px solid #d0d0d0; border-radius: 8px; font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; }
+    details { margin-top: 16px; }
+    summary { cursor: pointer; color: #555; }
+    .hero { margin-bottom: 24px; }
+    .note { color: #666; line-height: 1.5; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 24px 0; padding: 16px; border: 1px solid #ddd; border-radius: 12px; background: #fff; }
+    .status { color: #555; }
+    #output { display: grid; gap: 20px; }
+    .component { padding: 20px; border: 1px solid #ddd; border-radius: 14px; background: #fff; }
+    .component-head { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: end; margin-bottom: 20px; }
+    .meta { color: #666; font-size: 14px; }
+    .variant-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: start; overflow-x: auto; }
+    .variant { box-sizing: border-box; width: max-content; max-width: 100%; overflow: auto; padding: 16px; border: 1px solid #e4e4e4; border-radius: 12px; background: #fff; }
+    svg { display: block; overflow: visible; background: #fafafa; border: 1px solid #eee; }
+    .empty { padding: 32px; border: 1px dashed #ccc; border-radius: 12px; color: #666; background: #fff; }
+    .asset-note { fill: #777; font: 10px Inter, system-ui, sans-serif; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>DSD Render Contract Preview</h1>
+      <p class="note">Open this file next to <code>render-contract.json</code>, or load the JSON manually. The preview renders fixed geometry from the contract; it is a debugging aid, not a browser implementation.</p>
+    </section>
+    <section class="toolbar">
+      <select id="component" aria-label="Component"></select>
+      <input id="file" type="file" accept="application/json,.json">
+      <span id="status" class="status">Looking for render-contract.json...</span>
+    </section>
+    <details>
+      <summary>Paste JSON fallback</summary>
+      <textarea id="input" placeholder="Paste render contract JSON here"></textarea>
+      <button id="render" class="primary">Render pasted JSON</button>
+    </details>
+    <div id="output"></div>
+  </main>
+  <script>
+    const input = document.getElementById("input");
+    const output = document.getElementById("output");
+    const status = document.getElementById("status");
+    const componentSelect = document.getElementById("component");
+    let activeContract;
+
+    document.getElementById("render").addEventListener("click", () => {
+      try {
+        setContract(JSON.parse(input.value), "pasted JSON");
+      } catch (error) {
+        setStatus("Could not parse pasted JSON: " + error.message);
+      }
+    });
+    document.getElementById("file").addEventListener("change", (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      file.text().then((text) => setContract(JSON.parse(text), file.name)).catch((error) => setStatus("Could not load file: " + error.message));
+    });
+    componentSelect.addEventListener("change", renderSelectedComponent);
+
+    fetch("render-contract.json").then((response) => response.ok ? response.text() : "").then((text) => {
+      if (text && !input.value) setContract(JSON.parse(text), "render-contract.json");
+      if (!text) setStatus("Auto-load unavailable. Choose render-contract.json or paste it below.");
+    }).catch(() => setStatus("Auto-load unavailable. Choose render-contract.json or paste it below."));
+
+    function setContract(contract, source) {
+      activeContract = contract;
+      input.value = JSON.stringify(contract, null, 2);
+      componentSelect.replaceChildren(
+        el("option", { value: "all" }, ["All components (" + contract.components.length + ")"]),
+        ...contract.components.map((component, index) =>
+          el("option", { value: String(index) }, [component.name + " (" + component.variants.length + " variants)"])
+        )
+      );
+      componentSelect.value = "all";
+      setStatus("Loaded " + source + ". " + contract.components.length + " components.");
+      renderSelectedComponent();
+    }
+
+    function renderSelectedComponent() {
+      if (!activeContract || !activeContract.components.length) {
+        output.replaceChildren(el("div", { class: "empty" }, ["No components found in this render contract."]));
+        return;
+      }
+      if (componentSelect.value === "all") {
+        output.replaceChildren();
+        for (const component of activeContract.components) output.append(renderComponent(component));
+        return;
+      }
+      const component = activeContract.components[Number(componentSelect.value) || 0];
+      output.replaceChildren(renderComponent(component));
+    }
+
+    function setStatus(message) {
+      status.textContent = message;
+    }
+
+    function renderComponent(component) {
+      const section = el("section", { class: "component" }, [
+        el("div", { class: "component-head" }, [
+          el("div", {}, [el("h2", {}, [component.name]), el("p", { class: "meta" }, [component.uid])]),
+          el("p", { class: "meta" }, [component.variants.length + " variants"])
+        ])
+      ]);
+      const grid = el("div", { class: "variant-grid" });
+      for (const variant of component.variants) {
+        grid.append(renderVariant(variant));
+      }
+      section.append(grid);
+      return section;
+    }
+
+    function renderVariant(variant) {
+      const wrap = el("div", { class: "variant" }, [el("h3", {}, [variant.name])]);
+      const svg = ns("svg");
+      const width = Math.max(1, Number(variant.viewport.width) || 1);
+      const height = Math.max(1, Number(variant.viewport.height) || 1);
+      svg.setAttribute("width", String(width));
+      svg.setAttribute("height", String(height));
+      svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+      const context = {
+        defs: ns("defs"),
+        assets: new Map((activeContract.assets || []).map((asset) => [asset.imageHash, asset])),
+        nextId: 0
+      };
+      const byId = new Map(variant.nodes.map((node) => [node.id, node]));
+      const childrenByParent = new Map();
+      for (const node of variant.nodes) {
+        if (!node.parentId) continue;
+        const siblings = childrenByParent.get(node.parentId) || [];
+        siblings.push(node);
+        childrenByParent.set(node.parentId, siblings);
+      }
+      const roots = variant.nodes.filter((node) => !node.parentId);
+      for (const root of roots) svg.append(renderTree(root, childrenByParent, 0, 0, true, context));
+      if (context.defs.childNodes.length) svg.prepend(context.defs);
+      wrap.append(svg);
+      return wrap;
+    }
+
+    function renderTree(node, childrenByParent, parentX, parentY, isRoot, context) {
+      const group = ns("g");
+      if (node.visible === false || node.opacity === 0) return group;
+      const x = isRoot ? 0 : parentX + number(node.box && node.box.x);
+      const y = isRoot ? 0 : parentY + number(node.box && node.box.y);
+      const clipId = clipPathFor(node, x, y, context);
+      if (clipId) group.setAttribute("clip-path", "url(#" + clipId + ")");
+      applyEffects(group, node, context);
+      const own = renderNode(node, x, y, context);
+      if (own) group.append(own);
+      for (const child of childrenByParent.get(node.id) || []) {
+        group.append(renderTree(child, childrenByParent, x, y, false, context));
+      }
+      return group;
+    }
+
+    function renderNode(node, x, y, context) {
+      if (node.vector && node.vector.vectorPaths && node.vector.vectorPaths[0] && node.vector.vectorPaths[0].data) {
+        const path = ns("path");
+        path.setAttribute("d", node.vector.vectorPaths[0].data);
+        applyPaint(path, node, context);
+        applyStrokeShape(path, node);
+        path.setAttribute("transform", "translate(" + x + " " + y + ")");
+        return path;
+      }
+      if (node.text && node.text.characters) {
+        const text = ns("text");
+        const fontSize = Number(node.text.fontSize) || 12;
+        let textX = x;
+        let textAnchor = "start";
+        if (node.text.textAlignHorizontal === "RIGHT") {
+          textX = x + number(node.box && node.box.width);
+          textAnchor = "end";
+        } else if (node.text.textAlignHorizontal === "CENTER") {
+          textX = x + (number(node.box && node.box.width) / 2);
+          textAnchor = "middle";
+        }
+        text.textContent = node.text.characters;
+        text.setAttribute("x", String(textX));
+        text.setAttribute("y", String(y));
+        text.setAttribute("dominant-baseline", "hanging");
+        text.setAttribute("text-anchor", textAnchor);
+        text.setAttribute("font-family", fontFamily(node.text.fontFamily));
+        text.setAttribute("font-size", String(fontSize));
+        text.setAttribute("font-weight", fontWeight(node.text.fontStyle));
+        text.setAttribute("font-style", fontStyle(node.text.fontStyle));
+        text.setAttribute("letter-spacing", letterSpacing(node.text.letterSpacing));
+        text.setAttribute("text-decoration", textDecoration(node.text.textDecoration));
+        applyPaint(text, node, context);
+        return text;
+      }
+      const image = visibleImage(node.fills);
+      const hasFill = visibleSolid(node.fills) || visibleGradient(node.fills) || image;
+      const hasStroke = visibleSolid(node.strokes) || visibleGradient(node.strokes);
+      if (!hasFill && !hasStroke) return null;
+      const rect = ns("rect");
+      rect.setAttribute("x", String(x));
+      rect.setAttribute("y", String(y));
+      rect.setAttribute("width", String(number(node.box && node.box.width)));
+      rect.setAttribute("height", String(number(node.box && node.box.height)));
+      applyRadius(rect, node);
+      applyPaint(rect, node, context);
+      applyStrokeShape(rect, node);
+      const hasPerSideStroke = node.strokeWeight && typeof node.strokeWeight === "object";
+      if (hasPerSideStroke) {
+        rect.removeAttribute("stroke");
+        rect.removeAttribute("stroke-width");
+      }
+      if (!image && !hasPerSideStroke) return rect;
+      const group = ns("g");
+      const asset = image && image.imageHash ? context.assets.get(image.imageHash) : undefined;
+      if (image && asset && asset.filePath) {
+        const imageNode = ns("image");
+        imageNode.setAttribute("href", assetHref(asset.filePath));
+        imageNode.setAttribute("x", String(x));
+        imageNode.setAttribute("y", String(y));
+        imageNode.setAttribute("width", String(number(node.box && node.box.width)));
+        imageNode.setAttribute("height", String(number(node.box && node.box.height)));
+        imageNode.setAttribute("preserveAspectRatio", imagePreserveAspectRatio(image.scaleMode));
+        if (image.opacity !== undefined) imageNode.setAttribute("opacity", String(image.opacity));
+        group.append(imageNode);
+        rect.setAttribute("fill", "transparent");
+        group.append(rect);
+      } else if (image) {
+        group.append(rect);
+        const note = ns("text");
+        note.textContent = "image asset not embedded";
+        note.setAttribute("x", String(x + 8));
+        note.setAttribute("y", String(y + 8));
+        note.setAttribute("dominant-baseline", "hanging");
+        note.setAttribute("class", "asset-note");
+        group.append(note);
+      } else {
+        group.append(rect);
+      }
+      applyPerSideStrokes(group, node, x, y, context);
+      return group;
+    }
+
+    function applyPaint(item, node, context) {
+      const fill = visibleSolid(node.fills);
+      const stroke = visibleSolid(node.strokes);
+      const fillGradient = visibleGradient(node.fills);
+      const strokeGradient = visibleGradient(node.strokes);
+      const image = visibleImage(node.fills);
+      item.setAttribute("fill", fill && fill.color && fill.color.hex ? fill.color.hex : (node.text ? "#111" : "transparent"));
+      if (!fill && fillGradient) item.setAttribute("fill", gradientRef(fillGradient, context));
+      if (!fill && image) item.setAttribute("fill", "#eee");
+      if (stroke && stroke.color && stroke.color.hex) item.setAttribute("stroke", stroke.color.hex);
+      if (!stroke && strokeGradient) item.setAttribute("stroke", gradientRef(strokeGradient, context));
+      if (typeof node.strokeWeight === "number") item.setAttribute("stroke-width", String(node.strokeWeight));
+      if (node.opacity !== undefined) item.setAttribute("opacity", String(node.opacity));
+    }
+
+    function applyStrokeShape(item, node) {
+      if (node.strokeCap) item.setAttribute("stroke-linecap", String(node.strokeCap).toLowerCase());
+      if (node.strokeJoin) item.setAttribute("stroke-linejoin", String(node.strokeJoin).toLowerCase());
+      if (Array.isArray(node.dashPattern) && node.dashPattern.length) item.setAttribute("stroke-dasharray", node.dashPattern.join(" "));
+    }
+
+    function applyPerSideStrokes(group, node, x, y, context) {
+      if (!node.strokeWeight || typeof node.strokeWeight !== "object") return;
+      const width = number(node.box && node.box.width);
+      const height = number(node.box && node.box.height);
+      const sides = [
+        ["top", x, y, x + width, y],
+        ["right", x + width, y, x + width, y + height],
+        ["bottom", x, y + height, x + width, y + height],
+        ["left", x, y, x, y + height]
+      ];
+      const stroke = visibleSolid(node.strokes);
+      const gradient = visibleGradient(node.strokes);
+      for (const [side, x1, y1, x2, y2] of sides) {
+        const sideWidth = number(node.strokeWeight[side]);
+        if (!sideWidth) continue;
+        const line = ns("line");
+        line.setAttribute("x1", String(x1));
+        line.setAttribute("y1", String(y1));
+        line.setAttribute("x2", String(x2));
+        line.setAttribute("y2", String(y2));
+        line.setAttribute("stroke-width", String(sideWidth));
+        if (stroke && stroke.color && stroke.color.hex) line.setAttribute("stroke", stroke.color.hex);
+        if (!stroke && gradient) line.setAttribute("stroke", gradientRef(gradient, context));
+        applyStrokeShape(line, node);
+        group.append(line);
+      }
+    }
+
+    function applyRadius(item, node) {
+      if (typeof node.radius === "number") {
+        item.setAttribute("rx", String(node.radius));
+        return;
+      }
+      if (node.radius && typeof node.radius === "object") {
+        item.setAttribute("rx", String(Math.max(
+          number(node.radius.topLeft),
+          number(node.radius.topRight),
+          number(node.radius.bottomRight),
+          number(node.radius.bottomLeft)
+        )));
+      }
+    }
+
+    function applyEffects(item, node, context) {
+      const shadow = (node.effects || []).find((effect) => effect && effect.visible !== false && (effect.type === "DROP_SHADOW" || effect.type === "LAYER_BLUR"));
+      if (!shadow) return;
+      const id = nextDefId(context, "effect");
+      const filter = ns("filter");
+      filter.setAttribute("id", id);
+      filter.setAttribute("x", "-50%");
+      filter.setAttribute("y", "-50%");
+      filter.setAttribute("width", "200%");
+      filter.setAttribute("height", "200%");
+      if (shadow.type === "DROP_SHADOW") {
+        const drop = ns("feDropShadow");
+        drop.setAttribute("dx", String(number(shadow.offset && shadow.offset.x)));
+        drop.setAttribute("dy", String(number(shadow.offset && shadow.offset.y)));
+        drop.setAttribute("stdDeviation", String(number(shadow.radius) / 2));
+        if (shadow.color && shadow.color.hex) drop.setAttribute("flood-color", shadow.color.hex);
+        if (shadow.color && shadow.color.alpha !== undefined) drop.setAttribute("flood-opacity", String(shadow.color.alpha));
+        filter.append(drop);
+      } else {
+        const blur = ns("feGaussianBlur");
+        blur.setAttribute("stdDeviation", String(number(shadow.radius) / 2));
+        filter.append(blur);
+      }
+      context.defs.append(filter);
+      item.setAttribute("filter", "url(#" + id + ")");
+    }
+
+    function clipPathFor(node, x, y, context) {
+      if (!node.clipsContent) return "";
+      const id = nextDefId(context, "clip");
+      const clipPath = ns("clipPath");
+      clipPath.setAttribute("id", id);
+      const rect = ns("rect");
+      rect.setAttribute("x", String(x));
+      rect.setAttribute("y", String(y));
+      rect.setAttribute("width", String(number(node.box && node.box.width)));
+      rect.setAttribute("height", String(number(node.box && node.box.height)));
+      applyRadius(rect, node);
+      clipPath.append(rect);
+      context.defs.append(clipPath);
+      return id;
+    }
+
+    function gradientRef(paint, context) {
+      const id = nextDefId(context, "gradient");
+      const gradient = ns(paint.type === "GRADIENT_RADIAL" ? "radialGradient" : "linearGradient");
+      gradient.setAttribute("id", id);
+      for (const stop of paint.stops || []) {
+        const item = ns("stop");
+        item.setAttribute("offset", String(Math.max(0, Math.min(1, number(stop.position))) * 100) + "%");
+        if (stop.color && stop.color.hex) item.setAttribute("stop-color", stop.color.hex);
+        if (stop.color && stop.color.alpha !== undefined) item.setAttribute("stop-opacity", String(stop.color.alpha));
+        gradient.append(item);
+      }
+      context.defs.append(gradient);
+      return "url(#" + id + ")";
+    }
+
+    function nextDefId(context, prefix) {
+      context.nextId += 1;
+      return "dsd-" + prefix + "-" + context.nextId;
+    }
+
+    function visibleSolid(paints) {
+      return paints ? paints.find((paint) => paint && paint.type === "SOLID" && paint.visible !== false) : undefined;
+    }
+
+    function visibleImage(paints) {
+      return paints ? paints.find((paint) => paint && paint.type === "IMAGE" && paint.visible !== false) : undefined;
+    }
+
+    function visibleGradient(paints) {
+      return paints ? paints.find((paint) => paint && typeof paint.type === "string" && paint.type.indexOf("GRADIENT_") === 0 && paint.visible !== false) : undefined;
+    }
+
+    function imagePreserveAspectRatio(scaleMode) {
+      if (scaleMode === "FILL") return "xMidYMid slice";
+      if (scaleMode === "FIT") return "xMidYMid meet";
+      return "none";
+    }
+
+    function assetHref(filePath) {
+      if (/^(?:[a-z]+:|\/|\.\.\/|\.\/)/i.test(filePath)) return filePath;
+      return "../" + filePath;
+    }
+
+    function number(value) {
+      return Number.isFinite(Number(value)) ? Number(value) : 0;
+    }
+
+    function fontFamily(family) {
+      const name = typeof family === "string" && family && family !== "MIXED" ? family : "Inter";
+      return '"' + name.replace(/"/g, "") + '", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    }
+
+    function fontWeight(style) {
+      const normalized = String(style || "Regular").toLowerCase();
+      if (normalized.includes("thin")) return "100";
+      if (normalized.includes("extra light") || normalized.includes("ultra light")) return "200";
+      if (normalized.includes("light")) return "300";
+      if (normalized.includes("medium")) return "500";
+      if (normalized.includes("semi bold") || normalized.includes("semibold")) return "600";
+      if (normalized.includes("extra bold") || normalized.includes("ultra bold")) return "800";
+      if (normalized.includes("bold")) return "700";
+      if (normalized.includes("black") || normalized.includes("heavy")) return "900";
+      return "400";
+    }
+
+    function fontStyle(style) {
+      return String(style || "").toLowerCase().includes("italic") ? "italic" : "normal";
+    }
+
+    function letterSpacing(value) {
+      if (!value || value.value === undefined) return "0";
+      const unit = value.unit === "PERCENT" ? "%" : "px";
+      return String(number(value.value)) + unit;
+    }
+
+    function textDecoration(value) {
+      const normalized = String(value || "NONE").toLowerCase();
+      if (normalized === "strikethrough") return "line-through";
+      if (normalized === "underline") return "underline";
+      return "none";
+    }
+
+    function el(name, attrs = {}, children = []) {
+      const node = document.createElement(name);
+      for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, value);
+      for (const child of children) node.append(typeof child === "string" ? document.createTextNode(child) : child);
+      return node;
+    }
+    function ns(name) { return document.createElementNS("http://www.w3.org/2000/svg", name); }
+  </script>
+</body>
+</html>
