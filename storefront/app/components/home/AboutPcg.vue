@@ -20,11 +20,14 @@
       </div>
     </div>
 
-    <img
-      src="/images/homepage/About_Desktop.png"
-      alt="PCG team reviewing financial documents"
-      class="mx-auto mt-12 max-w-7xl w-full rounded-2xl object-cover shadow-sm"
-    />
+    <picture class="mx-auto mt-12 block max-w-7xl w-full">
+      <source media="(min-width: 768px)" srcset="/images/homepage/About_Desktop.png" />
+      <img
+        src="/images/homepage/About_Mobile.png"
+        alt="PCG team reviewing financial documents"
+        class="w-full rounded-2xl object-cover shadow-sm"
+      />
+    </picture>
   </section>
 </template>
 

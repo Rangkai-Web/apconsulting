@@ -1,8 +1,9 @@
 <template>
-  <section
-    class="bg-secondary-700 bg-cover bg-center px-4 py-20 text-center text-white md:px-8 relative overflow-hidden"
-    style="background-image: url('/images/homepage/CTA_Desktop.png')"
-  >
+  <section class="bg-secondary-700 px-4 py-16 text-center text-white md:px-8 md:py-20 relative overflow-hidden">
+    <picture class="absolute inset-0 size-full pointer-events-none">
+      <source media="(min-width: 768px)" srcset="/images/homepage/CTA_Desktop.png" />
+      <img src="/images/homepage/CTA_Mobile.png" alt="" class="size-full object-cover opacity-80" />
+    </picture>
     <div class="relative z-10 mx-auto max-w-3xl">
       <p class="text-sm font-semibold uppercase tracking-wide text-primary-500">START A CONVERSATION</p>
       <h2 class="mt-4 text-3xl font-bold leading-tight md:text-5xl">

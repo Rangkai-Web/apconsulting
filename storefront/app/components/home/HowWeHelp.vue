@@ -14,11 +14,14 @@
       </p>
     </div>
 
-    <img
-      src="/images/homepage/HowWeHelp_Desktop.png"
-      alt="PCG team"
-      class="mx-auto mt-10 max-w-7xl w-full rounded-2xl grayscale object-cover"
-    />
+    <picture class="mx-auto mt-10 block max-w-7xl w-full">
+      <source media="(min-width: 768px)" srcset="/images/homepage/HowWeHelp_Desktop.png" />
+      <img
+        src="/images/homepage/HowWeHelp_Mobile.png"
+        alt="PCG team"
+        class="w-full rounded-2xl grayscale object-cover"
+      />
+    </picture>
 
     <div class="mx-auto mt-12 grid max-w-7xl gap-6 md:grid-cols-3">
       <div v-for="card in cards" :key="card.title" class="rounded-xl border border-neutral-200 bg-gradient-to-b from-secondary-50 to-white p-6 shadow-sm">

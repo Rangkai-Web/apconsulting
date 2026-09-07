@@ -15,7 +15,10 @@
 
     <div class="mx-auto mt-10 grid max-w-7xl gap-8 md:grid-cols-2">
       <div v-for="card in cards" :key="card.title" class="relative">
-        <img :src="card.image" :alt="card.title" class="w-full rounded-2xl grayscale object-cover" />
+        <picture class="block w-full">
+          <source media="(min-width: 768px)" :srcset="card.imageDesktop" />
+          <img :src="card.imageMobile" :alt="card.title" class="w-full rounded-2xl grayscale object-cover" />
+        </picture>
         <div class="mx-6 -mt-12 relative z-10 max-w-xs rounded-xl bg-white p-5 shadow-lg border border-neutral-100 md:mx-8">
           <div class="flex items-center gap-2">
             <img :src="card.icon" alt="" class="size-6" />
@@ -31,13 +34,15 @@
 <script setup lang="ts">
 const cards = [
   {
-    image: "/images/homepage/TaxAdvisory_Desktop.png",
+    imageDesktop: "/images/homepage/TaxAdvisory_Desktop.png",
+    imageMobile: "/images/homepage/TaxAdvisory_Mobile.png",
     icon: "/images/icon/TaxAdvisory_Icon.svg",
     title: "Tax Advisory",
     body: "Manage obligations, identify risks, and make more informed tax decisions.",
   },
   {
-    image: "/images/homepage/Finance&Consulting_Desktop.png",
+    imageDesktop: "/images/homepage/Finance&Consulting_Desktop.png",
+    imageMobile: "/images/homepage/Finance&Consulting_Mobile.png",
     icon: "/images/icon/FinanceConsult_Icon.svg",
     title: "Finance & Consulting",
     body: "Use financial visibility to plan ahead and build sustainable growth.",
