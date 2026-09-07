@@ -32,7 +32,7 @@
           <!-- White Overlay Box (Top-Left inside Image) -->
           <div class="absolute top-4 left-4 right-4 max-w-sm rounded-xl bg-white p-4 shadow-lg border border-neutral-100/60 sm:top-6 sm:left-6">
             <div class="flex items-center gap-2.5">
-              <img src="/images/icon/TaxAdvisory_Icon.svg" alt="" class="size-6 shrink-0" />
+              <img src="/images/icon/FinanceConsult_Icon.svg" alt="" class="size-6 shrink-0" />
               <p class="font-bold text-secondary-700">Tax Advisory</p>
             </div>
             <p class="mt-2 text-xs text-neutral-500 leading-relaxed">
@@ -56,7 +56,7 @@
         <!-- White Overlay Box (Top-Left inside Image) -->
         <div class="absolute top-4 left-4 right-4 max-w-sm rounded-xl bg-white p-4 shadow-lg border border-neutral-100/60 sm:top-6 sm:left-6">
           <div class="flex items-center gap-2.5">
-            <img src="/images/icon/FinanceConsult_Icon.svg" alt="" class="size-6 shrink-0" />
+            <img src="/images/icon/TaxAdvisory_Icon.svg" alt="" class="size-6 shrink-0" />
             <p class="font-bold text-secondary-700">Finance & Consulting</p>
           </div>
           <p class="mt-2 text-xs text-neutral-500 leading-relaxed">
