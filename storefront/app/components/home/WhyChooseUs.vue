@@ -1,7 +1,12 @@
 <template>
   <section class="relative px-4 py-16 md:px-8 md:py-24 overflow-hidden">
-    <!-- Soft background glow -->
-    <div aria-hidden="true" class="pointer-events-none absolute -top-10 left-1/4 -z-10 size-96 rounded-full bg-primary-100/60 blur-3xl" />
+    <!-- Yellow Gradient Background SVG from Figma -->
+    <img
+      src="/images/homepage/Yellow_Gradient.svg"
+      alt=""
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-12 left-1/4 -z-10 h-auto w-[485px] max-w-full"
+    />
 
     <div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-2 md:gap-12 md:items-stretch">
       <!-- Left Column: Header + Tax Advisory Card -->
