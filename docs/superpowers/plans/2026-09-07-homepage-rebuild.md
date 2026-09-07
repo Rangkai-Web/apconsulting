@@ -262,7 +262,7 @@ app: {
 
 Leave `runtimeConfig.public.siteUrl`'s default as-is for now (still `bbystargo.com`) — updating the production domain is a deployment concern, not part of this homepage rebuild; flag it to the user separately.
 
-- [ ] **Step 2: Replace the JSON-LD in `app.vue` with hardcoded PCG data**
+- [x] **Step 2: Replace the JSON-LD in `app.vue` with hardcoded PCG data**
 
 ```vue
 <template>

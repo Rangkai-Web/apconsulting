@@ -29,47 +29,31 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      htmlAttrs: { lang: "id" },
-      title: "BbystarGO — Jasa Pembelian Barang & Ready Stock",
-      titleTemplate: "BbystarGO",
+      htmlAttrs: { lang: "en" },
+      title: "PCG — Phangkawira Consulting Group",
+      titleTemplate: "%s | PCG",
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
       meta: [
         {
           name: "description",
           content:
-            "BbystarGO — jasa pembelian barang dari Indonesia, Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock & Pre Order, aman dan terpercaya.",
+            "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
         },
-        {
-          property: "og:title",
-          content: "BbystarGO — Jasa Pembelian Barang & Ready Stock",
-        },
+        { property: "og:title", content: "PCG — Phangkawira Consulting Group" },
         {
           property: "og:description",
           content:
-            "BbystarGO — jasa pembelian barang dari Indonesia, Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock & Pre Order, aman dan terpercaya.",
+            "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
         },
-        {
-          property: "og:image",
-          content: "https://bbystargo.com/BbystarGO_1.jpg",
-        },
-        { property: "og:site_name", content: "BbystarGO" },
+        { property: "og:site_name", content: "PCG" },
         { property: "og:type", content: "website" },
-        { property: "og:locale", content: "id_ID" },
-        { name: "twitter:card", content: "summary_large_image" },
-        {
-          name: "twitter:title",
-          content: "BbystarGO — Jasa Pembelian Barang & Ready Stock",
-        },
         {
           name: "twitter:description",
           content:
-            "BbystarGO — jasa pembelian barang dari Indonesia, Korea, China, Jepang, dan negara lain sejak 2023. Ready Stock & Pre Order, aman dan terpercaya.",
-        },
-        {
-          name: "twitter:image",
-          content: "https://bbystargo.com/BbystarGO_1.jpg",
+            "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
         },
       ],
     },
   },
 });
+
