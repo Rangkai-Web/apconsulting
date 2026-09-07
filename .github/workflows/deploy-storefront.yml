@@ -2,11 +2,11 @@ name: Deploy Storefront
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'storefront/**'
-      - '.github/workflows/deploy-storefront.yml'
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - 'storefront/**'
+  #     - '.github/workflows/deploy-storefront.yml'
 
 jobs:
   deploy:
