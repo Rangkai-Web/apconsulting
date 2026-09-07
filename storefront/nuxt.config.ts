@@ -2,10 +2,11 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
+  srcDir: "app",
   compatibilityDate: "2026-06-19",
   devtools: { enabled: true },
   ssr: false,
-  css: ["./app/assets/css/main.css"],
+  css: ["~/assets/css/main.css"],
   modules: [
     "@nuxt/ui",
     "@nuxt/icon",
