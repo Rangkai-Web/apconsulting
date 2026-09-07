@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,600&family=Poppins:wght@700&display=swap");
 @import "tailwindcss";
 @import "@nuxt/ui";
 
@@ -12,6 +13,7 @@ h1, h2, h3, h4, h5, h6 {
 @theme static {
   --font-sans: "Poppins", sans-serif;
   --font-heading: "Poppins", sans-serif;
+  --font-serif: "Lora", serif;
 
   /* Yellow — Figma "Yellow/*" styles */
   --color-primary-50: #FEF9E8;
