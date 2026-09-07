@@ -1,33 +1,78 @@
 <template>
   <section class="px-4 py-16 md:px-8 md:py-24">
-    <div class="mx-auto max-w-7xl md:grid md:grid-cols-2 md:items-start md:gap-12">
+    <div
+      class="mx-auto max-w-7xl grid gap-8 md:grid-cols-2 md:items-center md:gap-12"
+    >
       <div>
-        <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">HOW WE HELP</p>
-        <h2 class="mt-4 text-3xl font-semibold text-secondary-700 md:text-4xl">
-          <span class="italic">Your Business Deserves</span>
+        <p
+          class="text-sm font-semibold uppercase tracking-wide text-neutral-400"
+        >
+          HOW WE HELP
+        </p>
+        <h2
+          class="mt-4 text-3xl font-normal text-secondary-700 md:text-[44px] leading-[1.2]"
+        >
+          <span class="font-serif italic font-semibold block"
+            >Your Business Deserves</span
+          >
           <span class="block">More Than Routine Bookkeeping.</span>
         </h2>
+        <p
+          class="mt-4 max-w-lg text-sm text-neutral-500 leading-relaxed md:text-base"
+        >
+          We help businesses manage tax, accounting, bookkeeping, and financial
+          reporting with clarity and structure, so you can make confident
+          decisions and focus on growth.
+        </p>
       </div>
-      <p class="mt-6 text-neutral-500 md:mt-0 md:pt-10">
-        We help businesses manage tax, accounting, bookkeeping, and financial reporting with
-        clarity and structure, so you can make confident decisions and focus on growth.
-      </p>
+
+      <picture class="block w-full overflow-hidden">
+        <source
+          media="(min-width: 768px)"
+          srcset="/images/homepage/HowWeHelp_Desktop.png"
+        />
+        <img
+          src="/images/homepage/HowWeHelp_Mobile.png"
+          alt="PCG team"
+          class="w-full object-cover shadow-sm"
+        />
+      </picture>
     </div>
 
-    <picture class="mx-auto mt-10 block max-w-7xl w-full">
-      <source media="(min-width: 768px)" srcset="/images/homepage/HowWeHelp_Desktop.png" />
-      <img
-        src="/images/homepage/HowWeHelp_Mobile.png"
-        alt="PCG team"
-        class="w-full rounded-3xl grayscale object-cover"
-      />
-    </picture>
-
-    <div class="mx-auto mt-12 grid max-w-7xl gap-6 md:grid-cols-3">
-      <div v-for="card in cards" :key="card.title" class="rounded-2xl border border-neutral-200 bg-gradient-to-b from-secondary-50 to-white p-6 shadow-sm">
-        <img :src="card.icon" :alt="card.title" class="size-14" />
-        <h3 class="mt-4 text-lg font-bold text-secondary-700">{{ card.title }}</h3>
-        <p class="mt-2 text-sm text-neutral-500 leading-relaxed">{{ card.body }}</p>
+    <div
+      class="mx-auto mt-12 grid max-w-7xl gap-6 md:grid-cols-3 items-stretch"
+    >
+      <div
+        v-for="card in cards"
+        :key="card.title"
+        class="flex flex-col p-6 sm:p-8 md:p-[42px] min-h-[360px] border border-[#0000001F] rounded-none shadow-xs transition-shadow"
+        style="
+          background: radial-gradient(
+            49.65% 56.63% at 97.41% 3.65%,
+            #e9edff 0%,
+            #ffffff 100%
+          );
+        "
+      >
+        <div>
+          <img
+            :src="card.icon"
+            :alt="card.title"
+            class="h-24 w-auto object-contain"
+          />
+        </div>
+        <div class="mt-8 flex flex-col justify-start">
+          <div class="min-h-[56px] flex items-start">
+            <h3
+              class="text-xl md:text-[22px] font-bold text-secondary-700 leading-snug"
+            >
+              {{ card.title }}
+            </h3>
+          </div>
+          <p class="mt-3 text-sm text-neutral-500 leading-relaxed font-normal">
+            {{ card.body }}
+          </p>
+        </div>
       </div>
     </div>
   </section>
