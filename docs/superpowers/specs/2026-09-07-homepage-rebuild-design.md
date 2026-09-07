@@ -170,6 +170,17 @@ Source of truth: live Figma frame `10:28973` ("Homepage"), file key `2oCbkmAnxCE
 - Contact Us: address ("Lt 3 Sayur Sentul, Blk. D, Rukan Cordoba, Jl. Green Lake City Boulevard No.23, Kota Tangerang, Banten 15146"), email ("pcgserver9@gmail.com")
 - Bottom bar: "Copyright © 2026 Phangkawira Consulting Group. All Rights Reserved" + "Privacy Policy" / "Terms & Conditions" links (no target pages yet — link to `#` or omit `href` until those pages exist)
 
+## Mobile / responsive
+
+Checked against the live Figma mobile frame (`node 74:8038`, "Homepage_Mobile", 375×13176). Same 10 sections + navbar, same order, same copy — this is a **responsive reflow**, not a separate design:
+
+- **Navbar** (`105:1879`): collapses to logo + hamburger icon (`icon/Hamburger_Icon.svg`) — nav links and the "Discuss Your Needs" button move into a menu, not shown expanded in the static frame. Implementer should treat this as a standard mobile nav drawer/sheet; exact open-state content = same links as desktop nav.
+- **Hero** (`76:12448`): headline/body/both buttons stack full-width above the image; the 3 building photos stack in a row below (still using `HeroContent_Mobile.png`, `Hero_Bg_Mobile.png` if present — desktop-only names in current export, confirm mobile variants exist before build).
+- **Footer** (`76:13013`): "Quick Links" and "Services" columns sit side by side (2-col), "Contact Us" full-width below, social icons row above the columns. Same content as desktop footer, just re-flowed.
+- No new copy, no removed sections, no mobile-only content was found. Build one component per section with Tailwind responsive classes (mobile-first stack → desktop row/grid), not separate mobile/desktop components.
+
+Mobile section node IDs (for implementer reference during build, same order as the desktop table): Navbar `105:1879`, Hero `76:12448`, About PCG `76:12462`, Stats `76:12501`, How We Help `76:12639`, Why Businesses `76:12775`, Our Approach `76:12801`, Insights `76:12913`, FAQ `76:12952`, CTA `76:12999`, Footer `76:13013`.
+
 ## Cleanup (delete as part of this work)
 
 - `storefront/app/pages/index.vue` (rewritten, not literally deleted — becomes the new homepage)
