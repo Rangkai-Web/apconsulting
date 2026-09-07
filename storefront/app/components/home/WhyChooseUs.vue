@@ -1,51 +1,71 @@
 <template>
-  <section class="px-4 py-16 md:px-8 md:py-24">
-    <div class="mx-auto max-w-7xl">
-      <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">WHY BUSINESSES CHOOSE US</p>
-      <h2 class="mt-4 max-w-2xl text-3xl font-semibold text-secondary-700 md:text-4xl">
-        <span class="italic">The right support</span> can change the way your business moves
-        forward.
-      </h2>
-      <p class="mt-4 max-w-2xl text-neutral-500">
-        Managing a business requires more than keeping records up to date. It requires clear
-        information, practical guidance, and a reliable partner who understands the bigger
-        picture.
-      </p>
-    </div>
+  <section class="relative px-4 py-16 md:px-8 md:py-24 overflow-hidden">
+    <!-- Soft background glow -->
+    <div aria-hidden="true" class="pointer-events-none absolute -top-10 left-1/4 -z-10 size-96 rounded-full bg-primary-100/60 blur-3xl" />
 
-    <div class="mx-auto mt-10 grid max-w-7xl gap-8 md:grid-cols-2">
-      <div v-for="card in cards" :key="card.title" class="relative">
-        <picture class="block w-full">
-          <source media="(min-width: 768px)" :srcset="card.imageDesktop" />
-          <img :src="card.imageMobile" :alt="card.title" class="w-full rounded-2xl grayscale object-cover" />
-        </picture>
-        <div class="mx-6 -mt-12 relative z-10 max-w-xs rounded-xl bg-white p-5 shadow-lg border border-neutral-100 md:mx-8">
-          <div class="flex items-center gap-2">
-            <img :src="card.icon" alt="" class="size-6" />
-            <p class="font-bold text-secondary-700">{{ card.title }}</p>
+    <div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-2 md:gap-12 md:items-stretch">
+      <!-- Left Column: Header + Tax Advisory Card -->
+      <div class="flex flex-col justify-between gap-8">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">WHY BUSINESSES CHOOSE US</p>
+          <h2 class="mt-4 text-3xl font-semibold leading-tight text-secondary-700 md:text-4xl lg:text-5xl">
+            <span class="italic">The right support</span> can change the way your business moves forward.
+          </h2>
+          <p class="mt-4 text-sm text-neutral-500 leading-relaxed md:text-base">
+            Managing a business requires more than keeping records up to date. It requires clear
+            information, practical guidance, and a reliable partner who understands the bigger
+            picture.
+          </p>
+        </div>
+
+        <!-- Tax Advisory Card (Underneath description on Left) -->
+        <div class="relative overflow-hidden rounded-2xl shadow-sm">
+          <picture class="block w-full">
+            <source media="(min-width: 768px)" srcset="/images/homepage/TaxAdvisory_Desktop.png" />
+            <img
+              src="/images/homepage/TaxAdvisory_Mobile.png"
+              alt="Tax Advisory"
+              class="w-full h-auto rounded-2xl grayscale object-cover"
+            />
+          </picture>
+
+          <!-- White Overlay Box (Top-Left inside Image) -->
+          <div class="absolute top-4 left-4 right-4 max-w-sm rounded-xl bg-white p-4 shadow-lg border border-neutral-100/60 sm:top-6 sm:left-6">
+            <div class="flex items-center gap-2.5">
+              <img src="/images/icon/TaxAdvisory_Icon.svg" alt="" class="size-6 shrink-0" />
+              <p class="font-bold text-secondary-700">Tax Advisory</p>
+            </div>
+            <p class="mt-2 text-xs text-neutral-500 leading-relaxed">
+              Manage obligations, identify risks, and make more informed tax decisions.
+            </p>
           </div>
-          <p class="mt-2 text-xs text-neutral-500 leading-relaxed">{{ card.body }}</p>
+        </div>
+      </div>
+
+      <!-- Right Column: Finance & Consulting Card (Tall Column) -->
+      <div class="relative overflow-hidden rounded-2xl shadow-sm md:h-full">
+        <picture class="block w-full h-full">
+          <source media="(min-width: 768px)" srcset="/images/homepage/Finance&Consulting_Desktop.png" />
+          <img
+            src="/images/homepage/Finance&Consulting_Mobile.png"
+            alt="Finance & Consulting"
+            class="w-full h-full rounded-2xl grayscale object-cover"
+          />
+        </picture>
+
+        <!-- White Overlay Box (Top-Left inside Image) -->
+        <div class="absolute top-4 left-4 right-4 max-w-sm rounded-xl bg-white p-4 shadow-lg border border-neutral-100/60 sm:top-6 sm:left-6">
+          <div class="flex items-center gap-2.5">
+            <img src="/images/icon/FinanceConsult_Icon.svg" alt="" class="size-6 shrink-0" />
+            <p class="font-bold text-secondary-700">Finance & Consulting</p>
+          </div>
+          <p class="mt-2 text-xs text-neutral-500 leading-relaxed">
+            Use financial visibility to plan ahead and build sustainable growth.
+          </p>
         </div>
       </div>
     </div>
   </section>
 </template>
 
-<script setup lang="ts">
-const cards = [
-  {
-    imageDesktop: "/images/homepage/TaxAdvisory_Desktop.png",
-    imageMobile: "/images/homepage/TaxAdvisory_Mobile.png",
-    icon: "/images/icon/TaxAdvisory_Icon.svg",
-    title: "Tax Advisory",
-    body: "Manage obligations, identify risks, and make more informed tax decisions.",
-  },
-  {
-    imageDesktop: "/images/homepage/Finance&Consulting_Desktop.png",
-    imageMobile: "/images/homepage/Finance&Consulting_Mobile.png",
-    icon: "/images/icon/FinanceConsult_Icon.svg",
-    title: "Finance & Consulting",
-    body: "Use financial visibility to plan ahead and build sustainable growth.",
-  },
-];
-</script>
+<script setup lang="ts"></script>
