@@ -18,50 +18,56 @@
         <NuxtLink
           to="/"
           class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors"
-          >Home</NuxtLink
+          >{{ t("nav.home") }}</NuxtLink
         >
         <NuxtLink
           to="/services"
           class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors"
-          >Services</NuxtLink
+          >{{ t("nav.services") }}</NuxtLink
         >
         <NuxtLink
           to="/insight"
           class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors"
-          >Insights</NuxtLink
+          >{{ t("nav.insights") }}</NuxtLink
         >
         <NuxtLink
           to="/about"
           class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors"
-          >About</NuxtLink
+          >{{ t("nav.about") }}</NuxtLink
         >
         <NuxtLink
           to="/contact"
           class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors"
-          >Contact</NuxtLink
+          >{{ t("nav.contact") }}</NuxtLink
         >
       </nav>
 
-      <UButton
-        to="/contact"
-        color="secondary"
-        variant="solid"
-        size="lg"
-        class="hidden font-medium md:inline-flex rounded-none"
-      >
-        Discuss Your Needs
-      </UButton>
+      <div class="hidden items-center gap-4 md:flex">
+        <LanguageSwitcher />
+        <UButton
+          to="/contact"
+          color="secondary"
+          variant="solid"
+          size="lg"
+          class="font-medium rounded-none"
+        >
+          {{ t("nav.discussNeeds") }}
+        </UButton>
+      </div>
 
-      <button
-        type="button"
-        data-testid="hamburger-button"
-        class="p-2 md:hidden"
-        :aria-expanded="mobileOpen"
-        aria-label="Toggle menu"
-        @click="mobileOpen = !mobileOpen"
-      >
-        <UIcon name="i-heroicons-bars-3" class="size-6 text-secondary-700" />
-      </button>
+      <div class="flex items-center gap-3 md:hidden">
+        <LanguageSwitcher />
+        <button
+          type="button"
+          data-testid="hamburger-button"
+          class="p-2"
+          :aria-expanded="mobileOpen"
+          aria-label="Toggle menu"
+          @click="mobileOpen = !mobileOpen"
+        >
+          <UIcon name="i-heroicons-bars-3" class="size-6 text-secondary-700" />
+        </button>
+      </div>
     </div>
 
     <div
@@ -73,31 +79,31 @@
         to="/"
         class="text-neutral-600 font-medium"
         @click="mobileOpen = false"
-        >Home</NuxtLink
+        >{{ t("nav.home") }}</NuxtLink
       >
       <NuxtLink
         to="/services"
         class="text-neutral-600 font-medium"
         @click="mobileOpen = false"
-        >Services</NuxtLink
+        >{{ t("nav.services") }}</NuxtLink
       >
       <NuxtLink
         to="/insight"
         class="text-neutral-600 font-medium"
         @click="mobileOpen = false"
-        >Insights</NuxtLink
+        >{{ t("nav.insights") }}</NuxtLink
       >
       <NuxtLink
         to="/about"
         class="text-neutral-600 font-medium"
         @click="mobileOpen = false"
-        >About</NuxtLink
+        >{{ t("nav.about") }}</NuxtLink
       >
       <NuxtLink
         to="/contact"
         class="text-neutral-600 font-medium"
         @click="mobileOpen = false"
-        >Contact</NuxtLink
+        >{{ t("nav.contact") }}</NuxtLink
       >
       <UButton
         to="/contact"
@@ -106,7 +112,7 @@
         size="lg"
         block
         class="font-medium rounded-none"
-        >Discuss Your Needs</UButton
+        >{{ t("nav.discussNeeds") }}</UButton
       >
     </div>
   </header>
@@ -114,6 +120,9 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useLanguage } from "~/composables/useLanguage";
 
+const { t } = useLanguage();
 const mobileOpen = ref(false);
 </script>
+

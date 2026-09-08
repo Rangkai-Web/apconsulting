@@ -29,8 +29,7 @@
         <p
           class="mt-4 max-w-sm text-sm leading-relaxed text-neutral-500 font-normal"
         >
-          Professional support in tax, accounting, and financial services. We're
-          helping businesses move forward with clarity and confidence.
+          {{ t('footer.tagline') }}
         </p>
         <div class="mt-6 flex gap-3">
           <a
@@ -48,38 +47,38 @@
       <!-- Column 2: Quick Links -->
       <div>
         <p class="font-semibold text-[#083653] text-base md:text-lg">
-          Quick Links
+          {{ t('footer.quickLinks') }}
         </p>
         <ul class="mt-4 space-y-3 text-sm text-neutral-500 font-normal">
           <li>
             <NuxtLink to="/" class="hover:text-[#083653] transition-colors"
-              >Home</NuxtLink
+              >{{ t('nav.home') }}</NuxtLink
             >
           </li>
           <li>
             <NuxtLink to="/about" class="hover:text-[#083653] transition-colors"
-              >About</NuxtLink
+              >{{ t('nav.about') }}</NuxtLink
             >
           </li>
           <li>
             <NuxtLink
               to="/services"
               class="hover:text-[#083653] transition-colors"
-              >Services</NuxtLink
+              >{{ t('nav.services') }}</NuxtLink
             >
           </li>
           <li>
             <NuxtLink
               to="/insight"
               class="hover:text-[#083653] transition-colors"
-              >Insights</NuxtLink
+              >{{ t('nav.insights') }}</NuxtLink
             >
           </li>
           <li>
             <NuxtLink
               to="/contact"
               class="hover:text-[#083653] transition-colors"
-              >Contact</NuxtLink
+              >{{ t('nav.contact') }}</NuxtLink
             >
           </li>
         </ul>
@@ -88,7 +87,7 @@
       <!-- Column 3: Services -->
       <div>
         <p class="font-semibold text-[#083653] text-base md:text-lg">
-          Services
+          {{ t('footer.services') }}
         </p>
         <ul class="mt-4 space-y-3 text-sm text-neutral-500 font-normal">
           <li>Taxation</li>
@@ -101,7 +100,7 @@
       <!-- Column 4: Contact Us -->
       <div>
         <p class="font-semibold text-[#083653] text-base md:text-lg">
-          Contact Us
+          {{ t('footer.contactUs') }}
         </p>
         <p class="mt-4 flex gap-2.5 text-sm text-neutral-500 font-normal">
           <UIcon
@@ -133,17 +132,17 @@
     >
       <p class="mx-auto text-center">
         Copyright © {{ new Date().getFullYear() }} Phangkawira Consulting Group.
-        All Rights Reserved
+        {{ t('footer.rights') }}
       </p>
-      <!-- <div class="flex gap-6">
-        <a href="#" class="hover:underline">Privacy Policy</a>
-        <a href="#" class="hover:underline">Terms & Conditions</a>
-      </div> -->
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
+import { useLanguage } from "~/composables/useLanguage";
+
+const { t } = useLanguage();
+
 const socials = [
   { name: "Instagram", icon: "i-simple-icons-instagram", href: "#" },
   { name: "X", icon: "i-simple-icons-x", href: "#" },
