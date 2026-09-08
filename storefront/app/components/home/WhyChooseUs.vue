@@ -15,24 +15,22 @@
           <p
             class="text-sm font-semibold uppercase tracking-wide text-neutral-400"
           >
-            WHY BUSINESSES CHOOSE US
+            {{ t('home.whyChooseUs.tag') }}
           </p>
           <h2
             class="mt-4 text-3xl font-normal leading-[1.2] text-[#083653] sm:text-4xl md:text-[48px] tracking-normal"
           >
             <span class="font-sans font-semibold italic text-[#083653]"
-              >The right support</span
+              >{{ t('home.whyChooseUs.titleItalic') }}</span
             >
             <span class="block font-sans font-normal text-[#083653]"
-              >can change the way your business moves forward.</span
+              >{{ t('home.whyChooseUs.titleNormal') }}</span
             >
           </h2>
           <p
             class="mt-4 text-sm text-neutral-500 leading-relaxed md:text-base max-w-lg"
           >
-            Managing a business requires more than keeping records up to date.
-            It requires clear information, practical guidance, and a reliable
-            partner who understands the bigger picture.
+            {{ t('home.whyChooseUs.description') }}
           </p>
         </div>
 
@@ -62,13 +60,12 @@
                 alt=""
                 class="size-6 shrink-0"
               />
-              <p class="font-bold text-secondary-700 text-base">Tax Advisory</p>
+              <p class="font-bold text-secondary-700 text-base">{{ t('home.whyChooseUs.card1Title') }}</p>
             </div>
             <p
               class="mt-2 text-xs text-neutral-500 leading-relaxed font-normal"
             >
-              Manage obligations, identify risks, and make more informed tax
-              decisions.
+              {{ t('home.whyChooseUs.card1Body') }}
             </p>
           </div>
         </div>
@@ -101,11 +98,11 @@
               class="size-6 shrink-0"
             />
             <p class="font-bold text-secondary-700 text-base">
-              Finance & Consulting
+              {{ t('home.whyChooseUs.card2Title') }}
             </p>
           </div>
           <p class="mt-2 text-xs text-neutral-500 leading-relaxed font-normal">
-            Use financial visibility to plan ahead and build sustainable growth.
+            {{ t('home.whyChooseUs.card2Body') }}
           </p>
         </div>
       </div>
@@ -113,4 +110,8 @@
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useLanguage } from '~/composables/useLanguage'
+
+const { t } = useLanguage()
+</script>

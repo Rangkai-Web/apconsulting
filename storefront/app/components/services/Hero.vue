@@ -23,16 +23,14 @@
     <div class="relative z-10 mx-auto max-w-7xl w-full">
       <div class="max-w-2xl text-white">
         <h1
-          class="pt-48 text-3xl font-bold text-white sm:text-4xl md:text-[52px] leading-[1.15] tracking-tight"
+          class="pt-24 text-3xl font-semibold text-white sm:text-4xl md:text-[52px] leading-[1.15] tracking-tight"
         >
-          Support designed around your business needs.
+          {{ t("services.hero.title") }}
         </h1>
         <p
           class="mt-4 text-sm text-white/90 leading-relaxed md:text-base font-normal max-w-xl"
         >
-          From tax compliance and bookkeeping to financial analysis and business
-          administration, PCG provides practical support that helps you stay
-          organized and make informed decisions.
+          {{ t("services.hero.description") }}
         </p>
         <div
           class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
@@ -44,7 +42,7 @@
             size="lg"
             class="w-fit justify-center font-medium px-7 py-4 rounded-none bg-[#FFBB00] text-[#083653] hover:bg-[#FFBB00]/90 transition-colors uppercase text-xs sm:text-sm tracking-wider"
           >
-            DISCOVER OUR SERVICES
+            {{ t("services.hero.discoverBtn") }}
           </UButton>
           <UButton
             to="/contact"
@@ -52,7 +50,7 @@
             size="lg"
             class="w-fit justify-center font-medium px-7 py-4 rounded-none border border-white text-white hover:bg-white/10 transition-colors uppercase text-xs sm:text-sm tracking-wider"
           >
-            DISCUSS YOUR NEEDS
+            {{ t("services.hero.discussBtn") }}
           </UButton>
         </div>
       </div>
@@ -60,4 +58,8 @@
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useLanguage } from "~/composables/useLanguage";
+
+const { t } = useLanguage();
+</script>

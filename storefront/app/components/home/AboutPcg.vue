@@ -5,14 +5,14 @@
         <p
           class="text-sm font-semibold uppercase tracking-wide text-neutral-400"
         >
-          ABOUT PCG
+          {{ t('home.about.tag') }}
         </p>
         <h2
           class="mt-4 text-3xl font-normal text-secondary-700 md:text-[48px] leading-[1.2] tracking-normal"
         >
-          More than accountants.
+          {{ t('home.about.titleNormal') }}
           <span class="block font-semibold italic text-secondary-700"
-            >Partners in your progress.</span
+            >{{ t('home.about.titleItalic') }}</span
           >
         </h2>
       </div>
@@ -20,18 +20,16 @@
         <p
           class="text-base font-normal text-neutral-500 leading-[1.5] tracking-[-0.02em] md:text-right"
         >
-          We helps businesses, families, and ambitious individuals make
-          confident financial decisions. We turn complex information into clear,
-          practical next steps, helping you stay compliant, improve performance,
-          and plan for what comes next.
+          {{ t('home.about.description') }}
         </p>
         <UButton
+          to="/about"
           color="primary"
           variant="solid"
           size="lg"
           class="mt-6 font-medium px-6 py-4 h-14 rounded-none bg-primary-500 text-secondary-700 hover:bg-primary-600 transition-colors"
         >
-          DISCOVER HOW WE HELP
+          {{ t('home.about.button') }}
         </UButton>
       </div>
     </div>
@@ -50,4 +48,8 @@
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useLanguage } from '~/composables/useLanguage'
+
+const { t } = useLanguage()
+</script>

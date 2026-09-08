@@ -9,13 +9,12 @@
         <p
           class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#F4C400]"
         >
-          VISION
+          {{ t('about.vision.tag') }}
         </p>
         <h2
           class="mt-4 max-w-3xl text-2xl font-normal text-white sm:text-3xl md:text-[36px] leading-[1.3]"
         >
-          To be a trusted partner that brings clarity, confidence, and
-          sustainable growth to every business we serve
+          {{ t('about.vision.title') }}
         </h2>
       </div>
 
@@ -24,22 +23,20 @@
         <p
           class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#F4C400]"
         >
-          MISSION
+          {{ t('about.mission.tag') }}
         </p>
         <h3
           class="mt-4 text-xl font-normal text-white sm:text-2xl md:text-[28px] leading-[1.3]"
         >
-          We help businesses manage financial and operational complexity through
-          reliable expertise, practical insight, and tailored professional
-          support.
+          {{ t('about.mission.title') }}
         </h3>
 
         <ul
           class="mt-8 space-y-4 text-sm md:text-base text-neutral-200 font-normal"
         >
           <li
-            v-for="item in missionItems"
-            :key="item"
+            v-for="itemKey in missionItemKeys"
+            :key="itemKey"
             class="flex items-center gap-3"
           >
             <img
@@ -47,7 +44,7 @@
               alt=""
               class="size-5 shrink-0"
             />
-            <span>{{ item }}</span>
+            <span>{{ t(itemKey) }}</span>
           </li>
         </ul>
       </div>
@@ -56,11 +53,15 @@
 </template>
 
 <script setup lang="ts">
-const missionItems = [
-  "Deliver reliable professional services.",
-  "Bring clarity to complex information.",
-  "Assist clients to achieve financial control.",
-  "Build long-term trust relationships.",
-  "Enable sustainable business growth.",
+import { useLanguage } from '~/composables/useLanguage'
+
+const { t } = useLanguage()
+
+const missionItemKeys = [
+  "about.mission.item1",
+  "about.mission.item2",
+  "about.mission.item3",
+  "about.mission.item4",
+  "about.mission.item5",
 ];
 </script>

@@ -2,19 +2,19 @@
   <section class="px-4 py-16 md:px-8 md:py-24">
     <div class="mx-auto max-w-3xl text-center">
       <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        {{ tag }}
+        {{ tag || t('home.faq.tag') }}
       </p>
       <h2
         class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
       >
         <span class="font-sans font-semibold italic text-[#083653]"
-          >{{ titlePrefix }}{{ titleHighlight }}</span
+          >{{ titlePrefix || t('home.faq.titlePrefix') }}{{ titleHighlight || t('home.faq.titleHighlight') }}</span
         >
       </h2>
       <p
         class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"
       >
-        {{ subtitle }}
+        {{ subtitle || t('home.faq.subtitle') }}
       </p>
     </div>
 
@@ -54,60 +54,48 @@
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import { useLanguage } from "~/composables/useLanguage";
+
+const { t } = useLanguage();
 
 export interface FaqItem {
   question: string;
   answer: string;
 }
 
-const props = withDefaults(
-  defineProps<{
-    tag?: string;
-    titlePrefix?: string;
-    titleHighlight?: string;
-    subtitle?: string;
-    items?: FaqItem[];
-  }>(),
-  {
-    tag: "FREQUENTLY ASKED QUESTIONS",
-    titlePrefix: "Clear answers ",
-    titleHighlight: "for your next step.",
-    subtitle:
-      "Before starting a conversation, here are answers to the questions businesses commonly ask about PCG's services, process, and engagement.",
-  },
-);
+const props = defineProps<{
+  tag?: string;
+  titlePrefix?: string;
+  titleHighlight?: string;
+  subtitle?: string;
+  items?: FaqItem[];
+}>();
 
-const defaultItems: FaqItem[] = [
+const defaultItems = computed<FaqItem[]>(() => [
   {
-    question: "What services does PCG provide?",
-    answer:
-      "PCG provides professional consulting and advisory support across taxation, accounting and bookkeeping, and other customized financial services. The available scope depends on your business needs and will be discussed before an engagement begins.",
+    question: t("home.faq.q1"),
+    answer: t("home.faq.a1"),
   },
   {
-    question: "How does PCG work with us?",
-    answer:
-      "We start with an initial consultation to assess your business structure, records, and primary challenges. From there, we propose a customized scope of work tailored to your objectives and operational scale.",
+    question: t("home.faq.q2"),
+    answer: t("home.faq.a2"),
   },
   {
-    question: "What information should I prepare before contacting PCG?",
-    answer:
-      "Having basic information ready—such as your company structure, current accounting setup, recent financial reports, or tax documents—helps us understand your situation faster, though you are welcome to contact us even at an early stage.",
+    question: t("home.faq.q3"),
+    answer: t("home.faq.a3"),
   },
   {
-    question:
-      "Does PCG support ongoing monthly services or only one-off projects?",
-    answer:
-      "We support both ongoing recurring retainer engagements (such as monthly bookkeeping or tax reporting) as well as project-based advisory services depending on your company's requirements.",
+    question: t("home.faq.q4"),
+    answer: t("home.faq.a4"),
   },
   {
-    question: "How is engagement pricing set up?",
-    answer:
-      "Pricing is customized based on the scope, complexity, and transaction volume of your business operations. We provide a transparent scope and pricing proposal after our initial discussion.",
+    question: t("home.faq.q5"),
+    answer: t("home.faq.a5"),
   },
-];
+]);
 
 const faqList = computed(() =>
-  props.items && props.items.length > 0 ? props.items : defaultItems,
+  props.items && props.items.length > 0 ? props.items : defaultItems.value,
 );
 
 const openIndexes = ref<number[]>([]);

@@ -24,7 +24,7 @@
       <span
         class="pt-24 sm:pt-0 inline-block text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#FFBB00]"
       >
-        PCG FEATURED INSIGHT
+        {{ t('insight.hero.tag') }}
       </span>
       <NuxtLink
         to="/insigth/navigating-corporate-tax-compliance"
@@ -33,32 +33,34 @@
         <h1
           class="mt-3 max-w-2xl text-3xl font-semibold text-white sm:text-4xl md:text-[48px] leading-[1.15] tracking-tight group-hover:text-white/95 transition-colors"
         >
-          Navigating Corporate Tax Compliance and Minimizing Business Risks
+          {{ t('insight.hero.title') }}
         </h1>
       </NuxtLink>
       <p
         class="mt-4 text-sm text-white/90 leading-relaxed md:text-base font-normal max-w-2xl"
       >
-        Discover how managing your tax obligations properly and structuring your
-        financial administration can support your business development and drive
-        sustainable decision-making
+        {{ t('insight.hero.description') }}
       </p>
 
       <div
         class="mt-6 flex flex-wrap items-center gap-4 md:gap-6 text-xs sm:text-sm text-white/80 font-normal"
       >
-        <span class="font-medium text-white">By PCG Editorial Team</span>
+        <span class="font-medium text-white">{{ t('insight.hero.author') }}</span>
         <span class="flex items-center gap-1.5">
           <UIcon name="i-heroicons-calendar" class="size-4" />
-          September 10, 2026
+          {{ t('insight.hero.date') }}
         </span>
         <span class="flex items-center gap-1.5">
           <UIcon name="i-heroicons-clock" class="size-4" />
-          5 min read
+          {{ t('insight.hero.readTime') }}
         </span>
       </div>
     </div>
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useLanguage } from '~/composables/useLanguage'
+
+const { t } = useLanguage()
+</script>

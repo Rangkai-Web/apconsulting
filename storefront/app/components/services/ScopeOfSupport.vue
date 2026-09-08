@@ -2,24 +2,22 @@
   <section id="scope-of-support" class="px-4 py-16 md:px-8 md:py-24 bg-white">
     <div class="mx-auto max-w-4xl text-center">
       <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        SCOPE OF SUPPORT
+        {{ t('services.scope.tag') }}
       </p>
       <h2
         class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
       >
         <span class="font-sans font-bold italic text-[#083653]"
-          >Practical support
+          >{{ t('services.scope.titleItalic') }}
         </span>
         <span class="font-sans font-normal text-[#083653]"
-          >from compliance to business insight.</span
+          >{{ t('services.scope.titleNormal') }}</span
         >
       </h2>
       <p
         class="mt-4 max-w-2xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"
       >
-        Whether you need recurring compliance support, cleaner financial
-        records, or custom advice to scale, PCG provides flexible services built
-        around your needs.
+        {{ t('services.scope.description') }}
       </p>
     </div>
 
@@ -47,18 +45,18 @@
             <h3
               class="text-xl md:text-[24px] font-semibold text-[#083653] leading-snug"
             >
-              {{ service.title }}
+              {{ t(service.titleKey) }}
             </h3>
             <p
               class="mt-2 text-sm md:text-base text-neutral-500 leading-relaxed font-normal max-w-lg"
             >
-              {{ service.description }}
+              {{ t(service.descKey) }}
             </p>
             <NuxtLink
               to="/contact"
               class="mt-4 inline-flex items-center text-xs md:text-sm font-semibold uppercase tracking-wider text-[#083653] hover:text-[#083653]/80 group"
             >
-              <span>{{ service.ctaText }}</span>
+              <span>{{ t(service.ctaKey) }}</span>
               <UIcon
                 name="i-heroicons-arrow-right"
                 class="ml-1.5 size-4 text-[#083653] transition-transform group-hover:translate-x-1"
@@ -71,7 +69,7 @@
         <div class="lg:col-span-5">
           <ul class="space-y-2.5">
             <li
-              v-for="(feature, idx) in service.features"
+              v-for="(featureKey, idx) in service.featureKeys"
               :key="idx"
               class="flex items-center gap-3 text-sm md:text-base font-normal text-neutral-600"
             >
@@ -80,7 +78,7 @@
                 alt=""
                 class="size-5 shrink-0"
               />
-              <span>{{ feature }}</span>
+              <span>{{ t(featureKey) }}</span>
             </li>
           </ul>
         </div>
@@ -90,60 +88,60 @@
 </template>
 
 <script setup lang="ts">
+import { useLanguage } from '~/composables/useLanguage'
+
+const { t } = useLanguage()
+
 const services = [
   {
     number: "01",
-    title: "Taxation",
-    description:
-      "Support your tax responsibilities with a more structured process and practical guidance.",
-    ctaText: "DISCUSS TAX SUPPORT",
-    features: [
-      "Tax consultation",
-      "Monthly and annual tax reporting",
-      "Tax compliance review",
-      "Tax planning",
-      "Tax audit assistance",
+    titleKey: "services.scope.s1Title",
+    descKey: "services.scope.s1Desc",
+    ctaKey: "services.scope.s1Cta",
+    featureKeys: [
+      "services.scope.s1F1",
+      "services.scope.s1F2",
+      "services.scope.s1F3",
+      "services.scope.s1F4",
+      "services.scope.s1F5",
     ],
   },
   {
     number: "02",
-    title: "Accounting & Bookkeeping",
-    description:
-      "Build reliable financial records that give your business a clearer view of its day-to-day operations.",
-    ctaText: "DISCUSS ACCOUNTING SUPPORT",
-    features: [
-      "Financial transaction recording",
-      "Monthly financial statements",
-      "Annual financial statements",
-      "Bank reconciliation",
-      "Accounting journal adjustments",
+    titleKey: "services.scope.s2Title",
+    descKey: "services.scope.s2Desc",
+    ctaKey: "services.scope.s2Cta",
+    featureKeys: [
+      "services.scope.s2F1",
+      "services.scope.s2F2",
+      "services.scope.s2F3",
+      "services.scope.s2F4",
+      "services.scope.s2F5",
     ],
   },
   {
     number: "03",
-    title: "Business Administration Support",
-    description:
-      "Get flexible support for administrative work that helps your business run in a more organized way.",
-    ctaText: "DISCUSS BUSINESS SUPPORT",
-    features: [
-      "Corporate administration",
-      "Document coordination",
-      "Administrative tasks",
-      "Customized support",
+    titleKey: "services.scope.s3Title",
+    descKey: "services.scope.s3Desc",
+    ctaKey: "services.scope.s3Cta",
+    featureKeys: [
+      "services.scope.s3F1",
+      "services.scope.s3F2",
+      "services.scope.s3F3",
+      "services.scope.s3F4",
     ],
   },
   {
     number: "04",
-    title: "Other Financial Services",
-    description:
-      "Turn financial information into useful insight for planning, control, and better decisions.",
-    ctaText: "DISCUSS FINANCIAL SUPPORT",
-    features: [
-      "Financial statement analysis",
-      "Financial projections",
-      "Cash-flow management",
-      "Corporate budgeting",
-      "Financial performance evaluation",
+    titleKey: "services.scope.s4Title",
+    descKey: "services.scope.s4Desc",
+    ctaKey: "services.scope.s4Cta",
+    featureKeys: [
+      "services.scope.s4F1",
+      "services.scope.s4F2",
+      "services.scope.s4F3",
+      "services.scope.s4F4",
+      "services.scope.s4F5",
     ],
   },
 ];

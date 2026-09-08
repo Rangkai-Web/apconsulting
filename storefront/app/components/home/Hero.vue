@@ -16,36 +16,36 @@
         <h1
           class="text-3xl font-bold uppercase text-secondary-700 sm:text-4xl md:text-[52px] leading-[1.2] tracking-[-0.02em]"
         >
-          CLEARER FINANCES.
+          {{ t("home.hero.title1") }}
           <span
-            class="block font-serif font-semibold italic text-primary-500 text-3xl sm:text-4xl md:text-[52px] leading-[1.2] tracking-[-0.02em]"
-            >STRONGER BUSINESS</span
+            class="font-serif font-semibold italic text-primary-500 text-3xl sm:text-4xl md:text-[52px] leading-[1.2] tracking-[-0.02em]"
+            >{{ t("home.hero.titleHighlight") }}</span
           >
-          DECISIONS.
+          {{ t("home.hero.title2") }}
         </h1>
         <p
           class="mt-4 max-w-md text-sm text-neutral-500 leading-relaxed md:mt-6 md:text-base"
         >
-          PCG helps businesses manage tax, accounting, bookkeeping, and other
-          financial needs with a structured, professional approach tailored to
-          their goals
+          {{ t("home.hero.description") }}
         </p>
         <div class="mt-6 flex flex-col gap-3 sm:flex-row md:mt-8 md:gap-4">
           <UButton
+            to="/services"
             color="secondary"
             variant="outline"
             size="lg"
             class="w-fit sm:w-auto justify-center font-medium px-8 py-4 rounded-none border border-secondary-700 text-secondary-700 hover:bg-secondary-50 transition-colors"
           >
-            EXPLORE OUR SERVICES
+            {{ t("home.hero.exploreBtn") }}
           </UButton>
           <UButton
+            to="/contact"
             color="primary"
             variant="solid"
             size="lg"
             class="w-fit sm:w-auto justify-center font-medium px-8 py-4 rounded-none bg-primary-500 text-secondary-700 hover:bg-primary-600 transition-colors"
           >
-            DISCUSS YOUR NEEDS
+            {{ t("home.hero.discussBtn") }}
           </UButton>
         </div>
       </div>
@@ -67,4 +67,8 @@
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useLanguage } from "~/composables/useLanguage";
+
+const { t } = useLanguage();
+</script>

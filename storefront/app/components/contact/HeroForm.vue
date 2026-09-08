@@ -9,27 +9,26 @@
           <p
             class="text-xs md:text-sm font-semibold uppercase tracking-wide text-neutral-400"
           >
-            CONTACT US
+            {{ t("contact.hero.tag") }}
           </p>
           <h1 class="mt-2 text-3xl sm:text-4xl md:text-[44px] leading-tight">
             <span class="font-sans font-light text-[#083653]"
-              >Get in touch
+              >{{ t("contact.hero.titleLight") }}
             </span>
             <span class="font-sans font-semibold italic text-[#083653]"
-              >with PCG.</span
+              >{{ t("contact.hero.titleItalic") }}</span
             >
           </h1>
         </div>
 
         <div class="text-left md:text-right max-w-md">
           <p class="text-xs md:text-sm font-semibold text-[#083653]">
-            Have a question or want to discuss your business needs?
+            {{ t("contact.hero.headerSubtitle") }}
           </p>
           <p
             class="mt-1 text-xs md:text-sm text-neutral-500 font-normal leading-relaxed"
           >
-            Send us a message and the PCG team will help you identify a
-            practical starting point.
+            {{ t("contact.hero.headerDesc") }}
           </p>
         </div>
       </div>
@@ -47,7 +46,7 @@
             />
             <img
               src="/images/contact/HeroContent_Mobile.png"
-              alt="Tell us what you need"
+              :alt="t('contact.hero.cardTitle')"
               class="size-full object-cover"
             />
           </picture>
@@ -57,13 +56,12 @@
             class="absolute inset-0 bg-gradient-to-t from-[#083653]/95 via-[#083653]/40 to-transparent flex flex-col justify-end p-8 md:p-10 pointer-events-none"
           >
             <h2 class="text-2xl md:text-3xl font-bold text-white leading-tight">
-              Tell us what you need.
+              {{ t("contact.hero.cardTitle") }}
             </h2>
             <p
               class="mt-3 text-xs md:text-sm text-white/90 font-normal leading-relaxed max-w-sm"
             >
-              Share a little about your business, your current challenge, or the
-              service you would like to discuss.
+              {{ t("contact.hero.cardDesc") }}
             </p>
           </div>
         </div>
@@ -82,10 +80,7 @@
                 name="i-heroicons-check-circle"
                 class="size-5 text-emerald-600 shrink-0"
               />
-              <span
-                >Thank you! Your message has been received. Our team will
-                contact you shortly.</span
-              >
+              <span>{{ t("contact.form.successMsg") }}</span>
             </div>
             <button
               type="button"
@@ -105,13 +100,13 @@
                   for="fullName"
                   class="block text-xs md:text-sm font-semibold text-[#083653]"
                 >
-                  Full Name
+                  {{ t("contact.form.fullName") }}
                 </label>
                 <input
                   id="fullName"
                   v-model="form.fullName"
                   type="text"
-                  placeholder="Enter your name"
+                  :placeholder="t('contact.form.fullNamePlaceholder')"
                   class="mt-2 w-full px-4 py-3 text-xs md:text-sm border bg-white text-neutral-800 rounded-[6px] focus:outline-none focus:ring-1 focus:ring-[#083653] transition-colors"
                   :class="
                     errors.fullName ? 'border-rose-500' : 'border-[#DFE7ED]'
@@ -129,7 +124,7 @@
                   for="email"
                   class="block text-xs md:text-sm font-semibold text-[#083653]"
                 >
-                  Email Address
+                  {{ t("contact.form.email") }}
                 </label>
                 <div class="relative mt-2">
                   <UIcon
@@ -140,7 +135,7 @@
                     id="email"
                     v-model="form.email"
                     type="email"
-                    placeholder="you@example.com"
+                    :placeholder="t('contact.form.emailPlaceholder')"
                     class="w-full pl-10 pr-4 py-3 text-xs md:text-sm border bg-white text-neutral-800 rounded-[6px] focus:outline-none focus:ring-1 focus:ring-[#083653] transition-colors"
                     :class="
                       errors.email ? 'border-rose-500' : 'border-[#DFE7ED]'
@@ -162,27 +157,31 @@
                   for="service"
                   class="block text-xs md:text-sm font-semibold text-[#083653]"
                 >
-                  Service of interest
+                  {{ t("contact.form.service") }}
                 </label>
                 <select
                   id="service"
                   v-model="form.service"
                   class="mt-2 w-full px-4 py-3 text-xs md:text-sm border border-[#DFE7ED] bg-white text-neutral-700 rounded-[6px] focus:outline-none focus:ring-1 focus:ring-[#083653] transition-colors appearance-none cursor-pointer"
                 >
-                  <option value="" disabled selected>Select one</option>
+                  <option value="" disabled selected>
+                    {{ t("contact.form.selectOne") }}
+                  </option>
                   <option value="Taxation Services">
-                    Taxation Services (Tax Box)
+                    {{ t("contact.form.optTax") }}
                   </option>
                   <option value="Accounting & Bookkeeping">
-                    Accounting & Bookkeeping
+                    {{ t("contact.form.optAcc") }}
                   </option>
                   <option value="Business Administration Support">
-                    Business Administration Support
+                    {{ t("contact.form.optBiz") }}
                   </option>
                   <option value="Other Financial Services">
-                    Other Financial Services
+                    {{ t("contact.form.optFin") }}
                   </option>
-                  <option value="General Inquiry">General Inquiry</option>
+                  <option value="General Inquiry">
+                    {{ t("contact.form.optGen") }}
+                  </option>
                 </select>
               </div>
 
@@ -192,7 +191,7 @@
                   for="phone"
                   class="block text-xs md:text-sm font-semibold text-[#083653]"
                 >
-                  Phone number (optional)
+                  {{ t("contact.form.phone") }}
                 </label>
                 <div class="relative mt-2">
                   <UIcon
@@ -216,13 +215,13 @@
                 for="message"
                 class="block text-xs md:text-sm font-semibold text-[#083653]"
               >
-                Message
+                {{ t("contact.form.message") }}
               </label>
               <textarea
                 id="message"
                 v-model="form.message"
                 rows="4"
-                placeholder="Tells how we can help"
+                :placeholder="t('contact.form.messagePlaceholder')"
                 class="mt-2 w-full px-4 py-3 text-xs md:text-sm border bg-white text-neutral-800 rounded-[6px] focus:outline-none focus:ring-1 focus:ring-[#083653] transition-colors resize-none"
                 :class="errors.message ? 'border-rose-500' : 'border-[#DFE7ED]'"
                 @blur="validateField('message')"
@@ -244,7 +243,11 @@
                   name="i-heroicons-arrow-path"
                   class="size-4 animate-spin"
                 />
-                <span>{{ loading ? "Sending..." : "Send Message" }}</span>
+                <span>{{
+                  loading
+                    ? t("contact.form.sendingBtn")
+                    : t("contact.form.sendBtn")
+                }}</span>
               </button>
             </div>
           </form>
@@ -256,6 +259,8 @@
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
+
+const { t } = useLanguage();
 
 const form = reactive({
   fullName: "",
@@ -276,23 +281,23 @@ const submitted = ref(false);
 
 const validateField = (field: "fullName" | "email" | "message") => {
   if (field === "fullName") {
-    errors.fullName = form.fullName.trim() ? "" : "Full Name is required.";
+    errors.fullName = form.fullName.trim() ? "" : t("contact.form.errName");
   }
   if (field === "email") {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!form.email.trim()) {
-      errors.email = "Email Address is required.";
+      errors.email = t("contact.form.errEmailEmpty");
     } else if (!emailRegex.test(form.email.trim())) {
-      errors.email = "Please enter a valid email address.";
+      errors.email = t("contact.form.errEmailInvalid");
     } else {
       errors.email = "";
     }
   }
   if (field === "message") {
     if (!form.message.trim()) {
-      errors.message = "Message is required.";
+      errors.message = t("contact.form.errMsgEmpty");
     } else if (form.message.trim().length < 10) {
-      errors.message = "Message must be at least 10 characters.";
+      errors.message = t("contact.form.errMsgShort");
     } else {
       errors.message = "";
     }

@@ -2,20 +2,19 @@
   <section class="px-4 py-16 md:px-8 md:py-24 bg-[#FBFEFF]">
     <div class="mx-auto max-w-3xl text-center">
       <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        START WITH YOUR CURRENT NEED
+        {{ t('services.need.tag') }}
       </p>
       <h2
         class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
       >
         <span class="font-sans font-semibold italic text-[#083653]"
-          >Where does your business need more clarity?</span
+          >{{ t('services.need.titleItalic') }}</span
         >
       </h2>
       <p
         class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"
       >
-        Choose the statement below that matches your reality. We can build our
-        service scope around where you are right now.
+        {{ t('services.need.subtitle') }}
       </p>
     </div>
 
@@ -43,10 +42,10 @@
           <h3
             class="mt-4 text-lg md:text-xl font-semibold text-[#083653] leading-snug"
           >
-            {{ need.title }}
+            {{ t(need.titleKey) }}
           </h3>
           <p class="mt-3 text-sm text-neutral-500 leading-relaxed font-normal">
-            {{ need.body }}
+            {{ t(need.bodyKey) }}
           </p>
         </div>
       </div>
@@ -55,26 +54,30 @@
 </template>
 
 <script setup lang="ts">
+import { useLanguage } from '~/composables/useLanguage'
+
+const { t } = useLanguage()
+
 const needs = [
   {
     number: "01",
-    title: "Stay compliant",
-    body: "Organize tax reportings and meet statutory requirements on time.",
+    titleKey: "services.need.n1Title",
+    bodyKey: "services.need.n1Body",
   },
   {
     number: "02",
-    title: "Organize your books",
-    body: "Create structured records for cleaner accounting and financial reporting.",
+    titleKey: "services.need.n2Title",
+    bodyKey: "services.need.n2Body",
   },
   {
     number: "03",
-    title: "Understand performance",
-    body: "Use financial information to understand what is happening in your business.",
+    titleKey: "services.need.n3Title",
+    bodyKey: "services.need.n3Body",
   },
   {
     number: "04",
-    title: "Get strategic support",
-    body: "Evaluate financial decisions and prepare your business for growth.",
+    titleKey: "services.need.n4Title",
+    bodyKey: "services.need.n4Body",
   },
 ];
 </script>

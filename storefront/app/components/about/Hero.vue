@@ -24,15 +24,13 @@
         <h1
           class="pt-24 text-3xl font-semibold text-white sm:text-4xl md:text-[48px] leading-[1.15]"
         >
-          <span class="block">More than accountants.</span>
-          <span class="block">Partners in your progress.</span>
+          <span class="block">{{ t('about.hero.title1') }}</span>
+          <span class="block">{{ t('about.hero.title2') }}</span>
         </h1>
         <p
           class="mt-4 text-sm text-white/90 leading-relaxed md:text-base font-normal max-w-lg"
         >
-          PCG helps businesses make confident financial decisions. From tax and
-          accounting to financial planning and business support, we turn complex
-          information into clear, practical next steps.
+          {{ t('about.hero.description') }}
         </p>
         <div class="mt-8 flex flex-wrap items-center gap-4 sm:gap-6">
           <UButton
@@ -42,15 +40,15 @@
             size="lg"
             class="w-fit justify-center font-medium px-6 py-4 rounded-none bg-[#F4C400] text-[#083653] hover:bg-[#F4C400]/90 transition-colors uppercase text-xs sm:text-sm tracking-wider"
           >
-            DISCOVER OUR APPROACH
+            {{ t('about.hero.discoverBtn') }}
           </UButton>
           <UButton
-            to="/contact"
+            to="/about#people"
             variant="outline"
             size="lg"
             class="w-fit justify-center font-medium px-7 py-4 rounded-none border border-white text-white hover:bg-white/10 transition-colors uppercase text-xs sm:text-sm tracking-wider"
           >
-            MEET THE TEAM
+            {{ t('about.hero.teamBtn') }}
           </UButton>
         </div>
       </div>
@@ -58,4 +56,8 @@
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useLanguage } from '~/composables/useLanguage'
+
+const { t } = useLanguage()
+</script>

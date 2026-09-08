@@ -7,23 +7,22 @@
       <p
         class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-neutral-400"
       >
-        THE PEOPLE BEHIND PCG
+        {{ t('about.people.tag') }}
       </p>
       <h2
         class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
       >
         <span class="font-sans font-normal text-[#083653]"
-          >Built by expertise.
+          >{{ t('about.people.titleNormal') }}
         </span>
         <span class="block font-sans font-semibold italic text-[#083653]"
-          >Driven by purpose.</span
+          >{{ t('about.people.titleItalic') }}</span
         >
       </h2>
       <p
         class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base font-normal"
       >
-        Meet the professionals behind PCG—bringing hands-on experience, clear
-        focus, and a shared commitment to your success.
+        {{ t('about.people.description') }}
       </p>
     </div>
 
@@ -58,6 +57,10 @@
 </template>
 
 <script setup lang="ts">
+import { useLanguage } from '~/composables/useLanguage'
+
+const { t } = useLanguage()
+
 const people = [
   {
     name: "Darren Robertson",

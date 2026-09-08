@@ -4,25 +4,29 @@
     <ServicesScopeOfSupport />
     <ServicesCurrentNeed />
     <HomeOurApproach
-      tag="HOW WE WORK"
-      title-prefix="From "
-      title-highlight="understanding "
-      title-suffix="to confident action."
-      subtitle="Managing and growing your business with strategic financial advice starts with four clear steps."
+      :tag="t('services.ourApproach.tag')"
+      :title-prefix="t('services.ourApproach.titlePrefix')"
+      :title-highlight="t('services.ourApproach.titleHighlight')"
+      :title-suffix="t('services.ourApproach.titleSuffix')"
+      :subtitle="t('services.ourApproach.subtitle')"
     />
     <HomeFaq />
     <HomeCta
-      tag="START A CONVERSATION"
-      title-normal="Not sure which service is right for you?"
+      :tag="t('services.cta.tag')"
+      :title-normal="t('services.cta.titleNormal')"
       title-italic=""
-      description="Tell us about your current situation. We'll help you define the right scope of support for your business."
-      button-text="Discuss Your Needs"
+      :description="t('services.cta.description')"
+      :button-text="t('services.cta.buttonText')"
       button-link="/contact"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import { useLanguage } from '~/composables/useLanguage'
+
+const { t } = useLanguage()
+
 useHead({
   title: "Services",
   meta: [

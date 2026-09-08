@@ -7,7 +7,7 @@
         class="inline-flex items-center gap-2 text-xs md:text-sm font-semibold uppercase tracking-wider text-[#083653] hover:underline"
       >
         <UIcon name="i-heroicons-arrow-left" class="size-4" />
-        Back to Insights
+        {{ t('insight.detail.backLink') }}
       </NuxtLink>
 
       <!-- Article Header -->
@@ -15,28 +15,28 @@
         <span
           class="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider bg-[#FFBB00] text-[#083653]"
         >
-          {{ article.category }}
+          {{ t(article.categoryKey) }}
         </span>
 
         <h1
           class="mt-4 text-3xl font-bold text-[#083653] sm:text-4xl md:text-[44px] leading-tight"
         >
-          {{ article.title }}
+          {{ t(article.titleKey) }}
         </h1>
 
         <div
           class="mt-4 flex flex-wrap items-center gap-4 text-xs sm:text-sm text-neutral-500 font-normal"
         >
           <span class="font-semibold text-[#083653]"
-            >By {{ article.author }}</span
+            >{{ t('insight.hero.author') }}</span
           >
           <span class="flex items-center gap-1.5">
             <UIcon name="i-heroicons-calendar" class="size-4" />
-            {{ article.date }}
+            {{ t('insight.hero.date') }}
           </span>
           <span class="flex items-center gap-1.5">
             <UIcon name="i-heroicons-clock" class="size-4" />
-            {{ article.readTime }}
+            {{ t('insight.hero.readTime') }}
           </span>
         </div>
       </div>
@@ -45,7 +45,7 @@
       <div class="mt-8 overflow-hidden aspect-[16/9] border border-[#DFE7ED]">
         <img
           :src="article.image"
-          :alt="article.title"
+          :alt="t(article.titleKey)"
           class="size-full object-cover"
         />
       </div>
@@ -55,47 +55,36 @@
         class="mt-8 text-neutral-700 text-base md:text-lg leading-relaxed font-normal space-y-6 border-b border-[#DFE7ED] pb-12"
       >
         <p>
-          Managing corporate tax compliance and financial records effectively is
-          essential for organizational stability and sustainable growth.
-          Companies operating in competitive markets face evolving regulatory
-          frameworks that require structured oversight and continuous
-          monitoring.
+          {{ t('insight.detail.p1') }}
         </p>
 
         <h2 class="text-2xl font-bold text-[#083653] pt-4">
-          Strategic Tax Planning & Risk Oversight
+          {{ t('insight.detail.h1') }}
         </h2>
 
         <p>
-          Proactive tax advisory allows businesses to structure financial
-          transactions efficiently while mitigating legal and regulatory risks.
-          From periodic tax reporting to statutory audits, transparent financial
-          record-keeping builds credibility with tax authorities and financial
-          partners.
+          {{ t('insight.detail.p2') }}
         </p>
 
         <blockquote
           class="p-6 bg-[#F5FBFF] border-l-4 border-[#083653] text-[#083653] italic font-medium"
         >
-          "Proper financial administration turns compliance from a routine
-          obligation into a strategic asset for business decision-making."
+          {{ t('insight.detail.quote') }}
         </blockquote>
 
         <h2 class="text-2xl font-bold text-[#083653] pt-4">
-          Key Takeaways for Business Leaders
+          {{ t('insight.detail.h2') }}
         </h2>
 
         <ul class="list-disc pl-6 space-y-2 text-neutral-700 font-normal">
           <li>
-            Establish standardized monthly financial reconciliation processes.
+            {{ t('insight.detail.li1') }}
           </li>
           <li>
-            Conduct periodic tax risk assessments prior to statutory filing
-            deadlines.
+            {{ t('insight.detail.li2') }}
           </li>
           <li>
-            Consult with specialized advisory partners to optimize tax planning
-            strategies.
+            {{ t('insight.detail.li3') }}
           </li>
         </ul>
       </div>
@@ -107,7 +96,7 @@
           class="inline-flex items-center gap-2 text-sm font-semibold text-[#083653] hover:underline"
         >
           <UIcon name="i-heroicons-arrow-left" class="size-4" />
-          Explore More Insights
+          {{ t('insight.detail.exploreMore') }}
         </NuxtLink>
 
         <UButton
@@ -117,7 +106,7 @@
           size="md"
           class="rounded-none bg-[#FFBB00] text-[#083653] hover:bg-[#FFBB00]/90 font-medium"
         >
-          Discuss Your Needs
+          {{ t('insight.detail.discussBtn') }}
         </UButton>
       </div>
     </div>
@@ -127,6 +116,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRoute } from "vue-router";
+import { useLanguage } from "~/composables/useLanguage";
+
+const { t } = useLanguage();
 
 definePageMeta({
   alias: ["/insight/:id", "/insights/:id"],
@@ -134,25 +126,83 @@ definePageMeta({
 
 const route = useRoute();
 
+const articlesList = [
+  {
+    id: "effective-tax-planning-strategies",
+    titleKey: "insight.p1.title",
+    categoryKey: "insight.cat.tax",
+    image: "/images/homepage/TaxAdvisory_Desktop.png",
+  },
+  {
+    id: "building-reliable-financial-records",
+    titleKey: "insight.p2.title",
+    categoryKey: "insight.cat.acc",
+    image: "/images/homepage/Finance&Consulting_Desktop.png",
+  },
+  {
+    id: "financial-analysis-for-business-growth",
+    titleKey: "insight.p3.title",
+    categoryKey: "insight.cat.fin",
+    image: "/images/homepage/HowWeHelp_Desktop.png",
+  },
+  {
+    id: "tax-compliance-checklist-2026",
+    titleKey: "insight.p4.title",
+    categoryKey: "insight.cat.tax",
+    image: "/images/homepage/About_Desktop.png",
+  },
+  {
+    id: "streamlining-bookkeeping-systems",
+    titleKey: "insight.p5.title",
+    categoryKey: "insight.cat.acc",
+    image: "/images/homepage/TaxAdvisory_Desktop.png",
+  },
+  {
+    id: "cash-flow-management-best-practices",
+    titleKey: "insight.p6.title",
+    categoryKey: "insight.cat.fin",
+    image: "/images/homepage/Finance&Consulting_Desktop.png",
+  },
+  {
+    id: "transfer-pricing-advisory-guide",
+    titleKey: "insight.p7.title",
+    categoryKey: "insight.cat.tax",
+    image: "/images/homepage/HowWeHelp_Desktop.png",
+  },
+  {
+    id: "annual-financial-statement-prep",
+    titleKey: "insight.p8.title",
+    categoryKey: "insight.cat.acc",
+    image: "/images/homepage/About_Desktop.png",
+  },
+  {
+    id: "business-valuation-methodologies",
+    titleKey: "insight.p9.title",
+    categoryKey: "insight.cat.fin",
+    image: "/images/homepage/TaxAdvisory_Desktop.png",
+  },
+];
+
 const article = computed(() => {
+  const paramId = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
+  const found = articlesList.find((a) => a.id === paramId);
+  if (found) {
+    return found;
+  }
   return {
-    id: route.params.id || "navigating-corporate-tax-compliance",
-    title: "Navigating Corporate Tax Compliance and Minimizing Business Risks",
-    category: "Taxation Services",
-    author: "PCG Editorial Team",
-    date: "September 10, 2026",
-    readTime: "5 min read",
+    id: paramId || "navigating-corporate-tax-compliance",
+    titleKey: "insight.hero.title",
+    categoryKey: "insight.cat.tax",
     image: "/images/insight/Hero_Desktop.png",
   };
 });
 
 useHead({
-  title: article.value.title,
+  title: computed(() => t(article.value.titleKey)),
   meta: [
     {
       name: "description",
-      content:
-        "Discover how managing your tax obligations properly and structuring your financial administration can support your business development.",
+      content: computed(() => t('insight.hero.description')),
     },
   ],
 });

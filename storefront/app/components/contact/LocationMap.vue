@@ -10,17 +10,16 @@
           <p
             class="text-sm font-semibold uppercase tracking-wide text-neutral-400"
           >
-            LOCATION
+            {{ t("contact.location.tag") }}
           </p>
           <h2 class="mt-2 text-2xl md:text-3xl font-bold text-[#083653]">
-            Visit Our Office
+            {{ t("contact.location.title") }}
           </h2>
         </div>
         <p
           class="text-sm text-neutral-500 font-normal max-w-md text-left sm:text-right"
         >
-          Green Lake City Boulevard No.23, Rukan Cordoba Blk. D Lt 3, Kota
-          Tangerang, Banten
+          {{ t("contact.location.address") }}
         </p>
       </div>
 
@@ -43,4 +42,6 @@
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { t } = useLanguage();
+</script>
