@@ -1,21 +1,63 @@
 <template>
   <section class="px-4 py-16 md:px-8 md:py-24">
     <div class="mx-auto max-w-3xl text-center">
-      <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">OUR APPROACH</p>
-      <h2 class="mt-4 text-3xl font-semibold text-secondary-700 md:text-4xl">
-        From <span class="italic">Financial Clarity</span> to Confident Action.
+      <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">
+        OUR APPROACH
+      </p>
+      <h2
+        class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
+      >
+        <span class="font-sans font-normal text-[#083653]">From </span>
+        <span class="font-sans font-semibold italic text-[#083653]"
+          >Financial Clarity
+        </span>
+        <!-- <span class="font-sans font-normal text-[#083653]">to</span> -->
+        <span class="block font-sans font-normal text-[#083653]"
+          >to Confident Action.</span
+        >
       </h2>
-      <p class="mt-4 text-neutral-500">
-        A structured approach to help your business stay compliant, organized, and ready for
-        what comes next.
+      <p
+        class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"
+      >
+        A structured approach to help your business stay compliant, organized,
+        and ready for what comes next.
       </p>
     </div>
 
-    <div class="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
-      <div v-for="step in steps" :key="step.title" class="rounded-2xl border border-neutral-200 bg-white p-8 text-center shadow-sm">
-        <img :src="step.icon" :alt="step.title" class="mx-auto size-16" />
-        <h3 class="mt-4 text-lg font-bold text-secondary-700">{{ step.title }}</h3>
-        <p class="mt-2 text-sm text-neutral-500 leading-relaxed">{{ step.body }}</p>
+    <div
+      class="mx-auto mt-12 grid max-w-6xl gap-6 md:grid-cols-2 items-stretch"
+    >
+      <div
+        v-for="step in steps"
+        :key="step.title"
+        class="flex flex-col items-center justify-center p-8 md:p-[42px] border border-[#0000001F] rounded-none shadow-xs text-center"
+        style="
+          background: radial-gradient(
+            41% 81.3% at 50% 100%,
+            #e9edff 0%,
+            #ffffff 100%
+          );
+        "
+      >
+        <div class="flex justify-center items-center">
+          <img
+            :src="step.icon"
+            :alt="step.title"
+            class="h-20 w-auto object-contain mx-auto"
+          />
+        </div>
+        <div class="mt-6 flex flex-col gap-2 items-center text-center">
+          <h3
+            class="text-xl md:text-[22px] font-bold text-[#083653] leading-snug"
+          >
+            {{ step.title }}
+          </h3>
+          <p
+            class="text-sm text-neutral-500 leading-relaxed font-normal max-w-md mx-auto"
+          >
+            {{ step.body }}
+          </p>
+        </div>
       </div>
     </div>
   </section>

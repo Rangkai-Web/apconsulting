@@ -1,16 +1,45 @@
 <template>
   <header class="relative z-40 bg-transparent">
-    <div class="mx-auto flex h-20 md:h-[92px] max-w-7xl items-center justify-between px-4 md:px-8">
-      <NuxtLink to="/" class="flex items-center gap-2 text-2xl font-bold text-secondary-700">
-        <img src="/pcg_logo.jpeg" alt="PCG Logo" class="h-12 md:h-[60px] w-auto object-contain" />
+    <div
+      class="mx-auto flex h-20 md:h-24 max-w-7xl items-center justify-between px-4 md:px-8"
+    >
+      <NuxtLink
+        to="/"
+        class="flex items-center gap-2 text-2xl font-bold text-secondary-700"
+      >
+        <img
+          src="/pcg_logo.jpeg"
+          alt="PCG Logo"
+          class="h-20 md:h-28 w-auto object-contain"
+        />
       </NuxtLink>
 
       <nav class="hidden items-center gap-8 md:flex">
-        <NuxtLink to="/" class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors">Home</NuxtLink>
-        <NuxtLink to="/services" class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors">Services</NuxtLink>
-        <NuxtLink to="/insight" class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors">Insights</NuxtLink>
-        <NuxtLink to="/about" class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors">About</NuxtLink>
-        <NuxtLink to="/contact" class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors">Contact</NuxtLink>
+        <NuxtLink
+          to="/"
+          class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors"
+          >Home</NuxtLink
+        >
+        <NuxtLink
+          to="/services"
+          class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors"
+          >Services</NuxtLink
+        >
+        <NuxtLink
+          to="/insight"
+          class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors"
+          >Insights</NuxtLink
+        >
+        <NuxtLink
+          to="/about"
+          class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors"
+          >About</NuxtLink
+        >
+        <NuxtLink
+          to="/contact"
+          class="text-base font-normal text-neutral-500 hover:text-secondary-700 transition-colors"
+          >Contact</NuxtLink
+        >
       </nav>
 
       <UButton
@@ -18,7 +47,7 @@
         color="secondary"
         variant="solid"
         size="lg"
-        class="hidden font-bold md:inline-flex rounded-none"
+        class="hidden font-medium! md:inline-flex rounded-none"
       >
         Discuss Your Needs
       </UButton>
@@ -35,13 +64,49 @@
       </button>
     </div>
 
-    <div v-if="mobileOpen" data-testid="mobile-menu" class="flex flex-col gap-4 border-t border-neutral-200 bg-white/95 px-4 py-4 md:hidden shadow-lg">
-      <NuxtLink to="/" class="text-neutral-600 font-medium" @click="mobileOpen = false">Home</NuxtLink>
-      <NuxtLink to="/services" class="text-neutral-600 font-medium" @click="mobileOpen = false">Services</NuxtLink>
-      <NuxtLink to="/insight" class="text-neutral-600 font-medium" @click="mobileOpen = false">Insights</NuxtLink>
-      <NuxtLink to="/about" class="text-neutral-600 font-medium" @click="mobileOpen = false">About</NuxtLink>
-      <NuxtLink to="/contact" class="text-neutral-600 font-medium" @click="mobileOpen = false">Contact</NuxtLink>
-      <UButton to="/contact" color="secondary" variant="solid" block class="font-bold rounded-none">Discuss Your Needs</UButton>
+    <div
+      v-if="mobileOpen"
+      data-testid="mobile-menu"
+      class="flex flex-col gap-4 border-t border-neutral-200 bg-white/95 px-4 py-4 md:hidden shadow-lg"
+    >
+      <NuxtLink
+        to="/"
+        class="text-neutral-600 font-medium"
+        @click="mobileOpen = false"
+        >Home</NuxtLink
+      >
+      <NuxtLink
+        to="/services"
+        class="text-neutral-600 font-medium"
+        @click="mobileOpen = false"
+        >Services</NuxtLink
+      >
+      <NuxtLink
+        to="/insight"
+        class="text-neutral-600 font-medium"
+        @click="mobileOpen = false"
+        >Insights</NuxtLink
+      >
+      <NuxtLink
+        to="/about"
+        class="text-neutral-600 font-medium"
+        @click="mobileOpen = false"
+        >About</NuxtLink
+      >
+      <NuxtLink
+        to="/contact"
+        class="text-neutral-600 font-medium"
+        @click="mobileOpen = false"
+        >Contact</NuxtLink
+      >
+      <UButton
+        to="/contact"
+        color="secondary"
+        variant="solid"
+        block
+        class="font-bold rounded-none"
+        >Discuss Your Needs</UButton
+      >
     </div>
   </header>
 </template>
@@ -51,4 +116,3 @@ import { ref } from "vue";
 
 const mobileOpen = ref(false);
 </script>
-

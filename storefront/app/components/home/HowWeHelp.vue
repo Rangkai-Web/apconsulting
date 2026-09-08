@@ -10,12 +10,14 @@
           HOW WE HELP
         </p>
         <h2
-          class="mt-4 text-3xl font-normal text-secondary-700 md:text-[44px] leading-[1.2]"
+          class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
         >
-          <span class="font-serif italic font-semibold block"
+          <span class="font-sans font-semibold italic text-[#083653] block"
             >Your Business Deserves</span
           >
-          <span class="block">More Than Routine Bookkeeping.</span>
+          <span class="font-sans font-normal text-[#083653] block"
+            >More Than Routine Bookkeeping.</span
+          >
         </h2>
         <p
           class="mt-4 max-w-lg text-sm text-neutral-500 leading-relaxed md:text-base"

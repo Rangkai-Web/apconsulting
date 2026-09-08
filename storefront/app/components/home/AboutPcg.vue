@@ -29,7 +29,7 @@
           color="primary"
           variant="solid"
           size="lg"
-          class="mt-6 font-bold px-6 py-4 h-[56px] rounded-none bg-primary-500 text-secondary-700 hover:bg-primary-600 transition-colors"
+          class="mt-6 font-medium px-6 py-4 h-14 rounded-none bg-primary-500 text-secondary-700 hover:bg-primary-600 transition-colors"
         >
           DISCOVER HOW WE HELP
         </UButton>
