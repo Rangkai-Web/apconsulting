@@ -64,7 +64,6 @@ withDefaults(
       "Tell us about your tax, accounting, or financial needs. PCG will help you identify a practical starting point for your business.",
     buttonText: "Discuss Your Needs",
     buttonLink: "/contact",
-  }
+  },
 );
 </script>
-

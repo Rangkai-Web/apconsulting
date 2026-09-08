@@ -7,13 +7,15 @@
       <h2
         class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
       >
-        <span class="font-sans font-normal text-[#083653]">{{ titlePrefix }}</span>
+        <span class="font-sans font-normal text-[#083653]">{{
+          titlePrefix
+        }}</span>
         <span class="font-sans font-semibold italic text-[#083653]"
           >{{ titleHighlight }}
         </span>
-        <span class="block font-sans font-normal text-[#083653]"
-          >{{ titleSuffix }}</span
-        >
+        <span class="block font-sans font-normal text-[#083653]">{{
+          titleSuffix
+        }}</span>
       </h2>
       <p
         class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"
@@ -77,7 +79,7 @@ withDefaults(
     titleSuffix: "to Confident Action.",
     subtitle:
       "A structured approach to help your business stay compliant, organized, and ready for what comes next.",
-  }
+  },
 );
 
 const steps = [
@@ -103,4 +105,3 @@ const steps = [
   },
 ];
 </script>
-

@@ -10,7 +10,6 @@
         <span class="font-sans font-semibold italic text-[#083653]"
           >{{ titlePrefix }}{{ titleHighlight }}</span
         >
-
       </h2>
       <p
         class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"

@@ -12,16 +12,24 @@
 
       <!-- Article Header -->
       <div class="mt-6">
-        <span class="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider bg-[#FFBB00] text-[#083653]">
+        <span
+          class="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider bg-[#FFBB00] text-[#083653]"
+        >
           {{ article.category }}
         </span>
 
-        <h1 class="mt-4 text-3xl font-bold text-[#083653] sm:text-4xl md:text-[44px] leading-tight">
+        <h1
+          class="mt-4 text-3xl font-bold text-[#083653] sm:text-4xl md:text-[44px] leading-tight"
+        >
           {{ article.title }}
         </h1>
 
-        <div class="mt-4 flex flex-wrap items-center gap-4 text-xs sm:text-sm text-neutral-500 font-normal">
-          <span class="font-semibold text-[#083653]">By {{ article.author }}</span>
+        <div
+          class="mt-4 flex flex-wrap items-center gap-4 text-xs sm:text-sm text-neutral-500 font-normal"
+        >
+          <span class="font-semibold text-[#083653]"
+            >By {{ article.author }}</span
+          >
           <span class="flex items-center gap-1.5">
             <UIcon name="i-heroicons-calendar" class="size-4" />
             {{ article.date }}
@@ -43,9 +51,15 @@
       </div>
 
       <!-- Article Body -->
-      <div class="mt-8 text-neutral-700 text-base md:text-lg leading-relaxed font-normal space-y-6 border-b border-[#DFE7ED] pb-12">
+      <div
+        class="mt-8 text-neutral-700 text-base md:text-lg leading-relaxed font-normal space-y-6 border-b border-[#DFE7ED] pb-12"
+      >
         <p>
-          Managing corporate tax compliance and financial records effectively is essential for organizational stability and sustainable growth. Companies operating in competitive markets face evolving regulatory frameworks that require structured oversight and continuous monitoring.
+          Managing corporate tax compliance and financial records effectively is
+          essential for organizational stability and sustainable growth.
+          Companies operating in competitive markets face evolving regulatory
+          frameworks that require structured oversight and continuous
+          monitoring.
         </p>
 
         <h2 class="text-2xl font-bold text-[#083653] pt-4">
@@ -53,11 +67,18 @@
         </h2>
 
         <p>
-          Proactive tax advisory allows businesses to structure financial transactions efficiently while mitigating legal and regulatory risks. From periodic tax reporting to statutory audits, transparent financial record-keeping builds credibility with tax authorities and financial partners.
+          Proactive tax advisory allows businesses to structure financial
+          transactions efficiently while mitigating legal and regulatory risks.
+          From periodic tax reporting to statutory audits, transparent financial
+          record-keeping builds credibility with tax authorities and financial
+          partners.
         </p>
 
-        <blockquote class="p-6 bg-[#F5FBFF] border-l-4 border-[#083653] text-[#083653] italic font-medium">
-          "Proper financial administration turns compliance from a routine obligation into a strategic asset for business decision-making."
+        <blockquote
+          class="p-6 bg-[#F5FBFF] border-l-4 border-[#083653] text-[#083653] italic font-medium"
+        >
+          "Proper financial administration turns compliance from a routine
+          obligation into a strategic asset for business decision-making."
         </blockquote>
 
         <h2 class="text-2xl font-bold text-[#083653] pt-4">
@@ -65,9 +86,17 @@
         </h2>
 
         <ul class="list-disc pl-6 space-y-2 text-neutral-700 font-normal">
-          <li>Establish standardized monthly financial reconciliation processes.</li>
-          <li>Conduct periodic tax risk assessments prior to statutory filing deadlines.</li>
-          <li>Consult with specialized advisory partners to optimize tax planning strategies.</li>
+          <li>
+            Establish standardized monthly financial reconciliation processes.
+          </li>
+          <li>
+            Conduct periodic tax risk assessments prior to statutory filing
+            deadlines.
+          </li>
+          <li>
+            Consult with specialized advisory partners to optimize tax planning
+            strategies.
+          </li>
         </ul>
       </div>
 

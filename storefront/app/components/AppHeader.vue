@@ -69,7 +69,6 @@
       data-testid="mobile-menu"
       class="absolute top-full left-0 right-0 z-50 flex flex-col gap-4 border-t border-neutral-200 bg-white/95 px-4 py-4 md:hidden shadow-lg"
     >
-
       <NuxtLink
         to="/"
         class="text-neutral-600 font-medium"
