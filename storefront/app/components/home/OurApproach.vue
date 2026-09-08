@@ -2,25 +2,23 @@
   <section class="px-4 py-16 md:px-8 md:py-24">
     <div class="mx-auto max-w-3xl text-center">
       <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        OUR APPROACH
+        {{ tag }}
       </p>
       <h2
         class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
       >
-        <span class="font-sans font-normal text-[#083653]">From </span>
+        <span class="font-sans font-normal text-[#083653]">{{ titlePrefix }}</span>
         <span class="font-sans font-semibold italic text-[#083653]"
-          >Financial Clarity
+          >{{ titleHighlight }}
         </span>
-        <!-- <span class="font-sans font-normal text-[#083653]">to</span> -->
         <span class="block font-sans font-normal text-[#083653]"
-          >to Confident Action.</span
+          >{{ titleSuffix }}</span
         >
       </h2>
       <p
         class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"
       >
-        A structured approach to help your business stay compliant, organized,
-        and ready for what comes next.
+        {{ subtitle }}
       </p>
     </div>
 
@@ -64,6 +62,24 @@
 </template>
 
 <script setup lang="ts">
+withDefaults(
+  defineProps<{
+    tag?: string;
+    titlePrefix?: string;
+    titleHighlight?: string;
+    titleSuffix?: string;
+    subtitle?: string;
+  }>(),
+  {
+    tag: "OUR APPROACH",
+    titlePrefix: "From ",
+    titleHighlight: "Financial Clarity",
+    titleSuffix: "to Confident Action.",
+    subtitle:
+      "A structured approach to help your business stay compliant, organized, and ready for what comes next.",
+  }
+);
+
 const steps = [
   {
     icon: "/images/icon/Understand_Icon.svg",
@@ -87,3 +103,4 @@ const steps = [
   },
 ];
 </script>
+

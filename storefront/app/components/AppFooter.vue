@@ -23,7 +23,7 @@
           <img
             src="/pcg_logo.jpeg"
             alt="PCG Logo"
-            class="h-10 w-auto object-contain"
+            class="h-24 w-auto object-contain rounded-full"
           />
         </NuxtLink>
         <p

@@ -47,7 +47,7 @@
         color="secondary"
         variant="solid"
         size="lg"
-        class="hidden font-medium! md:inline-flex rounded-none"
+        class="hidden font-medium md:inline-flex rounded-none"
       >
         Discuss Your Needs
       </UButton>
@@ -67,8 +67,9 @@
     <div
       v-if="mobileOpen"
       data-testid="mobile-menu"
-      class="flex flex-col gap-4 border-t border-neutral-200 bg-white/95 px-4 py-4 md:hidden shadow-lg"
+      class="absolute top-full left-0 right-0 z-50 flex flex-col gap-4 border-t border-neutral-200 bg-white/95 px-4 py-4 md:hidden shadow-lg"
     >
+
       <NuxtLink
         to="/"
         class="text-neutral-600 font-medium"
@@ -103,8 +104,9 @@
         to="/contact"
         color="secondary"
         variant="solid"
+        size="lg"
         block
-        class="font-bold rounded-none"
+        class="font-medium rounded-none"
         >Discuss Your Needs</UButton
       >
     </div>

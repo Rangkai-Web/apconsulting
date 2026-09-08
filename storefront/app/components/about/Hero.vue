@@ -40,15 +40,15 @@
             color="primary"
             variant="solid"
             size="lg"
-            class="justify-center font-medium px-6 py-4 rounded-none bg-[#F4C400] text-[#083653] hover:bg-[#F4C400]/90 transition-colors uppercase text-xs sm:text-sm tracking-wider"
+            class="w-fit justify-center font-medium px-6 py-4 rounded-none bg-[#F4C400] text-[#083653] hover:bg-[#F4C400]/90 transition-colors uppercase text-xs sm:text-sm tracking-wider"
           >
             DISCOVER OUR APPROACH
           </UButton>
           <UButton
-            to="#people"
-            variant="link"
+            to="/contact"
+            variant="outline"
             size="lg"
-            class="justify-center font-medium px-2 py-4 text-white hover:text-white/80 transition-colors uppercase text-xs sm:text-sm tracking-wider no-underline hover:no-underline"
+            class="w-fit justify-center font-medium px-7 py-4 rounded-none border border-white text-white hover:bg-white/10 transition-colors uppercase text-xs sm:text-sm tracking-wider"
           >
             MEET THE TEAM
           </UButton>
