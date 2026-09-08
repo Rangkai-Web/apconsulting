@@ -10,7 +10,7 @@
         <img
           src="/pcg_logo.jpeg"
           alt="PCG Logo"
-          class="h-20 md:h-28 w-auto object-contain"
+          class="h-20 md:h-24 w-auto object-contain"
         />
       </NuxtLink>
 
