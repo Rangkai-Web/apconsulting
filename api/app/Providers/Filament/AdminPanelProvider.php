@@ -11,7 +11,6 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -26,26 +25,24 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->domain(app()->isProduction() ? 'admin.bbystargo.com' : null)
-            ->path(app()->isProduction() ? '' : 'admin')
+            ->path('admin')
             ->authGuard('admin')
             ->login()
-            ->brandName('Admin Panel BbystarGO')
-            ->brandLogo(asset('BbystarGO_1.jpg'))
-            ->brandLogoHeight('5rem')
+            ->brandName('PCG Admin Panel')
+            ->brandLogo(asset('pcg_logo.jpeg'))
+            ->brandLogoHeight('3rem')
+            ->favicon(asset('favicon.ico'))
             ->colors([
-                'primary' => Color::hex('#FF746C'),
+                'primary' => Color::hex('#083653'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 \App\Filament\Widgets\StatsOverview::class,
-                \App\Filament\Widgets\OrdersChart::class,
-                \App\Filament\Widgets\OrderStatusChart::class,
+                \App\Filament\Widgets\QuickShortcutsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

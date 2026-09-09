@@ -18,10 +18,31 @@
       </p>
     </div>
 
-    <div class="mx-auto mt-12 max-w-4xl space-y-4">
+    <!-- Skeleton Loading State -->
+    <div v-if="pending && !apiResponse" class="mx-auto mt-12 max-w-4xl space-y-4">
+      <div
+        v-for="n in 4"
+        :key="n"
+        class="h-[72px] w-full animate-pulse bg-neutral-100 border border-[#DFE7ED]"
+      />
+    </div>
+
+    <!-- Empty State -->
+    <div
+      v-else-if="!faqList || faqList.length === 0"
+      class="mx-auto mt-12 max-w-4xl p-12 text-center border border-dashed border-neutral-300 bg-[#F5FBFF]"
+    >
+      <UIcon name="i-heroicons-question-mark-circle" class="size-12 text-neutral-400 mx-auto" />
+      <p class="mt-3 text-base font-medium text-neutral-600">
+        {{ currentLocale === 'en' ? 'No FAQs available at the moment.' : 'Belum ada pertanyaan saat ini.' }}
+      </p>
+    </div>
+
+    <!-- Data State -->
+    <div v-else class="mx-auto mt-12 max-w-4xl space-y-4">
       <div
         v-for="(item, index) in faqList"
-        :key="index"
+        :key="item.id || index"
         class="rounded-none bg-[#F5FBFF] border border-[#DFE7ED] overflow-hidden shadow-xs"
       >
         <button
@@ -55,48 +76,46 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useLanguage } from "~/composables/useLanguage";
+import { getApiBaseUrl, safeUseFetch } from "~/utils/api";
 
-const { t } = useLanguage();
+const { t, currentLocale } = useLanguage();
 
 export interface FaqItem {
+  id?: number;
   question: string;
   answer: string;
 }
 
-const props = defineProps<{
+defineProps<{
   tag?: string;
   titlePrefix?: string;
   titleHighlight?: string;
   subtitle?: string;
-  items?: FaqItem[];
 }>();
 
+const apiBase = getApiBaseUrl();
+
+const { data: apiResponse, pending } = safeUseFetch<{ data: FaqItem[] }>(
+  () => `${apiBase}/faqs?lang=${currentLocale.value}`,
+  {
+    watch: [currentLocale],
+  }
+);
+
 const defaultItems = computed<FaqItem[]>(() => [
-  {
-    question: t("home.faq.q1"),
-    answer: t("home.faq.a1"),
-  },
-  {
-    question: t("home.faq.q2"),
-    answer: t("home.faq.a2"),
-  },
-  {
-    question: t("home.faq.q3"),
-    answer: t("home.faq.a3"),
-  },
-  {
-    question: t("home.faq.q4"),
-    answer: t("home.faq.a4"),
-  },
-  {
-    question: t("home.faq.q5"),
-    answer: t("home.faq.a5"),
-  },
+  { question: t("home.faq.q1"), answer: t("home.faq.a1") },
+  { question: t("home.faq.q2"), answer: t("home.faq.a2") },
+  { question: t("home.faq.q3"), answer: t("home.faq.a3") },
+  { question: t("home.faq.q4"), answer: t("home.faq.a4") },
+  { question: t("home.faq.q5"), answer: t("home.faq.a5") },
 ]);
 
-const faqList = computed(() =>
-  props.items && props.items.length > 0 ? props.items : defaultItems.value,
-);
+const faqList = computed<FaqItem[]>(() => {
+  if (apiResponse.value?.data && apiResponse.value.data.length > 0) {
+    return apiResponse.value.data;
+  }
+  return defaultItems.value;
+});
 
 const openIndexes = ref<number[]>([]);
 
@@ -108,3 +127,5 @@ const toggleItem = (index: number) => {
   }
 };
 </script>
+
+

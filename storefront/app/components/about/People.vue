@@ -26,16 +26,41 @@
       </p>
     </div>
 
+    <!-- Skeleton Loading State -->
     <div
+      v-if="pending"
+      class="mx-auto mt-12 grid max-w-7xl gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch"
+    >
+      <div
+        v-for="n in 4"
+        :key="n"
+        class="h-[380px] sm:h-[420px] md:h-[450px] w-full animate-pulse bg-neutral-200 border border-neutral-300"
+      />
+    </div>
+
+    <!-- Empty State -->
+    <div
+      v-else-if="!people || people.length === 0"
+      class="mx-auto mt-12 max-w-4xl p-12 text-center border border-dashed border-neutral-300 bg-white"
+    >
+      <UIcon name="i-heroicons-user-group" class="size-12 text-neutral-400 mx-auto" />
+      <p class="mt-3 text-base font-medium text-neutral-600">
+        {{ currentLocale === 'en' ? 'No team members listed at the moment.' : 'Belum ada anggota tim yang ditampilkan saat ini.' }}
+      </p>
+    </div>
+
+    <!-- Data State -->
+    <div
+      v-else
       class="mx-auto mt-12 grid max-w-7xl gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch"
     >
       <div
         v-for="person in people"
-        :key="person.name"
-        class="relative flex flex-col h-[380px] sm:h-[420px] md:h-[450px] w-full overflow-hidden rounded-none group bg-neutral-100"
+        :key="person.id"
+        class="relative flex flex-col h-[380px] sm:h-[420px] md:h-[450px] w-full overflow-hidden rounded-none group bg-neutral-100 border border-neutral-200"
       >
         <img
-          :src="person.image"
+          :src="resolveImageUrl(person.photo, '/images/homepage/About_Desktop.png')"
           :alt="person.name"
           class="absolute inset-0 size-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
         />
@@ -48,7 +73,7 @@
             {{ person.name }}
           </h3>
           <p class="text-xs text-neutral-500 font-normal mt-1">
-            {{ person.role }}
+            {{ person.position }}
           </p>
         </div>
       </div>
@@ -57,30 +82,24 @@
 </template>
 
 <script setup lang="ts">
-import { useLanguage } from '~/composables/useLanguage'
+import { computed } from "vue";
+import { useLanguage } from "~/composables/useLanguage";
+import { getApiBaseUrl, resolveImageUrl, safeUseFetch } from "~/utils/api";
 
-const { t } = useLanguage()
+interface TeamMember {
+  id: number;
+  name: string;
+  position: string;
+  photo?: string;
+  bio?: string;
+}
 
-const people = [
-  {
-    name: "Darren Robertson",
-    role: "Partner / Tax",
-    image: "/images/about/team/darren.jpg",
-  },
-  {
-    name: "Cody Fisher",
-    role: "Partner / Advisory",
-    image: "/images/about/team/cody.jpg",
-  },
-  {
-    name: "Jacob Jones",
-    role: "Partner / Audit",
-    image: "/images/about/team/jacob.jpg",
-  },
-  {
-    name: "Floyd Miles",
-    role: "Partner / Finance",
-    image: "/images/about/team/floyd.jpg",
-  },
-];
+const { t, currentLocale } = useLanguage();
+const apiBase = getApiBaseUrl();
+
+const { data: apiResponse, pending } = safeUseFetch<{ data: TeamMember[] }>(
+  () => `${apiBase}/team`
+);
+
+const people = computed(() => apiResponse.value?.data || []);
 </script>

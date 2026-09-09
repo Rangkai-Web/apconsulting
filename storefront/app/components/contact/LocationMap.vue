@@ -19,7 +19,7 @@
         <p
           class="text-sm text-neutral-500 font-normal max-w-md text-left sm:text-right"
         >
-          {{ t("contact.location.address") }}
+          {{ address || t("contact.location.address") }}
         </p>
       </div>
 
@@ -29,7 +29,7 @@
       >
         <iframe
           title="PCG Office Location Map"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.452601955025!2d106.6974864758671!3d-6.203875393783993!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f9843a9b1399%3A0xb35a39cb6ff1237a!2sRukan%20Cordoba%2C%20Jl.%20Green%20Lake%20City%20Blvd%2C%20Petir%2C%20Cipondoh%2C%20Tangerang%20City%2C%20Banten%2015147!5e0!3m2!1sen!2sid!4v1710000000000!5m2!1sen!2sid"
+          :src="mapsEmbedUrl"
           width="100%"
           height="100%"
           style="border: 0"
@@ -43,5 +43,9 @@
 </template>
 
 <script setup lang="ts">
+import { useLanguage } from "~/composables/useLanguage";
+import { useCompanySettings } from "~/composables/useCompanySettings";
+
 const { t } = useLanguage();
+const { address, mapsEmbedUrl } = useCompanySettings();
 </script>

@@ -311,18 +311,42 @@ const validateAll = () => {
   return !errors.fullName && !errors.email && !errors.message;
 };
 
+const config = useRuntimeConfig();
+
 const handleSubmit = async () => {
   if (!validateAll()) return;
 
   loading.value = true;
-  await new Promise((resolve) => setTimeout(resolve, 800));
-  loading.value = false;
-  submitted.value = true;
 
-  form.fullName = "";
-  form.email = "";
-  form.phone = "";
-  form.service = "";
-  form.message = "";
+  try {
+    const res: any = await $fetch(`${config.public.apiBase}/contact`, {
+      method: "POST",
+      body: {
+        full_name: form.fullName,
+        email: form.email,
+        phone: form.phone || null,
+        service_interest: form.service || null,
+        message: form.message,
+      },
+    });
+
+    submitted.value = true;
+
+    // Reset form fields
+    form.fullName = "";
+    form.email = "";
+    form.phone = "";
+    form.service = "";
+    form.message = "";
+
+    // Open WhatsApp link if returned from API
+    if (res && res.whatsapp_url) {
+      window.open(res.whatsapp_url, "_blank");
+    }
+  } catch (err) {
+    console.error("Failed to submit contact form:", err);
+  } finally {
+    loading.value = false;
+  }
 };
 </script>

@@ -2,9 +2,10 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Order;
-use App\Models\Product;
-use App\Models\User;
+use App\Models\Article;
+use App\Models\Faq;
+use App\Models\Inquiry;
+use App\Models\Team;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -12,26 +13,31 @@ class StatsOverview extends StatsOverviewWidget
 {
     protected function getStats(): array
     {
-        $revenue = Order::whereIn('order_status', ['paid', 'processing', 'shipped', 'completed'])->sum('total');
-        $newOrdersCount = Order::whereIn('order_status', ['pending', 'paid'])->count();
-        $productsCount = Product::count();
-        $customersCount = User::count();
+        $unreadInquiries = Inquiry::where('status', 'unread')->count();
+        $publishedArticles = Article::where('is_published', true)->count();
+        $activeFaqs = Faq::where('is_active', true)->count();
+        $activeTeamMembers = Team::where('is_active', true)->count();
 
         return [
-            Stat::make('Total Pendapatan', 'Rp ' . number_format($revenue, 0, ',', '.'))
-                ->description('Total transaksi berhasil')
-                ->descriptionIcon('heroicon-m-shopping-bag')
-                ->color('success'),
-            Stat::make('Pesanan Baru', $newOrdersCount)
-                ->description('Perlu segera diproses')
+            Stat::make('Pesan Masuk (Unread)', $unreadInquiries)
+                ->description($unreadInquiries > 0 ? 'Perlu segera ditanggapi' : 'Tidak ada pesan baru')
                 ->descriptionIcon('heroicon-m-envelope')
-                ->color($newOrdersCount > 0 ? 'warning' : 'gray'),
-            Stat::make('Total Produk', number_format($productsCount, 0, ',', '.'))
-                ->description('Produk aktif terdaftar')
-                ->descriptionIcon('heroicon-m-cube'),
-            Stat::make('Total Pelanggan', number_format($customersCount, 0, ',', '.'))
-                ->description('Pelanggan terdaftar')
-                ->descriptionIcon('heroicon-m-users'),
+                ->color($unreadInquiries > 0 ? 'warning' : 'success'),
+
+            Stat::make('Artikel Terbit', $publishedArticles)
+                ->description('Artikel & insight publik')
+                ->descriptionIcon('heroicon-m-document-text')
+                ->color('primary'),
+
+            Stat::make('FAQ Aktif', $activeFaqs)
+                ->description('Pertanyaan aktif di website')
+                ->descriptionIcon('heroicon-m-question-mark-circle')
+                ->color('gray'),
+
+            Stat::make('Tim Profesional', $activeTeamMembers)
+                ->description('Anggota tim terdaftar')
+                ->descriptionIcon('heroicon-m-user-group')
+                ->color('info'),
         ];
     }
 }

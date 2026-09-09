@@ -8,9 +8,9 @@
         class="flex items-center gap-2 text-2xl font-bold text-secondary-700"
       >
         <img
-          src="/pcg_logo.jpeg"
+          :src="logoUrl"
           alt="PCG Logo"
-          class="h-20 md:h-24 w-auto object-contain"
+          class="h-20 md:h-24 w-auto object-contain rounded-full"
         />
       </NuxtLink>
 
@@ -121,8 +121,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useLanguage } from "~/composables/useLanguage";
+import { useCompanySettings } from "~/composables/useCompanySettings";
 
 const { t } = useLanguage();
 const mobileOpen = ref(false);
+const { logoUrl } = useCompanySettings();
 </script>
-

@@ -6,7 +6,7 @@ describe('AppFooter', () => {
   it('renders contact details and the copyright line', () => {
     const wrapper = mount(AppFooter)
     const text = wrapper.text()
-    expect(text).toContain('pcgserver9@gmail.com')
+    expect(text).toContain('info@pcgmitra.co.id')
     expect(text).toContain('Kota Tangerang, Banten 15146')
     expect(text).toContain('Copyright © 2026 Phangkawira Consulting Group. All Rights Reserved')
   })
