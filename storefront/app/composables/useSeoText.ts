@@ -1,7 +1,16 @@
 function decodeHtmlEntities(text: string): string {
-  const el = document.createElement("textarea");
-  el.innerHTML = text;
-  return el.value;
+  if (typeof document !== "undefined") {
+    const el = document.createElement("textarea");
+    el.innerHTML = text;
+    return el.value;
+  }
+  return text
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&#39;/g, "'");
 }
 
 // JSON.stringify output can contain "</script>", or the line/paragraph

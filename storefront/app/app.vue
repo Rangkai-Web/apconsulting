@@ -8,11 +8,16 @@
 
 <script setup lang="ts">
 import { useSeoText } from "~/composables/useSeoText";
+import { useLanguage } from "~/composables/useLanguage";
 
 const { toSafeJsonLd } = useSeoText();
+const { currentLocale } = useLanguage();
 const config = useRuntimeConfig();
 
 useHead(() => ({
+  htmlAttrs: {
+    lang: currentLocale.value,
+  },
   script: [
     {
       type: "application/ld+json",
@@ -20,8 +25,14 @@ useHead(() => ({
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
         name: "Phangkawira Consulting Group",
+        alternateName: "PCG Consulting",
         url: config.public.siteUrl,
+        logo: `${config.public.siteUrl}/pcg_logo.jpeg`,
+        image: `${config.public.siteUrl}/pcg_logo.jpeg`,
+        description:
+          "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
         email: "pcgserver9@gmail.com",
+        telephone: "+628123456789",
         address: {
           "@type": "PostalAddress",
           streetAddress:
@@ -31,6 +42,7 @@ useHead(() => ({
           postalCode: "15146",
           addressCountry: "ID",
         },
+        priceRange: "$$",
       }),
     },
   ],

@@ -127,6 +127,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useLanguage } from "~/composables/useLanguage";
+import { useSeoText } from "~/composables/useSeoText";
 import { getApiBaseUrl, resolveImageUrl, formatDate, safeUseFetch } from "~/utils/api";
 
 interface ArticleDetail {
@@ -148,7 +149,9 @@ definePageMeta({
 });
 
 const { t, currentLocale } = useLanguage();
+const { toSafeJsonLd, toPlainText } = useSeoText();
 const route = useRoute();
+const config = useRuntimeConfig();
 const apiBase = getApiBaseUrl();
 
 const articleId = computed(() => {
@@ -164,15 +167,65 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleDetail }>(
 
 const article = computed(() => apiResponse.value?.data || null);
 
-useHead({
-  title: computed(() => article.value?.title || "Insight Detail"),
-  meta: [
-    {
-      name: "description",
-      content: computed(() => article.value?.excerpt || "PCG Article Insight"),
-    },
-  ],
+const pageTitle = computed(() => (article.value?.title ? article.value.title : "Insight Detail"));
+const pageDescription = computed(() =>
+  article.value?.excerpt ? toPlainText(article.value.excerpt, 160) : "PCG Article Insight"
+);
+const pageImage = computed(() =>
+  article.value?.cover_image
+    ? resolveImageUrl(article.value.cover_image)
+    : `${config.public.siteUrl}/pcg_logo.jpeg`
+);
+const canonicalUrl = computed(() => `${config.public.siteUrl}/insight/${articleId.value}`);
+
+useSeoMeta({
+  title: pageTitle,
+  ogTitle: pageTitle,
+  description: pageDescription,
+  ogDescription: pageDescription,
+  ogImage: pageImage,
+  ogUrl: canonicalUrl,
+  ogType: "article",
+  twitterCard: "summary_large_image",
+  twitterTitle: pageTitle,
+  twitterDescription: pageDescription,
+  twitterImage: pageImage,
 });
+
+useHead(() => ({
+  link: [{ rel: "canonical", href: canonicalUrl.value }],
+  script: article.value
+    ? [
+        {
+          type: "application/ld+json",
+          innerHTML: toSafeJsonLd({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: article.value.title,
+            description: pageDescription.value,
+            image: [pageImage.value],
+            datePublished: article.value.published_at,
+            author: {
+              "@type": "Person",
+              name: article.value.author_name || "PCG Team",
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "Phangkawira Consulting Group",
+              logo: {
+                "@type": "ImageObject",
+                url: `${config.public.siteUrl}/pcg_logo.jpeg`,
+              },
+            },
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": canonicalUrl.value,
+            },
+          }),
+        },
+      ]
+    : [],
+}));
 </script>
 
 <style>

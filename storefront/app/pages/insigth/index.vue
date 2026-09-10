@@ -6,17 +6,49 @@
 </template>
 
 <script setup lang="ts">
+import { useSeoText } from "~/composables/useSeoText";
+
 definePageMeta({
   alias: ["/insight", "/insights"],
 });
 
+const { toSafeJsonLd } = useSeoText();
+const config = useRuntimeConfig();
+const canonicalUrl = `${config.public.siteUrl}/insight`;
+const title = "Insights & Articles — Phangkawira Consulting Group";
+const description =
+  "Stay informed with PCG's latest tax regulations, accounting best practices, and strategic financial insights.";
+
+useSeoMeta({
+  title,
+  ogTitle: title,
+  description,
+  ogDescription: description,
+  ogImage: `${config.public.siteUrl}/pcg_logo.jpeg`,
+  ogUrl: canonicalUrl,
+  twitterCard: "summary_large_image",
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterImage: `${config.public.siteUrl}/pcg_logo.jpeg`,
+});
+
 useHead({
-  title: "Insights & Articles",
-  meta: [
+  link: [{ rel: "canonical", href: canonicalUrl }],
+  script: [
     {
-      name: "description",
-      content:
-        "Stay informed with PCG's latest tax regulations, accounting best practices, and strategic financial insights.",
+      type: "application/ld+json",
+      innerHTML: toSafeJsonLd({
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        name: title,
+        description,
+        url: canonicalUrl,
+        publisher: {
+          "@type": "Organization",
+          name: "Phangkawira Consulting Group",
+          logo: `${config.public.siteUrl}/pcg_logo.jpeg`,
+        },
+      }),
     },
   ],
 });

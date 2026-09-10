@@ -35,10 +35,17 @@ export default defineNuxtConfig({
       titleTemplate: "%s | PCG",
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
       meta: [
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "theme-color", content: "#083653" },
         {
           name: "description",
           content:
             "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
+        },
+        {
+          name: "keywords",
+          content:
+            "PCG, Phangkawira Consulting Group, tax consulting, accounting, bookkeeping, financial advisory, Tax Box, Tangerang, Indonesia",
         },
         { property: "og:title", content: "PCG — Phangkawira Consulting Group" },
         {
@@ -48,11 +55,15 @@ export default defineNuxtConfig({
         },
         { property: "og:site_name", content: "PCG" },
         { property: "og:type", content: "website" },
+        { property: "og:image", content: "https://bbystargo.com/pcg_logo.jpeg" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: "PCG — Phangkawira Consulting Group" },
         {
           name: "twitter:description",
           content:
             "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
         },
+        { name: "twitter:image", content: "https://bbystargo.com/pcg_logo.jpeg" },
       ],
     },
   },
