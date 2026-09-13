@@ -3,9 +3,10 @@
     class="relative overflow-hidden bg-white px-4 pb-12 pt-28 md:px-8 md:pb-24 md:pt-[140px] -mt-20 md:-mt-[92px]"
   >
     <img
-      src="/images/homepage/Globe_Desktop.png"
+      src="/images/homepage/Globe_Desktop.webp"
       alt=""
       aria-hidden="true"
+      decoding="async"
       class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-60"
     />
 
@@ -54,11 +55,15 @@
         <picture class="w-full">
           <source
             media="(min-width: 768px)"
-            srcset="/images/homepage/HeroContent_Desktop.png"
+            srcset="/images/homepage/HeroContent_Desktop.webp"
           />
           <img
-            src="/images/homepage/HeroContent_Mobile.png"
+            src="/images/homepage/HeroContent_Mobile.webp"
             alt="PCG — clearer finances, stronger business decisions"
+            fetchpriority="high"
+            decoding="async"
+            width="600"
+            height="500"
             class="w-full object-contain"
           />
         </picture>

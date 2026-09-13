@@ -41,11 +41,15 @@
           <picture class="block w-full h-full">
             <source
               media="(min-width: 768px)"
-              srcset="/images/homepage/TaxAdvisory_Desktop.png"
+              srcset="/images/homepage/TaxAdvisory_Desktop.webp"
             />
             <img
-              src="/images/homepage/TaxAdvisory_Desktop.png"
+              src="/images/homepage/TaxAdvisory_Desktop.webp"
               alt="Tax Advisory"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="380"
               class="w-full h-full grayscale object-cover"
             />
           </picture>
@@ -58,6 +62,10 @@
               <img
                 src="/images/icon/TaxAdvisory_Icon.svg"
                 alt=""
+                loading="lazy"
+                decoding="async"
+                width="24"
+                height="24"
                 class="size-6 shrink-0"
               />
               <p class="font-bold text-secondary-700 text-base">{{ t('home.whyChooseUs.card1Title') }}</p>
@@ -78,11 +86,15 @@
         <picture class="block w-full h-full">
           <source
             media="(min-width: 768px)"
-            srcset="/images/homepage/Finance&Consulting_Desktop.png"
+            srcset="/images/homepage/Finance&Consulting_Desktop.webp"
           />
           <img
-            src="/images/homepage/Finance&Consulting_Desktop.png"
+            src="/images/homepage/Finance&Consulting_Desktop.webp"
             alt="Finance & Consulting"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="715"
             class="w-full h-full grayscale object-cover"
           />
         </picture>

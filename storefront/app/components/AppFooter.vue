@@ -6,11 +6,17 @@
     <img
       src="/images/footer/footer1.svg"
       alt=""
+      aria-hidden="true"
+      loading="lazy"
+      decoding="async"
       class="absolute top-0 left-0 pointer-events-none z-0"
     />
     <img
       src="/images/footer/footer2.svg"
       alt=""
+      aria-hidden="true"
+      loading="lazy"
+      decoding="async"
       class="absolute bottom-0 right-0 pointer-events-none z-0"
     />
 
@@ -23,6 +29,10 @@
           <img
             :src="logoUrl"
             alt="PCG Logo"
+            width="80"
+            height="80"
+            loading="lazy"
+            decoding="async"
             class="h-24 w-auto object-contain rounded-full"
           />
         </NuxtLink>

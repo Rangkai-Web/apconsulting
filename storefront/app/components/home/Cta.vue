@@ -5,11 +5,14 @@
     <picture class="absolute inset-0 size-full pointer-events-none">
       <source
         media="(min-width: 768px)"
-        srcset="/images/homepage/CTA_Desktop.png"
+        srcset="/images/homepage/CTA_Desktop.webp"
       />
       <img
-        src="/images/homepage/CTA_Mobile.png"
+        src="/images/homepage/CTA_Mobile.webp"
         alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
         class="size-full object-cover opacity-60"
       />
     </picture>

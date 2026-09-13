@@ -6,11 +6,15 @@
     <picture class="absolute inset-0 size-full pointer-events-none">
       <source
         media="(min-width: 768px)"
-        :srcset="resolveImageUrl(featuredArticle?.cover_image, '/images/insight/Hero_Desktop.png')"
+        :srcset="resolveImageUrl(featuredArticle?.cover_image, '/images/insight/Hero_Desktop.webp')"
       />
       <img
-        :src="resolveImageUrl(featuredArticle?.cover_image, '/images/insight/Hero_Mobile.png')"
+        :src="resolveImageUrl(featuredArticle?.cover_image, '/images/insight/Hero_Mobile.webp')"
         alt="PCG Featured Insight"
+        fetchpriority="high"
+        decoding="async"
+        width="1280"
+        height="580"
         class="size-full object-cover opacity-35"
       />
     </picture>

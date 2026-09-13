@@ -4,8 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   srcDir: "app",
   compatibilityDate: "2026-06-19",
-  devtools: { enabled: true },
-  ssr: false,
+  devtools: { enabled: false },
+  ssr: true,
   css: ["~/assets/css/main.css"],
   modules: [
     "@nuxt/ui",
@@ -16,6 +16,14 @@ export default defineNuxtConfig({
     "vue3-carousel-nuxt",
     "@pinia/nuxt",
   ],
+  fonts: {
+    provider: "google",
+    defaults: {
+      weights: [400, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin"],
+    },
+  },
   runtimeConfig: {
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:8000/api",
@@ -27,13 +35,35 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      cssCodeSplit: true,
+    },
+  },
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: ["/", "/about", "/services", "/insight", "/contact"],
+    },
+  },
+  routeRules: {
+    "/": { prerender: true },
+    "/about": { prerender: true },
+    "/services": { prerender: true },
+    "/insight": { prerender: true },
+    "/contact": { prerender: true },
+  },
+  image: {
+    format: ["webp", "jpg", "png"],
+    quality: 80,
   },
   app: {
     head: {
-      htmlAttrs: { lang: "en" },
+      htmlAttrs: { lang: "id" },
       title: "PCG — Phangkawira Consulting Group",
       titleTemplate: "%s | PCG",
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      ],
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { name: "theme-color", content: "#083653" },

@@ -29,11 +29,15 @@
       <picture class="block w-full overflow-hidden">
         <source
           media="(min-width: 768px)"
-          srcset="/images/homepage/HowWeHelp_Desktop.png"
+          srcset="/images/homepage/HowWeHelp_Desktop.webp"
         />
         <img
-          src="/images/homepage/HowWeHelp_Mobile.png"
+          src="/images/homepage/HowWeHelp_Mobile.webp"
           alt="PCG team"
+          loading="lazy"
+          decoding="async"
+          width="600"
+          height="400"
           class="w-full object-cover shadow-sm"
         />
       </picture>

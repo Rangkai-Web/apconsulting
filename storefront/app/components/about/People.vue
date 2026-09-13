@@ -60,8 +60,12 @@
         class="relative flex flex-col h-[380px] sm:h-[420px] md:h-[450px] w-full overflow-hidden rounded-none group bg-neutral-100 border border-neutral-200"
       >
         <img
-          :src="resolveImageUrl(person.photo, '/images/homepage/About_Desktop.png')"
+          :src="resolveImageUrl(person.photo, '/images/homepage/About_Desktop.webp')"
           :alt="person.name"
+          loading="lazy"
+          decoding="async"
+          width="400"
+          height="450"
           class="absolute inset-0 size-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
         />
         <div

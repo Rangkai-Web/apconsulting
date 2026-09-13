@@ -6,11 +6,15 @@
     <picture class="absolute inset-0 size-full pointer-events-none">
       <source
         media="(min-width: 768px)"
-        srcset="/images/about/Hero_Desktop.png"
+        srcset="/images/about/Hero_Desktop.webp"
       />
       <img
-        src="/images/about/Hero_Mobile.png"
+        src="/images/about/Hero_Mobile.webp"
         alt="PCG Team"
+        fetchpriority="high"
+        decoding="async"
+        width="1280"
+        height="600"
         class="size-full object-cover"
       />
     </picture>

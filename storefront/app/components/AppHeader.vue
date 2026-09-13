@@ -10,6 +10,10 @@
         <img
           :src="logoUrl"
           alt="PCG Logo"
+          width="80"
+          height="80"
+          decoding="async"
+          fetchpriority="high"
           class="h-20 md:h-24 w-auto object-contain rounded-full"
         />
       </NuxtLink>

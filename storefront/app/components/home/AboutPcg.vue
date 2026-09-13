@@ -37,11 +37,15 @@
     <picture class="mx-auto mt-12 block max-w-7xl w-full">
       <source
         media="(min-width: 768px)"
-        srcset="/images/homepage/About_Desktop.png"
+        srcset="/images/homepage/About_Desktop.webp"
       />
       <img
-        src="/images/homepage/About_Mobile.png"
+        src="/images/homepage/About_Mobile.webp"
         alt="PCG team reviewing financial documents"
+        loading="lazy"
+        decoding="async"
+        width="1280"
+        height="720"
         class="w-full object-cover shadow-sm"
       />
     </picture>

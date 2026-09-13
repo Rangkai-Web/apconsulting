@@ -42,11 +42,15 @@
           <picture class="absolute inset-0 size-full pointer-events-none">
             <source
               media="(min-width: 768px)"
-              srcset="/images/contact/HeroContent_Desktop.png"
+              srcset="/images/contact/HeroContent_Desktop.webp"
             />
             <img
-              src="/images/contact/HeroContent_Mobile.png"
+              src="/images/contact/HeroContent_Mobile.webp"
               :alt="t('contact.hero.cardTitle')"
+              fetchpriority="high"
+              decoding="async"
+              width="600"
+              height="500"
               class="size-full object-cover"
             />
           </picture>
@@ -344,7 +348,7 @@ const handleSubmit = async () => {
       window.open(res.whatsapp_url, "_blank");
     }
   } catch (err) {
-    console.error("Failed to submit contact form:", err);
+    // Form error handled gracefully
   } finally {
     loading.value = false;
   }
