@@ -514,18 +514,18 @@ const translations: Record<Locale, Record<string, string>> = {
     "home.ourApproach.titleSuffix": "Menuju Langkah Pasti.",
     "home.ourApproach.subtitle":
       "Pendekatan terstruktur untuk membantu bisnis Anda tetap patuh, terorganisir, dan siap menghadapi masa depan.",
-    "home.ourApproach.step1Title": "Memahami Bisnis Anda",
+    "home.ourApproach.step1Title": "Memahami Bisnis Anda Sepenuhnya",
     "home.ourApproach.step1Body":
       "Kami mengevaluasi posisi keuangan, catatan, dan proses administratif Anda untuk memahami kondisi bisnis Anda saat ini.",
     "home.ourApproach.step2Title": "Mengidentifikasi Prioritas",
     "home.ourApproach.step2Body":
       "Kami mengidentifikasi risiko, celah, dan prioritas, lalu berfokus pada area yang membutuhkan perhatian terlebih dahulu.",
-    "home.ourApproach.step3Title": "Menerapkan Solusi",
+    "home.ourApproach.step3Title": "Menerapkan Solusi Yang Tepat",
     "home.ourApproach.step3Body":
       "Kami menerapkan solusi perpajakan, akuntansi, dan keuangan yang disepakati sesuai dengan kebutuhan bisnis Anda.",
-    "home.ourApproach.step4Title": "Tinjauan & Langkah Maju",
+    "home.ourApproach.step4Title": "Evaluasi dan Terus Melangkah Maju",
     "home.ourApproach.step4Body":
-      "Kami meninjau kemajuan secara berkala dan memberikan dukungan berkelanjutan seiring berkembangnya bisnis Anda.",
+      "Kami mengevaluasi perkembangannya secara berkala dan siap memberikan dukungan berkelanjutan seiring dengan bertumbuhnya bisnis Anda.",
 
     // Home Insights
     "home.insights.tag": "ARTIKEL & WAWASAN",
@@ -571,62 +571,64 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // About Hero
     "about.hero.title1": "Lebih dari sekadar akuntan.",
-    "about.hero.title2": "Mitra dalam kemajuan Anda.",
+    "about.hero.title2": "Kami Mitra Kesuksesan Anda.",
     "about.hero.description":
-      "PCG membantu bisnis mengambil keputusan keuangan dengan yakin. Mulai dari perpajakan dan akuntansi hingga perencanaan keuangan dan dukungan bisnis, kami mengubah informasi kompleks menjadi langkah nyata yang jelas dan praktis.",
-    "about.hero.discoverBtn": "TEMUKAN PENDEKATAN KAMI",
+      "PCG mendampingi bisnis Anda untuk mengambil keputusan finansial dengan penuh keyakinan. Mulai dari urusan pajak dan akuntansi hingga perencanaan keuangan dan pendampingan bisnis, kami menyederhanakan informasi yang rumit menjadi langkah-langkah praktis yang siap dijalankan.",
+    "about.hero.discoverBtn": "PELAJARI PENDEKATAN KAMI",
     "about.hero.teamBtn": "LIHAT TIM KAMI",
 
     // About PCG Section
     "about.pcg.tag": "TENTANG PCG",
     "about.pcg.titleNormal": "Lebih dari sekadar akuntan.",
-    "about.pcg.titleItalic": "Mitra dalam kemajuan Anda.",
+    "about.pcg.titleItalic": "Kami Mitra Kesuksesan Anda.",
     "about.pcg.paragraph1":
-      "PCG (Phangkawira Consulting Group) adalah perusahaan konsultan profesional yang menyediakan berbagai layanan dukungan keuangan untuk perusahaan, pemilik bisnis, dan klien spesialis. Praktik konsultasi kami mencakup akuntansi dan pembukuan, serta layanan keuangan kustom yang dirancang untuk menjawab kebutuhan spesifik setiap klien.",
+      "CV Phangkawira Consulting Group adalah firma layanan profesional yang menyediakan konsultasi dan pendampingan di berbagai area manajemen bisnis. Kami memiliki spesialisasi di bidang konsultasi pajak, akuntansi korporat dan pembukuan, serta layanan keuangan khusus yang dirancang untuk menjawab kebutuhan unik setiap klien.",
     "about.pcg.paragraph2":
-      "Kami menyadari bahwa setiap bisnis beroperasi dalam kondisi, kebutuhan operasional, dan tantangan keuangan yang unik. Sejak awal, pendekatan kami berpusat pada mendengarkan serta memahami bisnis, prioritas, dan tujuan Anda secara mendalam.",
+      "Kami sangat menyadari bahwa setiap bisnis beroperasi dalam lingkungan yang berbeda dan menghadapi tantangannya masing-masing. Oleh karena itu, kami menerapkan pendekatan layanan yang adaptif dan fleksibel—menyesuaikan dukungan kami dengan kondisi, prioritas, serta tujuan dari setiap klien yang kami layani.",
 
     // About Vision & Mission
     "about.vision.tag": "VISI",
     "about.vision.title":
-      "Menjadi mitra terpercaya yang menghadirkan kejelasan, rasa percaya diri, dan pertumbuhan berkelanjutan bagi setiap bisnis yang kami layani",
+      "Menjadi mitra tepercaya yang selalu menghadirkan kejelasan, rasa yakin, dan pertumbuhan berkelanjutan bagi setiap bisnis yang kami layani.",
     "about.mission.tag": "MISI",
     "about.mission.title":
-      "Kami membantu bisnis mengelola kompleksitas keuangan dan operasional melalui keahlian terpercaya, wawasan praktis, dan dukungan profesional yang disesuaikan.",
-    "about.mission.item1": "Memberikan layanan profesional yang terpercaya.",
+      "Kami membantu para pelaku bisnis mengelola kerumitan finansial dan operasional melalui keahlian yang dapat diandalkan, wawasan praktis, dan dukungan profesional yang dirancang khusus.",
+    "about.mission.item1": "Menghadirkan layanan profesional yang tepercaya.",
     "about.mission.item2":
-      "Menghadirkan kejelasan pada informasi yang kompleks.",
+      "Memperjelas dan menyederhanakan informasi yang rumit.",
     "about.mission.item3":
-      "Membantu klien mencapai kendali penuh atas keuangan.",
-    "about.mission.item4": "Membangun hubungan kepercayaan jangka panjang.",
-    "about.mission.item5": "Mendorong pertumbuhan bisnis yang berkelanjutan.",
+      "Mendukung kepatuhan aturan dan kendali keuangan yang baik.",
+    "about.mission.item4":
+      "Membantu pengambilan keputusan bisnis yang lebih cerdas.",
+    "about.mission.item5":
+      "Membangun hubungan kemitraan jangka panjang yang erat dengan klien.",
 
     // About Why Choose PCG
     "about.whyChoose.tag": "MENGAPA MEMILIH PCG",
     "about.whyChoose.titleNormal": "Dukungan yang ",
-    "about.whyChoose.titleItalic": "melampaui sekadar angka.",
+    "about.whyChoose.titleItalic": "melampaui sekadar deretan angka.",
     "about.whyChoose.description":
-      "PCG membantu bisnis mengelola perpajakan, akuntansi, pembukuan, dan kebutuhan keuangan dengan pendekatan terstruktur dan profesional yang disesuaikan dengan tujuan Anda.",
+      "PCG menghadirkan dukungan kepatuhan yang jelas serta wawasan strategis yang Anda butuhkan, agar bisnis dapat berjalan dengan lebih terarah dan percaya diri.",
     "about.whyChoose.ctaButton": "MULAI PERCAKAPAN",
-    "about.whyChoose.card1Title": "Solusi Bisnis Satu Pintu",
+    "about.whyChoose.card1Title": "Solusi Bisnis Terpadu",
     "about.whyChoose.card1Body":
-      "Dukungan praktis dan terintegrasi di bidang pajak, akuntansi, konsultasi, dan proses administratif melalui satu mitra konsultan.",
-    "about.whyChoose.card2Title": "Jaringan Profesional",
+      "Dapatkan dukungan terintegrasi untuk perizinan bisnis, perpajakan, akuntansi, dan kebutuhan finansial lainnya—semua cukup melalui satu mitra tepercaya.",
+    "about.whyChoose.card2Title": "Jaringan Profesional Yang Luas",
     "about.whyChoose.card2Body":
-      "Akses dukungan konsultasi spesialis melalui jaringan profesional kami yang memberikan kedalaman sumber daya saat bisnis Anda membutuhkannya.",
+      "Jaringan profesional kami, yang didukung oleh AP Consulting, siap menghubungkan Anda dengan para ahli dan dukungan yang paling relevan untuk bisnis Anda.",
     "about.whyChoose.card3Title": "Kepatuhan & Manajemen Risiko",
     "about.whyChoose.card3Body":
-      "Proses terstruktur untuk mengelola kewajiban kepatuhan, mengurangi risiko operasional, dan menjaga pelaporan keuangan tetap akurat serta tepat waktu.",
+      "Pastikan bisnis Anda selalu sejalan dengan peraturan yang berlaku, sembari kami membantu mengenali dan meminimalkan potensi risiko pajak maupun keuangan.",
     "about.whyChoose.card4Title": "Wawasan Bisnis Strategis",
     "about.whyChoose.card4Body":
-      "Mengubah data keuangan menjadi wawasan praktis sehingga manajemen dapat mengambil keputusan yang lebih tepat.",
+      "Manfaatkan analisis praktis dan rekomendasi khusus dari kami untuk merancang langkah dan keputusan bisnis yang lebih matang.",
 
     // About People
     "about.people.tag": "TIM DI BALIK PCG",
-    "about.people.titleNormal": "Dibangun oleh keahlian. ",
-    "about.people.titleItalic": "Didorong oleh tujuan.",
+    "about.people.titleNormal": "Dibangun oleh Para Ahli. ",
+    "about.people.titleItalic": "Digerakkan oleh tujuan yang kuat.",
     "about.people.description":
-      "Temui para profesional di balik PCG—yang membawa pengalaman langsung, fokus yang jelas, dan komitmen bersama untuk kesuksesan Anda.",
+      "Mari berkenalan dengan orang-orang di balik layar yang selalu mendedikasikan keahlian dan komitmen PCG ke dalam setiap hubungan dengan klien kami.",
 
     // Services Hero
     "services.hero.title":
@@ -685,21 +687,21 @@ const translations: Record<Locale, Record<string, string>> = {
       "Di mana bisnis Anda membutuhkan kejelasan lebih?",
     "services.need.subtitle":
       "Pilih pernyataan di bawah ini yang sesuai dengan kondisi Anda. Kami dapat merancang cakupan layanan sesuai keberadaan bisnis Anda saat ini.",
-    "services.need.n1Title": "Tetap patuh",
+    "services.need.n1Title": "Tetap Taat Aturan",
     "services.need.n1Body":
-      "Rapikan pelaporan pajak dan penuhi persyaratan regulasi tepat waktu.",
-    "services.need.n2Title": "Merapikan pembukuan",
+      "Rapikan urusan kewajiban pajak dan kenali potensi risiko sejak awal.",
+    "services.need.n2Title": "Rapikan Pembukuan",
     "services.need.n2Body":
-      "Buat catatan terstruktur untuk akuntansi dan pelaporan keuangan yang lebih rapi.",
-    "services.need.n3Title": "Memahami kinerja",
+      "Bangun rutinitas pencatatan dan pelaporan keuangan yang lebih konsisten.",
+    "services.need.n3Title": "Pahami Performa Bisnis",
     "services.need.n3Body":
-      "Gunakan informasi keuangan untuk memahami apa yang terjadi dalam bisnis Anda.",
-    "services.need.n4Title": "Dapatkan dukungan strategis",
+      "Manfaatkan data keuangan untuk melihat kondisi riil bisnis Anda saat ini.",
+    "services.need.n4Title": "Dapatkan Bantuan Administrasi",
     "services.need.n4Body":
-      "Evaluasi keputusan keuangan dan persiapkan bisnis Anda untuk pertumbuhan.",
+      "Jadikan urusan administrasi bisnis sehari-hari lebih mudah dikelola.",
 
     // Services Overrides
-    "services.ourApproach.tag": "CARA KERJA KAMI",
+    "services.ourApproach.tag": "PENDEKATAN KAMI",
     "services.ourApproach.titlePrefix": "Dari ",
     "services.ourApproach.titleHighlight": "pemahaman ",
     "services.ourApproach.titleSuffix": "menuju langkah pasti.",
@@ -795,12 +797,12 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // Contact Hero & Form
     "contact.hero.tag": "HUBUNGI KAMI",
-    "contact.hero.titleLight": "Hubungi ",
-    "contact.hero.titleItalic": "PCG.",
+    "contact.hero.titleLight": "Mari Terhubung ",
+    "contact.hero.titleItalic": "dengan PCG.",
     "contact.hero.headerSubtitle":
       "Punya pertanyaan atau ingin mendiskusikan kebutuhan bisnis Anda?",
     "contact.hero.headerDesc":
-      "Kirimkan pesan kepada kami dan tim PCG akan membantu Anda menentukan titik awal yang praktis.",
+      "Kirimkan pesan kepada kami, dan tim PCG akan membantu Anda menemukan langkah awal yang paling tepat.",
     "contact.hero.cardTitle": "Beritahu kami kebutuhan Anda.",
     "contact.hero.cardDesc":
       "Bagikan sedikit informasi mengenai bisnis Anda, tantangan yang dihadapi, atau layanan yang ingin didiskusikan.",
@@ -808,7 +810,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "contact.form.fullNamePlaceholder": "Masukkan nama Anda",
     "contact.form.email": "Alamat Email",
     "contact.form.emailPlaceholder": "nama@contoh.com",
-    "contact.form.service": "Layanan yang diminati",
+    "contact.form.service": "Layanan yang Dibutuhkan",
     "contact.form.selectOne": "Pilih salah satu",
     "contact.form.optTax": "Layanan Perpajakan (Tax Box)",
     "contact.form.optAcc": "Akuntansi & Pembukuan",
