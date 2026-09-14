@@ -2,11 +2,11 @@ name: Deploy API
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches: [main]
-  #   paths:
-  #     - 'api/**'
-  #     - '.github/workflows/deploy-api.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'api/**'
+      - '.github/workflows/deploy-api.yml'
 
 jobs:
   deploy:
@@ -23,7 +23,7 @@ jobs:
           script: |
             set -e
             export PATH="/opt/alt/php83/usr/bin:/usr/local/bin:$PATH"
-            cd /home/u497514044/domains/bbystargo.com/repo
+            cd /home/${{ secrets.SSH_USER }}/domains/pcgmitra.co.id/repo
             git pull origin main
             cd api
             composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
@@ -32,3 +32,4 @@ jobs:
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
+

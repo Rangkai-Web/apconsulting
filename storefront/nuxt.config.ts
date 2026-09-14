@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:8000/api",
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://bbystargo.com",
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://pcgmitra.co.id",
     },
   },
   ui: {
@@ -85,7 +85,7 @@ export default defineNuxtConfig({
         },
         { property: "og:site_name", content: "PCG" },
         { property: "og:type", content: "website" },
-        { property: "og:image", content: "https://bbystargo.com/pcg_logo.jpeg" },
+        { property: "og:image", content: "https://pcgmitra.co.id/pcg_logo.jpeg" },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: "PCG — Phangkawira Consulting Group" },
         {
@@ -93,7 +93,7 @@ export default defineNuxtConfig({
           content:
             "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
         },
-        { name: "twitter:image", content: "https://bbystargo.com/pcg_logo.jpeg" },
+        { name: "twitter:image", content: "https://pcgmitra.co.id/pcg_logo.jpeg" },
       ],
     },
   },
