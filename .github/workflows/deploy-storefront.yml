@@ -38,8 +38,12 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
+          if [ -z "$SSH_PRIVATE_KEY" ]; then
+            echo "ERROR: SSH_PRIVATE_KEY secret is not set in GitHub Secrets!"
+            exit 1
+          fi
           mkdir -p ~/.ssh
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
 
       - name: Deploy to Hostinger
@@ -48,12 +52,17 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
+          if [ -z "$SSH_HOST" ] || [ -z "$SSH_USER" ]; then
+            echo "ERROR: SSH_HOST or SSH_USER secret is missing in GitHub Secrets!"
+            exit 1
+          fi
+          PORT="${SSH_PORT:-65002}"
+          echo "Connecting to $SSH_USER@$SSH_HOST on port $PORT..."
           rsync -avz --delete \
             --exclude='.git' \
             --exclude='.htaccess' \
             --exclude='api' \
             --exclude='admin' \
-            -e "ssh -p $SSH_PORT -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            -e "ssh -p $PORT -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
             storefront/.output/public/ \
             $SSH_USER@$SSH_HOST:/home/$SSH_USER/domains/pcgmitra.co.id/public_html/
-
