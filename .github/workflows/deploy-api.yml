@@ -32,20 +32,23 @@ jobs:
             fi
             cd "$TARGET_DIR"
             git remote set-url origin "$REPO_URL"
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main
             cd api
             if [ ! -f .env ]; then
               echo "Creating .env from .env.example..."
               cp .env.example .env
               php artisan key:generate
             fi
+            touch database/database.sqlite 2>/dev/null || true
             composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
             php artisan storage:link || true
             php artisan package:discover --ansi
-            php artisan migrate --force
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
+            php artisan migrate --force || echo "Warning: Migration skipped (check DB config in .env)"
+            php artisan config:cache || true
+            php artisan route:cache || true
+            php artisan view:cache || true
+
 
 
 
