@@ -24,12 +24,14 @@ jobs:
             set -e
             export PATH="/opt/alt/php83/usr/bin:/usr/local/bin:$PATH"
             TARGET_DIR="/home/${{ secrets.SSH_USER }}/domains/pcgmitra.co.id/repo"
+            REPO_URL="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
             if [ ! -d "$TARGET_DIR" ]; then
               echo "Repository directory not found. Cloning repository..."
               mkdir -p "/home/${{ secrets.SSH_USER }}/domains/pcgmitra.co.id"
-              git clone https://github.com/${{ github.repository }}.git "$TARGET_DIR"
+              git clone "$REPO_URL" "$TARGET_DIR"
             fi
             cd "$TARGET_DIR"
+            git remote set-url origin "$REPO_URL"
             git pull origin main
             cd api
             if [ ! -f .env ]; then
@@ -43,5 +45,6 @@ jobs:
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
+
 
 
