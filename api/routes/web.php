@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect('/admin');
-});
+// Root route / is handled directly by Filament AdminPanelProvider at path('')
+
 
