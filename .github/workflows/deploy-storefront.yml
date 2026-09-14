@@ -60,9 +60,9 @@ jobs:
           echo "Connecting to $SSH_USER@$SSH_HOST on port $PORT..."
           rsync -avz --delete \
             --exclude='.git' \
-            --exclude='.htaccess' \
             --exclude='api' \
             --exclude='admin' \
             -e "ssh -p $PORT -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
             storefront/.output/public/ \
             $SSH_USER@$SSH_HOST:/home/$SSH_USER/domains/pcgmitra.co.id/public_html/
+
