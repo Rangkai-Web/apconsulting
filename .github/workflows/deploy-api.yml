@@ -23,13 +23,25 @@ jobs:
           script: |
             set -e
             export PATH="/opt/alt/php83/usr/bin:/usr/local/bin:$PATH"
-            cd /home/${{ secrets.SSH_USER }}/domains/pcgmitra.co.id/repo
+            TARGET_DIR="/home/${{ secrets.SSH_USER }}/domains/pcgmitra.co.id/repo"
+            if [ ! -d "$TARGET_DIR" ]; then
+              echo "Repository directory not found. Cloning repository..."
+              mkdir -p "/home/${{ secrets.SSH_USER }}/domains/pcgmitra.co.id"
+              git clone https://github.com/${{ github.repository }}.git "$TARGET_DIR"
+            fi
+            cd "$TARGET_DIR"
             git pull origin main
             cd api
+            if [ ! -f .env ]; then
+              echo "Creating .env from .env.example..."
+              cp .env.example .env
+              php artisan key:generate
+            fi
             composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
             php artisan package:discover --ansi
             php artisan migrate --force
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
+
 
