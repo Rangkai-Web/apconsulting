@@ -366,6 +366,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "insight.detail.backLink": "Back to Insights",
     "insight.detail.exploreMore": "Explore More Insights",
     "insight.detail.discussBtn": "Discuss Your Needs",
+    "insight.detail.share": "Share",
+    "insight.detail.linkCopied": "Link copied to clipboard",
     "insight.detail.p1":
       "Managing corporate tax compliance and financial records effectively is essential for organizational stability and sustainable growth. Companies operating in competitive markets face evolving regulatory frameworks that require structured oversight and continuous monitoring.",
     "insight.detail.h1": "Strategic Tax Planning & Risk Oversight",
@@ -780,6 +782,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "insight.detail.backLink": "Kembali ke Wawasan",
     "insight.detail.exploreMore": "Jelajahi Wawasan Lainnya",
     "insight.detail.discussBtn": "Diskusikan Kebutuhan Anda",
+    "insight.detail.share": "Bagikan",
+    "insight.detail.linkCopied": "Link berhasil disalin",
     "insight.detail.p1":
       "Mengelola kepatuhan pajak perusahaan dan catatan keuangan secara efektif sangat penting untuk stabilitas organisasi dan pertumbuhan yang berkelanjutan. Perusahaan yang beroperasi di pasar kompetitif menghadapi kerangka regulasi yang terus berkembang yang memerlukan pengawasan terstruktur dan pemantauan berkesinambungan.",
     "insight.detail.h1": "Perencanaan Pajak Strategis & Pengawasan Risiko",

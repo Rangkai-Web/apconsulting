@@ -73,6 +73,7 @@
               <UIcon name="i-heroicons-clock" class="size-4" />
               {{ article.read_time ? `${article.read_time} ${currentLocale === 'en' ? 'mins' : 'Menit'}` : t('insight.hero.readTime') }}
             </span>
+            <ShareButton :url="canonicalUrl" :title="article.title" />
           </div>
         </div>
 
