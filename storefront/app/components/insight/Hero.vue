@@ -85,6 +85,8 @@ const apiBase = getApiBaseUrl()
 const { data: apiResponse } = safeUseFetch<{ data: ArticleItem[] }>(
   () => `${apiBase}/articles?lang=${currentLocale.value}&per_page=1`,
   {
+    key: "insight-featured-hero",
+    getCachedData: () => undefined,
     watch: [currentLocale],
   }
 )

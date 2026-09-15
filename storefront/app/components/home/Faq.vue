@@ -98,6 +98,8 @@ const apiBase = getApiBaseUrl();
 const { data: apiResponse, pending } = safeUseFetch<{ data: FaqItem[] }>(
   () => `${apiBase}/faqs?lang=${currentLocale.value}`,
   {
+    key: "faqs-list",
+    getCachedData: () => undefined,
     watch: [currentLocale],
   }
 );

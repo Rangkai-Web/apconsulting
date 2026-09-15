@@ -171,20 +171,12 @@
                   <option value="" disabled selected>
                     {{ t("contact.form.selectOne") }}
                   </option>
-                  <option value="Taxation Services">
-                    {{ t("contact.form.optTax") }}
-                  </option>
-                  <option value="Accounting & Bookkeeping">
-                    {{ t("contact.form.optAcc") }}
-                  </option>
-                  <option value="Business Administration Support">
-                    {{ t("contact.form.optBiz") }}
-                  </option>
-                  <option value="Other Financial Services">
-                    {{ t("contact.form.optFin") }}
-                  </option>
-                  <option value="General Inquiry">
-                    {{ t("contact.form.optGen") }}
+                  <option
+                    v-for="item in formattedCategories"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
                   </option>
                 </select>
               </div>
@@ -263,8 +255,10 @@
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
+import { useServiceCategories } from "~/composables/useServiceCategories";
 
 const { t } = useLanguage();
+const { formattedCategories } = useServiceCategories();
 
 const form = reactive({
   fullName: "",

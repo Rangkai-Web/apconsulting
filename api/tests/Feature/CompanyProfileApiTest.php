@@ -143,4 +143,17 @@ class CompanyProfileApiTest extends TestCase
             'status' => 'unread',
         ]);
     }
+
+    public function test_can_fetch_service_categories(): void
+    {
+        $response = $this->getJson('/api/service-categories');
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'status',
+                'data' => [
+                    '*' => ['id', 'name_id', 'name_en', 'sort_order', 'is_active'],
+                ],
+            ]);
+    }
 }

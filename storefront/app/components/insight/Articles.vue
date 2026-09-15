@@ -22,18 +22,18 @@
             <!-- Category Filter Tabs -->
             <div class="flex flex-wrap gap-2 items-center">
               <button
-                v-for="cat in categories"
-                :key="cat.key"
+                v-for="cat in categoryList"
+                :key="cat.apiKey"
                 type="button"
                 class="px-3.5 py-1.5 text-xs md:text-sm font-medium transition-colors rounded-none"
                 :class="
-                  selectedCategoryKey === cat.key
+                  selectedCategoryKey === cat.apiKey
                     ? 'bg-[#083653] text-white'
                     : 'bg-white text-[#083653] border border-[#DFE7ED] hover:bg-neutral-50'
                 "
-                @click="selectCategory(cat.key)"
+                @click="selectCategory(cat.apiKey)"
               >
-                {{ t(cat.key) }}
+                {{ cat.label }}
               </button>
             </div>
 
@@ -217,18 +217,18 @@
             </h3>
 
             <ul class="mt-4 space-y-2">
-              <li v-for="cat in categories" :key="cat.key">
+              <li v-for="cat in categoryList" :key="cat.apiKey">
                 <button
                   type="button"
                   class="flex w-full items-center justify-between p-3 text-xs md:text-sm font-medium transition-colors"
                   :class="
-                    selectedCategoryKey === cat.key
+                    selectedCategoryKey === cat.apiKey
                       ? 'bg-[#E9EEF2] text-[#083653] font-bold'
                       : 'text-neutral-600 hover:bg-neutral-50'
                   "
-                  @click="selectCategory(cat.key)"
+                  @click="selectCategory(cat.apiKey)"
                 >
-                  <span>{{ t(cat.key) }}</span>
+                  <span>{{ cat.label }}</span>
                 </button>
               </li>
             </ul>
@@ -243,6 +243,7 @@
 import { ref, computed, watch } from "vue";
 import { refDebounced } from "@vueuse/core";
 import { useLanguage } from "~/composables/useLanguage";
+import { useServiceCategories } from "~/composables/useServiceCategories";
 import { getApiBaseUrl, resolveImageUrl, formatDate, safeUseFetch } from "~/utils/api";
 
 interface ArticleItem {
@@ -266,30 +267,32 @@ interface ArticleMeta {
 
 const { t, currentLocale } = useLanguage();
 const apiBase = getApiBaseUrl();
+const { categories: serviceCategories } = useServiceCategories();
 
-const selectedCategoryKey = ref("insight.cat.all");
+const selectedCategoryKey = ref("");
 const searchInput = ref("");
 const debouncedSearch = refDebounced(searchInput, 400);
 const currentPage = ref(1);
 
-const categories = [
-  { key: "insight.cat.all", apiKey: "" },
-  { key: "insight.cat.tax", apiKey: "Layanan Perpajakan" },
-  { key: "insight.cat.acc", apiKey: "Akuntansi & Pembukuan" },
-  { key: "insight.cat.fin", apiKey: "Layanan Keuangan Lainnya" },
-];
-
-const selectedCategoryObj = computed(() => {
-  return categories.find((c) => c.key === selectedCategoryKey.value) ?? categories[0]!;
+const categoryList = computed(() => {
+  const allObj = {
+    apiKey: "",
+    label: currentLocale.value === "en" ? "All Categories" : "Semua Kategori",
+  };
+  const list = serviceCategories.value.map((cat) => ({
+    apiKey: currentLocale.value === "en" ? cat.name_en : cat.name_id,
+    label: currentLocale.value === "en" ? cat.name_en : cat.name_id,
+  }));
+  return [allObj, ...list];
 });
 
-const selectCategory = (key: string) => {
-  selectedCategoryKey.value = key;
+const selectCategory = (apiKey: string) => {
+  selectedCategoryKey.value = apiKey;
   currentPage.value = 1;
 };
 
 const resetFilters = () => {
-  selectedCategoryKey.value = "insight.cat.all";
+  selectedCategoryKey.value = "";
   searchInput.value = "";
   currentPage.value = 1;
 };
@@ -300,9 +303,8 @@ watch([selectedCategoryKey, debouncedSearch], () => {
 
 const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleItem[]; meta: ArticleMeta }>(
   () => {
-    const cat = selectedCategoryObj.value;
-    const categoryParam = cat && cat.apiKey
-      ? `&category=${encodeURIComponent(cat.apiKey)}`
+    const categoryParam = selectedCategoryKey.value
+      ? `&category=${encodeURIComponent(selectedCategoryKey.value)}`
       : "";
     const searchParam = debouncedSearch.value
       ? `&search=${encodeURIComponent(debouncedSearch.value)}`
@@ -310,6 +312,8 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleItem[]; meta:
     return `${apiBase}/articles?lang=${currentLocale.value}&page=${currentPage.value}&per_page=6${categoryParam}${searchParam}`;
   },
   {
+    key: "articles-list",
+    getCachedData: () => undefined,
     watch: [currentLocale, currentPage, selectedCategoryKey, debouncedSearch],
   }
 );

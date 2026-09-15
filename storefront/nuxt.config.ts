@@ -46,11 +46,11 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    "/": { prerender: true },
-    "/about": { prerender: true },
-    "/services": { prerender: true },
-    "/insight": { prerender: true },
-    "/contact": { prerender: true },
+    "/": { isr: true },
+    "/about": { isr: true },
+    "/services": { isr: true },
+    "/insight": { isr: true },
+    "/contact": { isr: true },
   },
   image: {
     format: ["webp", "jpg", "png"],

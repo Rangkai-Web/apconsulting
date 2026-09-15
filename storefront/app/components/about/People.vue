@@ -102,7 +102,11 @@ const { t, currentLocale } = useLanguage();
 const apiBase = getApiBaseUrl();
 
 const { data: apiResponse, pending } = safeUseFetch<{ data: TeamMember[] }>(
-  () => `${apiBase}/team`
+  `${apiBase}/team`,
+  {
+    key: "team-list",
+    getCachedData: () => undefined,
+  }
 );
 
 const people = computed(() => apiResponse.value?.data || []);

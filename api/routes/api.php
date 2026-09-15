@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\FaqController;
 use App\Http\Controllers\Api\InquiryController;
+use App\Http\Controllers\Api\ServiceCategoryController;
 use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\Api\TeamController;
 use Illuminate\Support\Facades\Route;
@@ -17,4 +18,5 @@ Route::get('/articles', [ArticleController::class, 'index']);
 Route::get('/articles/{slug}', [ArticleController::class, 'show']);
 Route::get('/team', [TeamController::class, 'index']);
 Route::get('/settings', [SettingsController::class, 'show']);
+Route::get('/service-categories', [ServiceCategoryController::class, 'index']);
 Route::post('/contact', [InquiryController::class, 'store'])->middleware('throttle:10,1');

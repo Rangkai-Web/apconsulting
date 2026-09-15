@@ -162,6 +162,8 @@ const articleId = computed(() => {
 const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleDetail }>(
   () => `${apiBase}/articles/${articleId.value}?lang=${currentLocale.value}`,
   {
+    key: `article-detail-${articleId.value}`,
+    getCachedData: () => undefined,
     watch: [articleId, currentLocale],
   }
 );

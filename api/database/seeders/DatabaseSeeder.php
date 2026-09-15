@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             SettingsSeeder::class,
             FaqSeeder::class,
+            ServiceCategorySeeder::class,
+            TeamSeeder::class,
         ]);
     }
 }

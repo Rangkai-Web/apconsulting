@@ -128,6 +128,8 @@ const apiBase = getApiBaseUrl()
 const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleItem[] }>(
   () => `${apiBase}/articles?lang=${currentLocale.value}&per_page=3`,
   {
+    key: "home-insights-list",
+    getCachedData: () => undefined,
     watch: [currentLocale],
   }
 )

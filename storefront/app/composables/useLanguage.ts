@@ -318,13 +318,6 @@ const translations: Record<Locale, Record<string, string>> = {
     "insight.articles.readBtn": "Read",
     "insight.articles.sidebarTitle": "Articles Categories",
 
-    // Insights Categories
-    "insight.cat.all": "All Categories",
-    "insight.cat.tax": "Taxation Services",
-    "insight.cat.acc": "Accounting & Bookkeeping",
-    "insight.cat.fin": "Financial Analysis",
-    "insight.cat.latest": "Latest",
-
     // Insights Articles Data
     "insight.p1.title":
       "Effective Tax Planning Strategies for Growing Enterprises",
@@ -732,13 +725,6 @@ const translations: Record<Locale, Record<string, string>> = {
       "Dapatkan informasi terbaru mengenai regulasi perpajakan, praktik terbaik akuntansi, dan wawasan keuangan strategis.",
     "insight.articles.readBtn": "Baca",
     "insight.articles.sidebarTitle": "Kategori Artikel",
-
-    // Insights Categories
-    "insight.cat.all": "Semua Kategori",
-    "insight.cat.tax": "Layanan Perpajakan",
-    "insight.cat.acc": "Akuntansi & Pembukuan",
-    "insight.cat.fin": "Analisis Keuangan",
-    "insight.cat.latest": "Terbaru",
 
     // Insights Articles Data
     "insight.p1.title":

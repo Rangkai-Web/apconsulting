@@ -6,11 +6,13 @@ use App\Filament\Resources\ArticleResource\Pages\CreateArticle;
 use App\Filament\Resources\ArticleResource\Pages\EditArticle;
 use App\Filament\Resources\ArticleResource\Pages\ListArticles;
 use App\Models\Article;
+use App\Models\ServiceCategory;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Forms\Components\Textarea;
@@ -83,10 +85,20 @@ class ArticleResource extends Resource
                                 ->required()
                                 ->maxLength(255)
                                 ->unique(ignoreRecord: true),
-                            TextInput::make('category_id')
+                            Select::make('category_id')
                                 ->label('Kategori (Bahasa Indonesia)')
-                                ->placeholder('Contoh: Perpajakan, Keuangan, Tips Bisnis')
-                                ->maxLength(100),
+                                ->options(fn () => ServiceCategory::where('is_active', true)->pluck('name_id', 'name_id')->toArray())
+                                ->searchable()
+                                ->preload()
+                                ->live()
+                                ->afterStateUpdated(function (Set $set, ?string $state) {
+                                    if ($state) {
+                                        $cat = ServiceCategory::where('name_id', $state)->first();
+                                        if ($cat) {
+                                            $set('category_en', $cat->name_en);
+                                        }
+                                    }
+                                }),
                             Textarea::make('excerpt_id')
                                 ->label('Ringkasan Singkat (ID)')
                                 ->rows(3)
@@ -112,10 +124,11 @@ class ArticleResource extends Resource
                                 ->label('Slug URL (EN)')
                                 ->maxLength(255)
                                 ->unique(ignoreRecord: true),
-                            TextInput::make('category_en')
+                            Select::make('category_en')
                                 ->label('Category (English)')
-                                ->placeholder('Example: Taxation, Financial, Business Tips')
-                                ->maxLength(100),
+                                ->options(fn () => ServiceCategory::where('is_active', true)->pluck('name_en', 'name_en')->toArray())
+                                ->searchable()
+                                ->preload(),
                             Textarea::make('excerpt_en')
                                 ->label('Short Excerpt (EN)')
                                 ->rows(3)
