@@ -25,6 +25,8 @@ export function useCompanySettings() {
       `${apiBase}/settings`,
       {
         key: "company-settings",
+        lazy: true,
+        getCachedData: () => undefined,
       }
     );
 
