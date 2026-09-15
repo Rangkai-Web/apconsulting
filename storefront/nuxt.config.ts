@@ -64,6 +64,18 @@ export default defineNuxtConfig({
       link: [
         { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       ],
+      script: [
+        {
+          src: "https://www.googletagmanager.com/gtag/js?id=G-SH1GS7FRBG",
+          async: true,
+        },
+        {
+          innerHTML: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-SH1GS7FRBG');`,
+        },
+      ],
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { name: "theme-color", content: "#083653" },
