@@ -6,7 +6,10 @@
       src="/images/homepage/Globe_Desktop.webp"
       alt=""
       aria-hidden="true"
+      loading="lazy"
       decoding="async"
+      width="900"
+      height="858"
       class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-60"
     />
 
@@ -61,6 +64,7 @@
             src="/images/homepage/HeroContent_Mobile.webp"
             alt="PCG — clearer finances, stronger business decisions"
             fetchpriority="high"
+            loading="eager"
             decoding="async"
             width="600"
             height="500"

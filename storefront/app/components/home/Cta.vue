@@ -13,6 +13,8 @@
         aria-hidden="true"
         loading="lazy"
         decoding="async"
+        width="1280"
+        height="400"
         class="size-full object-cover opacity-60"
       />
     </picture>

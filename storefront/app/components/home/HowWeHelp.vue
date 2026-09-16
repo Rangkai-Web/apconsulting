@@ -62,6 +62,10 @@
           <img
             :src="card.icon"
             :alt="t(card.titleKey)"
+            loading="lazy"
+            decoding="async"
+            width="96"
+            height="96"
             class="h-24 w-auto object-contain"
           />
         </div>

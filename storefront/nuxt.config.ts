@@ -23,6 +23,7 @@ export default defineNuxtConfig({
       styles: ["normal", "italic"],
       subsets: ["latin"],
     },
+    display: "swap",
   },
   runtimeConfig: {
     public: {
@@ -51,6 +52,8 @@ export default defineNuxtConfig({
     "/services": { isr: true },
     "/insight": { isr: true },
     "/contact": { isr: true },
+    "/images/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
+    "/_nuxt/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
   },
   image: {
     format: ["webp", "jpg", "png"],
@@ -63,17 +66,34 @@ export default defineNuxtConfig({
       titleTemplate: "%s | PCG",
       link: [
         { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+        {
+          rel: "preload",
+          as: "image",
+          href: "/images/homepage/HeroContent_Desktop.webp",
+          media: "(min-width: 768px)",
+          type: "image/webp",
+        },
+        {
+          rel: "preload",
+          as: "image",
+          href: "/images/homepage/HeroContent_Mobile.webp",
+          media: "(max-width: 767px)",
+          type: "image/webp",
+        },
       ],
       script: [
         {
           src: "https://www.googletagmanager.com/gtag/js?id=G-SH1GS7FRBG",
           async: true,
+          defer: true,
+          tagPosition: "bodyClose",
         },
         {
           innerHTML: `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-SH1GS7FRBG');`,
+          tagPosition: "bodyClose",
         },
       ],
       meta: [

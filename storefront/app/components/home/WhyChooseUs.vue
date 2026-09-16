@@ -107,6 +107,10 @@
             <img
               src="/images/icon/FinanceConsult_Icon.svg"
               alt=""
+              loading="lazy"
+              decoding="async"
+              width="24"
+              height="24"
               class="size-6 shrink-0"
             />
             <p class="font-bold text-secondary-700 text-base">
