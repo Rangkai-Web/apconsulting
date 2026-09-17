@@ -146,7 +146,7 @@ interface ArticleDetail {
 }
 
 definePageMeta({
-  alias: ["/insight/:id", "/insights/:id"],
+  alias: ["/insigth/:id", "/insights/:id"],
 });
 
 const { t, currentLocale } = useLanguage();

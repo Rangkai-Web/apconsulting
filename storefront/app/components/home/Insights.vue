@@ -63,7 +63,7 @@
         class="flex flex-col justify-between rounded-none bg-white p-6 border border-[#0000001F] shadow-xs group"
       >
         <div>
-          <NuxtLink :to="`/insigth/${post.slug}`" class="block overflow-hidden h-48 bg-[#F8FAFC] border border-neutral-100 mb-4">
+          <NuxtLink :to="`/insight/${post.slug}`" class="block overflow-hidden h-48 bg-[#F8FAFC] border border-neutral-100 mb-4">
             <img
               :src="resolveImageUrl(post.cover_image)"
               :alt="post.title"
@@ -76,7 +76,7 @@
             {{ post.category_label || post.category }}
           </p>
           <h3 class="mt-2 text-lg font-bold text-[#083653] leading-snug line-clamp-2">
-            <NuxtLink :to="`/insigth/${post.slug}`" class="hover:underline">
+            <NuxtLink :to="`/insight/${post.slug}`" class="hover:underline">
               {{ post.title }}
             </NuxtLink>
           </h3>
@@ -91,7 +91,7 @@
             {{ formatDate(post.published_at, currentLocale) }}
           </span>
           <UButton
-            :to="`/insigth/${post.slug}`"
+            :to="`/insight/${post.slug}`"
             data-testid="view-details"
             color="secondary"
             variant="solid"

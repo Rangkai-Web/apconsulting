@@ -50,6 +50,7 @@ export default defineNuxtConfig({
     "/about": { isr: true },
     "/services": { isr: true },
     "/insight": { isr: true },
+    "/insight/**": { isr: true },
     "/contact": { isr: true },
     "/images/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
     "/_nuxt/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },

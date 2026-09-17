@@ -31,7 +31,7 @@
         {{ t('insight.hero.tag') }}
       </span>
       <NuxtLink
-        :to="featuredArticle ? `/insigth/${featuredArticle.slug}` : '/insight'"
+        :to="featuredArticle ? `/insight/${featuredArticle.slug}` : '/insight'"
         class="group block hover:text-white/95 transition-colors"
       >
         <h1

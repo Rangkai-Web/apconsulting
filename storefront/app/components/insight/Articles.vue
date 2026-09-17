@@ -129,7 +129,7 @@
               class="flex flex-col border border-[#DFE7ED] bg-white overflow-hidden shadow-xs hover:shadow-md transition-shadow group"
             >
               <NuxtLink
-                :to="`/insigth/${article.slug}`"
+                :to="`/insight/${article.slug}`"
                 class="block overflow-hidden aspect-[4/3] bg-neutral-100"
               >
                 <img
@@ -156,7 +156,7 @@
                   <h3
                     class="mt-2.5 text-base font-bold text-[#083653] leading-snug line-clamp-2 group-hover:text-[#083653]/80"
                   >
-                    <NuxtLink :to="`/insigth/${article.slug}`">
+                    <NuxtLink :to="`/insight/${article.slug}`">
                       {{ article.title }}
                     </NuxtLink>
                   </h3>
@@ -180,7 +180,7 @@
                     }}
                   </span>
                   <NuxtLink
-                    :to="`/insigth/${article.slug}`"
+                    :to="`/insight/${article.slug}`"
                     class="text-[#083653] font-semibold hover:underline flex items-center gap-1"
                   >
                     {{ t("insight.articles.readBtn") }}

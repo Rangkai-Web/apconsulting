@@ -9,7 +9,7 @@
 import { useSeoText } from "~/composables/useSeoText";
 
 definePageMeta({
-  alias: ["/insight", "/insights"],
+  alias: ["/insigth", "/insights"],
 });
 
 const { toSafeJsonLd } = useSeoText();
