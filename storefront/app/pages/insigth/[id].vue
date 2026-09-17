@@ -159,7 +159,7 @@ const articleId = computed(() => {
   return Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
 });
 
-const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleDetail }>(
+const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleDetail | ArticleDetail[] }>(
   () => `${apiBase}/articles/${articleId.value}?lang=${currentLocale.value}`,
   {
     key: `article-detail-${articleId.value}`,
@@ -168,7 +168,14 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleDetail }>(
   }
 );
 
-const article = computed(() => apiResponse.value?.data || null);
+const article = computed<ArticleDetail | null>(() => {
+  const data = apiResponse.value?.data;
+  if (!data) return null;
+  if (Array.isArray(data)) {
+    return data[0] ?? null;
+  }
+  return data;
+});
 
 const pageTitle = computed(() => (article.value?.title ? article.value.title : "Insight Detail"));
 const pageDescription = computed(() =>

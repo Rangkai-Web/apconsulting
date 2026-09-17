@@ -56,7 +56,10 @@ class ArticleController extends Controller
 
         $article = Article::where('is_published', true)
             ->where(function ($q) use ($slug) {
-                $q->where('slug_id', $slug)
+                if (is_numeric($slug)) {
+                    $q->where('id', (int) $slug);
+                }
+                $q->orWhere('slug_id', $slug)
                   ->orWhere('slug_en', $slug);
             })
             ->first();

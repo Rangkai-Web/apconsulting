@@ -81,9 +81,14 @@ class CompanyProfileApiTest extends TestCase
         $responseEn->assertStatus(200)
             ->assertJsonPath('data.title', 'Detail Test Article');
 
+        // Query with numeric ID
+        $responseNumericId = $this->getJson("/api/articles/{$article->id}?lang=id");
+        $responseNumericId->assertStatus(200)
+            ->assertJsonPath('data.title', 'Detail Uji Coba');
+
         $this->assertDatabaseHas('articles', [
             'id' => $article->id,
-            'views_count' => 2,
+            'views_count' => 3,
         ]);
     }
 
