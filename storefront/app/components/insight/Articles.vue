@@ -6,10 +6,10 @@
         <h2
           class="text-2xl sm:text-3xl md:text-[36px] font-bold text-[#083653] leading-tight"
         >
-          {{ t('insight.articles.title') }}
+          {{ t("insight.articles.title") }}
         </h2>
         <p class="mt-2 text-sm md:text-base text-neutral-500 font-normal">
-          {{ t('insight.articles.subtitle') }}
+          {{ t("insight.articles.subtitle") }}
         </p>
       </div>
 
@@ -18,7 +18,9 @@
         <!-- Left Area: Filters, Cards Grid, Pagination -->
         <div class="lg:col-span-9">
           <!-- Search & Filter Header -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div
+            class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6"
+          >
             <!-- Category Filter Tabs -->
             <div class="flex flex-wrap gap-2 items-center">
               <button
@@ -39,11 +41,18 @@
 
             <!-- Search Input with Debounce -->
             <div class="relative w-full sm:w-72 shrink-0">
-              <UIcon name="i-heroicons-magnifying-glass" class="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-neutral-400 pointer-events-none" />
+              <UIcon
+                name="i-heroicons-magnifying-glass"
+                class="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-neutral-400 pointer-events-none"
+              />
               <input
                 v-model="searchInput"
                 type="text"
-                :placeholder="currentLocale === 'en' ? 'Search articles...' : 'Cari artikel...'"
+                :placeholder="
+                  currentLocale === 'en'
+                    ? 'Search articles...'
+                    : 'Cari artikel...'
+                "
                 class="w-full pl-9 pr-8 py-2 text-xs md:text-sm bg-white border border-[#DFE7ED] focus:border-[#083653] focus:outline-none transition-colors"
               />
               <button
@@ -71,7 +80,9 @@
               <div class="mt-4 h-4 w-20 bg-neutral-200" />
               <div class="mt-2 h-6 w-3/4 bg-neutral-200" />
               <div class="mt-2 h-4 w-full bg-neutral-200" />
-              <div class="mt-auto pt-4 border-t border-[#DFE7ED] h-10 w-full bg-neutral-100" />
+              <div
+                class="mt-auto pt-4 border-t border-[#DFE7ED] h-10 w-full bg-neutral-100"
+              />
             </div>
           </div>
 
@@ -80,19 +91,30 @@
             v-else-if="!articles || articles.length === 0"
             class="mt-8 p-12 text-center border border-dashed border-neutral-300 bg-[#F5FBFF]"
           >
-            <UIcon name="i-heroicons-magnifying-glass" class="size-12 text-neutral-400 mx-auto" />
+            <UIcon
+              name="i-heroicons-magnifying-glass"
+              class="size-12 text-neutral-400 mx-auto"
+            />
             <h3 class="mt-3 text-lg font-bold text-[#083653]">
-              {{ currentLocale === 'en' ? 'No articles found' : 'Tidak ada artikel ditemukan' }}
+              {{
+                currentLocale === "en"
+                  ? "No articles found"
+                  : "Tidak ada artikel ditemukan"
+              }}
             </h3>
             <p class="mt-1 text-sm text-neutral-500 max-w-md mx-auto">
-              {{ currentLocale === 'en' ? 'Try adjusting your search query or reset the filters.' : 'Coba gunakan kata kunci lain atau reset filter kategori Anda.' }}
+              {{
+                currentLocale === "en"
+                  ? "Try adjusting your search query or reset the filters."
+                  : "Coba gunakan kata kunci lain atau reset filter kategori Anda."
+              }}
             </p>
             <button
               type="button"
               class="mt-4 px-4 py-2 bg-[#083653] text-white text-xs font-semibold uppercase tracking-wider hover:bg-[#083653]/90"
               @click="resetFilters"
             >
-              {{ currentLocale === 'en' ? 'Reset Filters' : 'Reset Filter' }}
+              {{ currentLocale === "en" ? "Reset Filters" : "Reset Filter" }}
             </button>
           </div>
 
@@ -126,7 +148,9 @@
                       name="i-heroicons-calendar"
                       class="size-3.5 shrink-0"
                     />
-                    <span>{{ formatDate(article.published_at, currentLocale) }}</span>
+                    <span>{{
+                      formatDate(article.published_at, currentLocale)
+                    }}</span>
                   </div>
 
                   <h3
@@ -149,13 +173,17 @@
                 >
                   <span class="text-neutral-400 flex items-center gap-1">
                     <UIcon name="i-heroicons-clock" class="size-3.5" />
-                    {{ article.read_time ? `${article.read_time} ${currentLocale === 'en' ? 'mins' : 'Menit'}` : t('insight.hero.readTime') }}
+                    {{
+                      article.read_time
+                        ? `${article.read_time} ${currentLocale === "en" ? "mins" : "Menit"}`
+                        : t("insight.hero.readTime")
+                    }}
                   </span>
                   <NuxtLink
                     :to="`/insigth/${article.slug}`"
                     class="text-[#083653] font-semibold hover:underline flex items-center gap-1"
                   >
-                    {{ t('insight.articles.readBtn') }}
+                    {{ t("insight.articles.readBtn") }}
                     <UIcon name="i-heroicons-arrow-right" class="size-3" />
                   </NuxtLink>
                 </div>
@@ -169,7 +197,10 @@
             class="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[#DFE7ED]"
           >
             <p class="text-xs md:text-sm text-neutral-500 font-normal">
-              Showing page {{ currentPage }} of {{ lastPage }} ({{ totalArticles }} Articles)
+              Showing page {{ currentPage }} of {{ lastPage }} ({{
+                totalArticles
+              }}
+              Articles)
             </p>
 
             <div class="flex items-center gap-1.5">
@@ -213,14 +244,14 @@
             <h3
               class="text-base font-bold text-[#083653] border-b border-[#DFE7ED] pb-4"
             >
-              {{ t('insight.articles.sidebarTitle') }}
+              {{ t("insight.articles.sidebarTitle") }}
             </h3>
 
             <ul class="mt-4 space-y-2">
               <li v-for="cat in categoryList" :key="cat.apiKey">
                 <button
                   type="button"
-                  class="flex w-full items-center justify-between p-3 text-xs md:text-sm font-medium transition-colors"
+                  class="flex w-full items-center justify-between p-3 text-xs md:text-sm font-medium transition-colors text-left"
                   :class="
                     selectedCategoryKey === cat.apiKey
                       ? 'bg-[#E9EEF2] text-[#083653] font-bold'
@@ -244,7 +275,12 @@ import { ref, computed, watch } from "vue";
 import { refDebounced } from "@vueuse/core";
 import { useLanguage } from "~/composables/useLanguage";
 import { useServiceCategories } from "~/composables/useServiceCategories";
-import { getApiBaseUrl, resolveImageUrl, formatDate, safeUseFetch } from "~/utils/api";
+import {
+  getApiBaseUrl,
+  resolveImageUrl,
+  formatDate,
+  safeUseFetch,
+} from "~/utils/api";
 
 interface ArticleItem {
   id: number;
@@ -301,7 +337,10 @@ watch([selectedCategoryKey, debouncedSearch], () => {
   currentPage.value = 1;
 });
 
-const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleItem[]; meta: ArticleMeta }>(
+const { data: apiResponse, pending } = safeUseFetch<{
+  data: ArticleItem[];
+  meta: ArticleMeta;
+}>(
   () => {
     const categoryParam = selectedCategoryKey.value
       ? `&category=${encodeURIComponent(selectedCategoryKey.value)}`
@@ -315,7 +354,7 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleItem[]; meta:
     key: "articles-list",
     getCachedData: () => undefined,
     watch: [currentLocale, currentPage, selectedCategoryKey, debouncedSearch],
-  }
+  },
 );
 
 const articles = computed(() => apiResponse.value?.data || []);
