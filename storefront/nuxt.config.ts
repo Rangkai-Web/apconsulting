@@ -23,7 +23,6 @@ export default defineNuxtConfig({
       styles: ["normal", "italic"],
       subsets: ["latin"],
     },
-    display: "swap",
   },
   runtimeConfig: {
     public: {
