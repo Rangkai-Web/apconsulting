@@ -15,4 +15,14 @@ describe('buildShareUrl', () => {
       'https://pcgmitra.co.id/insight/5?utm_source=share&utm_medium=social&utm_campaign=insight'
     )
   })
+
+  it('handles relative paths gracefully without throwing', () => {
+    const result = buildShareUrl('/insight/5')
+    expect(result).toContain('/insight/5?utm_source=share&utm_medium=social&utm_campaign=insight')
+  })
+
+  it('returns empty string for empty inputs', () => {
+    const result = buildShareUrl('')
+    expect(result).toBe('')
+  })
 })

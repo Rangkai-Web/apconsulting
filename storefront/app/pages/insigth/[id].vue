@@ -186,7 +186,12 @@ const pageImage = computed(() =>
     ? resolveImageUrl(article.value.cover_image)
     : `${config.public.siteUrl}/pcg_logo.jpeg`
 );
-const canonicalUrl = computed(() => `${config.public.siteUrl}/insight/${articleId.value}`);
+const canonicalUrl = computed(() => {
+  if (import.meta.client && typeof window !== "undefined" && window.location?.origin) {
+    return `${window.location.origin}/insight/${articleId.value}`;
+  }
+  return `${config.public.siteUrl}/insight/${articleId.value}`;
+});
 
 useSeoMeta({
   title: pageTitle,
