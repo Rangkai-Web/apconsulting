@@ -31,13 +31,13 @@
             alt="PCG Logo"
             loading="lazy"
             decoding="async"
-            class="h-12 md:h-14 w-auto object-contain"
+            class="h-16! w-auto object-contain"
           />
         </NuxtLink>
         <p
           class="mt-4 max-w-sm text-sm leading-relaxed text-neutral-500 font-normal"
         >
-          {{ t('footer.tagline') }}
+          {{ t("footer.tagline") }}
         </p>
         <div v-if="socials && socials.length > 0" class="mt-6 flex gap-3">
           <a
@@ -57,38 +57,40 @@
       <!-- Column 2: Quick Links -->
       <div>
         <p class="font-semibold text-[#083653] text-base md:text-lg">
-          {{ t('footer.quickLinks') }}
+          {{ t("footer.quickLinks") }}
         </p>
         <ul class="mt-4 space-y-3 text-sm text-neutral-500 font-normal">
           <li>
-            <NuxtLink to="/" class="hover:text-[#083653] transition-colors"
-              >{{ t('nav.home') }}</NuxtLink
-            >
+            <NuxtLink to="/" class="hover:text-[#083653] transition-colors">{{
+              t("nav.home")
+            }}</NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/about" class="hover:text-[#083653] transition-colors"
-              >{{ t('nav.about') }}</NuxtLink
+            <NuxtLink
+              to="/about"
+              class="hover:text-[#083653] transition-colors"
+              >{{ t("nav.about") }}</NuxtLink
             >
           </li>
           <li>
             <NuxtLink
               to="/services"
               class="hover:text-[#083653] transition-colors"
-              >{{ t('nav.services') }}</NuxtLink
+              >{{ t("nav.services") }}</NuxtLink
             >
           </li>
           <li>
             <NuxtLink
               to="/insight"
               class="hover:text-[#083653] transition-colors"
-              >{{ t('nav.insights') }}</NuxtLink
+              >{{ t("nav.insights") }}</NuxtLink
             >
           </li>
           <li>
             <NuxtLink
               to="/contact"
               class="hover:text-[#083653] transition-colors"
-              >{{ t('nav.contact') }}</NuxtLink
+              >{{ t("nav.contact") }}</NuxtLink
             >
           </li>
         </ul>
@@ -97,7 +99,7 @@
       <!-- Column 3: Services -->
       <div>
         <p class="font-semibold text-[#083653] text-base md:text-lg">
-          {{ t('footer.services') }}
+          {{ t("footer.services") }}
         </p>
         <ul class="mt-4 space-y-3 text-sm text-neutral-500 font-normal">
           <li>Taxation</li>
@@ -110,7 +112,7 @@
       <!-- Column 4: Contact Us -->
       <div>
         <p class="font-semibold text-[#083653] text-base md:text-lg">
-          {{ t('footer.contactUs') }}
+          {{ t("footer.contactUs") }}
         </p>
         <p class="mt-4 flex gap-2.5 text-sm text-neutral-500 font-normal">
           <UIcon
@@ -126,9 +128,7 @@
             name="i-heroicons-envelope"
             class="size-5 shrink-0 text-[#083653]"
           />
-          <a :href="`mailto:${email}`" class="hover:underline"
-            >{{ email }}</a
-          >
+          <a :href="`mailto:${email}`" class="hover:underline">{{ email }}</a>
         </p>
         <p
           v-if="phone"
@@ -156,7 +156,7 @@
     >
       <p class="mx-auto text-center">
         Copyright © {{ new Date().getFullYear() }} Phangkawira Consulting Group.
-        {{ t('footer.rights') }}
+        {{ t("footer.rights") }}
       </p>
     </div>
   </footer>
@@ -164,5 +164,6 @@
 
 <script setup lang="ts">
 const { t } = useLanguage();
-const { logoUrl, email, phone, address, socials, getWhatsappUrl } = useCompanySettings();
+const { logoUrl, email, phone, address, socials, getWhatsappUrl } =
+  useCompanySettings();
 </script>
