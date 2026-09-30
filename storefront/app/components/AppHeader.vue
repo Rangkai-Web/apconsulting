@@ -9,7 +9,7 @@
           alt="PCG Logo"
           decoding="async"
           fetchpriority="high"
-          class="h-16 w-auto object-contain"
+          class="!h-16 w-auto object-contain"
         />
       </NuxtLink>
 
