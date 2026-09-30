@@ -3,16 +3,13 @@
     <div
       class="mx-auto flex h-20 md:h-24 max-w-7xl items-center justify-between px-4 md:px-8"
     >
-      <NuxtLink
-        to="/"
-        class="flex items-center gap-2 text-2xl font-bold text-secondary-700"
-      >
+      <NuxtLink to="/" class="flex items-center gap-2">
         <img
           :src="logoUrl"
           alt="PCG Logo"
           decoding="async"
           fetchpriority="high"
-          class="h-12 sm:h-14 md:h-16 w-auto object-contain py-1"
+          class="h-16 w-auto object-contain"
         />
       </NuxtLink>
 
