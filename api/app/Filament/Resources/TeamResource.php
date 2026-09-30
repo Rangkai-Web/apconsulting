@@ -20,6 +20,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
+use Filament\Schemas\Components\Section;
+
 class TeamResource extends Resource
 {
     protected static ?string $model = Team::class;
@@ -56,6 +58,26 @@ class TeamResource extends Resource
                 ->label('Biografi Singkat')
                 ->rows(3)
                 ->maxLength(500),
+            Section::make('Media Sosial')
+                ->description('Tautan ke akun media sosial anggota tim.')
+                ->schema([
+                    TextInput::make('linkedin_url')
+                        ->label('LinkedIn URL')
+                        ->url()
+                        ->placeholder('https://linkedin.com/in/...')
+                        ->maxLength(255),
+                    TextInput::make('instagram_url')
+                        ->label('Instagram URL')
+                        ->url()
+                        ->placeholder('https://instagram.com/...')
+                        ->maxLength(255),
+                    TextInput::make('tiktok_url')
+                        ->label('TikTok URL')
+                        ->url()
+                        ->placeholder('https://tiktok.com/@...')
+                        ->maxLength(255),
+                ])
+                ->columns(3),
             TextInput::make('sort_order')
                 ->label('Urutan Tampil')
                 ->numeric()

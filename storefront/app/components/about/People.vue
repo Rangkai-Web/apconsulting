@@ -69,7 +69,7 @@
           class="absolute inset-0 size-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
         />
         <div
-          class="absolute inset-x-3 bottom-3 z-10 bg-white border border-[#0000001F] py-3.5 px-4 text-center shadow-xs"
+          class="absolute inset-x-3 bottom-3 z-10 bg-white border border-[#0000001F] py-3.5 px-4 text-center shadow-xs flex flex-col items-center justify-center"
         >
           <h3
             class="font-bold text-[#083653] text-base sm:text-lg leading-tight"
@@ -79,6 +79,22 @@
           <p class="text-xs text-neutral-500 font-normal mt-1">
             {{ person.position }}
           </p>
+          <div
+            v-if="hasSocials(person)"
+            class="mt-2.5 flex items-center justify-center gap-3 pt-2 border-t border-neutral-100/80 w-full"
+          >
+            <a
+              v-for="social in getSocials(person)"
+              :key="social.name"
+              :href="social.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              :aria-label="`${person.name}'s ${social.name}`"
+              class="flex size-7 items-center justify-center rounded-full bg-neutral-100 text-[#083653] hover:bg-[#083653] hover:text-white transition-colors"
+            >
+              <UIcon :name="social.icon" class="size-3.5" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -96,6 +112,9 @@ interface TeamMember {
   position: string;
   photo?: string;
   bio?: string;
+  linkedin_url?: string;
+  instagram_url?: string;
+  tiktok_url?: string;
 }
 
 const { t, currentLocale } = useLanguage();
@@ -110,4 +129,33 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: TeamMember[] }>(
 );
 
 const people = computed(() => apiResponse.value?.data || []);
+
+function formatExternalUrl(url?: string): string {
+  if (!url) return "";
+  const trimmed = url.trim();
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed;
+  }
+  return `https://${trimmed}`;
+}
+
+function getSocials(person: TeamMember) {
+  const list = [
+    { name: "LinkedIn", icon: "i-simple-icons-linkedin", url: person.linkedin_url },
+    { name: "Instagram", icon: "i-simple-icons-instagram", url: person.instagram_url },
+    { name: "TikTok", icon: "i-simple-icons-tiktok", url: person.tiktok_url },
+  ];
+  return list
+    .filter(
+      (item) => typeof item.url === "string" && item.url.trim() !== "" && item.url !== "#"
+    )
+    .map((item) => ({
+      ...item,
+      url: formatExternalUrl(item.url),
+    }));
+}
+
+function hasSocials(person: TeamMember) {
+  return getSocials(person).length > 0;
+}
 </script>

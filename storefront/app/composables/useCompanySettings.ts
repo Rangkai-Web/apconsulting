@@ -83,16 +83,46 @@ export function useCompanySettings() {
       { name: "Facebook", icon: "i-simple-icons-facebook", href: settings.value.social?.facebook },
       { name: "YouTube", icon: "i-simple-icons-youtube", href: settings.value.social?.youtube },
     ];
-    return list.filter(
-      (item) => typeof item.href === "string" && item.href.trim() !== "" && item.href !== "#"
-    );
+    return list
+      .filter(
+        (item) => typeof item.href === "string" && item.href.trim() !== "" && item.href !== "#"
+      )
+      .map((item) => ({
+        ...item,
+        href: /^https?:\/\//i.test(item.href!.trim()) ? item.href!.trim() : `https://${item.href!.trim()}`,
+      }));
   });
+
+  const whatsappNumber = computed(
+    () => settings.value.contact?.whatsapp || settings.value.contact?.phone || "6281234567890"
+  );
+
+  const cleanWhatsappNumber = computed(() => {
+    let digits = whatsappNumber.value.replace(/\D/g, "");
+    if (digits.startsWith("0")) {
+      digits = "62" + digits.substring(1);
+    } else if (digits.startsWith("8")) {
+      digits = "62" + digits;
+    }
+    return digits;
+  });
+
+  const getWhatsappUrl = (message?: string) => {
+    const text = message || "Halo PCG, saya ingin berkonsultasi mengenai layanan Anda.";
+    return `https://wa.me/${cleanWhatsappNumber.value}?text=${encodeURIComponent(text)}`;
+  };
+
+  const whatsappLink = computed(() => getWhatsappUrl());
 
   return {
     settings,
     logoUrl,
     email,
     phone,
+    whatsappNumber,
+    cleanWhatsappNumber,
+    whatsappLink,
+    getWhatsappUrl,
     address,
     mapsEmbedUrl,
     socials,

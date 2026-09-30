@@ -29,11 +29,9 @@
           <img
             :src="logoUrl"
             alt="PCG Logo"
-            width="80"
-            height="80"
             loading="lazy"
             decoding="async"
-            class="h-24 w-auto object-contain rounded-full"
+            class="h-12 md:h-14 w-auto object-contain"
           />
         </NuxtLink>
         <p
@@ -140,9 +138,14 @@
             name="i-heroicons-phone"
             class="size-5 shrink-0 text-[#083653]"
           />
-          <a :href="`tel:${phone}`" class="hover:underline"
-            >{{ phone }}</a
+          <a
+            :href="getWhatsappUrl()"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:underline hover:text-[#083653] transition-colors"
           >
+            {{ phone }}
+          </a>
         </p>
       </div>
     </div>
@@ -160,9 +163,6 @@
 </template>
 
 <script setup lang="ts">
-import { useLanguage } from "~/composables/useLanguage";
-import { useCompanySettings } from "~/composables/useCompanySettings";
-
 const { t } = useLanguage();
-const { logoUrl, email, phone, address, socials } = useCompanySettings();
+const { logoUrl, email, phone, address, socials, getWhatsappUrl } = useCompanySettings();
 </script>

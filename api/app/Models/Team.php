@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
     'photo',
     'bio',
     'linkedin_url',
+    'instagram_url',
+    'tiktok_url',
     'sort_order',
     'is_active',
 ])]

@@ -64,8 +64,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useLanguage } from "~/composables/useLanguage";
-import { useCompanySettings } from "~/composables/useCompanySettings";
 
 const { t } = useLanguage();
 const { address, mapsEmbedUrl } = useCompanySettings();

@@ -10,11 +10,9 @@
         <img
           :src="logoUrl"
           alt="PCG Logo"
-          width="80"
-          height="80"
           decoding="async"
           fetchpriority="high"
-          class="h-20 md:h-24 w-auto object-contain rounded-full"
+          class="h-12 sm:h-14 md:h-16 w-auto object-contain py-1"
         />
       </NuxtLink>
 
@@ -124,8 +122,6 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useLanguage } from "~/composables/useLanguage";
-import { useCompanySettings } from "~/composables/useCompanySettings";
 
 const { t } = useLanguage();
 const mobileOpen = ref(false);
