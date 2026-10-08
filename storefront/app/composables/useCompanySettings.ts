@@ -43,13 +43,13 @@ export function useCompanySettings() {
 
   const socials = computed(() => {
     const list = [
-      { name: "LinkedIn", icon: "i-simple-icons-linkedin", href: settings.value.social?.linkedin || "https://linkedin.com/company/pcg-mitra" },
-      { name: "Instagram", icon: "i-simple-icons-instagram", href: settings.value.social?.instagram || "https://instagram.com/pcgmitra" },
+      { name: "LinkedIn", icon: "i-simple-icons-linkedin", href: settings.value.social?.linkedin },
+      { name: "Instagram", icon: "i-simple-icons-instagram", href: settings.value.social?.instagram },
       { name: "TikTok", icon: "i-simple-icons-tiktok", href: settings.value.social?.tiktok },
       { name: "Threads", icon: "i-simple-icons-threads", href: settings.value.social?.threads },
-      { name: "X", icon: "i-simple-icons-x", href: settings.value.social?.twitter || "https://twitter.com/pcgmitra" },
-      { name: "Facebook", icon: "i-simple-icons-facebook", href: settings.value.social?.facebook || "https://facebook.com/pcgmitra" },
-      { name: "YouTube", icon: "i-simple-icons-youtube", href: settings.value.social?.youtube || "https://youtube.com/@pcgmitra" },
+      { name: "X", icon: "i-simple-icons-x", href: settings.value.social?.twitter },
+      { name: "Facebook", icon: "i-simple-icons-facebook", href: settings.value.social?.facebook },
+      { name: "YouTube", icon: "i-simple-icons-youtube", href: settings.value.social?.youtube },
     ];
     return list
       .filter(

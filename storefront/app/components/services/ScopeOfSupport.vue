@@ -95,48 +95,6 @@ import { useServiceCategories } from "~/composables/useServiceCategories";
 const { t, currentLocale } = useLanguage();
 const { categories } = useServiceCategories();
 
-const FALLBACK_DATA: Record<number, {
-  desc_id: string;
-  desc_en: string;
-  cta_id: string;
-  cta_en: string;
-  features_id: string[];
-  features_en: string[];
-}> = {
-  1: {
-    desc_id: "Kami mendampingi pemenuhan kewajiban pajak Anda melalui proses yang lebih terstruktur dan panduan yang mudah diterapkan.",
-    desc_en: "Support your tax responsibilities with a more structured process and practical guidance.",
-    cta_id: "DISKUSIKAN LAYANAN PAJAK",
-    cta_en: "DISCUSS TAX SUPPORT",
-    features_id: ["Konsultasi perpajakan", "Pelaporan pajak bulanan dan tahunan", "Peninjauan kepatuhan pajak", "Perencanaan pajak", "Pendampingan pemeriksaan pajak"],
-    features_en: ["Tax consultation", "Monthly and annual tax reporting", "Tax compliance review", "Tax planning", "Tax audit assistance"],
-  },
-  2: {
-    desc_id: "Bangun catatan keuangan terpercaya yang memberikan gambaran lebih jelas tentang operasional harian bisnis Anda.",
-    desc_en: "Build reliable financial records that give your business a clearer view of its day-to-day operations.",
-    cta_id: "DISKUSIKAN DUKUNGAN AKUNTANSI",
-    cta_en: "DISCUSS ACCOUNTING SUPPORT",
-    features_id: ["Pencatatan transaksi keuangan", "Laporan keuangan bulanan", "Laporan keuangan tahunan", "Rekonsiliasi bank", "Penyesuaian jurnal akuntansi"],
-    features_en: ["Financial transaction recording", "Monthly financial statements", "Annual financial statements", "Bank reconciliation", "Accounting journal adjustments"],
-  },
-  3: {
-    desc_id: "Dapatkan dukungan fleksibel untuk pekerjaan administratif yang membantu bisnis Anda berjalan lebih terorganisir.",
-    desc_en: "Get flexible support for administrative work that helps your business run in a more organized way.",
-    cta_id: "DISKUSIKAN DUKUNGAN BISNIS",
-    cta_en: "DISCUSS BUSINESS SUPPORT",
-    features_id: ["Administrasi perusahaan", "Koordinasi dokumen", "Tugas-tugas administratif", "Dukungan kustom"],
-    features_en: ["Corporate administration", "Document coordination", "Administrative tasks", "Customized support"],
-  },
-  4: {
-    desc_id: "Ubah informasi keuangan menjadi wawasan berguna untuk perencanaan, pengendalian, dan keputusan yang lebih baik.",
-    desc_en: "Turn financial information into useful insight for planning, control, and better decisions.",
-    cta_id: "DISKUSIKAN DUKUNGAN KEUANGAN",
-    cta_en: "DISCUSS FINANCIAL SUPPORT",
-    features_id: ["Analisis laporan keuangan", "Proyeksi keuangan", "Manajemen arus kas", "Penganggaran perusahaan", "Evaluasi kinerja keuangan"],
-    features_en: ["Financial statement analysis", "Financial projections", "Cash-flow management", "Corporate budgeting", "Financial performance evaluation"],
-  },
-};
-
 function parseFeatures(val: any): string[] {
   if (!val) return [];
   if (Array.isArray(val)) {
@@ -167,32 +125,24 @@ const dynamicServices = computed(() => {
     })
     .map((cat, index) => {
       const numStr = String(index + 1).padStart(2, "0");
-      const fallback = (FALLBACK_DATA[cat.id] || FALLBACK_DATA[index + 1] || FALLBACK_DATA[1])!;
 
       const title = isEn ? cat.name_en || cat.name_id : cat.name_id || cat.name_en;
-      
+
       const desc = isEn
-        ? cat.description_en || fallback.desc_en || cat.description_id || fallback.desc_id
-        : cat.description_id || fallback.desc_id || cat.description_en || fallback.desc_en;
+        ? cat.description_en || cat.description_id || ""
+        : cat.description_id || cat.description_en || "";
 
       const cta = isEn
-        ? cat.cta_text_en || fallback.cta_en || cat.cta_text_id || fallback.cta_id
-        : cat.cta_text_id || fallback.cta_id || cat.cta_text_en || fallback.cta_en;
-      
-      const parsedCatEn = parseFeatures(cat.features_en);
-      const parsedCatId = parseFeatures(cat.features_id);
+        ? cat.cta_text_en || cat.cta_text_id || `DISCUSS ${title.toUpperCase()}`
+        : cat.cta_text_id || cat.cta_text_en || `DISKUSIKAN ${title.toUpperCase()}`;
 
       const rawFeatures = isEn
-        ? parsedCatEn.length > 0
-          ? parsedCatEn
-          : parsedCatId.length > 0
-            ? parsedCatId
-            : fallback.features_en
-        : parsedCatId.length > 0
-          ? parsedCatId
-          : parsedCatEn.length > 0
-            ? parsedCatEn
-            : fallback.features_id;
+        ? parseFeatures(cat.features_en).length > 0
+          ? cat.features_en
+          : cat.features_id
+        : parseFeatures(cat.features_id).length > 0
+          ? cat.features_id
+          : cat.features_en;
 
       const features = parseFeatures(rawFeatures);
 
