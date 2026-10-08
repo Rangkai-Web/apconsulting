@@ -22,7 +22,7 @@ export function useCompanySettings() {
     `${apiBase}/settings`,
     {
       key: "company-settings",
-      getCachedData: () => false,
+      getCachedData: (key: string, nuxtApp: any) => (nuxtApp?.isHydrating ? nuxtApp.payload?.data?.[key] : undefined),
     }
   );
 
@@ -54,7 +54,7 @@ export function useCompanySettings() {
     ];
     return list
       .filter(
-        (item) => typeof item.href === "string" && item.href.trim() !== "" && item.href !== "#"
+        (item) => typeof item.href === "string" && item.href.replace(/[\u00a0\s]+/g, "").trim() !== "" && item.href !== "#"
       )
       .map((item) => ({
         ...item,

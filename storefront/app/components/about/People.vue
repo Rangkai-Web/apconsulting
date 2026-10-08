@@ -143,7 +143,7 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: TeamMember[] }>(
   `${apiBase}/team`,
   {
     key: "team-list",
-    getCachedData: () => false,
+    getCachedData: (key: string, nuxtApp: any) => (nuxtApp?.isHydrating ? nuxtApp.payload?.data?.[key] : undefined),
   },
 );
 
@@ -151,7 +151,7 @@ const people = computed(() => apiResponse.value?.data || []);
 
 function formatExternalUrl(url?: string): string {
   if (!url) return "";
-  const trimmed = url.trim();
+  const trimmed = url.replace(/[\u00a0\s]+/g, "").trim();
   if (/^https?:\/\//i.test(trimmed)) {
     return trimmed;
   }
@@ -180,7 +180,7 @@ function getSocials(person: TeamMember) {
     .filter(
       (item) =>
         typeof item.url === "string" &&
-        item.url.trim() !== "" &&
+        item.url.replace(/[\u00a0\s]+/g, "").trim() !== "" &&
         item.url !== "#",
     )
     .map((item) => ({
