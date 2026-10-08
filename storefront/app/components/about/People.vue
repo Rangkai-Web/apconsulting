@@ -143,6 +143,7 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: TeamMember[] }>(
   `${apiBase}/team`,
   {
     key: "team-list",
+    getCachedData: () => false,
   },
 );
 

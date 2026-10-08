@@ -22,6 +22,7 @@ export function useCompanySettings() {
     `${apiBase}/settings`,
     {
       key: "company-settings",
+      getCachedData: () => false,
     }
   );
 
