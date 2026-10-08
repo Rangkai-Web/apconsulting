@@ -162,12 +162,12 @@ function getSocials(person: TeamMember) {
     {
       name: "LinkedIn",
       icon: "i-simple-icons-linkedin",
-      url: person.linkedin_url,
+      url: person.linkedin_url || "https://linkedin.com",
     },
     {
       name: "Instagram",
       icon: "i-simple-icons-instagram",
-      url: person.instagram_url,
+      url: person.instagram_url || "https://instagram.com",
     },
     { name: "TikTok", icon: "i-simple-icons-tiktok", url: person.tiktok_url },
     { name: "Threads", icon: "i-simple-icons-threads", url: person.threads_url },
