@@ -119,6 +119,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useLanguage } from "~/composables/useLanguage";
+import { useCompanySettings } from "~/composables/useCompanySettings";
 
 const { t } = useLanguage();
 const mobileOpen = ref(false);

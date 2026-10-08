@@ -17,6 +17,6 @@ describe('AppFooter', () => {
     expect(text).toContain('Taxation')
     expect(text).toContain('Accounting & Bookkeeping')
     expect(text).toContain('Financial Services')
-    expect(text).toContain('Business Support')
+    expect(text).toContain('Business')
   })
 })
