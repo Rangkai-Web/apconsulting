@@ -5,24 +5,24 @@
   >
     <div class="mx-auto max-w-3xl text-center">
       <p
-        class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-neutral-400"
+        class="text-lg font-semibold uppercase tracking-wider text-neutral-400"
       >
-        {{ t('about.people.tag') }}
+        {{ t("about.people.tag") }}
       </p>
       <h2
         class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
       >
         <span class="font-sans font-normal text-[#083653]"
-          >{{ t('about.people.titleNormal') }}
+          >{{ t("about.people.titleNormal") }}
         </span>
-        <span class="block font-sans font-semibold italic text-[#083653]"
-          >{{ t('about.people.titleItalic') }}</span
-        >
+        <span class="block font-sans font-semibold italic text-[#083653]">{{
+          t("about.people.titleItalic")
+        }}</span>
       </h2>
       <p
         class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base font-normal"
       >
-        {{ t('about.people.description') }}
+        {{ t("about.people.description") }}
       </p>
     </div>
 
@@ -43,9 +43,16 @@
       v-else-if="!people || people.length === 0"
       class="mx-auto mt-12 max-w-4xl p-12 text-center border border-dashed border-neutral-300 bg-white"
     >
-      <UIcon name="i-heroicons-user-group" class="size-12 text-neutral-400 mx-auto" />
+      <UIcon
+        name="i-heroicons-user-group"
+        class="size-12 text-neutral-400 mx-auto"
+      />
       <p class="mt-3 text-base font-medium text-neutral-600">
-        {{ currentLocale === 'en' ? 'No team members listed at the moment.' : 'Belum ada anggota tim yang ditampilkan saat ini.' }}
+        {{
+          currentLocale === "en"
+            ? "No team members listed at the moment."
+            : "Belum ada anggota tim yang ditampilkan saat ini."
+        }}
       </p>
     </div>
 
@@ -60,7 +67,9 @@
         class="relative flex flex-col h-[380px] sm:h-[420px] md:h-[450px] w-full overflow-hidden rounded-none group bg-neutral-100 border border-neutral-200"
       >
         <img
-          :src="resolveImageUrl(person.photo, '/images/homepage/About_Desktop.webp')"
+          :src="
+            resolveImageUrl(person.photo, '/images/homepage/About_Desktop.webp')
+          "
           :alt="person.name"
           loading="lazy"
           decoding="async"
@@ -76,12 +85,18 @@
           >
             {{ person.name }}
           </h3>
-          <p class="text-xs text-neutral-500 font-normal mt-1">
+          <p class="text-xs text-neutral-500 font-medium mt-1">
             {{ person.position }}
+          </p>
+          <p
+            v-if="person.bio"
+            class="mt-2 text-xs text-neutral-600 font-normal line-clamp-2 leading-relaxed max-w-xs"
+          >
+            {{ person.bio }}
           </p>
           <div
             v-if="hasSocials(person)"
-            class="mt-2.5 flex items-center justify-center gap-3 pt-2 border-t border-neutral-100/80 w-full"
+            class="mt-2.5 flex flex-wrap items-center justify-center gap-2 pt-2 border-t border-neutral-100/80 w-full"
           >
             <a
               v-for="social in getSocials(person)"
@@ -90,7 +105,7 @@
               target="_blank"
               rel="noopener noreferrer"
               :aria-label="`${person.name}'s ${social.name}`"
-              class="flex size-7 items-center justify-center rounded-full bg-neutral-100 text-[#083653] hover:bg-[#083653] hover:text-white transition-colors"
+              class="flex size-7 items-center justify-center rounded-full bg-neutral-100 text-[#083653] hover:bg-[#083653] hover:text-white transition-colors shrink-0"
             >
               <UIcon :name="social.icon" class="size-3.5" />
             </a>
@@ -115,6 +130,10 @@ interface TeamMember {
   linkedin_url?: string;
   instagram_url?: string;
   tiktok_url?: string;
+  threads_url?: string;
+  facebook_url?: string;
+  twitter_url?: string;
+  youtube_url?: string;
 }
 
 const { t, currentLocale } = useLanguage();
@@ -124,8 +143,7 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: TeamMember[] }>(
   `${apiBase}/team`,
   {
     key: "team-list",
-    getCachedData: () => undefined,
-  }
+  },
 );
 
 const people = computed(() => apiResponse.value?.data || []);
@@ -141,13 +159,28 @@ function formatExternalUrl(url?: string): string {
 
 function getSocials(person: TeamMember) {
   const list = [
-    { name: "LinkedIn", icon: "i-simple-icons-linkedin", url: person.linkedin_url },
-    { name: "Instagram", icon: "i-simple-icons-instagram", url: person.instagram_url },
+    {
+      name: "LinkedIn",
+      icon: "i-simple-icons-linkedin",
+      url: person.linkedin_url,
+    },
+    {
+      name: "Instagram",
+      icon: "i-simple-icons-instagram",
+      url: person.instagram_url,
+    },
     { name: "TikTok", icon: "i-simple-icons-tiktok", url: person.tiktok_url },
+    { name: "Threads", icon: "i-simple-icons-threads", url: person.threads_url },
+    { name: "X", icon: "i-simple-icons-x", url: person.twitter_url },
+    { name: "Facebook", icon: "i-simple-icons-facebook", url: person.facebook_url },
+    { name: "YouTube", icon: "i-simple-icons-youtube", url: person.youtube_url },
   ];
   return list
     .filter(
-      (item) => typeof item.url === "string" && item.url.trim() !== "" && item.url !== "#"
+      (item) =>
+        typeof item.url === "string" &&
+        item.url.trim() !== "" &&
+        item.url !== "#",
     )
     .map((item) => ({
       ...item,

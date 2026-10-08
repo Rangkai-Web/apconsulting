@@ -6,7 +6,18 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['name_id', 'name_en', 'sort_order', 'is_active'])]
+#[Fillable([
+    'name_id',
+    'name_en',
+    'description_id',
+    'description_en',
+    'cta_text_id',
+    'cta_text_en',
+    'features_id',
+    'features_en',
+    'sort_order',
+    'is_active',
+])]
 class ServiceCategory extends Model
 {
     use HasFactory;
@@ -14,5 +25,7 @@ class ServiceCategory extends Model
     protected $casts = [
         'sort_order' => 'integer',
         'is_active' => 'boolean',
+        'features_id' => 'array',
+        'features_en' => 'array',
     ];
 }

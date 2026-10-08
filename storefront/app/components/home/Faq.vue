@@ -1,25 +1,29 @@
 <template>
   <section class="px-4 py-16 md:px-8 md:py-24">
     <div class="mx-auto max-w-3xl text-center">
-      <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        {{ tag || t('home.faq.tag') }}
+      <p class="text-lg font-semibold uppercase tracking-wide text-neutral-400">
+        {{ tag || t("home.faq.tag") }}
       </p>
       <h2
         class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
       >
         <span class="font-sans font-semibold italic text-[#083653]"
-          >{{ titlePrefix || t('home.faq.titlePrefix') }}{{ titleHighlight || t('home.faq.titleHighlight') }}</span
+          >{{ titlePrefix || t("home.faq.titlePrefix")
+          }}{{ titleHighlight || t("home.faq.titleHighlight") }}</span
         >
       </h2>
       <p
         class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"
       >
-        {{ subtitle || t('home.faq.subtitle') }}
+        {{ subtitle || t("home.faq.subtitle") }}
       </p>
     </div>
 
     <!-- Skeleton Loading State -->
-    <div v-if="pending && !apiResponse" class="mx-auto mt-12 max-w-4xl space-y-4">
+    <div
+      v-if="pending && !apiResponse"
+      class="mx-auto mt-12 max-w-4xl space-y-4"
+    >
       <div
         v-for="n in 4"
         :key="n"
@@ -32,9 +36,16 @@
       v-else-if="!faqList || faqList.length === 0"
       class="mx-auto mt-12 max-w-4xl p-12 text-center border border-dashed border-neutral-300 bg-[#F5FBFF]"
     >
-      <UIcon name="i-heroicons-question-mark-circle" class="size-12 text-neutral-400 mx-auto" />
+      <UIcon
+        name="i-heroicons-question-mark-circle"
+        class="size-12 text-neutral-400 mx-auto"
+      />
       <p class="mt-3 text-base font-medium text-neutral-600">
-        {{ currentLocale === 'en' ? 'No FAQs available at the moment.' : 'Belum ada pertanyaan saat ini.' }}
+        {{
+          currentLocale === "en"
+            ? "No FAQs available at the moment."
+            : "Belum ada pertanyaan saat ini."
+        }}
       </p>
     </div>
 
@@ -99,9 +110,8 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: FaqItem[] }>(
   () => `${apiBase}/faqs?lang=${currentLocale.value}`,
   {
     key: "faqs-list",
-    getCachedData: () => undefined,
     watch: [currentLocale],
-  }
+  },
 );
 
 const defaultItems = computed<FaqItem[]>(() => [
@@ -129,5 +139,3 @@ const toggleItem = (index: number) => {
   }
 };
 </script>
-
-

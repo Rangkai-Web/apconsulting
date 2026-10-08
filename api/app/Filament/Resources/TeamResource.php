@@ -76,8 +76,28 @@ class TeamResource extends Resource
                         ->url()
                         ->placeholder('https://tiktok.com/@...')
                         ->maxLength(255),
+                    TextInput::make('threads_url')
+                        ->label('Threads URL')
+                        ->url()
+                        ->placeholder('https://threads.net/@...')
+                        ->maxLength(255),
+                    TextInput::make('facebook_url')
+                        ->label('Facebook URL')
+                        ->url()
+                        ->placeholder('https://facebook.com/...')
+                        ->maxLength(255),
+                    TextInput::make('twitter_url')
+                        ->label('Twitter / X URL')
+                        ->url()
+                        ->placeholder('https://twitter.com/...')
+                        ->maxLength(255),
+                    TextInput::make('youtube_url')
+                        ->label('YouTube URL')
+                        ->url()
+                        ->placeholder('https://youtube.com/@...')
+                        ->maxLength(255),
                 ])
-                ->columns(3),
+                ->columns(2),
             TextInput::make('sort_order')
                 ->label('Urutan Tampil')
                 ->numeric()

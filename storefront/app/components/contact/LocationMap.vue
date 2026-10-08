@@ -8,7 +8,7 @@
       >
         <div>
           <p
-            class="text-sm font-semibold uppercase tracking-wide text-neutral-400"
+            class="text-lg font-semibold uppercase tracking-wide text-neutral-400"
           >
             {{ t("contact.location.tag") }}
           </p>
@@ -76,7 +76,11 @@ const loadMap = () => {
 };
 
 onMounted(() => {
-  if (typeof window !== "undefined" && "IntersectionObserver" in window && mapContainer.value) {
+  if (
+    typeof window !== "undefined" &&
+    "IntersectionObserver" in window &&
+    mapContainer.value
+  ) {
     const observer = new IntersectionObserver(
       (entries) => {
         const firstEntry = entries[0];
@@ -85,7 +89,7 @@ onMounted(() => {
           observer.disconnect();
         }
       },
-      { rootMargin: "100px" }
+      { rootMargin: "100px" },
     );
     observer.observe(mapContainer.value);
   } else {

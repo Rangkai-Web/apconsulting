@@ -1,74 +1,40 @@
-import { ref, computed, watch } from "vue";
+import { computed } from "vue";
 import { getApiBaseUrl, resolveImageUrl, safeUseFetch } from "~/utils/api";
 
 export interface SettingsData {
   company?: { logo?: string };
   contact?: { email?: string; phone?: string; whatsapp?: string; address?: string; maps_embed_url?: string };
-  social?: { instagram?: string; twitter?: string; facebook?: string; linkedin?: string; youtube?: string };
+  social?: {
+    instagram?: string;
+    twitter?: string;
+    facebook?: string;
+    linkedin?: string;
+    youtube?: string;
+    tiktok?: string;
+    threads?: string;
+  };
 }
-
-// Module-level singleton state: shared across all component invocations
-let isFetching = false;
-const settingsState = ref<SettingsData | null>(null);
-const pendingState = ref(false);
-const errorState = ref<any>(null);
 
 export function useCompanySettings() {
   const apiBase = getApiBaseUrl();
 
-  // Fetch only ONCE per application lifecycle
-  if (!settingsState.value && !isFetching) {
-    isFetching = true;
-    pendingState.value = true;
-
-    const { data: apiResponse, pending, error } = safeUseFetch<{ data: SettingsData }>(
-      `${apiBase}/settings`,
-      {
-        key: "company-settings",
-        lazy: true,
-        getCachedData: () => undefined,
-      }
-    );
-
-    if (apiResponse) {
-      watch(
-        apiResponse,
-        (newVal) => {
-          if (newVal?.data) {
-            settingsState.value = newVal.data;
-          }
-        },
-        { immediate: true }
-      );
+  const { data: apiResponse, pending, error } = safeUseFetch<{ data: SettingsData }>(
+    `${apiBase}/settings`,
+    {
+      key: "company-settings",
     }
+  );
 
-    if (pending) {
-      watch(
-        pending,
-        (val) => {
-          pendingState.value = val;
-        },
-        { immediate: true }
-      );
-    }
-
-    if (error) {
-      watch(
-        error,
-        (val) => {
-          errorState.value = val;
-        },
-        { immediate: true }
-      );
-    }
-  }
-
-  const settings = computed(() => settingsState.value || {});
+  const settings = computed(() => apiResponse.value?.data || {});
 
   const logoUrl = computed(() => resolveImageUrl(settings.value.company?.logo, "/pcg_logo.jpeg"));
   const email = computed(() => settings.value.contact?.email || "info@pcgmitra.co.id");
   const phone = computed(() => settings.value.contact?.phone || settings.value.contact?.whatsapp || "");
-  const address = computed(() => settings.value.contact?.address || "Blk. D, Rukan Cordoba, Jl. Green Lake City Boulevard No.23, Kota Tangerang, Banten 15146");
+  const address = computed(
+    () =>
+      settings.value.contact?.address ||
+      "Blok. D, Rukan Cordoba, Jl. Green Lake City Boulevard No.23, Kota Tangerang, Banten 15146"
+  );
   const mapsEmbedUrl = computed(
     () =>
       settings.value.contact?.maps_embed_url ||
@@ -79,6 +45,8 @@ export function useCompanySettings() {
     const list = [
       { name: "LinkedIn", icon: "i-simple-icons-linkedin", href: settings.value.social?.linkedin },
       { name: "Instagram", icon: "i-simple-icons-instagram", href: settings.value.social?.instagram },
+      { name: "TikTok", icon: "i-simple-icons-tiktok", href: settings.value.social?.tiktok },
+      { name: "Threads", icon: "i-simple-icons-threads", href: settings.value.social?.threads },
       { name: "X", icon: "i-simple-icons-x", href: settings.value.social?.twitter },
       { name: "Facebook", icon: "i-simple-icons-facebook", href: settings.value.social?.facebook },
       { name: "YouTube", icon: "i-simple-icons-youtube", href: settings.value.social?.youtube },
@@ -94,7 +62,7 @@ export function useCompanySettings() {
   });
 
   const whatsappNumber = computed(
-    () => settings.value.contact?.whatsapp || settings.value.contact?.phone || "6281234567890"
+    () => settings.value.contact?.whatsapp || settings.value.contact?.phone || "6289673803596"
   );
 
   const cleanWhatsappNumber = computed(() => {
@@ -126,7 +94,8 @@ export function useCompanySettings() {
     address,
     mapsEmbedUrl,
     socials,
-    pending: pendingState,
-    error: errorState,
+    pending,
+    error,
   };
 }
+

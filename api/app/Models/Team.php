@@ -14,6 +14,10 @@ use Illuminate\Database\Eloquent\Model;
     'linkedin_url',
     'instagram_url',
     'tiktok_url',
+    'threads_url',
+    'facebook_url',
+    'twitter_url',
+    'youtube_url',
     'sort_order',
     'is_active',
 ])]

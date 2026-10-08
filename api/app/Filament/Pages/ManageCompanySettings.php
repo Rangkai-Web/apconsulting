@@ -43,6 +43,8 @@ class ManageCompanySettings extends Page implements HasForms
             'google_maps_embed_url' => $settings['google_maps_embed_url'] ?? '',
             'social_linkedin' => $settings['social_linkedin'] ?? '',
             'social_instagram' => $settings['social_instagram'] ?? '',
+            'social_tiktok' => $settings['social_tiktok'] ?? '',
+            'social_threads' => $settings['social_threads'] ?? '',
             'social_facebook' => $settings['social_facebook'] ?? '',
             'social_twitter' => $settings['social_twitter'] ?? '',
             'social_youtube' => $settings['social_youtube'] ?? '',
@@ -109,6 +111,16 @@ class ManageCompanySettings extends Page implements HasForms
                             ->label('Instagram URL')
                             ->url()
                             ->placeholder('https://instagram.com/...')
+                            ->maxLength(255),
+                        TextInput::make('social_tiktok')
+                            ->label('TikTok URL')
+                            ->url()
+                            ->placeholder('https://tiktok.com/@...')
+                            ->maxLength(255),
+                        TextInput::make('social_threads')
+                            ->label('Threads URL')
+                            ->url()
+                            ->placeholder('https://threads.net/@...')
                             ->maxLength(255),
                         TextInput::make('social_facebook')
                             ->label('Facebook URL')

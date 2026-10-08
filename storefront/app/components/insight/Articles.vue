@@ -352,7 +352,6 @@ const { data: apiResponse, pending } = safeUseFetch<{
   },
   {
     key: "articles-list",
-    getCachedData: () => undefined,
     watch: [currentLocale, currentPage, selectedCategoryKey, debouncedSearch],
   },
 );

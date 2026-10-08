@@ -6,61 +6,60 @@
       class="pointer-events-none absolute top-10 left-1/2 -translate-x-1/2 md:top-[57px] md:left-[513px] md:translate-x-0 z-0 h-[285px] w-[285px] hidden sm:block rounded-full bg-[#F4C400] opacity-30 blur-[75px]"
     />
 
-    <div
-      class="relative z-10 mx-auto grid max-w-7xl gap-8 md:grid-cols-2 md:gap-12 md:items-stretch"
-    >
-      <!-- Left Column: Header + Tax Advisory Card -->
-      <div class="flex flex-col gap-6 md:gap-8">
-        <div>
-          <p
-            class="text-sm font-semibold uppercase tracking-wide text-neutral-400"
-          >
-            {{ t('home.whyChooseUs.tag') }}
-          </p>
-          <h2
-            class="mt-4 text-3xl font-normal leading-[1.2] text-[#083653] sm:text-4xl md:text-[48px] tracking-normal"
-          >
-            <span class="font-sans font-semibold italic text-[#083653]"
-              >{{ t('home.whyChooseUs.titleItalic') }}</span
-            >
-            <span class="block font-sans font-normal text-[#083653]"
-              >{{ t('home.whyChooseUs.titleNormal') }}</span
-            >
-          </h2>
-          <p
-            class="mt-4 text-sm text-neutral-500 leading-relaxed md:text-base max-w-lg"
-          >
-            {{ t('home.whyChooseUs.description') }}
-          </p>
-        </div>
+    <div class="relative z-10 mx-auto max-w-7xl">
+      <!-- Section Header -->
+      <div class="max-w-3xl">
+        <p
+          class="text-lg font-semibold uppercase tracking-wide text-neutral-400"
+        >
+          {{ t("home.whyChooseUs.tag") }}
+        </p>
+        <h2
+          class="mt-4 text-3xl font-normal leading-[1.2] text-[#083653] sm:text-4xl md:text-[48px] tracking-normal"
+        >
+          <span class="font-sans font-semibold italic text-[#083653]">{{
+            t("home.whyChooseUs.titleItalic")
+          }}</span>
+          <span class="block font-sans font-normal text-[#083653]">{{
+            t("home.whyChooseUs.titleNormal")
+          }}</span>
+        </h2>
+        <p
+          class="mt-4 text-sm text-neutral-500 leading-relaxed md:text-base max-w-xl"
+        >
+          {{ t("home.whyChooseUs.description") }}
+        </p>
+      </div>
 
-        <!-- Tax Advisory Card (Underneath description on Left) -->
+      <!-- 3 Items Grid -->
+      <div
+        class="mt-10 md:mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch"
+      >
         <div
-          class="relative overflow-hidden shadow-sm h-[320px] sm:h-[360px] md:h-[380px] w-full"
+          v-for="card in cards"
+          :key="card.titleKey"
+          class="relative overflow-hidden shadow-sm h-[380px] sm:h-[420px] md:h-[480px] w-full"
         >
           <picture class="block w-full h-full">
-            <source
-              media="(min-width: 768px)"
-              srcset="/images/homepage/TaxAdvisory_Desktop.webp"
-            />
+            <source media="(min-width: 768px)" :srcset="card.desktopImg" />
             <img
-              src="/images/homepage/TaxAdvisory_Desktop.webp"
-              alt="Tax Advisory"
+              :src="card.mobileImg"
+              :alt="t(card.titleKey)"
               loading="lazy"
               decoding="async"
               width="600"
-              height="380"
+              height="480"
               class="w-full h-full grayscale object-cover"
             />
           </picture>
 
           <!-- White Overlay Box (Top-Left inside Image) -->
           <div
-            class="absolute top-4 left-4 right-4 sm:right-auto sm:max-w-xs md:max-w-sm bg-white p-5 shadow-md shadow-black/5 border border-neutral-100/80 sm:top-6 sm:left-6"
+            class="absolute top-4 left-4 right-4 bg-white p-5 shadow-md shadow-black/5 border border-neutral-100/80 sm:top-6 sm:left-6 sm:right-6"
           >
             <div class="flex items-center gap-2.5">
               <img
-                src="/images/icon/TaxAdvisory_Icon.svg"
+                :src="card.icon"
                 alt=""
                 loading="lazy"
                 decoding="async"
@@ -68,58 +67,16 @@
                 height="24"
                 class="size-6 shrink-0"
               />
-              <p class="font-bold text-secondary-700 text-base">{{ t('home.whyChooseUs.card1Title') }}</p>
+              <p class="font-bold text-secondary-700 text-base">
+                {{ t(card.titleKey) }}
+              </p>
             </div>
             <p
               class="mt-2 text-xs text-neutral-500 leading-relaxed font-normal"
             >
-              {{ t('home.whyChooseUs.card1Body') }}
+              {{ t(card.bodyKey) }}
             </p>
           </div>
-        </div>
-      </div>
-
-      <!-- Right Column: Finance & Consulting Card (Tall Column) -->
-      <div
-        class="relative overflow-hidden shadow-sm h-[420px] sm:h-[480px] md:h-[715px] w-full"
-      >
-        <picture class="block w-full h-full">
-          <source
-            media="(min-width: 768px)"
-            srcset="/images/homepage/Finance&Consulting_Desktop.webp"
-          />
-          <img
-            src="/images/homepage/Finance&Consulting_Desktop.webp"
-            alt="Finance & Consulting"
-            loading="lazy"
-            decoding="async"
-            width="600"
-            height="715"
-            class="w-full h-full grayscale object-cover"
-          />
-        </picture>
-
-        <!-- White Overlay Box (Top-Left inside Image) -->
-        <div
-          class="absolute top-4 left-4 right-4 sm:right-auto sm:max-w-xs md:max-w-sm bg-white p-5 shadow-md shadow-black/5 border border-neutral-100/80 sm:top-6 sm:left-6"
-        >
-          <div class="flex items-center gap-2.5">
-            <img
-              src="/images/icon/FinanceConsult_Icon.svg"
-              alt=""
-              loading="lazy"
-              decoding="async"
-              width="24"
-              height="24"
-              class="size-6 shrink-0"
-            />
-            <p class="font-bold text-secondary-700 text-base">
-              {{ t('home.whyChooseUs.card2Title') }}
-            </p>
-          </div>
-          <p class="mt-2 text-xs text-neutral-500 leading-relaxed font-normal">
-            {{ t('home.whyChooseUs.card2Body') }}
-          </p>
         </div>
       </div>
     </div>
@@ -127,7 +84,31 @@
 </template>
 
 <script setup lang="ts">
-import { useLanguage } from '~/composables/useLanguage'
+import { useLanguage } from "~/composables/useLanguage";
 
-const { t } = useLanguage()
+const { t } = useLanguage();
+
+const cards = [
+  {
+    icon: "/images/icon/TaxAdvisory_Icon.svg",
+    desktopImg: "/images/homepage/TaxAdvisory_Desktop.webp",
+    mobileImg: "/images/homepage/TaxAdvisory_Mobile.webp",
+    titleKey: "home.whyChooseUs.card1Title",
+    bodyKey: "home.whyChooseUs.card1Body",
+  },
+  {
+    icon: "/images/icon/FinanceConsult_Icon.svg",
+    desktopImg: "/images/homepage/Finance&Consulting_Desktop.webp",
+    mobileImg: "/images/homepage/Finance&Consulting_Mobile.webp",
+    titleKey: "home.whyChooseUs.card2Title",
+    bodyKey: "home.whyChooseUs.card2Body",
+  },
+  {
+    icon: "/images/icon/Check_Icon.svg",
+    desktopImg: "/images/homepage/HowWeHelp_Desktop.webp",
+    mobileImg: "/images/homepage/HowWeHelp_Mobile.webp",
+    titleKey: "home.whyChooseUs.card3Title",
+    bodyKey: "home.whyChooseUs.card3Body",
+  },
+];
 </script>

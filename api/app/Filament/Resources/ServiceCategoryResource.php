@@ -10,6 +10,8 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
@@ -53,6 +55,15 @@ class ServiceCategoryResource extends Resource
                                 ->label('Nama Layanan (Bahasa Indonesia)')
                                 ->required()
                                 ->maxLength(255),
+                            Textarea::make('description_id')
+                                ->label('Deskripsi Layanan (Bahasa Indonesia)')
+                                ->rows(3),
+                            TextInput::make('cta_text_id')
+                                ->label('Teks Tombol Diskusi / CTA (Bahasa Indonesia)')
+                                ->placeholder('e.g. DISKUSIKAN LAYANAN PAJAK'),
+                            TagsInput::make('features_id')
+                                ->label('Daftar Fitur / Poin Layanan (Bahasa Indonesia)')
+                                ->placeholder('Ketik poin lalu tekan Enter'),
                         ]),
                     Tab::make('English')
                         ->icon('heroicon-o-globe-alt')
@@ -61,6 +72,15 @@ class ServiceCategoryResource extends Resource
                                 ->label('Service Name (English)')
                                 ->required()
                                 ->maxLength(255),
+                            Textarea::make('description_en')
+                                ->label('Service Description (English)')
+                                ->rows(3),
+                            TextInput::make('cta_text_en')
+                                ->label('CTA Button Text (English)')
+                                ->placeholder('e.g. DISCUSS TAX SUPPORT'),
+                            TagsInput::make('features_en')
+                                ->label('Features / Point List (English)')
+                                ->placeholder('Type item and press Enter'),
                         ]),
                 ])
                 ->columnSpan(2),

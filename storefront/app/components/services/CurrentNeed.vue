@@ -1,20 +1,20 @@
 <template>
   <section class="px-4 py-16 md:px-8 md:py-24 bg-[#FBFEFF]">
     <div class="mx-auto max-w-3xl text-center">
-      <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        {{ t('services.need.tag') }}
+      <p class="text-lg font-semibold uppercase tracking-wide text-neutral-400">
+        {{ t("services.need.tag") }}
       </p>
       <h2
         class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
       >
-        <span class="font-sans font-semibold italic text-[#083653]"
-          >{{ t('services.need.titleItalic') }}</span
-        >
+        <span class="font-sans font-semibold italic text-[#083653]">{{
+          t("services.need.titleItalic")
+        }}</span>
       </h2>
       <p
         class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"
       >
-        {{ t('services.need.subtitle') }}
+        {{ t("services.need.subtitle") }}
       </p>
     </div>
 
@@ -54,9 +54,9 @@
 </template>
 
 <script setup lang="ts">
-import { useLanguage } from '~/composables/useLanguage'
+import { useLanguage } from "~/composables/useLanguage";
 
-const { t } = useLanguage()
+const { t } = useLanguage();
 
 const needs = [
   {

@@ -31,6 +31,8 @@ class SettingsController extends Controller
                 'social' => [
                     'linkedin' => $settings['social_linkedin'] ?? '',
                     'instagram' => $settings['social_instagram'] ?? '',
+                    'tiktok' => $settings['social_tiktok'] ?? '',
+                    'threads' => $settings['social_threads'] ?? '',
                     'facebook' => $settings['social_facebook'] ?? '',
                     'twitter' => $settings['social_twitter'] ?? '',
                     'youtube' => $settings['social_youtube'] ?? '',

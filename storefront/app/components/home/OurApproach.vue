@@ -1,26 +1,26 @@
 <template>
   <section class="px-4 py-16 md:px-8 md:py-24">
     <div class="mx-auto max-w-3xl text-center">
-      <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        {{ tag || t('home.ourApproach.tag') }}
+      <p class="text-lg font-semibold uppercase tracking-wide text-neutral-400">
+        {{ tag || t("home.ourApproach.tag") }}
       </p>
       <h2
         class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
       >
         <span class="font-sans font-normal text-[#083653]">{{
-          titlePrefix || t('home.ourApproach.titlePrefix')
+          titlePrefix || t("home.ourApproach.titlePrefix")
         }}</span>
         <span class="font-sans font-semibold italic text-[#083653]"
-          >{{ titleHighlight || t('home.ourApproach.titleHighlight') }}
+          >{{ titleHighlight || t("home.ourApproach.titleHighlight") }}
         </span>
         <span class="block font-sans font-normal text-[#083653]">{{
-          titleSuffix || t('home.ourApproach.titleSuffix')
+          titleSuffix || t("home.ourApproach.titleSuffix")
         }}</span>
       </h2>
       <p
         class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"
       >
-        {{ subtitle || t('home.ourApproach.subtitle') }}
+        {{ subtitle || t("home.ourApproach.subtitle") }}
       </p>
     </div>
 
@@ -64,9 +64,9 @@
 </template>
 
 <script setup lang="ts">
-import { useLanguage } from '~/composables/useLanguage'
+import { useLanguage } from "~/composables/useLanguage";
 
-const { t } = useLanguage()
+const { t } = useLanguage();
 
 defineProps<{
   tag?: string;
@@ -74,7 +74,7 @@ defineProps<{
   titleHighlight?: string;
   titleSuffix?: string;
   subtitle?: string;
-}>()
+}>();
 
 const stepList = [
   {

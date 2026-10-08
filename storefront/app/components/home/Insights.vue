@@ -1,23 +1,23 @@
 <template>
   <section class="bg-[#F9FAFB] px-4 py-16 md:px-[32px] md:py-[80px]">
     <div class="mx-auto max-w-3xl text-center">
-      <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        {{ t('home.insights.tag') }}
+      <p class="text-lg font-semibold uppercase tracking-wide text-neutral-400">
+        {{ t("home.insights.tag") }}
       </p>
       <h2
         class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
       >
         <span class="font-sans font-normal text-[#083653]"
-          >{{ t('home.insights.titleNormal') }}
+          >{{ t("home.insights.titleNormal") }}
         </span>
-        <span class="block font-sans font-semibold italic text-[#083653]"
-          >{{ t('home.insights.titleItalic') }}</span
-        >
+        <span class="block font-sans font-semibold italic text-[#083653]">{{
+          t("home.insights.titleItalic")
+        }}</span>
       </h2>
       <p
         class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"
       >
-        {{ t('home.insights.subtitle') }}
+        {{ t("home.insights.subtitle") }}
       </p>
     </div>
 
@@ -46,9 +46,16 @@
       v-else-if="!articles || articles.length === 0"
       class="mx-auto mt-12 max-w-4xl p-12 text-center border border-dashed border-neutral-300 bg-white"
     >
-      <UIcon name="i-heroicons-document-text" class="size-12 text-neutral-400 mx-auto" />
+      <UIcon
+        name="i-heroicons-document-text"
+        class="size-12 text-neutral-400 mx-auto"
+      />
       <p class="mt-3 text-base font-medium text-neutral-600">
-        {{ currentLocale === 'en' ? 'No articles available.' : 'Belum ada artikel saat ini.' }}
+        {{
+          currentLocale === "en"
+            ? "No articles available."
+            : "Belum ada artikel saat ini."
+        }}
       </p>
     </div>
 
@@ -63,24 +70,29 @@
         class="flex flex-col justify-between rounded-none bg-white p-6 border border-[#0000001F] shadow-xs group"
       >
         <div>
-          <NuxtLink :to="`/insight/${post.slug}`" class="block overflow-hidden h-48 bg-[#F8FAFC] border border-neutral-100 mb-4">
+          <NuxtLink
+            :to="`/insight/${post.slug}`"
+            class="block overflow-hidden h-48 bg-[#F8FAFC] border border-neutral-100 mb-4"
+          >
             <img
               :src="resolveImageUrl(post.cover_image)"
               :alt="post.title"
               class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </NuxtLink>
-          <p
-            class="text-xs font-bold text-[#083653] uppercase tracking-wide"
-          >
+          <p class="text-xs font-bold text-[#083653] uppercase tracking-wide">
             {{ post.category_label || post.category }}
           </p>
-          <h3 class="mt-2 text-lg font-bold text-[#083653] leading-snug line-clamp-2">
+          <h3
+            class="mt-2 text-lg font-bold text-[#083653] leading-snug line-clamp-2"
+          >
             <NuxtLink :to="`/insight/${post.slug}`" class="hover:underline">
               {{ post.title }}
             </NuxtLink>
           </h3>
-          <p class="mt-2 text-sm text-neutral-500 leading-relaxed font-normal line-clamp-3">
+          <p
+            class="mt-2 text-sm text-neutral-500 leading-relaxed font-normal line-clamp-3"
+          >
             {{ post.excerpt }}
           </p>
         </div>
@@ -98,7 +110,7 @@
             size="lg"
             class="rounded-none h-[48px] px-5 py-3 gap-[10px] bg-[#083653] hover:bg-[#083653]/90 text-white font-medium text-sm inline-flex items-center justify-center"
           >
-            {{ t('home.insights.viewDetails') }}
+            {{ t("home.insights.viewDetails") }}
           </UButton>
         </div>
       </article>
@@ -107,9 +119,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useLanguage } from '~/composables/useLanguage'
-import { getApiBaseUrl, resolveImageUrl, formatDate, safeUseFetch } from '~/utils/api'
+import { computed } from "vue";
+import { useLanguage } from "~/composables/useLanguage";
+import {
+  getApiBaseUrl,
+  resolveImageUrl,
+  formatDate,
+  safeUseFetch,
+} from "~/utils/api";
 
 interface ArticleItem {
   id: number;
@@ -122,17 +139,16 @@ interface ArticleItem {
   published_at?: string;
 }
 
-const { t, currentLocale } = useLanguage()
-const apiBase = getApiBaseUrl()
+const { t, currentLocale } = useLanguage();
+const apiBase = getApiBaseUrl();
 
 const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleItem[] }>(
   () => `${apiBase}/articles?lang=${currentLocale.value}&per_page=3`,
   {
     key: "home-insights-list",
-    getCachedData: () => undefined,
     watch: [currentLocale],
-  }
-)
+  },
+);
 
 const defaultPosts = computed<ArticleItem[]>(() => [
   {
@@ -174,5 +190,3 @@ const articles = computed<ArticleItem[]>(() => {
   return defaultPosts.value;
 });
 </script>
-
-

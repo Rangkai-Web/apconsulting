@@ -102,6 +102,9 @@ const translations: Record<Locale, Record<string, string>> = {
     "home.whyChooseUs.card2Title": "Finance & Consulting",
     "home.whyChooseUs.card2Body":
       "Use financial visibility to plan ahead and build sustainable growth.",
+    "home.whyChooseUs.card3Title": "One Stop Business Solution",
+    "home.whyChooseUs.card3Body":
+      "Comprehensive, integrated support covering tax, accounting, and business services to fulfill all your company's operational needs.",
 
     // Home Our Approach
     "home.ourApproach.tag": "OUR APPROACH",
@@ -501,6 +504,9 @@ const translations: Record<Locale, Record<string, string>> = {
     "home.whyChooseUs.card2Title": "Keuangan & Konsultasi",
     "home.whyChooseUs.card2Body":
       "Manfaatkan transparansi data keuangan Anda untuk merencanakan masa depan dan menciptakan pertumbuhan bisnis yang berkelanjutan.",
+    "home.whyChooseUs.card3Title": "One Stop Business Solution",
+    "home.whyChooseUs.card3Body":
+      "Dukungan terpadu mulai dari perpajakan, akuntansi, hingga administrasi bisnis untuk memenuhi segala kebutuhan usaha Anda.",
 
     // Home Our Approach
     "home.ourApproach.tag": "PENDEKATAN KAMI",

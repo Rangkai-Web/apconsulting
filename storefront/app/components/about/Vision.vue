@@ -7,28 +7,28 @@
       <!-- Vision Block (Top Right aligned or wide) -->
       <div class="flex flex-col md:items-end md:text-right">
         <p
-          class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#F4C400]"
+          class="text-lg font-semibold uppercase tracking-wider text-[#F4C400]"
         >
-          {{ t('about.vision.tag') }}
+          {{ t("about.vision.tag") }}
         </p>
         <h2
           class="mt-4 max-w-3xl text-2xl font-normal text-white sm:text-3xl md:text-[36px] leading-[1.3]"
         >
-          {{ t('about.vision.title') }}
+          {{ t("about.vision.title") }}
         </h2>
       </div>
 
       <!-- Mission Block (Bottom Left aligned) -->
       <div class="max-w-3xl">
         <p
-          class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#F4C400]"
+          class="text-lg font-semibold uppercase tracking-wider text-[#F4C400]"
         >
-          {{ t('about.mission.tag') }}
+          {{ t("about.mission.tag") }}
         </p>
         <h3
           class="mt-4 text-xl font-normal text-white sm:text-2xl md:text-[28px] leading-[1.3]"
         >
-          {{ t('about.mission.title') }}
+          {{ t("about.mission.title") }}
         </h3>
 
         <ul
@@ -53,9 +53,9 @@
 </template>
 
 <script setup lang="ts">
-import { useLanguage } from '~/composables/useLanguage'
+import { useLanguage } from "~/composables/useLanguage";
 
-const { t } = useLanguage()
+const { t } = useLanguage();
 
 const missionItemKeys = [
   "about.mission.item1",

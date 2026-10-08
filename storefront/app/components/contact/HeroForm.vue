@@ -7,7 +7,7 @@
       >
         <div>
           <p
-            class="text-xs md:text-sm font-semibold uppercase tracking-wide text-neutral-400"
+            class="text-lg font-semibold uppercase tracking-wide text-neutral-400"
           >
             {{ t("contact.hero.tag") }}
           </p>
@@ -15,9 +15,9 @@
             <span class="font-sans font-light text-[#083653]"
               >{{ t("contact.hero.titleLight") }}
             </span>
-            <span class="font-sans font-semibold italic text-[#083653]"
-              >{{ t("contact.hero.titleItalic") }}</span
-            >
+            <span class="font-sans font-semibold italic text-[#083653]">{{
+              t("contact.hero.titleItalic")
+            }}</span>
           </h1>
         </div>
 

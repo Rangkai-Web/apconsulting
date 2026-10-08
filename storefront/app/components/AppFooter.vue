@@ -102,10 +102,14 @@
           {{ t("footer.services") }}
         </p>
         <ul class="mt-4 space-y-3 text-sm text-neutral-500 font-normal">
-          <li>Taxation</li>
-          <li>Accounting & Bookkeeping</li>
-          <li>Financial Services</li>
-          <li>Business Support</li>
+          <li v-for="cat in footerServices" :key="cat.id">
+            <NuxtLink
+              to="/services#scope-of-support"
+              class="hover:text-[#083653] transition-colors"
+            >
+              {{ cat.label }}
+            </NuxtLink>
+          </li>
         </ul>
       </div>
 
@@ -119,7 +123,13 @@
             name="i-heroicons-map-pin"
             class="mt-0.5 size-5 shrink-0 text-[#083653]"
           />
-          <span>{{ address }}</span>
+          <a
+            href="https://www.google.com/maps?cid=16773261178981573718&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAFKgSnqNcy&hl=id&source=embed"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:underline hover:text-[#083653] transition-colors"
+            >{{ address }}</a
+          >
         </p>
         <p
           class="mt-3 flex items-center gap-2.5 text-sm text-neutral-500 font-normal"
@@ -163,7 +173,28 @@
 </template>
 
 <script setup lang="ts">
-const { t } = useLanguage();
+import { computed } from "vue";
+import { useLanguage } from "~/composables/useLanguage";
+import { useCompanySettings } from "~/composables/useCompanySettings";
+import { useServiceCategories } from "~/composables/useServiceCategories";
+
+const { t, currentLocale } = useLanguage();
 const { logoUrl, email, phone, address, socials, getWhatsappUrl } =
   useCompanySettings();
+const { categories } = useServiceCategories();
+
+const footerServices = computed(() => {
+  const isEn = currentLocale.value === "en";
+  return categories.value
+    .filter((cat) => {
+      if (!cat.is_active) return false;
+      const nameEn = (cat.name_en || "").toLowerCase();
+      const nameId = (cat.name_id || "").toLowerCase();
+      return nameEn !== "general inquiry" && nameId !== "pertanyaan umum";
+    })
+    .map((cat) => ({
+      id: cat.id,
+      label: isEn ? cat.name_en || cat.name_id : cat.name_id || cat.name_en,
+    }));
+});
 </script>

@@ -5,7 +5,7 @@
     >
       <div>
         <p
-          class="text-sm font-semibold uppercase tracking-wide text-neutral-400"
+          class="text-lg font-semibold uppercase tracking-wide text-neutral-400"
         >
           {{ t("home.howWeHelp.tag") }}
         </p>

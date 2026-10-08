@@ -3,24 +3,24 @@
     <div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-2 md:items-start">
       <div>
         <p
-          class="text-sm font-semibold uppercase tracking-wide text-neutral-400"
+          class="text-lg font-semibold uppercase tracking-wide text-neutral-400"
         >
-          {{ t('home.about.tag') }}
+          {{ t("home.about.tag") }}
         </p>
         <h2
           class="mt-4 text-3xl font-normal text-secondary-700 md:text-[48px] leading-[1.2] tracking-normal"
         >
-          {{ t('home.about.titleNormal') }}
-          <span class="block font-semibold italic text-secondary-700"
-            >{{ t('home.about.titleItalic') }}</span
-          >
+          {{ t("home.about.titleNormal") }}
+          <span class="block font-semibold italic text-secondary-700">{{
+            t("home.about.titleItalic")
+          }}</span>
         </h2>
       </div>
       <div class="flex flex-col items-start md:items-end md:pt-10">
         <p
           class="text-base font-normal text-neutral-500 leading-[1.5] tracking-[-0.02em] md:text-right"
         >
-          {{ t('home.about.description') }}
+          {{ t("home.about.description") }}
         </p>
         <UButton
           to="/about"
@@ -29,7 +29,7 @@
           size="lg"
           class="mt-6 font-medium px-6 py-4 h-14 rounded-none bg-primary-500 text-secondary-700 hover:bg-primary-600 transition-colors"
         >
-          {{ t('home.about.button') }}
+          {{ t("home.about.button") }}
         </UButton>
       </div>
     </div>
@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { useLanguage } from '~/composables/useLanguage'
+import { useLanguage } from "~/composables/useLanguage";
 
-const { t } = useLanguage()
+const { t } = useLanguage();
 </script>

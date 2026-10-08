@@ -3,7 +3,7 @@
     <div class="mx-auto max-w-7xl md:flex md:items-end md:justify-between">
       <div class="max-w-2xl">
         <p
-          class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#F4C400]"
+          class="text-lg font-semibold uppercase tracking-wider text-[#F4C400]"
         >
           {{ t("home.stats.tag") }}
         </p>
