@@ -43,7 +43,7 @@ async function fetchAllArticleIdentifiers(apiBase) {
 }
 
 async function main() {
-  const apiBase = process.env.NUXT_PUBLIC_API_BASE || "http://localhost:8000/api";
+  const apiBase = process.env.NUXT_PUBLIC_API_BASE || "https://admin.pcgmitra.co.id/api";
   const siteUrl = process.env.NUXT_PUBLIC_SITE_URL || "https://pcgmitra.co.id";
   const outputDir = process.env.SITEMAP_OUTPUT_DIR || resolve(__dirname, "../.output/public");
 

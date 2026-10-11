@@ -13,7 +13,7 @@ export function getApiBaseUrl(): string {
   } catch {
     // Fallback when executed outside Nuxt context (e.g. unit tests)
   }
-  return "http://localhost:8000/api";
+  return "https://admin.pcgmitra.co.id/api";
 }
 
 export function safeUseFetch<T>(url: string | (() => string), opts?: any) {
