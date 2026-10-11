@@ -17,7 +17,10 @@ export function getApiBaseUrl(): string {
 export function safeUseFetch<T>(url: string | (() => string), opts?: any) {
   try {
     if (typeof useFetch === "function") {
-      return useFetch<T>(url, opts);
+      return useFetch<T>(url, {
+        dedupe: "defer",
+        ...opts,
+      });
     }
   } catch {
     // Unit tests fallback
