@@ -143,7 +143,6 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: TeamMember[] }>(
   `${apiBase}/team`,
   {
     key: "team-list",
-    getCachedData: (key: string, nuxtApp: any) => (nuxtApp?.isHydrating ? nuxtApp.payload?.data?.[key] : undefined),
   },
 );
 

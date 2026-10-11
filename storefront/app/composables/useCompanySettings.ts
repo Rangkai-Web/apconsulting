@@ -22,7 +22,6 @@ export function useCompanySettings() {
     `${apiBase}/settings`,
     {
       key: "company-settings",
-      getCachedData: (key: string, nuxtApp: any) => (nuxtApp?.isHydrating ? nuxtApp.payload?.data?.[key] : undefined),
     }
   );
 

@@ -1,6 +1,4 @@
-import { ref, getCurrentInstance, onMounted } from "vue";
-
-const lastRefreshedMap = new Map<string, number>();
+import { ref } from "vue";
 
 export function getApiBaseUrl(): string {
   try {
@@ -19,51 +17,7 @@ export function getApiBaseUrl(): string {
 export function safeUseFetch<T>(url: string | (() => string), opts?: any) {
   try {
     if (typeof useFetch === "function") {
-      const fetchOpts = {
-        getCachedData: (key: string, nuxtApp: any) =>
-          nuxtApp?.isHydrating ? nuxtApp.payload?.data?.[key] : undefined,
-        ...opts,
-      };
-
-      const res = useFetch<T>(url, fetchOpts);
-
-      // On client side, revalidate in background after hydration (SWR pattern)
-      if (typeof window !== "undefined" && opts?.clientRefresh !== false) {
-        const triggerRefresh = () => {
-          let rawKey = opts?.key;
-          if (!rawKey) {
-            try {
-              rawKey = typeof url === "function" ? url() : String(url);
-            } catch {
-              rawKey = "api-fetch";
-            }
-          }
-
-          const now = Date.now();
-          const last = lastRefreshedMap.get(rawKey) || 0;
-          if (now - last > 5000) {
-            lastRefreshedMap.set(rawKey, now);
-            try {
-              const promise = res.refresh();
-              if (promise && typeof promise.catch === "function") {
-                promise.catch(() => {});
-              }
-            } catch {
-              // Ignore background refresh failure to prevent UI crash
-            }
-          }
-        };
-
-        if (getCurrentInstance()) {
-          onMounted(() => {
-            triggerRefresh();
-          });
-        } else {
-          setTimeout(triggerRefresh, 0);
-        }
-      }
-
-      return res;
+      return useFetch<T>(url, opts);
     }
   } catch {
     // Unit tests fallback

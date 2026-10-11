@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   srcDir: "app",
   compatibilityDate: "2026-06-19",
   devtools: { enabled: false },
-  ssr: true,
+  ssr: false,
   css: ["~/assets/css/main.css"],
   modules: [
     "@nuxt/ui",
@@ -38,22 +38,6 @@ export default defineNuxtConfig({
     build: {
       cssCodeSplit: true,
     },
-  },
-  nitro: {
-    prerender: {
-      crawlLinks: true,
-      routes: ["/", "/about", "/services", "/insight", "/contact"],
-    },
-  },
-  routeRules: {
-    "/": { isr: true },
-    "/about": { isr: true },
-    "/services": { isr: true },
-    "/insight": { isr: true },
-    "/insight/**": { isr: true },
-    "/contact": { isr: true },
-    "/images/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
-    "/_nuxt/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
   },
   image: {
     format: ["webp", "jpg", "png"],
