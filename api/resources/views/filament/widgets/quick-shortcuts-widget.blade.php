@@ -6,7 +6,7 @@
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 0.5rem;">
             <!-- Shortcut 1: Tulis Artikel Baru -->
-            <a href="{{ url('/admin/articles/create') }}" 
+            <a href="{{ \App\Filament\Resources\ArticleResource::getUrl('create') }}" 
                style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border-radius: 0.75rem; border: 1px solid rgba(156, 163, 175, 0.25); background-color: rgba(156, 163, 175, 0.05); text-decoration: none; color: inherit; transition: all 0.2s;"
                onmouseover="this.style.borderColor='#3b82f6'; this.style.backgroundColor='rgba(59,130,246,0.1)'"
                onmouseout="this.style.borderColor='rgba(156, 163, 175, 0.25)'; this.style.backgroundColor='rgba(156, 163, 175, 0.05)'">
@@ -20,7 +20,7 @@
             </a>
 
             <!-- Shortcut 2: Tambah FAQ -->
-            <a href="{{ url('/admin/faqs/create') }}" 
+            <a href="{{ \App\Filament\Resources\FaqResource::getUrl('create') }}" 
                style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border-radius: 0.75rem; border: 1px solid rgba(156, 163, 175, 0.25); background-color: rgba(156, 163, 175, 0.05); text-decoration: none; color: inherit; transition: all 0.2s;"
                onmouseover="this.style.borderColor='#f59e0b'; this.style.backgroundColor='rgba(245,158,11,0.1)'"
                onmouseout="this.style.borderColor='rgba(156, 163, 175, 0.25)'; this.style.backgroundColor='rgba(156, 163, 175, 0.05)'">
@@ -34,7 +34,7 @@
             </a>
 
             <!-- Shortcut 3: Tambah Tim -->
-            <a href="{{ url('/admin/teams/create') }}" 
+            <a href="{{ \App\Filament\Resources\TeamResource::getUrl('create') }}" 
                style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border-radius: 0.75rem; border: 1px solid rgba(156, 163, 175, 0.25); background-color: rgba(156, 163, 175, 0.05); text-decoration: none; color: inherit; transition: all 0.2s;"
                onmouseover="this.style.borderColor='#06b6d4'; this.style.backgroundColor='rgba(6,182,212,0.1)'"
                onmouseout="this.style.borderColor='rgba(156, 163, 175, 0.25)'; this.style.backgroundColor='rgba(156, 163, 175, 0.05)'">
@@ -48,7 +48,7 @@
             </a>
 
             <!-- Shortcut 4: Edit Pengaturan -->
-            <a href="{{ url('/admin/manage-company-settings') }}" 
+            <a href="{{ \App\Filament\Pages\ManageCompanySettings::getUrl() }}" 
                style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border-radius: 0.75rem; border: 1px solid rgba(156, 163, 175, 0.25); background-color: rgba(156, 163, 175, 0.05); text-decoration: none; color: inherit; transition: all 0.2s;"
                onmouseover="this.style.borderColor='#10b981'; this.style.backgroundColor='rgba(16,185,129,0.1)'"
                onmouseout="this.style.borderColor='rgba(156, 163, 175, 0.25)'; this.style.backgroundColor='rgba(156, 163, 175, 0.05)'">
