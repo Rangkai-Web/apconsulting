@@ -233,7 +233,7 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // Services Scope of Support
     "services.scope.tag": "SCOPE OF SUPPORT",
-    "services.scope.titleItalic": "Practical support",
+    "services.scope.titleItalic": "Practical support, ",
     "services.scope.titleNormal": "from compliance to business insight.",
     "services.scope.description":
       "Whether you need recurring compliance support, cleaner financial records, or custom advice to scale, PCG provides flexible services built around your needs.",
