@@ -101,7 +101,8 @@ class TeamResource extends Resource
             TextInput::make('sort_order')
                 ->label('Urutan Tampil')
                 ->numeric()
-                ->default(0),
+                ->default(fn () => (Team::max('sort_order') ?? 0) + 1)
+                ->helperText('Otomatis diisi nomor urutan berikutnya. Bisa diubah jika perlu.'),
             Toggle::make('is_active')
                 ->label('Aktif Tampil')
                 ->default(true),

@@ -38,7 +38,8 @@ class FaqResource extends Resource
             TextInput::make('sort_order')
                 ->label('Urutan')
                 ->numeric()
-                ->default(0),
+                ->default(fn () => (Faq::max('sort_order') ?? 0) + 1)
+                ->helperText('Otomatis diisi nomor urutan berikutnya. Bisa diubah jika perlu.'),
             Toggle::make('is_active')
                 ->label('Aktif')
                 ->default(true),
