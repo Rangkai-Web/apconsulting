@@ -87,4 +87,23 @@ class ResourceSortOrderDefaultTest extends TestCase
         Livewire::test(CreateServiceCategory::class)
             ->assertSchemaStateSet(['sort_order' => 3]);
     }
+
+    public function test_team_create_form_rejects_duplicate_sort_order(): void
+    {
+        Team::create([
+            'name' => 'Existing Member',
+            'position' => 'Consultant',
+            'sort_order' => 1,
+            'is_active' => true,
+        ]);
+
+        Livewire::test(CreateTeam::class)
+            ->fillForm([
+                'name' => 'New Member',
+                'position' => 'Partner',
+                'sort_order' => 1,
+            ])
+            ->call('create')
+            ->assertHasFormErrors(['sort_order' => 'unique']);
+    }
 }

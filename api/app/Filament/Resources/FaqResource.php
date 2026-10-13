@@ -38,8 +38,13 @@ class FaqResource extends Resource
             TextInput::make('sort_order')
                 ->label('Urutan')
                 ->numeric()
+                ->minValue(1)
                 ->default(fn () => (Faq::max('sort_order') ?? 0) + 1)
-                ->helperText('Otomatis diisi nomor urutan berikutnya. Bisa diubah jika perlu.'),
+                ->unique(table: Faq::class, column: 'sort_order', ignoreRecord: true)
+                ->validationMessages([
+                    'unique' => 'Nomor urutan ini sudah digunakan oleh FAQ lain.',
+                ])
+                ->helperText('Otomatis diisi nomor urutan berikutnya. Nomor urutan harus unik.'),
             Toggle::make('is_active')
                 ->label('Aktif')
                 ->default(true),
@@ -79,6 +84,7 @@ class FaqResource extends Resource
     {
         return $table
             ->defaultSort('sort_order', 'asc')
+            ->reorderable('sort_order')
             ->defaultPaginationPageOption(10)
             ->paginated([10, 25, 50, 100])
             ->columns([

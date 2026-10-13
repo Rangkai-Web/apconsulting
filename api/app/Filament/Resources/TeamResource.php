@@ -101,8 +101,13 @@ class TeamResource extends Resource
             TextInput::make('sort_order')
                 ->label('Urutan Tampil')
                 ->numeric()
+                ->minValue(1)
                 ->default(fn () => (Team::max('sort_order') ?? 0) + 1)
-                ->helperText('Otomatis diisi nomor urutan berikutnya. Bisa diubah jika perlu.'),
+                ->unique(table: Team::class, column: 'sort_order', ignoreRecord: true)
+                ->validationMessages([
+                    'unique' => 'Nomor urutan tampil ini sudah digunakan oleh anggota tim lain.',
+                ])
+                ->helperText('Otomatis diisi nomor urutan berikutnya. Nomor urutan harus unik.'),
             Toggle::make('is_active')
                 ->label('Aktif Tampil')
                 ->default(true),
@@ -113,6 +118,7 @@ class TeamResource extends Resource
     {
         return $table
             ->defaultSort('sort_order', 'asc')
+            ->reorderable('sort_order')
             ->defaultPaginationPageOption(10)
             ->paginated([10, 25, 50, 100])
             ->columns([
