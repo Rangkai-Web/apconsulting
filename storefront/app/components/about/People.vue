@@ -59,7 +59,7 @@
     <!-- Data State -->
     <div
       v-else
-      class="mx-auto mt-12 grid max-w-7xl gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch"
+      :class="containerClasses"
     >
       <div
         v-for="person in people"
@@ -147,6 +147,20 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: TeamMember[] }>(
 );
 
 const people = computed(() => apiResponse.value?.data || []);
+
+const containerClasses = computed(() => {
+  const count = people.value.length;
+  if (count === 1) {
+    return "mx-auto mt-12 grid max-w-xs gap-6 grid-cols-1 items-stretch";
+  }
+  if (count === 2) {
+    return "mx-auto mt-12 grid max-w-xs sm:max-w-2xl gap-6 grid-cols-1 sm:grid-cols-2 items-stretch";
+  }
+  if (count === 3) {
+    return "mx-auto mt-12 grid max-w-xs sm:max-w-2xl lg:max-w-5xl gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch";
+  }
+  return "mx-auto mt-12 grid max-w-7xl gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch";
+});
 
 function formatExternalUrl(url?: string): string {
   if (!url) return "";

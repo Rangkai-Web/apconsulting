@@ -31,7 +31,7 @@ jobs:
         working-directory: storefront
         env:
           NUXT_PUBLIC_API_BASE: ${{ secrets.NUXT_PUBLIC_API_BASE }}
-          NUXT_PUBLIC_SITE_URL: https://pcgmitra.rangkaiweb.com
+          NUXT_PUBLIC_SITE_URL: https://pcgmitra.co.id
         run: npm run generate
 
       - name: Setup SSH key
@@ -64,4 +64,4 @@ jobs:
             --exclude='admin' \
             -e "ssh -p $PORT -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
             storefront/.output/public/ \
-            $SSH_USER@$SSH_HOST:/home/$SSH_USER/domains/pcgmitra.rangkaiweb.com/public_html/
+            $SSH_USER@$SSH_HOST:/home/$SSH_USER/domains/pcgmitra.co.id/public_html/
