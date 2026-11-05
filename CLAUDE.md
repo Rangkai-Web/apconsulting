@@ -3,6 +3,7 @@
 Monorepo: `api/` (Laravel 13 + Filament v5 admin) + `storefront/` (Nuxt 4 SPA).
 Full design: `docs/superpowers/specs/2026-06-19-toko-online-design.md`.
 Storefront UI/UX guidelines: `docs/superpowers/specs/2026-06-19-storefront-ui-design.md`.
+Animation & Scroll Reveal blueprint: `docs/ANIMATION_BLUEPRINT.md`.
 Implementation plans: `docs/superpowers/plans/`.
 REST API reference (kept in sync per endpoint task): `docs/api/`.
 
