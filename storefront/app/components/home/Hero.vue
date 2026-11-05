@@ -19,8 +19,7 @@
       <div>
         <!-- Typewriter Animated Tagline Badge -->
         <div
-          class="mb-4 inline-flex items-center gap-2.5 max-w-full border border-secondary-100 bg-[#F5FBFF] px-3.5 py-1.5 text-xs font-semibold text-secondary-700 sm:text-sm tracking-wide shadow-xs hover:border-primary-500/40 transition-colors"
-          data-reveal="fade"
+          class="mb-4 inline-flex items-center gap-2.5 max-w-full border border-secondary-100 bg-[#F5FBFF] px-3.5 py-1.5 text-xs font-semibold text-secondary-700 sm:text-sm tracking-wide shadow-xs hover:border-primary-500/40 transition-colors animate-hero-badge"
         >
           <span class="relative flex size-2 shrink-0">
             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-500 opacity-75"></span>
@@ -33,8 +32,7 @@
         </div>
 
         <h1
-          class="text-3xl font-bold uppercase text-secondary-700 sm:text-4xl md:text-[52px] leading-[1.2] tracking-[-0.02em]"
-          data-reveal="up"
+          class="text-3xl font-bold uppercase text-secondary-700 sm:text-4xl md:text-[52px] leading-[1.2] tracking-[-0.02em] animate-hero-title"
         >
           {{ t("home.hero.title1") }}
           <span
@@ -44,16 +42,12 @@
           {{ t("home.hero.title2") }}
         </h1>
         <p
-          class="mt-4 max-w-md text-sm text-neutral-500 leading-relaxed md:mt-6 md:text-base"
-          data-reveal="up"
-          data-reveal-delay="100"
+          class="mt-4 max-w-md text-sm text-neutral-500 leading-relaxed md:mt-6 md:text-base animate-hero-desc"
         >
           {{ t("home.hero.description") }}
         </p>
         <div
-          class="mt-6 flex flex-col gap-3 sm:flex-row md:mt-8 md:gap-4"
-          data-reveal="up"
-          data-reveal-delay="200"
+          class="mt-6 flex flex-col gap-3 sm:flex-row md:mt-8 md:gap-4 animate-hero-cta"
         >
           <UButton
             to="/services"
@@ -77,9 +71,7 @@
       </div>
 
       <div
-        class="flex items-end justify-center"
-        data-reveal="scale"
-        data-reveal-delay="150"
+        class="flex items-end justify-center animate-hero-image"
       >
         <picture class="w-full">
           <source

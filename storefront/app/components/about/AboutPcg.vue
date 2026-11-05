@@ -1,6 +1,6 @@
 <template>
   <section id="about-pcg" class="px-4 py-16 md:px-[32px] md:py-[80px] bg-white">
-    <div class="mx-auto max-w-7xl">
+    <div class="mx-auto max-w-7xl" data-reveal="up">
       <p
         class="text-lg font-semibold uppercase tracking-wider text-neutral-400"
       >

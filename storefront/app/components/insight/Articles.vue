@@ -122,11 +122,12 @@
           <div
             v-else
             class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+            data-reveal="up"
           >
             <article
               v-for="article in articles"
               :key="article.id"
-              class="flex flex-col border border-[#DFE7ED] bg-white overflow-hidden shadow-xs hover:shadow-md transition-shadow group"
+              class="flex flex-col border border-[#DFE7ED] bg-white overflow-hidden shadow-xs hover:shadow-md transition-shadow group hover-lift"
             >
               <NuxtLink
                 :to="`/insight/${article.slug}`"

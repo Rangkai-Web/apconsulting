@@ -24,9 +24,9 @@
       class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-transparent pointer-events-none"
     ></div>
 
-    <div class="relative z-10 mx-auto max-w-7xl w-full" data-reveal="up">
+    <div class="relative z-10 mx-auto max-w-7xl w-full">
       <span
-        class="pt-24 sm:pt-0 inline-block text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#FFBB00]"
+        class="pt-24 sm:pt-0 inline-block text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#FFBB00] animate-hero-badge"
       >
         {{ t('insight.hero.tag') }}
       </span>
@@ -35,13 +35,13 @@
         class="group block hover:text-white/95 transition-colors"
       >
         <h1
-          class="mt-3 max-w-2xl text-3xl font-semibold text-white sm:text-4xl md:text-[48px] leading-[1.15] tracking-tight group-hover:text-white/95 transition-colors line-clamp-2"
+          class="mt-3 max-w-2xl text-3xl font-semibold text-white sm:text-4xl md:text-[48px] leading-[1.15] tracking-tight group-hover:text-white/95 transition-colors line-clamp-2 animate-hero-title"
         >
           {{ featuredArticle?.title || t('insight.hero.title') }}
         </h1>
       </NuxtLink>
       <p
-        class="mt-4 text-sm text-white/90 leading-relaxed md:text-base font-normal max-w-2xl line-clamp-3"
+        class="mt-4 text-sm text-white/90 leading-relaxed md:text-base font-normal max-w-2xl line-clamp-3 animate-hero-desc"
       >
         {{ featuredArticle?.excerpt || t('insight.hero.description') }}
       </p>

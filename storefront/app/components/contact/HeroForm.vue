@@ -75,6 +75,8 @@
         <!-- Right Column: Form Container Card -->
         <div
           class="lg:col-span-7 bg-[#F8FAFC] border border-[#0000001F] p-6 sm:p-8 md:p-10 flex flex-col justify-between"
+          data-reveal="right"
+          data-reveal-delay="100"
         >
           <!-- Success Alert -->
           <div

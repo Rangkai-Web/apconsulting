@@ -5,6 +5,7 @@
     <div class="mx-auto max-w-7xl">
       <div
         class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4"
+        data-reveal="up"
       >
         <div>
           <p
@@ -27,6 +28,8 @@
       <div
         ref="mapContainer"
         class="relative w-full h-[380px] md:h-[450px] overflow-hidden border border-[#DFE7ED] shadow-xs bg-neutral-100"
+        data-reveal="scale"
+        data-reveal-delay="100"
       >
         <iframe
           v-if="isMapVisible"

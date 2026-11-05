@@ -1,6 +1,6 @@
 <template>
   <section id="scope-of-support" class="px-4 py-16 md:px-8 md:py-24 bg-white">
-    <div class="mx-auto max-w-4xl text-center">
+    <div class="mx-auto max-w-4xl text-center" data-reveal="up">
       <p class="text-lg font-semibold uppercase tracking-wide text-neutral-400">
         {{ t("services.scope.tag") }}
       </p>
@@ -23,9 +23,11 @@
 
     <div class="mx-auto mt-12 max-w-6xl space-y-6">
       <div
-        v-for="service in dynamicServices"
+        v-for="(service, idx) in dynamicServices"
         :key="service.id || service.number"
-        class="p-6 md:p-[42px] border border-[#0000001F] rounded-none shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center"
+        class="p-6 md:p-[42px] border border-[#0000001F] rounded-none shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center hover-lift"
+        data-reveal="up"
+        :data-reveal-delay="idx * 120"
         style="
           background: radial-gradient(
             49.65% 56.63% at 97.41% 3.65%,

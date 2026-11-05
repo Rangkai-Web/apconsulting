@@ -1,6 +1,6 @@
 <template>
   <section class="px-4 py-16 md:px-8 md:py-24 bg-[#FBFEFF]">
-    <div class="mx-auto max-w-3xl text-center">
+    <div class="mx-auto max-w-3xl text-center" data-reveal="up">
       <p class="text-lg font-semibold uppercase tracking-wide text-neutral-400">
         {{ t("services.need.tag") }}
       </p>
@@ -22,9 +22,11 @@
       class="mx-auto mt-12 grid max-w-6xl gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-stretch"
     >
       <div
-        v-for="need in needs"
+        v-for="(need, idx) in needs"
         :key="need.number"
-        class="flex flex-col p-6 md:p-8 border border-[#0000001F] rounded-none shadow-xs text-left justify-between"
+        class="flex flex-col p-6 md:p-8 border border-[#0000001F] rounded-none shadow-xs text-left justify-between hover-lift"
+        data-reveal="up"
+        :data-reveal-delay="idx * 120"
         style="
           background: radial-gradient(
             41% 81.3% at 50% 100%,

@@ -19,7 +19,7 @@
       class="relative z-10 mx-auto max-w-7xl grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:items-start"
     >
       <!-- Left Column: Headline & CTA -->
-      <div>
+      <div data-reveal="up">
         <p
           class="text-lg font-semibold uppercase tracking-wider text-neutral-400"
         >
@@ -56,9 +56,11 @@
       <!-- Right Column: 2x2 Grid Cards -->
       <div class="grid gap-6 sm:grid-cols-2 items-stretch">
         <div
-          v-for="card in cards"
+          v-for="(card, idx) in cards"
           :key="card.titleKey"
-          class="flex flex-col p-6 sm:p-8 md:p-[36px] border border-[#0000001F] rounded-none shadow-xs text-left justify-between bg-white"
+          class="flex flex-col p-6 sm:p-8 md:p-[36px] border border-[#0000001F] rounded-none shadow-xs text-left justify-between bg-white hover-lift"
+          data-reveal="up"
+          :data-reveal-delay="idx * 120"
           style="
             background: radial-gradient(
               49.65% 56.63% at 97.41% 3.65%,

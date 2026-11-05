@@ -130,9 +130,16 @@ button,
 .stagger-4 { transition-delay: 400ms !important; }
 
 /* Micro-interaction: Interactive Card Hover Lift */
-.hover-lift,
+.hover-lift {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal]:not(.is-revealed).hover-lift {
+  transition: transform 0.72s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
 [data-reveal].is-revealed.hover-lift {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-reveal].is-revealed.hover-lift:hover,
@@ -146,6 +153,61 @@ button:active:not(:disabled),
 [class*="u-button"]:active:not([disabled]) {
   transform: scale(0.985);
   transition: transform 0.1s ease;
+}
+
+/* ==========================================================================
+   Hero Entrance Keyframe Animations (Guaranteed Smooth Play on Reload)
+   ========================================================================== */
+
+@keyframes heroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 36px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes heroScaleUp {
+  0% {
+    opacity: 0;
+    transform: scale(0.93) translate3d(0, 16px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+.animate-hero-badge {
+  animation: heroFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.animate-hero-title {
+  animation: heroFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.animate-hero-desc {
+  animation: heroFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+}
+
+.animate-hero-cta {
+  animation: heroFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+}
+
+.animate-hero-image {
+  animation: heroScaleUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
 }
 
 /* Logo Animation Styles */
@@ -193,6 +255,17 @@ button:active:not(:disabled),
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+
+  .animate-hero-badge,
+  .animate-hero-title,
+  .animate-hero-desc,
+  .animate-hero-cta,
+  .animate-hero-image,
+  .animate-logo-entrance {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 

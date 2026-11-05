@@ -34,8 +34,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
     },
     {
-      rootMargin: "0px 0px -50px 0px",
-      threshold: 0.05,
+      rootMargin: "0px 0px -40px 0px",
+      threshold: 0.02,
     }
   );
 
@@ -74,14 +74,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       // Elements below the viewport; hide until scrolled into view
       htmlEl.classList.add("reveal-hidden");
       observer.observe(htmlEl);
-
-      // Failsafe timer: ensure no element is ever stuck hidden under any browser condition
-      setTimeout(() => {
-        if (htmlEl.classList.contains("reveal-hidden") && !htmlEl.classList.contains("is-revealed")) {
-          revealElement(htmlEl);
-          observer.unobserve(htmlEl);
-        }
-      }, 2500);
     }
   };
 

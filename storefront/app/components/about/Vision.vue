@@ -5,7 +5,7 @@
   >
     <div class="mx-auto max-w-7xl relative z-10 flex flex-col gap-16 md:gap-20">
       <!-- Vision Block (Top Right aligned or wide) -->
-      <div class="flex flex-col md:items-end md:text-right">
+      <div class="flex flex-col md:items-end md:text-right" data-reveal="up">
         <p
           class="text-lg font-semibold uppercase tracking-wider text-[#F4C400]"
         >
@@ -19,7 +19,7 @@
       </div>
 
       <!-- Mission Block (Bottom Left aligned) -->
-      <div class="max-w-3xl">
+      <div class="max-w-3xl" data-reveal="up" data-reveal-delay="150">
         <p
           class="text-lg font-semibold uppercase tracking-wider text-[#F4C400]"
         >

@@ -24,19 +24,19 @@
     ></div>
 
     <div class="relative z-10 mx-auto max-w-7xl w-full">
-      <div class="max-w-xl text-white" data-reveal="up">
+      <div class="max-w-xl text-white">
         <h1
-          class="pt-24 text-3xl font-semibold text-white sm:text-4xl md:text-[48px] leading-[1.15]"
+          class="pt-24 text-3xl font-semibold text-white sm:text-4xl md:text-[48px] leading-[1.15] animate-hero-title"
         >
           <span class="block">{{ t('about.hero.title1') }}</span>
           <span class="block">{{ t('about.hero.title2') }}</span>
         </h1>
         <p
-          class="mt-4 text-sm text-white/90 leading-relaxed md:text-base font-normal max-w-lg"
+          class="mt-4 text-sm text-white/90 leading-relaxed md:text-base font-normal max-w-lg animate-hero-desc"
         >
           {{ t('about.hero.description') }}
         </p>
-        <div class="mt-8 flex flex-wrap items-center gap-4 sm:gap-6">
+        <div class="mt-8 flex flex-wrap items-center gap-4 sm:gap-6 animate-hero-cta">
           <UButton
             to="/about#why-choose"
             color="primary"

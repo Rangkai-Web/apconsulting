@@ -3,7 +3,7 @@
     id="people"
     class="px-4 py-16 md:px-[32px] md:py-[80px] bg-[#F9FAFB]"
   >
-    <div class="mx-auto max-w-3xl text-center">
+    <div class="mx-auto max-w-3xl text-center" data-reveal="up">
       <p
         class="text-lg font-semibold uppercase tracking-wider text-neutral-400"
       >
@@ -60,11 +60,14 @@
     <div
       v-else
       :class="containerClasses"
+      data-reveal="up"
     >
       <div
-        v-for="person in people"
+        v-for="(person, idx) in people"
         :key="person.id"
-        class="relative flex flex-col h-[380px] sm:h-[420px] md:h-[450px] w-full overflow-hidden rounded-none group bg-neutral-100 border border-neutral-200"
+        class="relative flex flex-col h-[380px] sm:h-[420px] md:h-[450px] w-full overflow-hidden rounded-none group bg-neutral-100 border border-neutral-200 hover-lift"
+        data-reveal="up"
+        :data-reveal-delay="idx * 100"
       >
         <img
           :src="

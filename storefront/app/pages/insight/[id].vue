@@ -44,7 +44,7 @@
       </div>
 
       <!-- Article Content State -->
-      <div v-else>
+      <div v-else data-reveal="up">
         <!-- Article Header -->
         <div class="mt-6">
           <span

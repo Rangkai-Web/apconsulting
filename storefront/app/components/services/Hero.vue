@@ -25,19 +25,19 @@
     ></div>
 
     <div class="relative z-10 mx-auto max-w-7xl w-full">
-      <div class="max-w-2xl text-white" data-reveal="up">
+      <div class="max-w-2xl text-white">
         <h1
-          class="pt-24 text-3xl font-semibold text-white sm:text-4xl md:text-[52px] leading-[1.15] tracking-tight"
+          class="pt-24 text-3xl font-semibold text-white sm:text-4xl md:text-[52px] leading-[1.15] tracking-tight animate-hero-title"
         >
           {{ t("services.hero.title") }}
         </h1>
         <p
-          class="mt-4 text-sm text-white/90 leading-relaxed md:text-base font-normal max-w-xl"
+          class="mt-4 text-sm text-white/90 leading-relaxed md:text-base font-normal max-w-xl animate-hero-desc"
         >
           {{ t("services.hero.description") }}
         </p>
         <div
-          class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
+          class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4 animate-hero-cta"
         >
           <UButton
             to="#scope-of-support"
