@@ -1,7 +1,7 @@
 <template>
   <section class="px-4 py-16 md:px-8 md:py-24">
     <div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-2 md:items-start">
-      <div>
+      <div data-reveal="up">
         <p
           class="text-lg font-semibold uppercase tracking-wide text-neutral-400"
         >
@@ -16,7 +16,11 @@
           }}</span>
         </h2>
       </div>
-      <div class="flex flex-col items-start md:items-end md:pt-10">
+      <div
+        class="flex flex-col items-start md:items-end md:pt-10"
+        data-reveal="up"
+        data-reveal-delay="100"
+      >
         <p
           class="text-base font-normal text-neutral-500 leading-[1.5] tracking-[-0.02em] md:text-right"
         >
@@ -34,7 +38,11 @@
       </div>
     </div>
 
-    <picture class="mx-auto mt-12 block max-w-7xl w-full">
+    <picture
+      class="mx-auto mt-12 block max-w-7xl w-full"
+      data-reveal="scale"
+      data-reveal-delay="150"
+    >
       <source
         media="(min-width: 768px)"
         srcset="/images/homepage/About_Desktop.webp"

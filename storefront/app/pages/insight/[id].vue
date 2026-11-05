@@ -96,7 +96,7 @@
         <!-- Article Body Content -->
         <div
           class="mt-8 article-content text-neutral-700 text-base md:text-lg leading-relaxed font-normal space-y-6 border-b border-[#DFE7ED] pb-12"
-          v-html="article.content"
+          v-html="formattedContent"
         />
 
         <!-- Bottom Navigation -->
@@ -174,6 +174,18 @@ const article = computed<ArticleDetail | null>(() => {
     return data[0] ?? null;
   }
   return data;
+});
+
+const formattedContent = computed(() => {
+  const rawContent = article.value?.content;
+  if (!rawContent) return "";
+  return rawContent.replace(
+    /(<div[^>]*class="[^"]*table-wrapper[^"]*"[^>]*>[\s\S]*?<\/div>)|(<table[\s\S]*?<\/table>)/gi,
+    (match, alreadyWrapped, tableOnly) => {
+      if (alreadyWrapped) return alreadyWrapped;
+      return `<div class="table-wrapper" tabindex="0" role="region" aria-label="Tabel Data">${tableOnly}</div>`;
+    }
+  );
 });
 
 const pageTitle = computed(() => (article.value?.title ? article.value.title : "Insight Detail"));
@@ -280,5 +292,81 @@ useHead(() => ({
 .article-content a {
   color: #083653;
   text-decoration: underline;
+}
+
+/* Table Styles */
+.article-content .table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.article-content table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #DFE7ED;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .article-content table {
+    font-size: 0.9375rem;
+  }
+}
+
+.article-content .table-wrapper table {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.article-content thead {
+  background-color: #F5FBFF;
+}
+
+.article-content th {
+  border: 1px solid #DFE7ED;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: #083653;
+  background-color: #F5FBFF;
+  text-align: left;
+  vertical-align: top;
+}
+
+.article-content td {
+  border: 1px solid #DFE7ED;
+  padding: 0.75rem 1rem;
+  color: #374151;
+  vertical-align: top;
+}
+
+.article-content tr:nth-child(even) td {
+  background-color: #FAFCFE;
+}
+
+.article-content tr:hover td {
+  background-color: #F0F7FC;
+}
+
+.article-content th p,
+.article-content td p {
+  margin-bottom: 0.35rem;
+  line-height: 1.5;
+}
+
+.article-content th p:last-child,
+.article-content td p:last-child {
+  margin-bottom: 0;
+}
+
+.article-content th strong,
+.article-content td strong {
+  color: #083653;
 }
 </style>

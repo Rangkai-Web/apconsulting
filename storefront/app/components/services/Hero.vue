@@ -25,7 +25,7 @@
     ></div>
 
     <div class="relative z-10 mx-auto max-w-7xl w-full">
-      <div class="max-w-2xl text-white">
+      <div class="max-w-2xl text-white" data-reveal="up">
         <h1
           class="pt-24 text-3xl font-semibold text-white sm:text-4xl md:text-[52px] leading-[1.15] tracking-tight"
         >

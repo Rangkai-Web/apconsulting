@@ -4,6 +4,7 @@
       <!-- Header Bar: Left Title & Right Description -->
       <div
         class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 md:pb-12"
+        data-reveal="up"
       >
         <div>
           <p
@@ -38,6 +39,7 @@
         <!-- Left Column: Image Card with Overlay Text -->
         <div
           class="lg:col-span-5 relative overflow-hidden min-h-[420px] md:min-h-[500px] border border-[#0000001F]"
+          data-reveal="left"
         >
           <picture class="absolute inset-0 size-full pointer-events-none">
             <source

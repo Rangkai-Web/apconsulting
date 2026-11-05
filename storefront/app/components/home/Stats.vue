@@ -1,7 +1,7 @@
 <template>
   <section class="bg-[#083653] px-4 py-16 text-white md:px-[32px] md:py-[80px]">
     <div class="mx-auto max-w-7xl md:flex md:items-end md:justify-between">
-      <div class="max-w-2xl">
+      <div class="max-w-2xl" data-reveal="up">
         <p
           class="text-lg font-semibold uppercase tracking-wider text-[#F4C400]"
         >
@@ -20,6 +20,8 @@
       </div>
       <p
         class="mt-4 max-w-sm text-sm text-neutral-300 leading-relaxed md:mt-0 md:text-right font-normal"
+        data-reveal="up"
+        data-reveal-delay="100"
       >
         {{ t("home.stats.description") }}
       </p>
@@ -29,9 +31,11 @@
       class="mx-auto mt-12 grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-4 md:gap-y-0 md:divide-x md:divide-white/20"
     >
       <div
-        v-for="stat in stats"
+        v-for="(stat, idx) in stats"
         :key="stat.key"
         class="flex flex-col items-center justify-center p-4 text-center"
+        data-reveal="up"
+        :data-reveal-delay="idx * 120"
       >
         <p class="text-4xl font-extrabold text-white md:text-5xl">
           {{ stat.value }}

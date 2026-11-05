@@ -1,6 +1,6 @@
 <template>
   <section class="px-4 py-16 md:px-8 md:py-24">
-    <div class="mx-auto max-w-3xl text-center">
+    <div class="mx-auto max-w-3xl text-center" data-reveal="up">
       <p class="text-lg font-semibold uppercase tracking-wide text-neutral-400">
         {{ tag || t("home.faq.tag") }}
       </p>
@@ -54,7 +54,9 @@
       <div
         v-for="(item, index) in faqList"
         :key="item.id || index"
-        class="rounded-none bg-[#F5FBFF] border border-[#DFE7ED] overflow-hidden shadow-xs"
+        class="rounded-none bg-[#F5FBFF] border border-[#DFE7ED] overflow-hidden shadow-xs hover-lift"
+        data-reveal="up"
+        :data-reveal-delay="index * 100"
       >
         <button
           type="button"

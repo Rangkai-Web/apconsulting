@@ -8,7 +8,7 @@
 
     <div class="relative z-10 mx-auto max-w-7xl">
       <!-- Section Header -->
-      <div class="max-w-3xl">
+      <div class="max-w-3xl" data-reveal="up">
         <p
           class="text-lg font-semibold uppercase tracking-wide text-neutral-400"
         >
@@ -36,9 +36,11 @@
         class="mt-10 md:mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch"
       >
         <div
-          v-for="card in cards"
+          v-for="(card, idx) in cards"
           :key="card.titleKey"
-          class="relative overflow-hidden shadow-sm h-[380px] sm:h-[420px] md:h-[480px] w-full"
+          class="group relative overflow-hidden shadow-sm h-[380px] sm:h-[420px] md:h-[480px] w-full hover-lift"
+          data-reveal="up"
+          :data-reveal-delay="idx * 150"
         >
           <picture class="block w-full h-full">
             <source media="(min-width: 768px)" :srcset="card.desktopImg" />
@@ -49,7 +51,7 @@
               decoding="async"
               width="600"
               height="480"
-              class="w-full h-full grayscale object-cover"
+              class="w-full h-full grayscale object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </picture>
 

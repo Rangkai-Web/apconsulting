@@ -3,7 +3,7 @@
     <div
       class="mx-auto max-w-7xl grid gap-8 md:grid-cols-2 md:items-center md:gap-12"
     >
-      <div>
+      <div data-reveal="up">
         <p
           class="text-lg font-semibold uppercase tracking-wide text-neutral-400"
         >
@@ -26,7 +26,11 @@
         </p>
       </div>
 
-      <picture class="block w-full overflow-hidden">
+      <picture
+        class="block w-full overflow-hidden"
+        data-reveal="scale"
+        data-reveal-delay="150"
+      >
         <source
           media="(min-width: 768px)"
           srcset="/images/homepage/HowWeHelp_Desktop.webp"
@@ -47,9 +51,11 @@
       class="mx-auto mt-12 grid max-w-7xl gap-6 md:grid-cols-3 items-stretch"
     >
       <div
-        v-for="card in cards"
+        v-for="(card, idx) in cards"
         :key="card.titleKey"
-        class="flex flex-col p-6 sm:p-8 md:p-[42px] min-h-[360px] border border-[#0000001F] rounded-none shadow-xs transition-shadow"
+        class="flex flex-col p-6 sm:p-8 md:p-[42px] min-h-[360px] border border-[#0000001F] rounded-none shadow-xs transition-shadow hover-lift"
+        data-reveal="up"
+        :data-reveal-delay="idx * 150"
         style="
           background: radial-gradient(
             49.65% 56.63% at 97.41% 3.65%,

@@ -1,6 +1,6 @@
 <template>
   <section class="bg-[#F9FAFB] px-4 py-16 md:px-[32px] md:py-[80px]">
-    <div class="mx-auto max-w-3xl text-center">
+    <div class="mx-auto max-w-3xl text-center" data-reveal="up">
       <p class="text-lg font-semibold uppercase tracking-wide text-neutral-400">
         {{ t("home.insights.tag") }}
       </p>
@@ -65,9 +65,11 @@
       class="mx-auto mt-12 grid max-w-7xl gap-6 md:grid-cols-3 items-stretch"
     >
       <article
-        v-for="post in articles"
+        v-for="(post, idx) in articles"
         :key="post.id"
-        class="flex flex-col justify-between rounded-none bg-white p-6 border border-[#0000001F] shadow-xs group"
+        class="flex flex-col justify-between rounded-none bg-white p-6 border border-[#0000001F] shadow-xs group hover-lift"
+        data-reveal="up"
+        :data-reveal-delay="idx * 150"
       >
         <div>
           <NuxtLink

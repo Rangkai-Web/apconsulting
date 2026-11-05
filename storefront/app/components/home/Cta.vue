@@ -18,7 +18,7 @@
         class="size-full object-cover opacity-60"
       />
     </picture>
-    <div class="relative z-10 mx-auto max-w-3xl">
+    <div class="relative z-10 mx-auto max-w-3xl" data-reveal="up">
       <p class="text-lg font-semibold uppercase tracking-wide text-[#F4C400]">
         {{ tag || t("cta.tag") }}
       </p>
