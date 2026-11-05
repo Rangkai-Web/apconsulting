@@ -54,18 +54,37 @@ button,
 }
 
 /* ==========================================================================
+   Page Transitions
+   ========================================================================== */
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translate3d(0, -10px, 0);
+}
+
+/* ==========================================================================
    Scroll Reveal Animations
    ========================================================================== */
 
 [data-reveal],
 .reveal-on-scroll {
   transition-property: opacity, transform;
-  transition-duration: 0.65s;
+  transition-duration: 0.72s;
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-/* Only elements explicitly positioned below the viewport are hidden until scrolled to */
+/* Only elements explicitly marked hidden are concealed until revealed */
 .reveal-hidden {
   opacity: 0 !important;
 }
@@ -73,23 +92,23 @@ button,
 .reveal-hidden[data-reveal="up"],
 .reveal-hidden[data-reveal=""],
 .reveal-hidden.reveal-on-scroll {
-  transform: translate3d(0, 24px, 0);
+  transform: translate3d(0, 32px, 0);
 }
 
 .reveal-hidden[data-reveal="down"] {
-  transform: translate3d(0, -24px, 0);
+  transform: translate3d(0, -32px, 0);
 }
 
 .reveal-hidden[data-reveal="left"] {
-  transform: translate3d(-24px, 0, 0);
+  transform: translate3d(-32px, 0, 0);
 }
 
 .reveal-hidden[data-reveal="right"] {
-  transform: translate3d(24px, 0, 0);
+  transform: translate3d(32px, 0, 0);
 }
 
 .reveal-hidden[data-reveal="scale"] {
-  transform: scale(0.96);
+  transform: scale(0.95);
 }
 
 .reveal-hidden[data-reveal="fade"] {
@@ -127,6 +146,39 @@ button:active:not(:disabled),
 [class*="u-button"]:active:not([disabled]) {
   transform: scale(0.985);
   transition: transform 0.1s ease;
+}
+
+/* Logo Animation Styles */
+.navbar-logo,
+.footer-logo {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .navbar-logo,
+.group:hover .footer-logo {
+  transform: scale(1.05) translate3d(0, -1px, 0);
+  filter: drop-shadow(0 4px 12px rgba(8, 54, 83, 0.15)) brightness(1.03);
+}
+
+.group:active .navbar-logo,
+.group:active .footer-logo {
+  transform: scale(0.96);
+  transition-duration: 0.1s;
+}
+
+@keyframes logoEntrance {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.animate-logo-entrance {
+  animation: logoEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
 /* Accessibility: Turn off heavy animations when prefers-reduced-motion is active */

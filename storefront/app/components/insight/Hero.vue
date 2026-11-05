@@ -24,7 +24,7 @@
       class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-transparent pointer-events-none"
     ></div>
 
-    <div class="relative z-10 mx-auto max-w-7xl w-full">
+    <div class="relative z-10 mx-auto max-w-7xl w-full" data-reveal="up">
       <span
         class="pt-24 sm:pt-0 inline-block text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#FFBB00]"
       >

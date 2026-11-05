@@ -2,7 +2,7 @@
   <section class="px-4 py-12 md:px-8 md:py-20 bg-white">
     <div class="mx-auto max-w-7xl">
       <!-- Section Header -->
-      <div>
+      <div data-reveal="up">
         <h2
           class="text-2xl sm:text-3xl md:text-[36px] font-bold text-[#083653] leading-tight"
         >

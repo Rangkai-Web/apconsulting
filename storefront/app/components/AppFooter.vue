@@ -24,14 +24,18 @@
       class="relative z-10 mx-auto grid max-w-7xl gap-8 md:gap-12 md:grid-cols-[2fr_1fr_1fr_1.5fr]"
     >
       <!-- Column 1: Logo, Description & Socials -->
-      <div>
-        <NuxtLink to="/" class="flex items-center gap-2">
+      <div data-reveal="fade">
+        <NuxtLink
+          to="/"
+          class="group inline-flex items-center gap-2 focus:outline-none"
+          aria-label="PCG Homepage"
+        >
           <img
             :src="logoUrl"
             alt="PCG Logo"
             loading="lazy"
             decoding="async"
-            class="h-16! w-auto object-contain"
+            class="h-16! w-auto object-contain footer-logo"
           />
         </NuxtLink>
         <p
@@ -47,7 +51,7 @@
             :aria-label="social.name"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex size-9 items-center justify-center rounded-full border border-neutral-300 bg-white/60 text-[#083653] hover:border-[#083653] transition-colors"
+            class="flex size-9 items-center justify-center rounded-full border border-neutral-300 bg-white/60 text-[#083653] hover:border-[#083653] hover:scale-110 active:scale-95 transition-all duration-200"
           >
             <UIcon :name="social.icon" class="size-4" />
           </a>

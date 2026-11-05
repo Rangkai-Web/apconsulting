@@ -7,37 +7,42 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  const revealElement = (el: HTMLElement) => {
+    const delay = el.getAttribute("data-reveal-delay");
+    if (delay) {
+      el.style.transitionDelay = `${delay}ms`;
+      el.addEventListener(
+        "transitionend",
+        () => {
+          el.style.transitionDelay = "";
+        },
+        { once: true }
+      );
+    }
+    el.classList.remove("reveal-hidden");
+    el.classList.add("is-revealed");
+  };
+
   const observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
           const el = entry.target as HTMLElement;
-          const delay = el.getAttribute("data-reveal-delay");
-          if (delay) {
-            el.style.transitionDelay = `${delay}ms`;
-            el.addEventListener(
-              "transitionend",
-              () => {
-                el.style.transitionDelay = "";
-              },
-              { once: true }
-            );
-          }
-          el.classList.remove("reveal-hidden");
-          el.classList.add("is-revealed");
+          revealElement(el);
           observer.unobserve(el);
         }
       }
     },
     {
-      rootMargin: "0px 0px -20px 0px",
+      rootMargin: "0px 0px -50px 0px",
       threshold: 0.05,
     }
   );
 
   const initElement = (el: Element) => {
     const htmlEl = el as HTMLElement;
-    if (htmlEl.classList.contains("is-revealed")) return;
+    if (htmlEl.classList.contains("is-revealed") || htmlEl.dataset.revealInit === "true") return;
+    htmlEl.dataset.revealInit = "true";
 
     if (prefersReducedMotion) {
       htmlEl.classList.remove("reveal-hidden");
@@ -45,27 +50,38 @@ export default defineNuxtPlugin((nuxtApp) => {
       return;
     }
 
-    // Check if element is already in the viewport
+    // Check element position relative to viewport
     const rect = htmlEl.getBoundingClientRect();
     const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 
-    // If visible or above viewport, reveal immediately
-    if (rect.top < windowHeight && rect.bottom > 0) {
+    // Elements above the viewport (e.g. user refreshed mid-page)
+    if (rect.bottom <= 0) {
       htmlEl.classList.remove("reveal-hidden");
       htmlEl.classList.add("is-revealed");
+      return;
+    }
+
+    // Elements currently visible in viewport: play smooth entrance reveal
+    if (rect.top < windowHeight && rect.bottom > 0) {
+      htmlEl.classList.add("reveal-hidden");
+      // Double rAF ensures the browser paints the hidden frame before transitioning
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          revealElement(htmlEl);
+        });
+      });
     } else {
-      // Element is below the viewport; hide until scrolled into view
+      // Elements below the viewport; hide until scrolled into view
       htmlEl.classList.add("reveal-hidden");
       observer.observe(htmlEl);
 
       // Failsafe timer: ensure no element is ever stuck hidden under any browser condition
       setTimeout(() => {
         if (htmlEl.classList.contains("reveal-hidden") && !htmlEl.classList.contains("is-revealed")) {
-          htmlEl.classList.remove("reveal-hidden");
-          htmlEl.classList.add("is-revealed");
+          revealElement(htmlEl);
           observer.unobserve(htmlEl);
         }
-      }, 3000);
+      }, 2500);
     }
   };
 
@@ -83,7 +99,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       if (debounceTimer) clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
         scanAndObserve();
-      }, 30);
+      }, 40);
     });
   }
 
@@ -110,10 +126,13 @@ export default defineNuxtPlugin((nuxtApp) => {
       nextTick(() => {
         scanAndObserve();
       });
-      // Safety pass 150ms after navigation
+      // Safety passes as page transition completes
       setTimeout(() => {
         scanAndObserve();
-      }, 150);
+      }, 260);
+      setTimeout(() => {
+        scanAndObserve();
+      }, 500);
     });
   }
 
