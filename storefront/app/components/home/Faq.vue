@@ -50,13 +50,11 @@
     </div>
 
     <!-- Data State -->
-    <div v-else class="mx-auto mt-12 max-w-4xl space-y-4">
+    <div v-else class="mx-auto mt-12 max-w-4xl space-y-4" data-reveal="up">
       <div
         v-for="(item, index) in faqList"
         :key="item.id || index"
         class="rounded-none bg-[#F5FBFF] border border-[#DFE7ED] overflow-hidden shadow-xs hover-lift"
-        data-reveal="up"
-        :data-reveal-delay="index * 100"
       >
         <button
           type="button"

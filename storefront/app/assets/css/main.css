@@ -54,60 +54,45 @@ button,
 }
 
 /* ==========================================================================
-   Page Transitions
-   ========================================================================== */
-
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.page-enter-from {
-  opacity: 0;
-  transform: translate3d(0, 8px, 0);
-}
-
-.page-leave-to {
-  opacity: 0;
-  transform: translate3d(0, -8px, 0);
-}
-
-/* ==========================================================================
    Scroll Reveal Animations
    ========================================================================== */
 
 [data-reveal],
 .reveal-on-scroll {
-  opacity: 0;
   transition-property: opacity, transform;
   transition-duration: 0.65s;
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-[data-reveal="up"],
-[data-reveal=""],
-.reveal-on-scroll {
+/* Only elements explicitly positioned below the viewport are hidden until scrolled to */
+.reveal-hidden {
+  opacity: 0 !important;
+}
+
+.reveal-hidden[data-reveal="up"],
+.reveal-hidden[data-reveal=""],
+.reveal-hidden.reveal-on-scroll {
   transform: translate3d(0, 24px, 0);
 }
 
-[data-reveal="down"] {
+.reveal-hidden[data-reveal="down"] {
   transform: translate3d(0, -24px, 0);
 }
 
-[data-reveal="left"] {
+.reveal-hidden[data-reveal="left"] {
   transform: translate3d(-24px, 0, 0);
 }
 
-[data-reveal="right"] {
+.reveal-hidden[data-reveal="right"] {
   transform: translate3d(24px, 0, 0);
 }
 
-[data-reveal="scale"] {
+.reveal-hidden[data-reveal="scale"] {
   transform: scale(0.96);
 }
 
-[data-reveal="fade"] {
+.reveal-hidden[data-reveal="fade"] {
   transform: none;
 }
 
@@ -126,14 +111,15 @@ button,
 .stagger-4 { transition-delay: 400ms !important; }
 
 /* Micro-interaction: Interactive Card Hover Lift */
-.hover-lift {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.hover-lift,
+[data-reveal].is-revealed.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 [data-reveal].is-revealed.hover-lift:hover,
 .hover-lift:hover {
   transform: translate3d(0, -6px, 0) !important;
-  box-shadow: 0 16px 32px -8px rgba(8, 54, 83, 0.12);
+  box-shadow: 0 16px 32px -8px rgba(8, 54, 83, 0.12) !important;
 }
 
 /* Tactile button active states */

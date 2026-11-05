@@ -63,13 +63,12 @@
     <div
       v-else
       class="mx-auto mt-12 grid max-w-7xl gap-6 md:grid-cols-3 items-stretch"
+      data-reveal="up"
     >
       <article
-        v-for="(post, idx) in articles"
+        v-for="post in articles"
         :key="post.id"
         class="flex flex-col justify-between rounded-none bg-white p-6 border border-[#0000001F] shadow-xs group hover-lift"
-        data-reveal="up"
-        :data-reveal-delay="idx * 150"
       >
         <div>
           <NuxtLink

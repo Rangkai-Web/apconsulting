@@ -198,7 +198,7 @@ const pageImage = computed(() =>
     : `${config.public.siteUrl}/pcg_logo.jpeg`
 );
 const canonicalUrl = computed(() => {
-  if (import.meta.client && typeof window !== "undefined" && window.location?.origin) {
+  if (typeof window !== "undefined" && window.location?.origin) {
     return `${window.location.origin}/insight/${articleId.value}`;
   }
   return `${config.public.siteUrl}/insight/${articleId.value}`;

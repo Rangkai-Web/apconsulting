@@ -44,7 +44,6 @@ export default defineNuxtConfig({
     quality: 80,
   },
   app: {
-    pageTransition: { name: "page", mode: "out-in" },
     head: {
       htmlAttrs: { lang: "id" },
       title: "PCG — Phangkawira Consulting Group",
