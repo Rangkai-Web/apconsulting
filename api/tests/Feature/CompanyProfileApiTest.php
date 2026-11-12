@@ -24,11 +24,11 @@ class CompanyProfileApiTest extends TestCase
     {
         $responseId = $this->getJson('/api/faqs?lang=id');
         $responseId->assertStatus(200)
-            ->assertJsonPath('data.0.question', 'Apa saja layanan utama yang ditawarkan oleh PCG?');
+            ->assertJsonPath('data.0.question', 'Apa saja layanan utama yang ditawarkan oleh AP Consulting?');
 
         $responseEn = $this->getJson('/api/faqs?lang=en');
         $responseEn->assertStatus(200)
-            ->assertJsonPath('data.0.question', 'What core services does PCG provide?');
+            ->assertJsonPath('data.0.question', 'What core services does AP Consulting provide?');
     }
 
     public function test_can_fetch_articles_in_indonesian_and_english(): void
@@ -44,7 +44,7 @@ class CompanyProfileApiTest extends TestCase
             'content_en' => '<p>Test content</p>',
             'category_id' => 'Perpajakan',
             'category_en' => 'Taxation',
-            'author_name' => 'Admin PCG',
+            'author_name' => 'Admin AP Consulting',
             'is_published' => true,
             'published_at' => now(),
         ]);

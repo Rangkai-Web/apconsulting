@@ -1,141 +1,109 @@
+<script setup lang="ts">
+import { ref, computed } from "vue"
+import { useLanguage } from "~/composables/useLanguage"
+
+const { t } = useLanguage()
+const openFaqIndex = ref<number | null>(0)
+
+const toggleFaq = (idx: number) => {
+  openFaqIndex.value = openFaqIndex.value === idx ? null : idx
+}
+
+const faqs = computed(() => [
+  {
+    question: t("home.v3.faq.q1"),
+    answer: t("home.v3.faq.a1"),
+  },
+  {
+    question: t("home.v3.faq.q2"),
+    answer: t("home.v3.faq.a2"),
+  },
+  {
+    question: t("home.v3.faq.q3"),
+    answer: t("home.v3.faq.a3"),
+  },
+  {
+    question: t("home.v3.faq.q4"),
+    answer: t("home.v3.faq.a4"),
+  },
+])
+</script>
+
 <template>
-  <section class="px-4 py-16 md:px-8 md:py-24">
-    <div class="mx-auto max-w-3xl text-center" data-reveal="up">
-      <p class="text-lg font-semibold uppercase tracking-wide text-neutral-400">
-        {{ tag || t("home.faq.tag") }}
-      </p>
-      <h2
-        class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
-      >
-        <span class="font-sans font-semibold italic text-[#083653]"
-          >{{ titlePrefix || t("home.faq.titlePrefix")
-          }}{{ titleHighlight || t("home.faq.titleHighlight") }}</span
-        >
-      </h2>
-      <p
-        class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"
-      >
-        {{ subtitle || t("home.faq.subtitle") }}
-      </p>
-    </div>
+  <section class="w-full bg-white py-12 sm:py-14 lg:py-16">
+    <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <!-- Left Column (5 cols) -->
+        <div class="lg:col-span-5">
+          <p class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#0869B2] mb-2">
+            {{ t("home.v3.faq.eyebrow") }}
+          </p>
+          <h2 class="text-2xl sm:text-4xl font-semibold leading-[1.18] tracking-[-0.03em] text-[#092F50] mb-3 sm:mb-4">
+            {{ t("home.v3.faq.titleNormal") }} <span class="font-bold italic text-[#0869B2]">{{ t("home.v3.faq.titleItalic") }}</span>
+          </h2>
+          <p class="text-[15px] leading-[1.65] text-[#4E6B85] mb-6">
+            {{ t("home.v3.faq.subtitle") }}
+          </p>
 
-    <!-- Skeleton Loading State -->
-    <div
-      v-if="pending && !apiResponse"
-      class="mx-auto mt-12 max-w-4xl space-y-4"
-    >
-      <div
-        v-for="n in 4"
-        :key="n"
-        class="h-[72px] w-full animate-pulse bg-neutral-100 border border-[#DFE7ED]"
-      />
-    </div>
+          <!-- Clean Direct Consultation Box -->
+          <div class="bg-[#F4F9FE] border border-[#DCE8F5] rounded-[2px] p-6">
+            <h3 class="text-[16px] font-bold text-[#092F50] mb-1.5">
+              {{ t("home.v3.faq.boxTitle") }}
+            </h3>
+            <p class="text-[13.5px] leading-[1.6] text-[#4E6B85] mb-4">
+              {{ t("home.v3.faq.boxDesc") }}
+            </p>
+            <NuxtLink
+              to="/contact"
+              class="group inline-flex items-center gap-1.5 text-sm font-bold text-[#0869B2] hover:text-[#06477D] transition-colors"
+            >
+              <span>{{ t("home.v3.faq.boxCta") }}</span>
+              <span class="transition-transform group-hover:translate-x-1">↗</span>
+            </NuxtLink>
+          </div>
+        </div>
 
-    <!-- Empty State -->
-    <div
-      v-else-if="!faqList || faqList.length === 0"
-      class="mx-auto mt-12 max-w-4xl p-12 text-center border border-dashed border-neutral-300 bg-[#F5FBFF]"
-    >
-      <UIcon
-        name="i-heroicons-question-mark-circle"
-        class="size-12 text-neutral-400 mx-auto"
-      />
-      <p class="mt-3 text-base font-medium text-neutral-600">
-        {{
-          currentLocale === "en"
-            ? "No FAQs available at the moment."
-            : "Belum ada pertanyaan saat ini."
-        }}
-      </p>
-    </div>
+        <!-- Right Column (7 cols): Clean Editorial Accordion -->
+        <div class="lg:col-span-7 border-t border-[#DCE8F5]">
+          <div
+            v-for="(faq, index) in faqs"
+            :key="index"
+            class="border-b border-[#DCE8F5]"
+          >
+            <button
+              type="button"
+              class="w-full py-5 flex items-start justify-between gap-4 text-left cursor-pointer group"
+              @click="toggleFaq(index)"
+            >
+              <span
+                :class="[
+                  'text-[16px] sm:text-[17px] font-semibold leading-[1.45] transition-colors',
+                  openFaqIndex === index ? 'text-[#0869B2]' : 'text-[#092F50] group-hover:text-[#0869B2]',
+                ]"
+              >
+                {{ faq.question }}
+              </span>
+              <span
+                :class="[
+                  'w-6 h-6 shrink-0 flex items-center justify-center text-lg font-medium leading-none select-none transition-colors mt-0.5',
+                  openFaqIndex === index ? 'text-[#0869B2]' : 'text-[#728FA9] group-hover:text-[#0869B2]',
+                ]"
+              >
+                {{ openFaqIndex === index ? "−" : "+" }}
+              </span>
+            </button>
 
-    <!-- Data State -->
-    <div v-else class="mx-auto mt-12 max-w-4xl space-y-4" data-reveal="up">
-      <div
-        v-for="(item, index) in faqList"
-        :key="item.id || index"
-        class="rounded-none bg-[#F5FBFF] border border-[#DFE7ED] overflow-hidden shadow-xs hover-lift"
-      >
-        <button
-          type="button"
-          data-testid="faq-question"
-          class="flex w-full items-center justify-between p-6 md:p-7 text-left font-medium text-lg md:text-[20px] text-[#083653] hover:text-[#083653]/90 transition-colors"
-          :aria-expanded="openIndexes.includes(index)"
-          @click="toggleItem(index)"
-        >
-          <span>{{ item.question }}</span>
-          <UIcon
-            :name="
-              openIndexes.includes(index)
-                ? 'i-heroicons-minus'
-                : 'i-heroicons-plus'
-            "
-            class="size-6 shrink-0 text-[#083653]"
-          />
-        </button>
-        <div
-          v-if="openIndexes.includes(index)"
-          class="px-6 pb-6 md:px-7 md:pb-7 text-sm md:text-base leading-relaxed text-neutral-500 font-normal pt-2 border-t border-[#DFE7ED]"
-        >
-          <p>{{ item.answer }}</p>
+            <div
+              v-show="openFaqIndex === index"
+              class="pb-5 pr-8"
+            >
+              <p class="text-[14.5px] leading-[1.7] text-[#4E6B85]">
+                {{ faq.answer }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 </template>
-
-<script setup lang="ts">
-import { ref, computed } from "vue";
-import { useLanguage } from "~/composables/useLanguage";
-import { getApiBaseUrl, safeUseFetch } from "~/utils/api";
-
-const { t, currentLocale } = useLanguage();
-
-export interface FaqItem {
-  id?: number;
-  question: string;
-  answer: string;
-}
-
-defineProps<{
-  tag?: string;
-  titlePrefix?: string;
-  titleHighlight?: string;
-  subtitle?: string;
-}>();
-
-const apiBase = getApiBaseUrl();
-
-const { data: apiResponse, pending } = safeUseFetch<{ data: FaqItem[] }>(
-  () => `${apiBase}/faqs?lang=${currentLocale.value}`,
-  {
-    key: "faqs-list",
-    watch: [currentLocale],
-  },
-);
-
-const defaultItems = computed<FaqItem[]>(() => [
-  { question: t("home.faq.q1"), answer: t("home.faq.a1") },
-  { question: t("home.faq.q2"), answer: t("home.faq.a2") },
-  { question: t("home.faq.q3"), answer: t("home.faq.a3") },
-  { question: t("home.faq.q4"), answer: t("home.faq.a4") },
-  { question: t("home.faq.q5"), answer: t("home.faq.a5") },
-]);
-
-const faqList = computed<FaqItem[]>(() => {
-  if (apiResponse.value?.data && apiResponse.value.data.length > 0) {
-    return apiResponse.value.data;
-  }
-  return defaultItems.value;
-});
-
-const openIndexes = ref<number[]>([]);
-
-const toggleItem = (index: number) => {
-  if (openIndexes.value.includes(index)) {
-    openIndexes.value = openIndexes.value.filter((i) => i !== index);
-  } else {
-    openIndexes.value.push(index);
-  }
-};
-</script>

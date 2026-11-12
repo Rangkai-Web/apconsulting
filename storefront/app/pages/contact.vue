@@ -1,66 +1,51 @@
 <template>
-  <div>
+  <main class="min-h-screen bg-white text-[#092F50] antialiased selection:bg-[#0869B2] selection:text-white">
     <ContactHeroForm />
     <ContactLocationMap />
-    <HomeCta
-      :tag="t('contact.cta.tag')"
-      title-normal=""
-      :title-italic="t('contact.cta.titleItalic')"
-      :description="t('contact.cta.description')"
-      :button-text="t('contact.cta.buttonText')"
-      button-link="#fullName"
-    />
-  </div>
+    <HomeCta />
+  </main>
 </template>
 
 <script setup lang="ts">
-import { useLanguage } from "~/composables/useLanguage";
-import { useSeoText } from "~/composables/useSeoText";
-
 const { t } = useLanguage();
-const { toSafeJsonLd } = useSeoText();
 const config = useRuntimeConfig();
-const canonicalUrl = `${config.public.siteUrl}/contact`;
-const title = "Contact Us — Phangkawira Consulting Group";
-const description =
-  "Get in touch with Phangkawira Consulting Group for professional tax, accounting, bookkeeping, and business financial advisory services.";
+const route = useRoute();
+const siteUrl = config.public.siteUrl || "https://apconsulting.id";
+const currentUrl = `${siteUrl}${route.path}`;
 
 useSeoMeta({
-  title,
-  ogTitle: title,
-  description,
-  ogDescription: description,
-  ogImage: `${config.public.siteUrl}/pcg_logo.jpeg`,
-  ogUrl: canonicalUrl,
+  title: computed(() => t("seo.contact.title")),
+  ogTitle: computed(() => t("seo.contact.title")),
+  description: computed(() => t("seo.contact.description")),
+  ogDescription: computed(() => t("seo.contact.description")),
+  ogUrl: currentUrl,
+  ogImage: `${siteUrl}/images/redesign/logo.png`,
   twitterCard: "summary_large_image",
-  twitterTitle: title,
-  twitterDescription: description,
-  twitterImage: `${config.public.siteUrl}/pcg_logo.jpeg`,
+  twitterTitle: computed(() => t("seo.contact.title")),
+  twitterDescription: computed(() => t("seo.contact.description")),
+  twitterImage: `${siteUrl}/images/redesign/logo.png`,
 });
 
 useHead({
-  link: [{ rel: "canonical", href: canonicalUrl }],
+  link: [{ rel: "canonical", href: currentUrl }],
   script: [
     {
       type: "application/ld+json",
-      innerHTML: toSafeJsonLd({
+      innerHTML: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "ContactPage",
-        name: title,
-        description,
-        url: canonicalUrl,
+        name: "Contact AP Consulting",
+        url: currentUrl,
         mainEntity: {
           "@type": "Organization",
-          name: "Phangkawira Consulting Group",
-          url: config.public.siteUrl,
-          email: "pcgserver9@gmail.com",
+          name: "AP Consulting",
+          email: "contact@apconsulting.id",
+          telephone: "+62 857 5417 2217",
           address: {
             "@type": "PostalAddress",
-            streetAddress:
-              "Lt 3 Sayur Sentul, Blk. D, Rukan Cordoba, Jl. Green Lake City Boulevard No.23",
-            addressLocality: "Kota Tangerang",
-            addressRegion: "Banten",
-            postalCode: "15146",
+            streetAddress: "SUN Plaza, Jl. Meruya Ilir Raya No. 20",
+            addressLocality: "Jakarta Barat",
+            addressRegion: "DKI Jakarta",
             addressCountry: "ID",
           },
         },

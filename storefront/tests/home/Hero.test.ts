@@ -9,7 +9,7 @@ describe('Home Hero', () => {
     expect(text).toContain('CLEARER FINANCES.')
     expect(text).toContain('STRONGER BUSINESS DECISIONS')
     expect(text).toContain('DECISIONS.')
-    expect(text).toContain('PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals')
+    expect(text).toContain('AP Consulting is a legal-based tax consulting firm with deep experience, professionalism, and high integrity in assisting clients (both corporate entities and individuals) to fulfill their tax obligations effectively.')
     expect(text).toContain('EXPLORE OUR SERVICES')
     expect(text).toContain('DISCUSS YOUR NEEDS')
   })

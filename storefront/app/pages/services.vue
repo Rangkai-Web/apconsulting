@@ -1,50 +1,43 @@
 <template>
-  <div>
+  <main class="min-h-screen bg-white text-[#092F50] antialiased selection:bg-[#0869B2] selection:text-white">
+    <!-- 1. Services Hero Banner -->
     <ServicesHero />
+
+    <!-- 2. Scope of Support (AP Consulting 3 Core Services: Tax, Payroll Outsourcing, Tax Accounting) -->
     <ServicesScopeOfSupport />
+
+    <!-- 3. Start With Your Current Need -->
     <ServicesCurrentNeed />
-    <HomeOurApproach
-      :tag="t('services.ourApproach.tag')"
-      :title-prefix="t('services.ourApproach.titlePrefix')"
-      :title-highlight="t('services.ourApproach.titleHighlight')"
-      :title-suffix="t('services.ourApproach.titleSuffix')"
-      :subtitle="t('services.ourApproach.subtitle')"
-    />
-    <HomeFaq />
-    <HomeCta
-      :tag="t('services.cta.tag')"
-      :title-normal="t('services.cta.titleNormal')"
-      title-italic=""
-      :description="t('services.cta.description')"
-      :button-text="t('services.cta.buttonText')"
-      button-link="/contact"
-    />
-  </div>
+
+    <!-- 4. Our Approach (How We Work With You) -->
+    <HomeApproach />
+
+    <!-- 5. Consultation CTA Banner -->
+    <HomeCta />
+  </main>
 </template>
 
 <script setup lang="ts">
-import { useLanguage } from '~/composables/useLanguage';
-import { useSeoText } from '~/composables/useSeoText';
+import { useSeoText } from "~/composables/useSeoText";
 
-const { t } = useLanguage();
 const { toSafeJsonLd } = useSeoText();
 const config = useRuntimeConfig();
 const canonicalUrl = `${config.public.siteUrl}/services`;
-const title = "Services — Tax, Accounting & Advisory";
+const title = "Services — Tax, Payroll Outsourcing & Tax Accounting | AP Consulting";
 const description =
-  "Explore PCG's comprehensive services: Tax Box, Accounting & Bookkeeping, Business Administration Support, and custom financial advisory.";
+  "Explore AP Consulting's professional services: Tax Services (Compliance, Review, Audit & Dispute Resolution), Payroll Outsourcing Services, and Tax Accounting Services.";
 
 useSeoMeta({
   title,
   ogTitle: title,
   description,
   ogDescription: description,
-  ogImage: `${config.public.siteUrl}/pcg_logo.jpeg`,
+  ogImage: `${config.public.siteUrl}/images/redesign/logo.png`,
   ogUrl: canonicalUrl,
   twitterCard: "summary_large_image",
   twitterTitle: title,
   twitterDescription: description,
-  twitterImage: `${config.public.siteUrl}/pcg_logo.jpeg`,
+  twitterImage: `${config.public.siteUrl}/images/redesign/logo.png`,
 });
 
 useHead({
@@ -61,29 +54,32 @@ useHead({
         itemListElement: [
           {
             "@type": "Service",
-            name: "Tax Box",
-            description: "Complete tax compliance and advisory services.",
+            name: "Tax Services",
+            description:
+              "Tax Compliance Service, Tax Review Service, and Tax Dispute Resolution & Tax Audit assistance.",
             provider: {
               "@type": "Organization",
-              name: "Phangkawira Consulting Group",
+              name: "AP Consulting",
             },
           },
           {
             "@type": "Service",
-            name: "Accounting & Bookkeeping",
-            description: "Structured financial reporting and bookkeeping support.",
+            name: "Payroll Outsourcing Services",
+            description:
+              "Monthly payroll administration, PPh 21/26 calculation & withholding, payslips, and periodic employee tax reporting.",
             provider: {
               "@type": "Organization",
-              name: "Phangkawira Consulting Group",
+              name: "AP Consulting",
             },
           },
           {
             "@type": "Service",
-            name: "Business Administration Support",
-            description: "Operational and corporate administrative assistance.",
+            name: "Tax Accounting Services",
+            description:
+              "Bookkeeping, monthly & annual financial statements, and fiscal reconciliation for tax compliance.",
             provider: {
               "@type": "Organization",
-              name: "Phangkawira Consulting Group",
+              name: "AP Consulting",
             },
           },
         ],

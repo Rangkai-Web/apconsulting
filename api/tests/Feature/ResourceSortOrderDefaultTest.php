@@ -21,8 +21,8 @@ class ResourceSortOrderDefaultTest extends TestCase
     {
         parent::setUp();
         $admin = Admin::create([
-            'name' => 'Admin PCG',
-            'email' => 'admin@pcgmitra.co.id',
+            'name' => 'Admin AP Consulting',
+            'email' => 'admin@apconsulting.id',
             'password' => bcrypt('password'),
         ]);
         $this->actingAs($admin, 'admin');

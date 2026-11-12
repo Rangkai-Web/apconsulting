@@ -9,7 +9,7 @@ describe('Home Cta', () => {
     expect(text).toContain('START A CONVERSATION')
     expect(text).toContain('Ready to bring more clarity to your business?')
     expect(text).toContain("Let's take the next step together.")
-    expect(text).toContain('Tell us about your tax, accounting, or financial needs. PCG will help you identify a practical starting point for your business.')
+    expect(text).toContain('Tell us about your tax, accounting, or financial needs. AP Consulting will help you identify a practical starting point for your business.')
     expect(text).toContain('Discuss Your Needs')
   })
 })

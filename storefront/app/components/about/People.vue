@@ -1,119 +1,96 @@
 <template>
   <section
     id="people"
-    class="px-4 py-16 md:px-[32px] md:py-[80px] bg-[#F9FAFB]"
+    class="scroll-mt-20 bg-white py-12 sm:py-16 lg:py-20"
   >
-    <div class="mx-auto max-w-3xl text-center" data-reveal="up">
-      <p
-        class="text-lg font-semibold uppercase tracking-wider text-neutral-400"
-      >
-        {{ t("about.people.tag") }}
-      </p>
-      <h2
-        class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
-      >
-        <span class="font-sans font-normal text-[#083653]"
-          >{{ t("about.people.titleNormal") }}
-        </span>
-        <span class="block font-sans font-semibold italic text-[#083653]">{{
-          t("about.people.titleItalic")
-        }}</span>
-      </h2>
-      <p
-        class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base font-normal"
-      >
-        {{ t("about.people.description") }}
-      </p>
-    </div>
-
-    <!-- Skeleton Loading State -->
-    <div
-      v-if="pending"
-      class="mx-auto mt-12 grid max-w-7xl gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch"
-    >
-      <div
-        v-for="n in 4"
-        :key="n"
-        class="h-[380px] sm:h-[420px] md:h-[450px] w-full animate-pulse bg-neutral-200 border border-neutral-300"
-      />
-    </div>
-
-    <!-- Empty State -->
-    <div
-      v-else-if="!people || people.length === 0"
-      class="mx-auto mt-12 max-w-4xl p-12 text-center border border-dashed border-neutral-300 bg-white"
-    >
-      <UIcon
-        name="i-heroicons-user-group"
-        class="size-12 text-neutral-400 mx-auto"
-      />
-      <p class="mt-3 text-base font-medium text-neutral-600">
-        {{
-          currentLocale === "en"
-            ? "No team members listed at the moment."
-            : "Belum ada anggota tim yang ditampilkan saat ini."
-        }}
-      </p>
-    </div>
-
-    <!-- Data State -->
-    <div
-      v-else
-      :class="containerClasses"
-      data-reveal="up"
-    >
-      <div
-        v-for="(person, idx) in people"
-        :key="person.id"
-        class="relative flex flex-col h-[380px] sm:h-[420px] md:h-[450px] w-full overflow-hidden rounded-none group bg-neutral-100 border border-neutral-200 hover-lift"
-        data-reveal="up"
-        :data-reveal-delay="idx * 100"
-      >
-        <img
-          :src="
-            resolveImageUrl(person.photo, '/images/homepage/About_Desktop.webp')
-          "
-          :alt="person.name"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="450"
-          class="absolute inset-0 size-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
-        />
-        <div
-          class="absolute inset-x-3 bottom-3 z-10 bg-white border border-[#0000001F] py-3.5 px-4 text-center shadow-xs flex flex-col items-center justify-center"
+    <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
+      <!-- Centered Editorial Header -->
+      <div class="mx-auto max-w-[680px] text-center mb-10 sm:mb-12">
+        <p
+          class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#0869B2] mb-2"
         >
-          <h3
-            class="font-bold text-[#083653] text-base sm:text-lg leading-tight"
-          >
-            {{ person.name }}
-          </h3>
-          <p class="text-xs text-neutral-500 font-medium mt-1">
-            {{ person.position }}
-          </p>
-          <p
-            v-if="person.bio"
-            class="mt-2 text-xs text-neutral-600 font-normal line-clamp-2 leading-relaxed max-w-xs"
-          >
-            {{ person.bio }}
-          </p>
-          <div
-            v-if="hasSocials(person)"
-            class="mt-2.5 flex flex-wrap items-center justify-center gap-2 pt-2 border-t border-neutral-100/80 w-full"
-          >
-            <a
-              v-for="social in getSocials(person)"
-              :key="social.name"
-              :href="social.url"
-              target="_blank"
-              rel="noopener noreferrer"
-              :aria-label="`${person.name}'s ${social.name}`"
-              class="flex size-7 items-center justify-center rounded-full bg-neutral-100 text-[#083653] hover:bg-[#083653] hover:text-white transition-colors shrink-0"
-            >
-              <UIcon :name="social.icon" class="size-3.5" />
-            </a>
+          {{ t("about.people.tag") }}
+        </p>
+        <h2
+          class="text-2xl sm:text-4xl font-semibold leading-[1.18] tracking-[-0.03em] text-[#092F50] mb-3"
+        >
+          <span class="font-bold">{{ t("about.people.titleNormal") }}</span>
+          {{ " " }}
+          <span class="font-bold italic text-[#0869B2]">{{
+            t("about.people.titleItalic")
+          }}</span>
+        </h2>
+        <p class="text-sm sm:text-[15.5px] leading-[1.65] text-[#52687B]">
+          {{ t("about.people.description") }}
+        </p>
+      </div>
+
+      <!-- Skeleton Loading State -->
+      <div
+        v-if="pending"
+        class="mx-auto grid max-w-[960px] gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        <div
+          v-for="n in 3"
+          :key="n"
+          class="h-[360px] w-full animate-pulse bg-[#F4F9FE] border border-[#DCE8F5] rounded-[2px]"
+        />
+      </div>
+
+      <!-- Team Grid (API Data or AP Consulting Leadership Fallback) -->
+      <div v-else :class="containerClasses">
+        <article
+          v-for="person in displayedPeople"
+          :key="person.id"
+          class="group flex flex-col bg-[#F8FBFF] rounded-[2px] border border-[#DCE8F5] hover:border-[#0869B2] transition-colors duration-200 overflow-hidden"
+        >
+          <!-- Photo -->
+          <div class="relative w-full h-[260px] sm:h-[290px] bg-[#EBF3FA] overflow-hidden border-b border-[#DCE8F5]">
+            <img
+              :src="resolvePersonPhoto(person.photo)"
+              :alt="person.name"
+              loading="lazy"
+              decoding="async"
+              class="size-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            />
           </div>
-        </div>
+
+          <!-- Profile Info -->
+          <div class="p-6 text-center flex flex-col flex-grow justify-between items-center bg-white">
+            <div>
+              <h3 class="text-lg sm:text-[19px] font-bold text-[#092F50] leading-snug">
+                {{ person.name }}
+              </h3>
+              <p class="text-xs sm:text-sm font-semibold text-[#0869B2] mt-1">
+                {{ person.position }}
+              </p>
+              <p
+                v-if="person.bio"
+                class="mt-2.5 text-xs sm:text-[13.5px] text-[#52687B] leading-[1.6] line-clamp-3"
+              >
+                {{ person.bio }}
+              </p>
+            </div>
+
+            <div
+              v-if="hasSocials(person)"
+              class="mt-5 pt-4 border-t border-[#F0F6FC] w-full flex flex-wrap items-center justify-center gap-2.5"
+            >
+              <a
+                v-for="social in getSocials(person)"
+                :key="social.name"
+                :href="social.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                :aria-label="`${person.name}'s ${social.name}`"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px] bg-[#F0F7FF] text-[#0869B2] hover:bg-[#0869B2] hover:text-white text-xs font-semibold transition-colors"
+              >
+                <UIcon :name="social.icon" class="size-3.5" />
+                <span>{{ social.name === "LinkedIn" ? t("about.people.seeProfile") : social.name }}</span>
+              </a>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -125,7 +102,7 @@ import { useLanguage } from "~/composables/useLanguage";
 import { getApiBaseUrl, resolveImageUrl, safeUseFetch } from "~/utils/api";
 
 interface TeamMember {
-  id: number;
+  id: number | string;
   name: string;
   position: string;
   photo?: string;
@@ -139,30 +116,51 @@ interface TeamMember {
   youtube_url?: string;
 }
 
-const { t, currentLocale } = useLanguage();
+const { t } = useLanguage();
 const apiBase = getApiBaseUrl();
 
 const { data: apiResponse, pending } = safeUseFetch<{ data: TeamMember[] }>(
   `${apiBase}/team`,
   {
     key: "team-list",
-  },
+  }
 );
 
-const people = computed(() => apiResponse.value?.data || []);
+const fallbackLeadership = computed<TeamMember[]>(() => [
+  {
+    id: "leadership-andry",
+    name: "Andry Phangkawira, S.E., Ak., BKP.",
+    position: "Partner",
+    photo: "/images/redesign/collaboration.png",
+    bio: t("about.people.licenseNote"),
+    linkedin_url: "https://www.linkedin.com/",
+  },
+]);
+
+const displayedPeople = computed(() => {
+  const items = apiResponse.value?.data || [];
+  return items.length > 0 ? items : fallbackLeadership.value;
+});
+
+function resolvePersonPhoto(photo?: string): string {
+  if (photo && photo.startsWith("/images/redesign/")) {
+    return photo;
+  }
+  return resolveImageUrl(photo, "/images/redesign/collaboration.png");
+}
 
 const containerClasses = computed(() => {
-  const count = people.value.length;
+  const count = displayedPeople.value.length;
   if (count === 1) {
-    return "mx-auto mt-12 grid max-w-xs gap-6 grid-cols-1 items-stretch";
+    return "mx-auto grid max-w-[360px] gap-6 grid-cols-1";
   }
   if (count === 2) {
-    return "mx-auto mt-12 grid max-w-xs sm:max-w-2xl gap-6 grid-cols-1 sm:grid-cols-2 items-stretch";
+    return "mx-auto grid max-w-[740px] gap-6 grid-cols-1 sm:grid-cols-2";
   }
   if (count === 3) {
-    return "mx-auto mt-12 grid max-w-xs sm:max-w-2xl lg:max-w-5xl gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch";
+    return "mx-auto grid max-w-[1060px] gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
   }
-  return "mx-auto mt-12 grid max-w-7xl gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch";
+  return "mx-auto grid max-w-[1240px] gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4";
 });
 
 function formatExternalUrl(url?: string): string {
@@ -197,7 +195,7 @@ function getSocials(person: TeamMember) {
       (item) =>
         typeof item.url === "string" &&
         item.url.replace(/[\u00a0\s]+/g, "").trim() !== "" &&
-        item.url !== "#",
+        item.url !== "#"
     )
     .map((item) => ({
       ...item,

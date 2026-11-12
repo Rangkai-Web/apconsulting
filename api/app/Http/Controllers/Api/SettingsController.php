@@ -13,7 +13,7 @@ class SettingsController extends Controller
         $settings = Setting::all()->pluck('value', 'key')->toArray();
 
         $logoPath = $settings['company_logo'] ?? null;
-        $logoUrl = $logoPath ? asset('uploads/' . $logoPath) : asset('pcg_logo.jpeg');
+        $logoUrl = $logoPath ? asset('uploads/' . $logoPath) : asset('ap_consulting_logo.jpeg');
 
         return response()->json([
             'status' => 'success',
@@ -22,7 +22,7 @@ class SettingsController extends Controller
                     'logo' => $logoUrl,
                 ],
                 'contact' => [
-                    'email' => $settings['contact_email'] ?? 'info@pcgmitra.co.id',
+                    'email' => $settings['contact_email'] ?? 'info@apconsulting.id',
                     'phone' => $settings['contact_phone'] ?? '+62 21 1234 5678',
                     'whatsapp' => $settings['whatsapp_number'] ?? '6281234567890',
                     'address' => $settings['office_address'] ?? '',

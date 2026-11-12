@@ -11,7 +11,7 @@ describe('AboutHero', () => {
     const text = wrapper.text()
     expect(text).toContain('More than accountants.')
     expect(text).toContain('Partners in your progress.')
-    expect(text).toContain('PCG helps businesses make confident financial decisions.')
+    expect(text).toContain('AP Consulting helps businesses make confident financial decisions.')
     expect(text).toContain('DISCOVER OUR APPROACH')
     expect(text).toContain('MEET THE TEAM')
   })

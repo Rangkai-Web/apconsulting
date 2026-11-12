@@ -37,7 +37,7 @@
         />
         <img
           src="/images/homepage/HowWeHelp_Mobile.webp"
-          alt="PCG team"
+          alt="AP Consulting team"
           loading="lazy"
           decoding="async"
           width="600"

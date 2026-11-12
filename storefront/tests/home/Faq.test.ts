@@ -8,13 +8,13 @@ describe('Home Faq', () => {
     const text = wrapper.text()
     expect(text).toContain('FREQUENTLY ASKED QUESTIONS')
     expect(text).toContain('Clear answers for your next step.')
-    expect(text).toContain('What services does PCG provide?')
+    expect(text).toContain('What services does AP Consulting provide?')
   })
 
   it('expands the answer when the question is clicked', async () => {
     const wrapper = mount(Faq)
-    expect(wrapper.text()).not.toContain('PCG provides professional consulting')
+    expect(wrapper.text()).not.toContain('AP Consulting provides professional consulting')
     await wrapper.find('[data-testid="faq-question"]').trigger('click')
-    expect(wrapper.text()).toContain('PCG provides professional consulting and advisory support across taxation, accounting and bookkeeping, and other customized financial services.')
+    expect(wrapper.text()).toContain('AP Consulting provides professional consulting and advisory support across taxation, accounting and bookkeeping, and other customized financial services.')
   })
 })

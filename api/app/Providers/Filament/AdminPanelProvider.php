@@ -28,8 +28,8 @@ class AdminPanelProvider extends PanelProvider
             ->path('')
             ->authGuard('admin')
             ->login()
-            ->brandName('PCG Admin Panel')
-            ->brandLogo(asset('pcg_logo.jpeg'))
+            ->brandName('AP Consulting Admin Panel')
+            ->brandLogo(asset('ap_consulting_logo.jpeg'))
             ->brandLogoHeight('3rem')
             ->favicon(asset('favicon.ico'))
             ->colors([

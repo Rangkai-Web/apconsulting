@@ -1,8 +1,8 @@
-# Homepage Rebuild (PCG Company Profile) Implementation Plan
+# Homepage Rebuild (AP Consulting Company Profile) Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace the storefront's ecommerce homepage (`/`) with the PCG (Phangkawira Consulting Group) company-profile homepage, matching the Figma design system and the live "Homepage" frame content.
+**Goal:** Replace the storefront's ecommerce homepage (`/`) with the AP Consulting (AP Consulting) company-profile homepage, matching the Figma design system and the live "Homepage" frame content.
 
 **Architecture:** Nuxt 4 SPA (`ssr: false`), one presentational Vue component per homepage section under `app/components/home/`, composed in `app/pages/index.vue`. Navbar/Footer are rewritten in place (`AppHeader.vue`, `AppFooter.vue`). Design tokens (colors, font) live in `app/assets/css/main.css` as Tailwind v4 `@theme` custom properties, consumed by Nuxt UI v4 via `app.config.ts`. No backend calls — all copy is hardcoded per the spec.
 
@@ -46,7 +46,7 @@ The frontend is mid-pivot: `app/store/cart.ts`, `app/store/auth.ts`, `app/store/
 - Modify: `app/pages/index.vue` (emptied here, rebuilt in Task 15)
 - Modify: `app/components/AppHeader.vue` (emptied here, rebuilt in Task 4)
 - Modify: `app/components/AppFooter.vue` (emptied here, rebuilt in Task 5)
-- Modify: `app/app.vue` (strip the `useStoreSeo`/`useCurrency` references here; real PCG JSON-LD content added in Task 3)
+- Modify: `app/app.vue` (strip the `useStoreSeo`/`useCurrency` references here; real AP Consulting JSON-LD content added in Task 3)
 
 **Interfaces:**
 - Produces: a repo where `npm run typecheck` and `npm run test` both run cleanly (may still show `AppHeader`/`AppFooter`/`index.vue` as trivially empty — that's expected until Tasks 4/5/15).
@@ -116,7 +116,7 @@ git commit -m "chore: remove dead ecommerce code ahead of homepage rebuild"
 
 ## Task 2: Design tokens — colors and font
 
-Replace the ecommerce coral/green palette and Quicksand/Fredoka fonts with the PCG palette (Poppins only). Values below are the exact hexes captured from `design-system.manifest.json` (see spec's "Design tokens" section) — only the shades that exist in the Figma export are defined; there is no fabricated in-between shade.
+Replace the ecommerce coral/green palette and Quicksand/Fredoka fonts with the AP Consulting palette (Poppins only). Values below are the exact hexes captured from `design-system.manifest.json` (see spec's "Design tokens" section) — only the shades that exist in the Figma export are defined; there is no fabricated in-between shade.
 
 **Files:**
 - Modify: `app/assets/css/main.css`
@@ -207,14 +207,14 @@ Expected: no matches. `@nuxt/fonts` (already installed, see `nuxt.config.ts` mod
 
 ```bash
 git add app/assets/css/main.css app/app.config.ts
-git commit -m "feat: swap design tokens to PCG palette and Poppins"
+git commit -m "feat: swap design tokens to AP Consulting palette and Poppins"
 ```
 
 ---
 
-## Task 3: Global SEO meta and JSON-LD for PCG
+## Task 3: Global SEO meta and JSON-LD for AP Consulting
 
-`nuxt.config.ts` and `app.vue` still describe "BbystarGO — Jasa Pembelian Barang & Ready Stock" (an `OnlineStore` schema). Replace with PCG's real identity, using the address/email confirmed from the Figma footer (spec section 10).
+`nuxt.config.ts` and `app.vue` still describe "BbystarGO — Jasa Pembelian Barang & Ready Stock" (an `OnlineStore` schema). Replace with AP Consulting's real identity, using the address/email confirmed from the Figma footer (spec section 10).
 
 **Files:**
 - Modify: `storefront/nuxt.config.ts`
@@ -230,30 +230,30 @@ git commit -m "feat: swap design tokens to PCG palette and Poppins"
 app: {
   head: {
     htmlAttrs: { lang: "en" },
-    title: "PCG — Phangkawira Consulting Group",
-    titleTemplate: "%s | PCG",
+    title: "AP Consulting — AP Consulting",
+    titleTemplate: "%s | AP Consulting",
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     meta: [
       {
         name: "description",
         content:
-          "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
+          "AP Consulting helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
       },
-      { property: "og:title", content: "PCG — Phangkawira Consulting Group" },
+      { property: "og:title", content: "AP Consulting — AP Consulting" },
       {
         property: "og:description",
         content:
-          "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
+          "AP Consulting helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
       },
-      { property: "og:site_name", content: "PCG" },
+      { property: "og:site_name", content: "AP Consulting" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "en_US" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "PCG — Phangkawira Consulting Group" },
+      { name: "twitter:title", content: "AP Consulting — AP Consulting" },
       {
         name: "twitter:description",
         content:
-          "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
+          "AP Consulting helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
       },
     ],
   },
@@ -262,7 +262,7 @@ app: {
 
 Leave `runtimeConfig.public.siteUrl`'s default as-is for now (still `bbystargo.com`) — updating the production domain is a deployment concern, not part of this homepage rebuild; flag it to the user separately.
 
-- [x] **Step 2: Replace the JSON-LD in `app.vue` with hardcoded PCG data**
+- [x] **Step 2: Replace the JSON-LD in `app.vue` with hardcoded AP Consulting data**
 
 ```vue
 <template>
@@ -286,9 +286,9 @@ useHead(() => ({
       innerHTML: toSafeJsonLd({
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
-        name: "Phangkawira Consulting Group",
+        name: "AP Consulting",
         url: config.public.siteUrl,
-        email: "pcgserver9@gmail.com",
+        email: "info@apconsulting.id",
         address: {
           "@type": "PostalAddress",
           streetAddress:
@@ -314,7 +314,7 @@ Expected: PASS.
 
 ```bash
 git add nuxt.config.ts app/app.vue
-git commit -m "feat: replace BbystarGO SEO meta and JSON-LD with PCG identity"
+git commit -m "feat: replace BbystarGO SEO meta and JSON-LD with AP Consulting identity"
 ```
 
 ---
@@ -329,7 +329,7 @@ Rebuild as a static nav bar (no cart/auth/wishlist state — those stores no lon
 
 **Interfaces:**
 - Produces: no props, no emits — self-contained. Rendered by `app/layouts/default.vue` (unchanged, already renders `<AppHeader />`).
-- Note: the PCG logo file doesn't exist in `public/images/` yet — Figma MCP export quota was exhausted mid-session. Until the real logo is exported, render the text "PCG" as a stand-in wrapped in the same `<NuxtLink to="/">` so swapping in `<img src="/images/pcg-logo.svg">` later is a one-line change. Flag this to the user in the task's commit message.
+- Note: the AP Consulting logo file doesn't exist in `public/images/` yet — Figma MCP export quota was exhausted mid-session. Until the real logo is exported, render the text "AP Consulting" as a stand-in wrapped in the same `<NuxtLink to="/">` so swapping in `<img src="/images/pcg-logo.svg">` later is a one-line change. Flag this to the user in the task's commit message.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -371,7 +371,7 @@ Expected: FAIL (`AppHeader.vue` is still the empty placeholder from Task 1).
 <template>
   <header class="sticky top-0 z-40 border-b border-neutral-200 bg-white">
     <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 md:px-8">
-      <NuxtLink to="/" class="text-2xl font-bold text-secondary-700">PCG</NuxtLink>
+      <NuxtLink to="/" class="text-2xl font-bold text-secondary-700">AP Consulting</NuxtLink>
 
       <nav class="hidden items-center gap-8 md:flex">
         <NuxtLink to="/" class="text-neutral-500 hover:text-secondary-700">Home</NuxtLink>
@@ -432,7 +432,7 @@ Expected: PASS.
 
 ```bash
 git add app/components/AppHeader.vue tests/AppHeader.test.ts
-git commit -m "feat: rebuild AppHeader as PCG navbar (logo is a text stand-in pending Figma export)"
+git commit -m "feat: rebuild AppHeader as AP Consulting navbar (logo is a text stand-in pending Figma export)"
 ```
 
 ---
@@ -460,9 +460,9 @@ describe('AppFooter', () => {
   it('renders contact details and the copyright line', () => {
     const wrapper = mount(AppFooter)
     const text = wrapper.text()
-    expect(text).toContain('pcgserver9@gmail.com')
+    expect(text).toContain('info@apconsulting.id')
     expect(text).toContain('Kota Tangerang, Banten 15146')
-    expect(text).toContain('Copyright © 2026 Phangkawira Consulting Group. All Rights Reserved')
+    expect(text).toContain('Copyright © 2026 AP Consulting. All Rights Reserved')
   })
 
   it('lists all four services', () => {
@@ -488,7 +488,7 @@ Expected: FAIL.
   <footer class="bg-neutral-50 px-4 py-16 md:px-8">
     <div class="mx-auto grid max-w-7xl gap-12 md:grid-cols-[2fr_1fr_1fr_1.5fr]">
       <div>
-        <p class="text-2xl font-bold text-secondary-700">PCG</p>
+        <p class="text-2xl font-bold text-secondary-700">AP Consulting</p>
         <p class="mt-4 max-w-sm text-neutral-500">
           Professional support in tax, accounting, and financial services. We're helping
           businesses move forward with clarity and confidence.
@@ -535,13 +535,13 @@ Expected: FAIL.
         </p>
         <p class="mt-3 flex items-center gap-2 text-neutral-500">
           <Icon name="lucide:mail" class="size-4 shrink-0" />
-          <a href="mailto:pcgserver9@gmail.com">pcgserver9@gmail.com</a>
+          <a href="mailto:info@apconsulting.id">info@apconsulting.id</a>
         </p>
       </div>
     </div>
 
     <div class="mx-auto mt-12 flex max-w-7xl flex-col gap-4 border-t border-neutral-200 pt-6 text-sm text-neutral-500 md:flex-row md:items-center md:justify-between">
-      <p>Copyright © 2026 Phangkawira Consulting Group. All Rights Reserved</p>
+      <p>Copyright © 2026 AP Consulting. All Rights Reserved</p>
       <div class="flex gap-6">
         <a href="#">Privacy Policy</a>
         <a href="#">Terms & Conditions</a>
@@ -571,7 +571,7 @@ Expected: PASS.
 
 ```bash
 git add app/components/AppFooter.vue tests/AppFooter.test.ts
-git commit -m "feat: rebuild AppFooter with real PCG content"
+git commit -m "feat: rebuild AppFooter with real AP Consulting content"
 ```
 
 ---
@@ -600,7 +600,7 @@ describe('Home Hero', () => {
     expect(text).toContain('CLEARER FINANCES.')
     expect(text).toContain('STRONGER BUSINESS DECISIONS')
     expect(text).toContain('DECISIONS.')
-    expect(text).toContain('PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals')
+    expect(text).toContain('AP Consulting helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals')
     expect(text).toContain('EXPLORE OUR SERVICES')
     expect(text).toContain('DISCUSS YOUR NEEDS')
   })
@@ -632,7 +632,7 @@ Expected: FAIL (file doesn't exist).
           DECISIONS.
         </h1>
         <p class="mt-6 max-w-md text-neutral-500">
-          PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs
+          AP Consulting helps businesses manage tax, accounting, bookkeeping, and other financial needs
           with a structured, professional approach tailored to their goals
         </p>
         <div class="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -642,7 +642,7 @@ Expected: FAIL (file doesn't exist).
       </div>
 
       <div class="flex items-end gap-4">
-        <img src="/images/homepage/HeroContent_Desktop.png" alt="PCG — clearer finances, stronger business decisions" class="w-full" />
+        <img src="/images/homepage/HeroContent_Desktop.png" alt="AP Consulting — clearer finances, stronger business decisions" class="w-full" />
       </div>
     </div>
   </section>
@@ -667,7 +667,7 @@ git commit -m "feat: add homepage Hero section"
 
 ---
 
-## Task 7: About PCG section
+## Task 7: About AP Consulting section
 
 **Files:**
 - Create: `app/components/home/AboutPcg.vue`
@@ -688,7 +688,7 @@ describe('Home AboutPcg', () => {
   it('renders the headline and CTA', () => {
     const wrapper = mount(AboutPcg)
     const text = wrapper.text()
-    expect(text).toContain('ABOUT PCG')
+    expect(text).toContain('ABOUT AP Consulting')
     expect(text).toContain('More than accountants.')
     expect(text).toContain('Partners in your progress.')
     expect(text).toContain('DISCOVER HOW WE HELP')
@@ -708,7 +708,7 @@ Expected: FAIL.
   <section class="px-4 py-16 md:px-8 md:py-24">
     <div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-2 md:items-start">
       <div>
-        <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">About PCG</p>
+        <p class="text-sm font-semibold uppercase tracking-wide text-neutral-400">About AP Consulting</p>
         <h2 class="mt-4 text-3xl font-semibold text-secondary-700 md:text-4xl">
           More than accountants.
           <span class="block italic">Partners in your progress.</span>
@@ -728,7 +728,7 @@ Expected: FAIL.
 
     <img
       src="/images/homepage/About_Desktop.png"
-      alt="PCG team reviewing financial documents"
+      alt="AP Consulting team reviewing financial documents"
       class="mx-auto mt-12 max-w-7xl rounded-lg"
     />
   </section>
@@ -746,12 +746,12 @@ Expected: PASS.
 
 ```bash
 git add app/components/home/AboutPcg.vue tests/home/AboutPcg.test.ts
-git commit -m "feat: add homepage About PCG section"
+git commit -m "feat: add homepage About AP Consulting section"
 ```
 
 ---
 
-## Task 8: Stats section ("PCG At a Glance")
+## Task 8: Stats section ("AP Consulting At a Glance")
 
 **Files:**
 - Create: `app/components/home/Stats.vue`
@@ -795,7 +795,7 @@ Expected: FAIL.
   <section class="bg-secondary-700 px-4 py-16 text-white md:px-8 md:py-24">
     <div class="mx-auto max-w-7xl md:flex md:items-end md:justify-between">
       <div class="max-w-xl">
-        <p class="text-sm font-semibold uppercase tracking-wide text-primary-500">PCG at a Glance</p>
+        <p class="text-sm font-semibold uppercase tracking-wide text-primary-500">AP Consulting at a Glance</p>
         <h2 class="mt-4 text-3xl font-bold italic md:text-4xl">
           A structured foundation for better business decisions.
         </h2>
@@ -896,7 +896,7 @@ Expected: FAIL.
 
     <img
       src="/images/homepage/HowWeHelp_Desktop.png"
-      alt="PCG team"
+      alt="AP Consulting team"
       class="mx-auto mt-10 max-w-7xl rounded-lg grayscale"
     />
 
@@ -1302,14 +1302,14 @@ describe('Home Faq', () => {
     const text = wrapper.text()
     expect(text).toContain('FREQUENTLY ASKED QUESTIONS')
     expect(text).toContain('Clear answers for your next step.')
-    expect(text).toContain('What services does PCG provide?')
+    expect(text).toContain('What services does AP Consulting provide?')
   })
 
   it('expands the answer when the question is clicked', async () => {
     const wrapper = mount(Faq)
-    expect(wrapper.text()).not.toContain('PCG provides professional consulting')
+    expect(wrapper.text()).not.toContain('AP Consulting provides professional consulting')
     await wrapper.find('[data-testid="faq-question"]').trigger('click')
-    expect(wrapper.text()).toContain('PCG provides professional consulting and advisory support across taxation, accounting and bookkeeping, and other customized financial services.')
+    expect(wrapper.text()).toContain('AP Consulting provides professional consulting and advisory support across taxation, accounting and bookkeeping, and other customized financial services.')
   })
 })
 ```
@@ -1331,7 +1331,7 @@ Expected: FAIL.
       </h2>
       <p class="mt-4 text-neutral-500">
         Before starting a conversation, here are answers to the questions businesses commonly
-        ask about PCG's services, process, and engagement.
+        ask about AP Consulting's services, process, and engagement.
       </p>
     </div>
 
@@ -1343,11 +1343,11 @@ Expected: FAIL.
         :aria-expanded="open"
         @click="open = !open"
       >
-        What services does PCG provide?
+        What services does AP Consulting provide?
         <Icon :name="open ? 'lucide:minus' : 'lucide:plus'" class="size-5 shrink-0" />
       </button>
       <p v-if="open" class="px-6 pb-6 text-neutral-500">
-        PCG provides professional consulting and advisory support across taxation, accounting
+        AP Consulting provides professional consulting and advisory support across taxation, accounting
         and bookkeeping, and other customized financial services. The available scope depends
         on your business needs and will be discussed before an engagement begins.
       </p>
@@ -1400,7 +1400,7 @@ describe('Home Cta', () => {
     expect(text).toContain('START A CONVERSATION')
     expect(text).toContain('Ready to bring more clarity to your business?')
     expect(text).toContain("Let's take the next step together.")
-    expect(text).toContain('Tell us about your tax, accounting, or financial needs. PCG will help you identify a practical starting point for your business.')
+    expect(text).toContain('Tell us about your tax, accounting, or financial needs. AP Consulting will help you identify a practical starting point for your business.')
     expect(text).toContain('Discuss Your Needs')
   })
 })
@@ -1426,7 +1426,7 @@ Expected: FAIL.
         <span class="block italic">Let's take the next step together.</span>
       </h2>
       <p class="mt-6 text-neutral-200">
-        Tell us about your tax, accounting, or financial needs. PCG will help you identify a
+        Tell us about your tax, accounting, or financial needs. AP Consulting will help you identify a
         practical starting point for your business.
       </p>
       <UButton color="neutral" variant="solid" size="lg" class="mt-8 bg-white text-secondary-700">
@@ -1551,14 +1551,14 @@ Run: `cd storefront && npm run dev`, open `http://localhost:3000/`, compare sect
 
 ```bash
 git add app/pages/index.vue tests/home/index.test.ts
-git commit -m "feat: assemble PCG homepage from all sections"
+git commit -m "feat: assemble AP Consulting homepage from all sections"
 ```
 
 ---
 
 ## Open items for the user (not blocking, carried from spec + this plan)
 
-- PCG logo file: not exported (Figma MCP quota hit mid-session). `AppHeader.vue`/`AppFooter.vue` render "PCG" as text until the real logo is exported and dropped at e.g. `public/images/pcg-logo.svg`.
+- AP Consulting logo file: not exported (Figma MCP quota hit mid-session). `AppHeader.vue`/`AppFooter.vue` render "AP Consulting" as text until the real logo is exported and dropped at e.g. `public/images/pcg-logo.svg`.
 - Insight article thumbnails: using icon files as placeholders (Task 12) until real photography exists.
 - FAQ items 2–5: not built — Figma content for them is missing or mismatched (spec + Task 13).
 - Hero headline's literal third line "DECISIONS." repeating the second line's last word — worth confirming with whoever owns the Figma file that this isn't a copy-paste error before treating it as final copy.

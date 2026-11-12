@@ -1,193 +1,150 @@
+<script setup lang="ts">
+import { computed } from "vue"
+import { useLanguage } from "~/composables/useLanguage"
+
+const { t, currentLocale } = useLanguage()
+
+const { data: insightsData } = await useFetch<{
+  data?: Array<{
+    id: string | number
+    title: string
+    slug: string
+    category?: { name: string }
+    published_at?: string
+    thumbnail?: string
+    excerpt?: string
+  }>
+}>("/api/insights", {
+  query: { limit: 3 },
+  default: () => ({ data: [] }),
+})
+
+const fallbackInsights = computed(() => [
+  {
+    id: "fallback-1",
+    category: t("home.v3.insights.defaultCat"),
+    date: t("home.v3.insights.f1Date"),
+    title: t("home.v3.insights.f1Title"),
+    excerpt: t("home.v3.insights.f1Excerpt"),
+    slug: "new-business-do-you-need-to-pay-tax-right-away",
+    image: "/images/redesign/article-featured.png",
+  },
+  {
+    id: "fallback-2",
+    category: t("home.v3.insights.defaultCat"),
+    date: t("home.v3.insights.f2Date"),
+    title: t("home.v3.insights.f2Title"),
+    excerpt: t("home.v3.insights.f2Excerpt"),
+    slug: "padankan-nik-npwp",
+    image: "/images/redesign/article-thumb-1.png",
+  },
+  {
+    id: "fallback-3",
+    category: t("home.v3.insights.defaultCat"),
+    date: t("home.v3.insights.f3Date"),
+    title: t("home.v3.insights.f3Title"),
+    excerpt: t("home.v3.insights.f3Excerpt"),
+    slug: "konsultan-pajak-spt-tahunan",
+    image: "/images/redesign/article-thumb-2.png",
+  },
+])
+
+const insightsList = computed(() => {
+  const items = insightsData.value?.data
+  if (items && items.length >= 3) {
+    const localeStr = currentLocale.value === "id" ? "id-ID" : "en-GB"
+    return items.slice(0, 3).map((item, idx) => ({
+      id: item.id,
+      category: (item.category?.name || t("home.v3.insights.defaultCat")).toUpperCase(),
+      date: item.published_at
+        ? new Date(item.published_at)
+            .toLocaleDateString(localeStr, {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+            })
+            .toUpperCase()
+        : t("home.v3.insights.f1Date"),
+      title: item.title,
+      excerpt:
+        item.excerpt ||
+        t("home.v3.insights.f1Excerpt"),
+      slug: item.slug,
+      image: item.thumbnail || fallbackInsights.value[idx]?.image || "/images/redesign/article-featured.png",
+    }))
+  }
+  return fallbackInsights.value
+})
+</script>
+
 <template>
-  <section class="bg-[#F9FAFB] px-4 py-16 md:px-[32px] md:py-[80px]">
-    <div class="mx-auto max-w-3xl text-center" data-reveal="up">
-      <p class="text-lg font-semibold uppercase tracking-wide text-neutral-400">
-        {{ t("home.insights.tag") }}
-      </p>
-      <h2
-        class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
-      >
-        <span class="font-sans font-normal text-[#083653]"
-          >{{ t("home.insights.titleNormal") }}
-        </span>
-        <span class="block font-sans font-semibold italic text-[#083653]">{{
-          t("home.insights.titleItalic")
-        }}</span>
-      </h2>
-      <p
-        class="mt-4 max-w-xl mx-auto text-sm text-neutral-500 leading-relaxed md:text-base"
-      >
-        {{ t("home.insights.subtitle") }}
-      </p>
-    </div>
-
-    <!-- Skeleton Loading State -->
-    <div
-      v-if="pending && !apiResponse"
-      class="mx-auto mt-12 grid max-w-7xl gap-6 md:grid-cols-3 items-stretch"
-    >
-      <div
-        v-for="n in 3"
-        :key="n"
-        class="flex flex-col justify-between bg-white p-6 border border-neutral-200 animate-pulse h-[380px]"
-      >
-        <div class="space-y-4">
-          <div class="h-48 w-full bg-neutral-200" />
-          <div class="h-4 w-24 bg-neutral-200" />
-          <div class="h-6 w-3/4 bg-neutral-200" />
-          <div class="h-4 w-full bg-neutral-200" />
-        </div>
-        <div class="h-12 w-full bg-neutral-200 pt-4" />
-      </div>
-    </div>
-
-    <!-- Empty State -->
-    <div
-      v-else-if="!articles || articles.length === 0"
-      class="mx-auto mt-12 max-w-4xl p-12 text-center border border-dashed border-neutral-300 bg-white"
-    >
-      <UIcon
-        name="i-heroicons-document-text"
-        class="size-12 text-neutral-400 mx-auto"
-      />
-      <p class="mt-3 text-base font-medium text-neutral-600">
-        {{
-          currentLocale === "en"
-            ? "No articles available."
-            : "Belum ada artikel saat ini."
-        }}
-      </p>
-    </div>
-
-    <!-- Data State -->
-    <div
-      v-else
-      class="mx-auto mt-12 grid max-w-7xl gap-6 md:grid-cols-3 items-stretch"
-      data-reveal="up"
-    >
-      <article
-        v-for="post in articles"
-        :key="post.id"
-        class="flex flex-col justify-between rounded-none bg-white p-6 border border-[#0000001F] shadow-xs group hover-lift"
-      >
+  <section class="w-full bg-[#F4F9FE] py-12 sm:py-14 lg:py-16 border-b border-[#DCE8F5]">
+    <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
+      <!-- Top Header -->
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
         <div>
-          <NuxtLink
-            :to="`/insight/${post.slug}`"
-            class="block overflow-hidden h-48 bg-[#F8FAFC] border border-neutral-100 mb-4"
-          >
-            <img
-              :src="resolveImageUrl(post.cover_image)"
-              :alt="post.title"
-              class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          </NuxtLink>
-          <p class="text-xs font-bold text-[#083653] uppercase tracking-wide">
-            {{ post.category_label || post.category }}
+          <p class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#0869B2] mb-2">
+            {{ t("home.v3.insights.eyebrow") }}
           </p>
-          <h3
-            class="mt-2 text-lg font-bold text-[#083653] leading-snug line-clamp-2"
-          >
-            <NuxtLink :to="`/insight/${post.slug}`" class="hover:underline">
-              {{ post.title }}
-            </NuxtLink>
-          </h3>
-          <p
-            class="mt-2 text-sm text-neutral-500 leading-relaxed font-normal line-clamp-3"
-          >
-            {{ post.excerpt }}
-          </p>
+          <h2 class="text-2xl sm:text-4xl font-semibold leading-[1.18] tracking-[-0.03em] text-[#092F50]">
+            {{ t("home.v3.insights.titleNormal") }} <span class="italic font-bold text-[#0869B2]">{{ t("home.v3.insights.titleItalic") }}</span>
+          </h2>
         </div>
-        <div
-          class="mt-6 flex items-center justify-between pt-4 border-t border-neutral-100"
+
+        <NuxtLink
+          to="/insight"
+          class="group inline-flex items-center gap-1.5 text-sm font-bold text-[#0869B2] hover:text-[#06477D] transition-colors"
         >
-          <span class="text-xs text-neutral-400 font-medium">
-            {{ formatDate(post.published_at, currentLocale) }}
-          </span>
-          <UButton
-            :to="`/insight/${post.slug}`"
-            data-testid="view-details"
-            color="secondary"
-            variant="solid"
-            size="lg"
-            class="rounded-none h-[48px] px-5 py-3 gap-[10px] bg-[#083653] hover:bg-[#083653]/90 text-white font-medium text-sm inline-flex items-center justify-center"
-          >
-            {{ t("home.insights.viewDetails") }}
-          </UButton>
-        </div>
-      </article>
+          <span>{{ t("home.v3.insights.viewAll") }}</span>
+          <span class="transition-transform group-hover:translate-x-1">→</span>
+        </NuxtLink>
+      </div>
+
+      <!-- 3-Column Editorial Article Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <NuxtLink
+          v-for="article in insightsList"
+          :key="article.id"
+          :to="`/insight/${article.slug}`"
+          class="group bg-white rounded-[2px] border border-[#DCE8F5] overflow-hidden flex flex-col justify-between transition-all duration-200 hover:border-[#0869B2]"
+        >
+          <div>
+            <!-- Article Thumbnail -->
+            <div class="w-full h-[200px] overflow-hidden bg-[#EBF3FA] border-b border-[#DCE8F5]">
+              <img
+                :src="article.image"
+                :alt="article.title"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+
+            <!-- Article Content -->
+            <div class="p-6">
+              <div class="flex items-center gap-2 text-[11px] font-semibold tracking-[0.1em] uppercase mb-3">
+                <span class="text-[#0869B2] font-bold">{{ article.category }}</span>
+                <span class="text-[#DCE8F5]">/</span>
+                <span class="text-[#728FA9]">{{ article.date }}</span>
+              </div>
+
+              <h3 class="text-[18px] font-bold leading-[1.35] tracking-[-0.01em] text-[#092F50] group-hover:text-[#0869B2] transition-colors mb-2.5 line-clamp-2">
+                {{ article.title }}
+              </h3>
+
+              <p class="text-[13.5px] leading-[1.6] text-[#4E6B85] line-clamp-3">
+                {{ article.excerpt }}
+              </p>
+            </div>
+          </div>
+
+          <div class="px-6 pb-5 pt-3 border-t border-[#F0F6FC] flex items-center justify-between text-xs font-bold text-[#0869B2]">
+            <span class="group-hover:text-[#092F50] transition-colors">
+              {{ t("home.v3.insights.readInsight") }}
+            </span>
+            <span class="text-base transition-transform group-hover:translate-x-1">↗</span>
+          </div>
+        </NuxtLink>
+      </div>
     </div>
   </section>
 </template>
-
-<script setup lang="ts">
-import { computed } from "vue";
-import { useLanguage } from "~/composables/useLanguage";
-import {
-  getApiBaseUrl,
-  resolveImageUrl,
-  formatDate,
-  safeUseFetch,
-} from "~/utils/api";
-
-interface ArticleItem {
-  id: number;
-  title: string;
-  slug: string;
-  category: string;
-  category_label?: string;
-  excerpt: string;
-  cover_image?: string;
-  published_at?: string;
-}
-
-const { t, currentLocale } = useLanguage();
-const apiBase = getApiBaseUrl();
-
-const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleItem[] }>(
-  () => `${apiBase}/articles?lang=${currentLocale.value}&per_page=3`,
-  {
-    key: "home-insights-list",
-    watch: [currentLocale],
-  },
-);
-
-const defaultPosts = computed<ArticleItem[]>(() => [
-  {
-    id: 1,
-    title: t("home.insights.post1Title"),
-    slug: "what-your-financial-reports-are-really-telling-you",
-    category: t("home.insights.cat1"),
-    category_label: t("home.insights.cat1"),
-    excerpt: t("home.insights.excerpt"),
-    cover_image: "/images/icon/Financial_Icon.svg",
-    published_at: "2026-08-31",
-  },
-  {
-    id: 2,
-    title: t("home.insights.post2Title"),
-    slug: "why-monthly-financial-reporting-matters",
-    category: t("home.insights.cat2"),
-    category_label: t("home.insights.cat2"),
-    excerpt: t("home.insights.excerpt"),
-    cover_image: "/images/icon/Analysis_Icon.svg",
-    published_at: "2026-08-31",
-  },
-  {
-    id: 3,
-    title: t("home.insights.post3Title"),
-    slug: "a-practical-way-to-improve-cash-flow-visibility",
-    category: t("home.insights.cat3"),
-    category_label: t("home.insights.cat3"),
-    excerpt: t("home.insights.excerpt"),
-    cover_image: "/images/icon/Compliance_Icon.svg",
-    published_at: "2026-08-31",
-  },
-]);
-
-const articles = computed<ArticleItem[]>(() => {
-  if (apiResponse.value?.data && apiResponse.value.data.length > 0) {
-    return apiResponse.value.data;
-  }
-  return defaultPosts.value;
-});
-</script>

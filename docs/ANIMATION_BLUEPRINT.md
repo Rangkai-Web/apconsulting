@@ -447,7 +447,7 @@ export default defineNuxtConfig({
   <section class="hero">
     <div class="badge animate-hero-badge">Tax & Accounting Advisory</div>
     <h1 class="animate-hero-title">Clearer Finances. Stronger Decisions.</h1>
-    <p class="animate-hero-desc">PCG helps businesses manage tax and financial needs...</p>
+    <p class="animate-hero-desc">AP Consulting helps businesses manage tax and financial needs...</p>
     <div class="actions animate-hero-cta">
       <button>Explore Services</button>
     </div>

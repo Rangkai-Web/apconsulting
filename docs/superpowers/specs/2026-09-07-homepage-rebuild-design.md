@@ -1,16 +1,16 @@
-# Homepage Rebuild — Company Profile (PCG) — Design
+# Homepage Rebuild — Company Profile (AP Consulting) — Design
 
 Date: 2026-09-07
 Status: Approved for planning
 
 ## Context
 
-This repo is mid-pivot: the storefront/admin were originally built for **BbystarGO**, an ecommerce store ("Toko Online"). It is being repurposed into a **company profile site for PCG (Phangkawira Consulting Group)**, a tax/accounting/financial consulting firm. Evidence:
+This repo is mid-pivot: the storefront/admin were originally built for **BbystarGO**, an ecommerce store ("Toko Online"). It is being repurposed into a **company profile site for AP Consulting (AP Consulting)**, a tax/accounting/financial consulting firm. Evidence:
 
 - `api/`: most ecommerce Filament resources (Banner, Category, Customer, Order, PaymentMethod) and their controllers/models are already deleted in the working tree (`git status`). Only `ProductResource` and `SettingsPage` remain.
 - `storefront/app/`: still has ecommerce pages/components (`index.vue` — old ecommerce home, `tentang-kami.vue`, `ProductCard.vue`, `VariantSelector.vue`, `QtyStepper.vue`, `RatingStars.vue`, `EmptyState.vue`, `AppCuteDecor.vue`, `store/wishlist.ts`).
 - `storefront/public/images/` has a Figma "DSD" (Design System Documentation) export at `design-system-page-design-interchange/` (component library: Button, Checkbox, Option, Navbar, Frame 37 — 75 color/text styles, all Poppins) plus per-page raw image/icon assets in `homepage/`, `about/`, `services/`, `contact/`, `insight/`, `icon/`.
-- Confirmed live against the source Figma file (`https://www.figma.com/design/2oCbkmAnxCENuBJ1mmMCyz/PCG`, node `10:28973` = "Homepage" frame, 1440×8379): the actual company name is **PCG**, business = tax/accounting/bookkeeping/financial consulting.
+- Confirmed live against the source Figma file (`https://www.figma.com/design/2oCbkmAnxCENuBJ1mmMCyz/AP Consulting`, node `10:28973` = "Homepage" frame, 1440×8379): the actual company name is **AP Consulting**, business = tax/accounting/bookkeeping/financial consulting.
 - `CLAUDE.md` at the repo root still describes the old "BbystarGO — Toko Online" stack. It is stale and will need a follow-up update once this pivot is underway (not part of this spec).
 
 ## Scope
@@ -72,7 +72,7 @@ Desktop and Mobile variants exist for each size/weight (`Desktop/Heading 1/Bold`
 ## Components
 
 - **Button**: theme `UButton` — `type` (Outline/Primary/Secondary) → Nuxt UI `variant`/`color`, `size` (Small/Normal/Large) → Nuxt UI `size`. Default per Figma: Primary + Large. Reference: `design-system-page-design-interchange/llm/components/button-e0eg41.context.json`.
-- **Navbar**: new `AppHeader.vue` (replacing the ecommerce one). Content confirmed from Figma (`node 1:852`): logo (PCG, from `icon/` or exported logo asset — check `homepage`/root image folders for a logo file, else export from Figma), nav links `Home / Services / Insights / About / Contact`, right-aligned CTA button "Discuss Your Needs" (Primary). Needs a mobile hamburger state — `icon/Hamburger_Icon.svg` exists for this.
+- **Navbar**: new `AppHeader.vue` (replacing the ecommerce one). Content confirmed from Figma (`node 1:852`): logo (AP Consulting, from `icon/` or exported logo asset — check `homepage`/root image folders for a logo file, else export from Figma), nav links `Home / Services / Insights / About / Contact`, right-aligned CTA button "Discuss Your Needs" (Primary). Needs a mobile hamburger state — `icon/Hamburger_Icon.svg` exists for this.
 - **Footer**: new `AppFooter.vue` (replacing the ecommerce one), content confirmed from Figma (`node 3:14329`) — see section 11 below. Not a placeholder; this is the real design.
 - **Checkbox / Option**: not used on the homepage. Tokens still available for phase 2.
 - Social icons (Instagram, X, Facebook, LinkedIn) in the footer: not present as files in `public/images/icon/` — use the project's existing icon system (Nuxt Icon / iconify, already installed per `.nuxt/nuxt-icon-client-bundle.mjs`) rather than exporting new SVGs.
@@ -85,8 +85,8 @@ Source of truth: live Figma frame `10:28973` ("Homepage"), file key `2oCbkmAnxCE
 |---|---|---|---|
 | 0 | `1:852` | Navbar | `AppHeader.vue` |
 | 1 | `76:176` | Hero | `components/home/Hero.vue` |
-| 2 | `4:14413` | About PCG | `components/home/AboutPcg.vue` |
-| 3 | `32:7086` | Stats ("PCG At a Glance") | `components/home/Stats.vue` |
+| 2 | `4:14413` | About AP Consulting | `components/home/AboutPcg.vue` |
+| 3 | `32:7086` | Stats ("AP Consulting At a Glance") | `components/home/Stats.vue` |
 | 4 | `13:154` | How We Help (3 cards) | `components/home/HowWeHelp.vue` |
 | 5 | `39:404` | Why Businesses Choose Us | `components/home/WhyChooseUs.vue` |
 | 6 | `5:14772` | Our Approach (4 steps) | `components/home/OurApproach.vue` |
@@ -97,19 +97,19 @@ Source of truth: live Figma frame `10:28973` ("Homepage"), file key `2oCbkmAnxCE
 
 ### 1. Hero (`76:176`)
 - Headline (3 lines, mixed style): "**CLEARER FINANCES.**" (navy, bold) / "*STRONGER BUSINESS DECISIONS*" (yellow, bold italic) / "**DECISIONS.**" (navy, bold) — Display/Heading scale, all-caps.
-- Body: "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals"
+- Body: "AP Consulting helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals"
 - Buttons: "EXPLORE OUR SERVICES" (Outline) + "DISCUSS YOUR NEEDS" (Primary/yellow)
 - Visual: 3 building photos (`public/images/homepage/HeroContent_Desktop.png` / `_Mobile.png`) over a dotted globe graphic (`Globe_Desktop.png`) and a light grey background band (`Hero_Bg_Desktop.png`)
 
-### 2. About PCG (`4:14413`)
-- Eyebrow: "ABOUT PCG"
+### 2. About AP Consulting (`4:14413`)
+- Eyebrow: "ABOUT AP Consulting"
 - Headline: "More than accountants. *Partners in your progress.*"
 - Body (right column): "We helps businesses, families, and ambitious individuals make confident financial decisions. We turn complex information into clear, practical next steps, helping you stay compliant, improve performance, and plan for what comes next."
 - Button: "DISCOVER HOW WE HELP" (Primary)
 - Image: flat-lay desk photo — `public/images/homepage/About_Desktop.png` / `_Mobile.png`
 
 ### 3. Stats (`32:7086`) — dark navy background (`blue-700`)
-- Eyebrow: "PCG AT A GLANCE" (yellow)
+- Eyebrow: "AP Consulting AT A GLANCE" (yellow)
 - Headline: "A structured foundation for better business decisions."
 - Sub: "Key facts about our service model and approach—presented without unsupported client or performance claims."
 - 4 stat pairs: `4` Core service areas / `4` Steps in our approach / `20` Integrated support partner / `200+` Customers
@@ -152,23 +152,23 @@ Source of truth: live Figma frame `10:28973` ("Homepage"), file key `2oCbkmAnxCE
 ### 8. FAQ (`32:7136`)
 - Eyebrow: "FREQUENTLY ASKED QUESTIONS"
 - Headline: "*Clear answers for your next step.*"
-- Sub: "Before starting a conversation, here are answers to the questions businesses commonly ask about PCG's services, process, and engagement."
-- Accordion, 5 items (first expanded by default): "What services does PCG provide?" (answer: "PCG provides professional consulting and advisory support across taxation, accounting and bookkeeping, and other customized financial services. The available scope depends on your business needs and will be discussed before an engagement begins.") / "Who does PCG work with?" / "What information should I prepare before speaking with PCG?" / "Can PCG support ongoing monthly accounting or bookkeeping?" / "How do I get started with PCG?" (last 4 answers not yet expanded in the screenshot — pull via Figma when implementing this section).
+- Sub: "Before starting a conversation, here are answers to the questions businesses commonly ask about AP Consulting's services, process, and engagement."
+- Accordion, 5 items (first expanded by default): "What services does AP Consulting provide?" (answer: "AP Consulting provides professional consulting and advisory support across taxation, accounting and bookkeeping, and other customized financial services. The available scope depends on your business needs and will be discussed before an engagement begins.") / "Who does AP Consulting work with?" / "What information should I prepare before speaking with AP Consulting?" / "Can AP Consulting support ongoing monthly accounting or bookkeeping?" / "How do I get started with AP Consulting?" (last 4 answers not yet expanded in the screenshot — pull via Figma when implementing this section).
 
 ### 9. CTA (`16:456`) — dark background
 - Background: diagonal line pattern, `public/images/homepage/CTA_Desktop.png` / `_Mobile.png`
 - Eyebrow: "START A CONVERSATION" (yellow)
 - Headline: "Ready to bring more clarity to your business? *Let's take the next step together.*"
-- Body: "Tell us about your tax, accounting, or financial needs. PCG will help you identify a practical starting point for your business."
+- Body: "Tell us about your tax, accounting, or financial needs. AP Consulting will help you identify a practical starting point for your business."
 - Button: "Discuss Your Needs" (white/inverted)
 
 ### 10. Footer (`3:14329`)
-- Logo (PCG) + tagline: "Professional support in tax, accounting, and financial services. We're helping businesses move forward with clarity and confidence."
+- Logo (AP Consulting) + tagline: "Professional support in tax, accounting, and financial services. We're helping businesses move forward with clarity and confidence."
 - Social icons: Instagram, X, Facebook, LinkedIn (use icon library, see Components section)
 - Quick Links: Home, About, Services, Insights, Contact
 - Services: Taxation, Accounting & Bookkeeping, Financial Services, Business Support
-- Contact Us: address ("Lt 3 Sayur Sentul, Blk. D, Rukan Cordoba, Jl. Green Lake City Boulevard No.23, Kota Tangerang, Banten 15146"), email ("pcgserver9@gmail.com")
-- Bottom bar: "Copyright © 2026 Phangkawira Consulting Group. All Rights Reserved" + "Privacy Policy" / "Terms & Conditions" links (no target pages yet — link to `#` or omit `href` until those pages exist)
+- Contact Us: address ("Lt 3 Sayur Sentul, Blk. D, Rukan Cordoba, Jl. Green Lake City Boulevard No.23, Kota Tangerang, Banten 15146"), email ("info@apconsulting.id")
+- Bottom bar: "Copyright © 2026 AP Consulting. All Rights Reserved" + "Privacy Policy" / "Terms & Conditions" links (no target pages yet — link to `#` or omit `href` until those pages exist)
 
 ## Mobile / responsive
 
@@ -179,7 +179,7 @@ Checked against the live Figma mobile frame (`node 74:8038`, "Homepage_Mobile", 
 - **Footer** (`76:13013`): "Quick Links" and "Services" columns sit side by side (2-col), "Contact Us" full-width below, social icons row above the columns. Same content as desktop footer, just re-flowed.
 - No new copy, no removed sections, no mobile-only content was found. Build one component per section with Tailwind responsive classes (mobile-first stack → desktop row/grid), not separate mobile/desktop components.
 
-Mobile section node IDs (for implementer reference during build, same order as the desktop table): Navbar `105:1879`, Hero `76:12448`, About PCG `76:12462`, Stats `76:12501`, How We Help `76:12639`, Why Businesses `76:12775`, Our Approach `76:12801`, Insights `76:12913`, FAQ `76:12952`, CTA `76:12999`, Footer `76:13013`.
+Mobile section node IDs (for implementer reference during build, same order as the desktop table): Navbar `105:1879`, Hero `76:12448`, About AP Consulting `76:12462`, Stats `76:12501`, How We Help `76:12639`, Why Businesses `76:12775`, Our Approach `76:12801`, Insights `76:12913`, FAQ `76:12952`, CTA `76:12999`, Footer `76:13013`.
 
 ## Cleanup (delete as part of this work)
 

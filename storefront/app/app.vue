@@ -24,28 +24,36 @@ useHead(() => ({
       innerHTML: toSafeJsonLd({
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
-        name: "Phangkawira Consulting Group",
-        alternateName: "PCG Consulting",
+        name: "AP Consulting",
+        alternateName: "AP Tax Consulting",
         url: config.public.siteUrl,
-        logo: `${config.public.siteUrl}/pcg_logo.jpeg`,
-        image: `${config.public.siteUrl}/pcg_logo.jpeg`,
+        logo: `${config.public.siteUrl}/ap_logo.jpeg`,
+        image: `${config.public.siteUrl}/ap_logo.jpeg`,
         description:
-          "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
-        email: "pcgserver9@gmail.com",
-        telephone: "+628123456789",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress:
-            "Lt 3 Sayur Sentul, Blk. D, Rukan Cordoba, Jl. Green Lake City Boulevard No.23",
-          addressLocality: "Kota Tangerang",
-          addressRegion: "Banten",
-          postalCode: "15146",
-          addressCountry: "ID",
-        },
+          "AP Consulting merupakan kantor konsultan pajak berbasis hukum yang berpengalaman, profesional dan berintegritas dalam membantu klien (badan usaha ataupun perorangan) dalam memenuhi kewajiban perpajakannya secara efektif.",
+        email: "contact@apconsulting.id",
+        telephone: "+6285754172217",
+        address: [
+          {
+            "@type": "PostalAddress",
+            name: "Head Office",
+            streetAddress: "SUN Plaza, Jl. Meruya Ilir Raya No. 20",
+            addressLocality: "Jakarta Barat",
+            addressRegion: "DKI Jakarta",
+            addressCountry: "ID",
+          },
+          {
+            "@type": "PostalAddress",
+            name: "Branch Office",
+            streetAddress: "Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong",
+            addressLocality: "Tangerang",
+            addressRegion: "Banten",
+            addressCountry: "ID",
+          },
+        ],
         priceRange: "$$",
       }),
     },
   ],
 }));
 </script>
-

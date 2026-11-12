@@ -1,92 +1,71 @@
 <template>
   <section
     id="why-choose"
-    class="relative px-4 py-16 md:px-[32px] md:py-[80px] bg-white overflow-hidden"
+    class="scroll-mt-20 bg-[#F4F9FE] py-12 sm:py-16 lg:py-20 border-b border-[#DCE8F5]"
   >
-    <!-- Background Yellow Glow Spots -->
-    <img
-      src="/images/about/Gradient.svg"
-      alt=""
-      class="absolute -top-20 -left-20 w-[450px] h-[450px] pointer-events-none opacity-50 z-0"
-    />
-    <img
-      src="/images/about/Gradient.svg"
-      alt=""
-      class="absolute -bottom-20 -right-20 w-[450px] h-[450px] pointer-events-none opacity-50 z-0"
-    />
-
-    <div
-      class="relative z-10 mx-auto max-w-7xl grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:items-start"
-    >
-      <!-- Left Column: Headline & CTA -->
-      <div data-reveal="up">
-        <p
-          class="text-lg font-semibold uppercase tracking-wider text-neutral-400"
-        >
-          {{ t("about.whyChoose.tag") }}
-        </p>
-        <h2
-          class="mt-4 text-3xl font-normal text-[#083653] sm:text-4xl md:text-[48px] leading-[1.2]"
-        >
-          <span class="font-sans font-normal text-[#083653] block"
-            >{{ t("about.whyChoose.titleNormal") }}
-          </span>
-          <span class="font-sans font-semibold italic text-[#083653] block">{{
-            t("about.whyChoose.titleItalic")
-          }}</span>
-        </h2>
-        <p
-          class="mt-4 max-w-lg text-sm text-neutral-500 leading-relaxed md:text-base font-normal"
-        >
-          {{ t("about.whyChoose.description") }}
-        </p>
-        <div class="mt-8">
-          <UButton
-            to="/contact"
-            color="neutral"
-            variant="outline"
-            size="lg"
-            class="rounded-none h-[56px] px-8 py-4 bg-white border border-[#083653] hover:bg-neutral-50 text-[#083653] font-medium text-sm inline-flex items-center justify-center"
+    <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
+      <div
+        class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start"
+      >
+        <!-- Left Column: Headline & CTA -->
+        <div class="lg:col-span-5">
+          <p
+            class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#0869B2] mb-2"
           >
-            {{ t("about.whyChoose.ctaButton") }}
-          </UButton>
-        </div>
-      </div>
+            {{ t("about.whyChoose.tag") }}
+          </p>
+          <h2
+            class="text-2xl sm:text-4xl font-semibold leading-[1.18] tracking-[-0.03em] text-[#092F50] mb-4"
+          >
+            <span class="font-bold">{{ t("about.whyChoose.titleNormal") }}</span>
+            {{ " " }}
+            <span class="font-bold italic text-[#0869B2]">{{
+              t("about.whyChoose.titleItalic")
+            }}</span>
+          </h2>
+          <p
+            class="text-sm sm:text-[15.5px] leading-[1.65] text-[#52687B] mb-7 max-w-md"
+          >
+            {{ t("about.whyChoose.description") }}
+          </p>
 
-      <!-- Right Column: 2x2 Grid Cards -->
-      <div class="grid gap-6 sm:grid-cols-2 items-stretch">
-        <div
-          v-for="(card, idx) in cards"
-          :key="card.titleKey"
-          class="flex flex-col p-6 sm:p-8 md:p-[36px] border border-[#0000001F] rounded-none shadow-xs text-left justify-between bg-white hover-lift"
-          data-reveal="up"
-          :data-reveal-delay="idx * 120"
-          style="
-            background: radial-gradient(
-              49.65% 56.63% at 97.41% 3.65%,
-              #e9edff 0%,
-              #ffffff 100%
-            );
-          "
-        >
-          <div>
-            <img
-              :src="card.icon"
-              :alt="t(card.titleKey)"
-              class="size-12 object-contain"
-            />
-          </div>
-          <div class="mt-6 flex flex-col gap-2">
-            <h3
-              class="text-lg md:text-[20px] font-bold text-[#083653] leading-snug"
+          <NuxtLink
+            to="/contact"
+            class="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-[2px] bg-[#0869B2] hover:bg-[#075997] text-white text-sm font-bold transition-colors shadow-xs"
+          >
+            <span>{{ t("about.whyChoose.ctaButton") }}</span>
+            <span
+              class="text-base leading-none transition-transform duration-200 group-hover:translate-x-1"
             >
-              {{ t(card.titleKey) }}
-            </h3>
-            <p
-              class="text-xs sm:text-sm text-neutral-500 leading-relaxed font-normal"
-            >
-              {{ t(card.bodyKey) }}
-            </p>
+              →
+            </span>
+          </NuxtLink>
+        </div>
+
+        <!-- Right Column: 2x2 Architectural Advantage Cards -->
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+          <div
+            v-for="card in cards"
+            :key="card.titleKey"
+            class="flex flex-col justify-between p-6 sm:p-7 rounded-[2px] bg-white border border-[#DCE8F5] hover:border-[#0869B2] transition-colors duration-200"
+          >
+            <div>
+              <div
+                class="mb-5 flex size-11 items-center justify-center rounded-[2px] bg-[#F0F7FF] border border-[#DCE8F5] text-[#0869B2]"
+              >
+                <UIcon :name="card.icon" class="size-5" />
+              </div>
+
+              <h3
+                class="text-[17px] sm:text-[18px] font-bold text-[#092F50] leading-snug mb-2"
+              >
+                {{ t(card.titleKey) }}
+              </h3>
+
+              <p class="text-[13.5px] sm:text-[14px] text-[#52687B] leading-[1.65]">
+                {{ t(card.bodyKey) }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -101,22 +80,22 @@ const { t } = useLanguage();
 
 const cards = [
   {
-    icon: "/images/about/TataKelolaOneStopBusiness.svg",
+    icon: "i-heroicons-shield-check",
     titleKey: "about.whyChoose.card1Title",
     bodyKey: "about.whyChoose.card1Body",
   },
   {
-    icon: "/images/about/TataKelolaProfesionalNetwork.svg",
+    icon: "i-heroicons-academic-cap",
     titleKey: "about.whyChoose.card2Title",
     bodyKey: "about.whyChoose.card2Body",
   },
   {
-    icon: "/images/about/TataKelolaCompliance&RiskManagement.svg",
+    icon: "i-heroicons-lock-closed",
     titleKey: "about.whyChoose.card3Title",
     bodyKey: "about.whyChoose.card3Body",
   },
   {
-    icon: "/images/about/TataKelolaStrategicBusinessInsight.svg",
+    icon: "i-heroicons-chart-bar-square",
     titleKey: "about.whyChoose.card4Title",
     bodyKey: "about.whyChoose.card4Body",
   },

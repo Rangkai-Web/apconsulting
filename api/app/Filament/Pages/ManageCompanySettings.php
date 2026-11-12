@@ -36,7 +36,7 @@ class ManageCompanySettings extends Page implements HasForms
 
         $this->form->fill([
             'company_logo' => $settings['company_logo'] ?? null,
-            'contact_email' => $settings['contact_email'] ?? 'info@pcgmitra.co.id',
+            'contact_email' => $settings['contact_email'] ?? 'info@apconsulting.id',
             'contact_phone' => $settings['contact_phone'] ?? '+62 21 1234 5678',
             'whatsapp_number' => $settings['whatsapp_number'] ?? '6281234567890',
             'office_address' => $settings['office_address'] ?? '',

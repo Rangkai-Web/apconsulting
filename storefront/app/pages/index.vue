@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="w-full bg-white font-sans text-[#092F50] antialiased">
     <HomeHero />
-    <HomeAboutPcg />
-    <HomeStats />
-    <HomeHowWeHelp />
-    <HomeWhyChooseUs />
-    <HomeOurApproach />
+    <HomeServices />
+    <HomeSectors />
+    <HomeAbout />
+    <HomeValues />
+    <HomeApproach />
     <HomeInsights />
     <HomeFaq />
     <HomeCta />
@@ -19,20 +19,22 @@ const config = useRuntimeConfig();
 const { toSafeJsonLd } = useSeoText();
 const canonicalUrl = `${config.public.siteUrl}/`;
 
+// Comprehensive SEO Metadata
+const title = "AP Consulting — Tax & Consulting Services";
+const description =
+  "Professional tax and accounting support, so you can focus on growing your business. Beyond numbers, it's about trust.";
+
 useSeoMeta({
-  title: "PCG — Phangkawira Consulting Group | Tax & Financial Advisory",
-  ogTitle: "PCG — Phangkawira Consulting Group | Tax & Financial Advisory",
-  description:
-    "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
-  ogDescription:
-    "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
-  ogImage: `${config.public.siteUrl}/pcg_logo.jpeg`,
+  title,
+  ogTitle: title,
+  description,
+  ogDescription: description,
+  ogImage: `${config.public.siteUrl}/images/redesign/logo.png`,
   ogUrl: canonicalUrl,
   twitterCard: "summary_large_image",
-  twitterTitle: "PCG — Phangkawira Consulting Group",
-  twitterDescription:
-    "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
-  twitterImage: `${config.public.siteUrl}/pcg_logo.jpeg`,
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterImage: `${config.public.siteUrl}/images/redesign/logo.png`,
 });
 
 useHead({
@@ -42,14 +44,14 @@ useHead({
       type: "application/ld+json",
       innerHTML: toSafeJsonLd({
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        name: "Phangkawira Consulting Group",
+        "@type": "AccountingService",
+        name: "AP Consulting",
+        alternateName: "AP Tax Consulting Services",
         url: config.public.siteUrl,
-        publisher: {
-          "@type": "Organization",
-          name: "Phangkawira Consulting Group",
-          logo: `${config.public.siteUrl}/pcg_logo.jpeg`,
-        },
+        logo: `${config.public.siteUrl}/images/redesign/logo.png`,
+        description,
+        email: "contact@apconsulting.id",
+        telephone: "+6285754172217",
       }),
     },
   ],

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('category_en')->nullable();
 
             $table->string('cover_image')->nullable();
-            $table->string('author_name')->default('Admin PCG');
+            $table->string('author_name')->default('Admin AP Consulting');
             $table->unsignedInteger('read_time')->default(5);
             $table->date('published_at')->nullable();
             $table->boolean('is_published')->default(true);

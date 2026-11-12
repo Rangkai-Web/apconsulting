@@ -1,41 +1,27 @@
-# BbystarGO — Toko Online
+# AP Consulting — Company Profile
 
-Monorepo: `api/` (Laravel 13 + Filament v5 admin) + `storefront/` (Nuxt 4 SPA).
-Full design: `docs/superpowers/specs/2026-06-19-toko-online-design.md`.
-Storefront UI/UX guidelines: `docs/superpowers/specs/2026-06-19-storefront-ui-design.md`.
+Monorepo: `api/` (Laravel 12/13 + Filament v5 admin) + `storefront/` (Nuxt 4 SPA).
+Docs: `docs/api/company-profile.md`
 Animation & Scroll Reveal blueprint: `docs/ANIMATION_BLUEPRINT.md`.
-Implementation plans: `docs/superpowers/plans/`.
-REST API reference (kept in sync per endpoint task): `docs/api/`.
+
+## Client Profile
+**AP Consulting** merupakan kantor konsultan pajak berbasis hukum yang berpengalaman, profesional dan berintegritas dalam membantu klien (badan usaha ataupun perorangan) dalam memenuhi kewajiban perpajakannya secara efektif.
+- **Komitmen**: Menjadi mitra perusahaan yang handal dan terpercaya dalam menyelesaikan permasalahan klien di bidang akuntansi dan perpajakan.
+- **Tim**: Berpengalaman serta berwawasan luas dalam bidang perpajakan, dengan kerjasama tim yang solid, pelayanan optimal serta penyelesaian permasalahan yang konkrit.
 
 ## Stack
-- Backend: Laravel 13, PHP 8.3+ (installed via Homebrew at `/opt/homebrew/bin/php`), MySQL, PHPUnit for tests, Sanctum (customer auth, `users` guard), separate `admin` guard + `admins` table for Filament v5.
-- Frontend: Nuxt 4.4.x, `ssr: false` (SPA only — no Node runtime in production), Nuxt UI v4 component library, Pinia for cart/auth state, Vitest for tests.
-- Payment: manual bank/e-wallet transfer, admin-verified in Filament (see `docs/api/orders.md`, `docs/api/payment-methods.md`). Shipping: RajaOngkir, single origin warehouse.
+- Backend: Laravel 12/13, PHP 8.3+ (installed via Homebrew at `/opt/homebrew/bin/php`), SQLite (testing) / MySQL (local/production), PHPUnit for tests, Filament v5 for admin panel.
+- Frontend: Nuxt 4.4.x, `ssr: false` (SPA only), Nuxt UI v4 component library, Pinia, Vitest for tests.
+- Localization: Bilingual support (Bahasa Indonesia `id` and English `en`).
 
 ## Command Guidelines
-- Run tests: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test`
-- Run single test: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan test --filter=TestClassName`
-- Run migrations: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && php artisan migrate`
-- List scheduled commands: `php artisan schedule:list`
-
-## Deployment Note — Laravel Scheduler
-
-The app uses `php artisan schedule:run` (registered in `bootstrap/app.php` via `->withSchedule()`). In production (Hostinger), a cron entry is required to invoke the scheduler every minute:
-
-```bash
-* * * * * cd /path/to/api && php artisan schedule:run >> /dev/null 2>&1
-```
-
-Without this cron entry, `orders:expire-pending` (and any future scheduled commands) will never run, regardless of how they are registered in code.
+- Backend Tests: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && cd api && php artisan test`
+- Run Migrations: `export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && cd api && php artisan migrate`
+- Frontend Tests: `cd storefront && npx vitest run`
+- Frontend Dev: `cd storefront && npm run dev`
+- Backend Dev: `cd api && php artisan serve`
 
 ## Conventions
-- Snapshot fields (`order_items.product_name/variant_name/price`) are intentional — never replace with a live join to `products`/`product_variants`. Order history must not change retroactively.
-- Cart has no database table by design — it is client-side only (Pinia + localStorage).
-- Customer and admin auth never share a table or guard. Don't merge `users` and `admins`.
-- RajaOngkir `/cost` endpoint is billed per call — never call it outside an explicit user-initiated "Cek Ongkir" action. Area lookups (province/city/district) must come from the local `rajaongkir_*` cache tables, never a live API call.
-- Any task that adds or changes a `/api/...` endpoint must update the matching file in `docs/api/` (one file per resource: `auth.md`, `catalog.md`, `cart-checkout.md`, `orders.md`, `shipping.md`). Plain markdown, not OpenAPI — method+path, auth requirement, example request/response, status codes.
-- Product images: max 5 per product (`products.images` json array), max 2MB per file, jpg/png/webp only — enforced in the Filament `FileUpload` field, not at the DB layer. Variant image is a single optional file, same limits; storefront falls back to the product's first image when a variant has none.
-- Storefront pages requiring a logged-in account (e.g. saved-address management) use an `auth` route middleware; guest checkout is allowed everywhere else, so don't gate checkout/cart behind `auth`. Login/register pages use a `guest-only` middleware that redirects already-authenticated users home.
-
-## Build status tracking
-Each implementation plan in `docs/superpowers/plans/` tracks its own task checkboxes. A task's checkbox being checked means that code is considered done and locked — don't regenerate or refactor a completed task's files unless the user explicitly asks for a change. Check the relevant plan file before modifying any file under `api/` or `storefront/`.
+- Multi-language support: Storefront translations are centralized in `storefront/app/composables/useLanguage.ts`.
+- Content & Articles: Admin panel manages multilingual articles, team members, service categories, FAQs, and company settings via Filament.
+- Contact inquiries: Submissions trigger WhatsApp redirect format with professional greeting for AP Consulting.

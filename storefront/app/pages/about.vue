@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <main class="min-h-screen bg-white text-[#092F50] antialiased selection:bg-[#0869B2] selection:text-white">
     <AboutHero />
     <AboutPcg />
     <AboutVision />
     <AboutWhyChoose />
     <AboutPeople />
     <HomeCta />
-  </div>
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -15,21 +15,21 @@ import { useSeoText } from "~/composables/useSeoText";
 const config = useRuntimeConfig();
 const { toSafeJsonLd } = useSeoText();
 const canonicalUrl = `${config.public.siteUrl}/about`;
-const title = "About Us — Phangkawira Consulting Group";
+const title = "About Us — AP Consulting";
 const description =
-  "Learn about Phangkawira Consulting Group. More than accountants, partners in your progress providing tax, accounting, and financial consulting.";
+  "AP Consulting merupakan kantor konsultan pajak berbasis hukum yang berpengalaman, profesional dan berintegritas dalam membantu klien (badan usaha ataupun perorangan) dalam memenuhi kewajiban perpajakannya secara efektif.";
 
 useSeoMeta({
   title,
   ogTitle: title,
   description,
   ogDescription: description,
-  ogImage: `${config.public.siteUrl}/pcg_logo.jpeg`,
+  ogImage: `${config.public.siteUrl}/ap_logo.jpeg`,
   ogUrl: canonicalUrl,
   twitterCard: "summary_large_image",
   twitterTitle: title,
   twitterDescription: description,
-  twitterImage: `${config.public.siteUrl}/pcg_logo.jpeg`,
+  twitterImage: `${config.public.siteUrl}/ap_logo.jpeg`,
 });
 
 useHead({
@@ -45,9 +45,9 @@ useHead({
         url: canonicalUrl,
         mainEntity: {
           "@type": "Organization",
-          name: "Phangkawira Consulting Group",
+          name: "AP Consulting",
           url: config.public.siteUrl,
-          logo: `${config.public.siteUrl}/pcg_logo.jpeg`,
+          logo: `${config.public.siteUrl}/ap_logo.jpeg`,
         },
       }),
     },

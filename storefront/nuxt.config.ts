@@ -19,15 +19,15 @@ export default defineNuxtConfig({
   fonts: {
     provider: "google",
     defaults: {
-      weights: [400, 600, 700],
+      weights: [400, 500, 600, 700, 800],
       styles: ["normal", "italic"],
       subsets: ["latin"],
     },
   },
   runtimeConfig: {
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || "https://admin.pcgmitra.co.id/api",
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://pcgmitra.co.id",
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || "https://admin.apconsulting.id/api",
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://apconsulting.id",
     },
   },
   ui: {
@@ -47,8 +47,8 @@ export default defineNuxtConfig({
     pageTransition: { name: "page", mode: "out-in" },
     head: {
       htmlAttrs: { lang: "id" },
-      title: "PCG — Phangkawira Consulting Group",
-      titleTemplate: "%s | PCG",
+      title: "AP Consulting — Kantor Konsultan Pajak Berbasis Hukum",
+      titleTemplate: "%s | AP Consulting",
       link: [
         { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
         {
@@ -84,30 +84,30 @@ gtag('config', 'G-SH1GS7FRBG');`,
         {
           name: "description",
           content:
-            "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
+            "AP Consulting merupakan kantor konsultan pajak berbasis hukum yang berpengalaman, profesional dan berintegritas dalam membantu klien (badan usaha ataupun perorangan) dalam memenuhi kewajiban perpajakannya secara efektif.",
         },
         {
           name: "keywords",
           content:
-            "PCG, Phangkawira Consulting Group, tax consulting, accounting, bookkeeping, financial advisory, Tax Box, Tangerang, Indonesia",
+            "AP Consulting, konsultan pajak, konsultan pajak berbasis hukum, akuntansi, perpajakan, tax consulting, Indonesia",
         },
-        { property: "og:title", content: "PCG — Phangkawira Consulting Group" },
+        { property: "og:title", content: "AP Consulting — Kantor Konsultan Pajak Berbasis Hukum" },
         {
           property: "og:description",
           content:
-            "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
+            "AP Consulting merupakan kantor konsultan pajak berbasis hukum yang berpengalaman, profesional dan berintegritas dalam membantu klien (badan usaha ataupun perorangan) dalam memenuhi kewajiban perpajakannya secara efektif.",
         },
-        { property: "og:site_name", content: "PCG" },
+        { property: "og:site_name", content: "AP Consulting" },
         { property: "og:type", content: "website" },
-        { property: "og:image", content: "https://pcgmitra.co.id/pcg_logo.jpeg" },
+        { property: "og:image", content: "https://apconsulting.id/ap_logo.jpeg" },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: "PCG — Phangkawira Consulting Group" },
+        { name: "twitter:title", content: "AP Consulting — Kantor Konsultan Pajak Berbasis Hukum" },
         {
           name: "twitter:description",
           content:
-            "PCG helps businesses manage tax, accounting, bookkeeping, and other financial needs with a structured, professional approach tailored to their goals.",
+            "AP Consulting merupakan kantor konsultan pajak berbasis hukum yang berpengalaman, profesional dan berintegritas dalam membantu klien (badan usaha ataupun perorangan) dalam memenuhi kewajiban perpajakannya secara efektif.",
         },
-        { name: "twitter:image", content: "https://pcgmitra.co.id/pcg_logo.jpeg" },
+        { name: "twitter:image", content: "https://apconsulting.id/ap_logo.jpeg" },
       ],
     },
   },

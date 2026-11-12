@@ -1,72 +1,127 @@
 <template>
   <section
     id="insight-hero"
-    class="relative min-h-[500px] md:min-h-[580px] flex items-center bg-[#083653] px-4 py-16 sm:px-8 md:px-16 md:py-20 overflow-hidden"
+    class="relative overflow-hidden bg-[#072642] text-white"
   >
-    <picture class="absolute inset-0 size-full pointer-events-none">
-      <source
-        media="(min-width: 768px)"
-        :srcset="resolveImageUrl(featuredArticle?.cover_image, '/images/insight/Hero_Desktop.webp')"
-      />
-      <img
-        :src="resolveImageUrl(featuredArticle?.cover_image, '/images/insight/Hero_Mobile.webp')"
-        alt="PCG Featured Insight"
-        fetchpriority="high"
-        decoding="async"
-        width="1280"
-        height="580"
-        class="size-full object-cover opacity-35"
-      />
-    </picture>
-
-    <!-- Dark gradient overlay for readable white text -->
+    <!-- Background Image & Crisp Blue-Navy Gradient Overlay -->
+    <img
+      src="https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1600&q=80"
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+      loading="eager"
+    />
     <div
-      class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-transparent pointer-events-none"
-    ></div>
+      class="absolute inset-0 bg-gradient-to-r from-[#06233D]/96 via-[#083A63]/92 to-[#0869B2]/80 pointer-events-none"
+    />
 
-    <div class="relative z-10 mx-auto max-w-7xl w-full">
-      <span
-        class="pt-24 sm:pt-0 inline-block text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#FFBB00] animate-hero-badge"
-      >
-        {{ t('insight.hero.tag') }}
-      </span>
-      <NuxtLink
-        :to="featuredArticle ? `/insight/${featuredArticle.slug}` : '/insight'"
-        class="group block hover:text-white/95 transition-colors"
-      >
-        <h1
-          class="mt-3 max-w-2xl text-3xl font-semibold text-white sm:text-4xl md:text-[48px] leading-[1.15] tracking-tight group-hover:text-white/95 transition-colors line-clamp-2 animate-hero-title"
-        >
-          {{ featuredArticle?.title || t('insight.hero.title') }}
-        </h1>
-      </NuxtLink>
-      <p
-        class="mt-4 text-sm text-white/90 leading-relaxed md:text-base font-normal max-w-2xl line-clamp-3 animate-hero-desc"
-      >
-        {{ featuredArticle?.excerpt || t('insight.hero.description') }}
-      </p>
-
+    <div
+      class="relative z-10 mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20"
+    >
       <div
-        class="mt-6 flex flex-wrap items-center gap-4 md:gap-6 text-xs sm:text-sm text-white/80 font-normal"
+        class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center"
       >
-        <span class="font-medium text-white">{{ featuredArticle?.author_name || t('insight.hero.author') }}</span>
-        <span class="flex items-center gap-1.5">
-          <UIcon name="i-heroicons-calendar" class="size-4" />
-          {{ formatDate(featuredArticle?.published_at, currentLocale) || t('insight.hero.date') }}
-        </span>
-        <span class="flex items-center gap-1.5">
-          <UIcon name="i-heroicons-clock" class="size-4" />
-          {{ featuredArticle?.read_time ? `${featuredArticle.read_time} ${currentLocale === 'en' ? 'mins' : 'Menit'}` : t('insight.hero.readTime') }}
-        </span>
+        <!-- Left Column: Featured Article Editorial -->
+        <div class="lg:col-span-7 flex flex-col items-start gap-4 sm:gap-5">
+          <div class="flex flex-wrap items-center gap-3">
+            <span
+              class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#B9DBF4]"
+            >
+              {{ t("insight.hero.eyebrow") }}
+            </span>
+            <span
+              class="px-2.5 py-0.5 rounded-[2px] bg-[#0869B2] text-white text-[10px] font-bold tracking-[0.12em] uppercase"
+            >
+              {{ t("insight.hero.tag") }}
+            </span>
+          </div>
+
+          <NuxtLink
+            :to="featuredHref"
+            class="group block focus:outline-none"
+          >
+            <h1
+              class="text-[28px] sm:text-4xl lg:text-[46px] font-bold leading-[1.15] tracking-[-0.025em] text-white group-hover:text-[#B9E2FF] transition-colors line-clamp-3"
+            >
+              {{ featuredArticle?.title || t("insight.hero.title") }}
+            </h1>
+          </NuxtLink>
+
+          <p
+            class="text-[15px] sm:text-[16.5px] text-[#E1EFFA] leading-[1.65] max-w-[560px] line-clamp-3"
+          >
+            {{ featuredArticle?.excerpt || t("insight.hero.description") }}
+          </p>
+
+          <!-- Metadata Row -->
+          <div
+            class="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs sm:text-sm text-[#B9DBF4]"
+          >
+            <span class="font-semibold text-white">
+              {{ featuredArticle?.author_name || t("insight.hero.author") }}
+            </span>
+            <span class="flex items-center gap-1.5">
+              <UIcon name="i-heroicons-calendar" class="size-4 text-[#8EC5F2]" />
+              {{
+                formatDate(featuredArticle?.published_at, currentLocale) ||
+                t("insight.hero.date")
+              }}
+            </span>
+            <span class="flex items-center gap-1.5">
+              <UIcon name="i-heroicons-clock" class="size-4 text-[#8EC5F2]" />
+              {{
+                featuredArticle?.read_time
+                  ? `${featuredArticle.read_time} ${currentLocale === "en" ? "mins" : "Menit"}`
+                  : t("insight.hero.readTime")
+              }}
+            </span>
+          </div>
+
+          <div class="pt-1 w-full sm:w-auto">
+            <NuxtLink
+              :to="featuredHref"
+              class="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-6 py-3 bg-white text-[#083A63] text-sm font-bold rounded-[2px] shadow-sm hover:bg-[#F0F7FF] transition-colors"
+            >
+              <span>{{ t("insight.hero.readFeatured") }}</span>
+              <span class="text-base leading-none text-[#0869B2]">→</span>
+            </NuxtLink>
+          </div>
+        </div>
+
+        <!-- Right Column: Featured Visual Frame -->
+        <div class="lg:col-span-5">
+          <NuxtLink
+            :to="featuredHref"
+            class="group block relative overflow-hidden rounded-tr-[40px] sm:rounded-tr-[52px] rounded-tl-[4px] rounded-b-[4px] border border-white/15 shadow-2xl bg-[#061F35]"
+          >
+            <img
+              :src="
+                resolveImageUrl(
+                  featuredArticle?.cover_image,
+                  '/images/redesign/article-featured.png'
+                )
+              "
+              :alt="featuredArticle?.title || t('insight.hero.title')"
+              fetchpriority="high"
+              decoding="async"
+              class="w-full h-[220px] sm:h-[300px] lg:h-[340px] object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useLanguage } from '~/composables/useLanguage'
-import { getApiBaseUrl, resolveImageUrl, formatDate, safeUseFetch } from '~/utils/api'
+import { computed } from "vue";
+import { useLanguage } from "~/composables/useLanguage";
+import {
+  getApiBaseUrl,
+  resolveImageUrl,
+  formatDate,
+  safeUseFetch,
+} from "~/utils/api";
 
 interface ArticleItem {
   id: number;
@@ -79,8 +134,8 @@ interface ArticleItem {
   published_at?: string;
 }
 
-const { t, currentLocale } = useLanguage()
-const apiBase = getApiBaseUrl()
+const { t, currentLocale } = useLanguage();
+const apiBase = getApiBaseUrl();
 
 const { data: apiResponse } = safeUseFetch<{ data: ArticleItem[] }>(
   () => `${apiBase}/articles?lang=${currentLocale.value}&per_page=1`,
@@ -88,8 +143,13 @@ const { data: apiResponse } = safeUseFetch<{ data: ArticleItem[] }>(
     key: "insight-featured-hero",
     watch: [currentLocale],
   }
-)
+);
 
-const featuredArticle = computed(() => apiResponse.value?.data?.[0] || null)
+const featuredArticle = computed(() => apiResponse.value?.data?.[0] || null);
+const featuredHref = computed(() =>
+  featuredArticle.value
+    ? `/insight/${featuredArticle.value.slug}`
+    : "/insight/new-business-do-you-need-to-pay-tax-right-away"
+);
 </script>
 

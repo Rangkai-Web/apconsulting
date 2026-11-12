@@ -20,53 +20,78 @@ const DEFAULT_CATEGORIES: ServiceCategoryItem[] = [
   {
     id: 1,
     name_id: "Layanan Perpajakan",
-    name_en: "Taxation Services",
-    description_id: "Kami mendampingi pemenuhan kewajiban pajak Anda melalui proses yang lebih terstruktur dan panduan yang mudah diterapkan.",
-    description_en: "Support your tax responsibilities with a more structured process and practical guidance.",
+    name_en: "Tax Services",
+    description_id:
+      "Kami mendampingi pemenuhan kewajiban pajak Anda melalui proses yang lebih terstruktur, mulai dari kepatuhan bulanan hingga pendampingan pemeriksaan dan sengketa pajak.",
+    description_en:
+      "From tax compliance and reviews to audit assistance and dispute resolution.",
     cta_text_id: "DISKUSIKAN LAYANAN PAJAK",
     cta_text_en: "DISCUSS TAX SUPPORT",
-    features_id: ["Konsultasi perpajakan", "Pelaporan pajak bulanan dan tahunan", "Peninjauan kepatuhan pajak", "Perencanaan pajak", "Pendampingan pemeriksaan pajak"],
-    features_en: ["Tax consultation", "Monthly and annual tax reporting", "Tax compliance review", "Tax planning", "Tax audit assistance"],
+    features_id: [
+      "Konsultasi perpajakan",
+      "Pelaporan pajak bulanan dan tahunan",
+      "Peninjauan kepatuhan pajak (Tax Review)",
+      "Perencanaan pajak (Tax Planning)",
+      "Pendampingan pemeriksaan & sengketa pajak",
+    ],
+    features_en: [
+      "Tax consultation",
+      "Monthly and annual tax reporting",
+      "Tax compliance review",
+      "Tax planning",
+      "Tax audit & dispute resolution assistance",
+    ],
     sort_order: 1,
     is_active: true,
   },
   {
     id: 2,
-    name_id: "Akuntansi & Pembukuan",
-    name_en: "Accounting & Bookkeeping",
-    description_id: "Bangun catatan keuangan terpercaya yang memberikan gambaran lebih jelas tentang operasional harian bisnis Anda.",
-    description_en: "Build reliable financial records that give your business a clearer view of its day-to-day operations.",
-    cta_text_id: "DISKUSIKAN DUKUNGAN AKUNTANSI",
-    cta_text_en: "DISCUSS ACCOUNTING SUPPORT",
-    features_id: ["Pencatatan transaksi keuangan", "Laporan keuangan bulanan", "Laporan keuangan tahunan", "Rekonsiliasi bank", "Penyesuaian jurnal akuntansi"],
-    features_en: ["Financial transaction recording", "Monthly financial statements", "Annual financial statements", "Bank reconciliation", "Accounting journal adjustments"],
+    name_id: "Layanan Payroll Outsourcing",
+    name_en: "Payroll Outsourcing Services",
+    description_id:
+      "Dukungan pengelolaan penggajian dan perhitungan PPh 21 karyawan agar administrasi payroll perusahaan Anda tetap terstruktur, tepat waktu, dan patuh aturan.",
+    description_en:
+      "Payroll support to help keep your business’s salary administration and employee tax withholding structured.",
+    cta_text_id: "DISKUSIKAN LAYANAN PAYROLL",
+    cta_text_en: "DISCUSS PAYROLL SUPPORT",
+    features_id: [
+      "Administrasi penggajian bulanan",
+      "Perhitungan & pemotongan PPh Pasal 21/26",
+      "Penyusunan slip gaji & laporan payroll",
+      "Pelaporan SPT Masa PPh 21 & bukti potong",
+    ],
+    features_en: [
+      "Monthly payroll administration",
+      "PPh 21/26 employee tax calculation & withholding",
+      "Payslip preparation & payroll reporting",
+      "Monthly & annual employee tax filing",
+    ],
     sort_order: 2,
     is_active: true,
   },
   {
     id: 3,
-    name_id: "Dukungan Administrasi Bisnis",
-    name_en: "Business Administration Support",
-    description_id: "Dapatkan dukungan fleksibel untuk pekerjaan administratif yang membantu bisnis Anda berjalan lebih terorganisir.",
-    description_en: "Get flexible support for administrative work that helps your business run in a more organized way.",
-    cta_text_id: "DISKUSIKAN DUKUNGAN BISNIS",
-    cta_text_en: "DISCUSS BUSINESS SUPPORT",
-    features_id: ["Administrasi perusahaan", "Koordinasi dokumen", "Tugas-tugas administratif", "Dukungan kustom"],
-    features_en: ["Corporate administration", "Document coordination", "Administrative tasks", "Customized support"],
+    name_id: "Layanan Akuntansi Pajak",
+    name_en: "Tax Accounting Services",
+    description_id:
+      "Dukungan pembukuan dan akuntansi perpajakan untuk pencatatan keuangan yang lebih rapi, akurat, dan siap untuk rekonsiliasi fiskal.",
+    description_en:
+      "Accounting and tax bookkeeping support for more organized records and accurate financial information.",
+    cta_text_id: "DISKUSIKAN DUKUNGAN AKUNTANSI",
+    cta_text_en: "DISCUSS ACCOUNTING SUPPORT",
+    features_id: [
+      "Pencatatan transaksi keuangan & pembukuan",
+      "Penyusunan laporan keuangan bulanan & tahunan",
+      "Rekonsiliasi bank & penyesuaian jurnal",
+      "Rekonsiliasi fiskal untuk kebutuhan perpajakan",
+    ],
+    features_en: [
+      "Financial transaction recording & bookkeeping",
+      "Monthly & annual financial statements",
+      "Bank reconciliation & journal adjustments",
+      "Fiscal reconciliation for tax compliance",
+    ],
     sort_order: 3,
-    is_active: true,
-  },
-  {
-    id: 4,
-    name_id: "Layanan Keuangan Lainnya",
-    name_en: "Other Financial Services",
-    description_id: "Ubah informasi keuangan menjadi wawasan berguna untuk perencanaan, pengendalian, dan keputusan yang lebih baik.",
-    description_en: "Turn financial information into useful insight for planning, control, and better decisions.",
-    cta_text_id: "DISKUSIKAN DUKUNGAN KEUANGAN",
-    cta_text_en: "DISCUSS FINANCIAL SUPPORT",
-    features_id: ["Analisis laporan keuangan", "Proyeksi keuangan", "Manajemen arus kas", "Penganggaran perusahaan", "Evaluasi kinerja keuangan"],
-    features_en: ["Financial statement analysis", "Financial projections", "Cash-flow management", "Corporate budgeting", "Financial performance evaluation"],
-    sort_order: 4,
     is_active: true,
   },
 ];
@@ -78,12 +103,16 @@ export function useServiceCategories() {
   const { data: apiResponse, pending, error } = safeUseFetch<{ data: ServiceCategoryItem[] }>(
     `${apiBase}/service-categories`,
     {
-      key: "service-categories-api-v3",
+      key: "service-categories-api-v4",
     }
   );
 
   const categories = computed<ServiceCategoryItem[]>(() => {
-    if (apiResponse.value?.data && Array.isArray(apiResponse.value.data) && apiResponse.value.data.length > 0) {
+    if (
+      apiResponse.value?.data &&
+      Array.isArray(apiResponse.value.data) &&
+      apiResponse.value.data.length > 0
+    ) {
       return apiResponse.value.data;
     }
     return DEFAULT_CATEGORIES;
@@ -92,7 +121,7 @@ export function useServiceCategories() {
   const formattedCategories = computed(() => {
     const locale = currentLocale?.value || "id";
     return categories.value.map((cat) => ({
-      value: cat.name_en, // Store name_en in backend inquiry
+      value: cat.name_en,
       label: locale === "en" ? cat.name_en : cat.name_id,
     }));
   });
@@ -104,4 +133,3 @@ export function useServiceCategories() {
     error,
   };
 }
-

@@ -10,33 +10,49 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @theme static {
-  --font-sans: "Poppins", sans-serif;
-  --font-heading: "Poppins", sans-serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-heading: "Plus Jakarta Sans", sans-serif;
   --font-serif: "Lora", serif;
 
-  /* Yellow — Figma "Yellow/*" styles */
-  --color-primary-50: #FEF9E8;
-  --color-primary-100: #FBEEB7;
-  --color-primary-500: #FFBB00;
-  --color-primary-600: #DBB514;
-  --color-primary-700: #AB8D10;
-  --color-primary-900: #655409;
+  /* AP Consulting Brand Blue */
+  --color-brand-blue: #0869B2;
+  --color-brand-navy: #092F50;
+  --color-brand-dark: #061F35;
+  --color-brand-deep: #102E47;
+  --color-brand-slate: #52687B;
+  --color-brand-border: #DCE6EF;
+  --color-brand-rule: #42617B;
+  --color-brand-light: #F1F7FC;
+  --color-brand-ice: #D1EBFF;
+  --color-brand-sky: #B9DBF4;
 
-  /* Navy blue — Figma "Blue/*" styles */
-  --color-secondary-50: #E6EBEE;
-  --color-secondary-100: #B2C1CA;
-  --color-secondary-500: #083653;
-  --color-secondary-600: #07314C;
-  --color-secondary-700: #06263B;
+  /* Primary Blue - Figma styles */
+  --color-primary-50: #F1F7FC;
+  --color-primary-100: #D8E5F0;
+  --color-primary-200: #B9DBF4;
+  --color-primary-500: #0869B2;
+  --color-primary-600: #075997;
+  --color-primary-700: #092F50;
+  --color-primary-900: #061F35;
 
-  /* Neutral — Figma "Netral/01..07" styles */
+  /* Navy blue - Figma styles */
+  --color-secondary-50: #F7FAFD;
+  --color-secondary-100: #EAF3FB;
+  --color-secondary-200: #DCE6EF;
+  --color-secondary-500: #102E47;
+  --color-secondary-600: #092F50;
+  --color-secondary-700: #062B48;
+  --color-secondary-900: #061F35;
+
+  /* Neutral styles */
   --color-neutral-50: #FFFFFF;
-  --color-neutral-200: #D4D4D4;
-  --color-neutral-400: #999999;
-  --color-neutral-500: #666666;
-  --color-neutral-600: #444444;
-  --color-neutral-800: #222222;
-  --color-neutral-900: #111111;
+  --color-neutral-100: #F7FAFD;
+  --color-neutral-200: #DCE6EF;
+  --color-neutral-400: #52687B;
+  --color-neutral-500: #42617B;
+  --color-neutral-600: #102E47;
+  --color-neutral-800: #092F50;
+  --color-neutral-900: #061F35;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -47,10 +63,10 @@ h1, h2, h3, h4, h5, h6 {
   scrollbar-width: none;
 }
 
-/* Ensure all buttons have zero border radius per Figma design spec (node 1-852) */
+/* Base button styling per Figma design spec (2px rounded corner) */
 button,
 [class*="u-button"] {
-  border-radius: 0px !important;
+  border-radius: 2px;
 }
 
 /* ==========================================================================

@@ -36,7 +36,7 @@ class InquiryController extends Controller
         $waNumber = preg_replace('/[^0-9]/', '', $rawWa ?? '6281234567890');
 
         $textLines = [
-            "Halo PCG, saya berminat dengan layanan Anda. Berikut detail kontak saya:",
+            "Halo AP Consulting, saya berminat dengan layanan Anda. Berikut detail kontak saya:",
             "",
             "- *Nama*: {$inquiry->full_name}",
             "- *Email*: {$inquiry->email}",

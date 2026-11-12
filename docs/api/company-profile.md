@@ -1,6 +1,6 @@
 # Company Profile API Reference
 
-Endpoint publik REST API untuk website Company Profile PCG. Semua endpoint mendukung lokalisasi dua bahasa (`lang=id` atau `lang=en`).
+Endpoint publik REST API untuk website Company Profile AP Consulting. Semua endpoint mendukung lokalisasi dua bahasa (`lang=id` atau `lang=en`).
 
 ## Endpoints Summary
 
@@ -29,8 +29,8 @@ Mengembalikan daftar FAQ dengan bahasa yang disesuaikan via query `lang` (defaul
   "data": [
     {
       "id": 1,
-      "question": "Apa saja layanan utama yang ditawarkan oleh PCG?",
-      "answer": "PCG menawarkan layanan konsultasi perpajakan...",
+      "question": "Apa saja layanan utama yang ditawarkan oleh AP Consulting?",
+      "answer": "AP Consulting menawarkan layanan konsultasi perpajakan berbasis hukum, akuntansi & pembukuan, serta penyelesaian permasalahan perpajakan untuk badan usaha maupun perorangan.",
       "category": "Umum",
       "sort_order": 1,
       "is_active": true
@@ -46,8 +46,8 @@ Mengembalikan daftar FAQ dengan bahasa yang disesuaikan via query `lang` (defaul
   "data": [
     {
       "id": 1,
-      "question": "What core services does PCG provide?",
-      "answer": "PCG provides professional tax consulting...",
+      "question": "What core services does AP Consulting provide?",
+      "answer": "AP Consulting provides legal-based tax consulting, accounting & bookkeeping, and tax compliance & dispute resolution for corporate and individual clients.",
       "category": "Umum",
       "sort_order": 1,
       "is_active": true
@@ -81,7 +81,7 @@ Mengembalikan daftar artikel terbit dengan bahasa yang disesuaikan (`lang=id|en`
       "content": "<p>Full content in English...</p>",
       "cover_image": "articles/cover-1.jpg",
       "category": "Perpajakan",
-      "author_name": "Admin PCG",
+      "author_name": "Admin AP Consulting",
       "published_at": "2026-09-09T12:00:00.000000Z",
       "views_count": 150
     }
@@ -116,7 +116,7 @@ Mengembalikan detail artikel berdasarkan `slug_id` atau `slug_en`.
     "content": "<p>Full content...</p>",
     "cover_image": "articles/cover-1.jpg",
     "category": "Perpajakan",
-    "author_name": "Admin PCG",
+    "author_name": "Admin AP Consulting",
     "published_at": "2026-09-09T12:00:00.000000Z",
     "views_count": 151
   }
@@ -127,7 +127,7 @@ Mengembalikan detail artikel berdasarkan `slug_id` atau `slug_en`.
 
 ## 4. GET /api/team
 
-Mengembalikan daftar anggota tim profesional PCG.
+Mengembalikan daftar anggota tim profesional AP Consulting.
 
 ---
 
@@ -139,4 +139,4 @@ Mengembalikan informasi kontak kantor dan media sosial.
 
 ## 6. POST /api/contact
 
-Mengirim pesan dari formulir kontak. Pesan tersimpan di database `inquiries` dan mengembalikan URL WhatsApp terformat.
+Mengirim pesan dari formulir kontak. Pesan tersimpan di database `inquiries` dan mengembalikan URL WhatsApp terformat dengan sapaan resmi AP Consulting.

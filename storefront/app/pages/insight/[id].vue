@@ -1,127 +1,165 @@
 <template>
-  <div class="bg-white py-12 md:py-20">
-    <div class="mx-auto max-w-4xl px-4 md:px-8">
-      <!-- Back Navigation -->
-      <NuxtLink
-        to="/insight"
-        class="inline-flex items-center gap-2 text-xs md:text-sm font-semibold uppercase tracking-wider text-[#083653] hover:underline"
-      >
-        <UIcon name="i-heroicons-arrow-left" class="size-4" />
-        {{ t('insight.detail.backLink') }}
-      </NuxtLink>
-
-      <!-- Skeleton Loading State -->
-      <div v-if="pending" class="mt-8 space-y-6 animate-pulse">
-        <div class="h-6 w-32 bg-neutral-200" />
-        <div class="h-10 w-3/4 bg-neutral-200" />
-        <div class="h-4 w-1/2 bg-neutral-200" />
-        <div class="h-72 w-full bg-neutral-200" />
-        <div class="space-y-3 pt-6">
-          <div class="h-4 w-full bg-neutral-200" />
-          <div class="h-4 w-full bg-neutral-200" />
-          <div class="h-4 w-4/5 bg-neutral-200" />
-        </div>
-      </div>
-
-      <!-- 404 / Empty State -->
-      <div
-        v-else-if="!article"
-        class="mt-12 p-12 text-center border border-dashed border-neutral-300 bg-[#F5FBFF]"
-      >
-        <UIcon name="i-heroicons-exclamation-triangle" class="size-12 text-amber-500 mx-auto" />
-        <h2 class="mt-4 text-2xl font-bold text-[#083653]">
-          {{ currentLocale === 'en' ? 'Article Not Found' : 'Artikel Tidak Ditemukan' }}
-        </h2>
-        <p class="mt-2 text-sm text-neutral-500 max-w-md mx-auto">
-          {{ currentLocale === 'en' ? 'The article you are looking for might have been moved or removed.' : 'Artikel yang Anda cari tidak dapat ditemukan atau telah dipindahkan.' }}
-        </p>
+  <main class="min-h-screen bg-white text-[#092F50] antialiased selection:bg-[#0869B2] selection:text-white">
+    <!-- Top Editorial Breadcrumb & Header Band -->
+    <section class="bg-[#F4F9FE] border-b border-[#DCE8F5] py-10 sm:py-12 lg:py-14">
+      <div class="mx-auto max-w-[880px] px-5 sm:px-6 lg:px-8">
+        <!-- Back Navigation -->
         <NuxtLink
           to="/insight"
-          class="mt-6 inline-block px-5 py-2.5 bg-[#083653] text-white text-xs font-semibold uppercase tracking-wider hover:bg-[#083653]/90"
+          class="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0869B2] hover:text-[#06477D] transition-colors"
         >
-          {{ t('insight.detail.backLink') }}
+          <span class="transition-transform duration-200 group-hover:-translate-x-1">←</span>
+          <span>{{ t("insight.detail.backLink") }}</span>
         </NuxtLink>
-      </div>
 
-      <!-- Article Content State -->
-      <div v-else data-reveal="up">
+        <!-- Skeleton Header -->
+        <div v-if="pending" class="mt-6 space-y-4 animate-pulse">
+          <div class="h-6 w-28 bg-[#DCE8F5] rounded-[2px]" />
+          <div class="h-10 w-5/6 bg-[#DCE8F5] rounded-[2px]" />
+          <div class="h-4 w-1/2 bg-[#DCE8F5] rounded-[2px]" />
+        </div>
+
         <!-- Article Header -->
-        <div class="mt-6">
+        <div v-else-if="article" class="mt-6">
           <span
-            class="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider bg-[#FFBB00] text-[#083653]"
+            class="inline-block px-3 py-1 rounded-[2px] text-[11px] font-bold uppercase tracking-[0.12em] bg-[#E6F2FC] text-[#0869B2] border border-[#CFE4F7]"
           >
             {{ article.category_label || article.category }}
           </span>
 
           <h1
-            class="mt-4 text-3xl font-bold text-[#083653] sm:text-4xl md:text-[44px] leading-tight"
+            class="mt-4 text-2xl sm:text-4xl lg:text-[42px] font-bold text-[#092F50] leading-[1.18] tracking-[-0.025em]"
           >
             {{ article.title }}
           </h1>
 
           <div
-            class="mt-4 flex flex-wrap items-center gap-4 text-xs sm:text-sm text-neutral-500 font-normal"
+            class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2.5 text-xs sm:text-sm text-[#52687B]"
           >
-            <span class="font-semibold text-[#083653]"
-              >{{ article.author_name || t('insight.hero.author') }}</span
-            >
+            <span class="font-bold text-[#092F50]">
+              {{ article.author_name || t("insight.hero.author") }}
+            </span>
             <span class="flex items-center gap-1.5">
-              <UIcon name="i-heroicons-calendar" class="size-4" />
+              <UIcon name="i-heroicons-calendar" class="size-4 text-[#0869B2]" />
               {{ formatDate(article.published_at, currentLocale) }}
             </span>
             <span class="flex items-center gap-1.5">
-              <UIcon name="i-heroicons-clock" class="size-4" />
-              {{ article.read_time ? `${article.read_time} ${currentLocale === 'en' ? 'mins' : 'Menit'}` : t('insight.hero.readTime') }}
+              <UIcon name="i-heroicons-clock" class="size-4 text-[#0869B2]" />
+              {{
+                article.read_time
+                  ? `${article.read_time} ${currentLocale === "en" ? "mins" : "Menit"}`
+                  : t("insight.hero.readTime")
+              }}
             </span>
             <ShareButton :url="canonicalUrl" :title="article.title" />
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Featured Image -->
-        <div class="mt-8 overflow-hidden aspect-[16/9] border border-[#DFE7ED] bg-neutral-100">
-          <img
-            :src="resolveImageUrl(article.cover_image)"
-            :alt="article.title"
-            class="size-full object-cover"
-          />
+    <!-- Article Body Section -->
+    <section class="py-10 sm:py-12 lg:py-16">
+      <div class="mx-auto max-w-[880px] px-5 sm:px-6 lg:px-8">
+        <!-- Skeleton Body -->
+        <div v-if="pending" class="space-y-6 animate-pulse">
+          <div class="h-72 sm:h-96 w-full bg-[#EBF3FA] rounded-[2px]" />
+          <div class="space-y-3 pt-4">
+            <div class="h-4 w-full bg-[#EBF3FA]" />
+            <div class="h-4 w-full bg-[#EBF3FA]" />
+            <div class="h-4 w-4/5 bg-[#EBF3FA]" />
+          </div>
         </div>
 
-        <!-- Article Excerpt / Highlight -->
-        <div v-if="article.excerpt" class="mt-8 p-6 bg-[#F5FBFF] border-l-4 border-[#083653]">
-          <p class="text-sm md:text-base text-[#083653] font-medium leading-relaxed italic">
-            {{ article.excerpt }}
-          </p>
-        </div>
-
-        <!-- Article Body Content -->
+        <!-- 404 / Empty State -->
         <div
-          class="mt-8 article-content text-neutral-700 text-base md:text-lg leading-relaxed font-normal space-y-6 border-b border-[#DFE7ED] pb-12"
-          v-html="formattedContent"
-        />
-
-        <!-- Bottom Navigation -->
-        <div class="mt-8 flex items-center justify-between">
+          v-else-if="!article"
+          class="p-10 sm:p-12 text-center border border-dashed border-[#B9D3EB] rounded-[2px] bg-[#F4F9FE]"
+        >
+          <UIcon
+            name="i-heroicons-document-text"
+            class="size-12 text-[#0869B2] mx-auto"
+          />
+          <h2 class="mt-4 text-xl sm:text-2xl font-bold text-[#092F50]">
+            {{
+              currentLocale === "en"
+                ? "Article Not Found"
+                : "Artikel Tidak Ditemukan"
+            }}
+          </h2>
+          <p class="mt-2 text-sm text-[#52687B] max-w-md mx-auto">
+            {{
+              currentLocale === "en"
+                ? "The article you are looking for might have been moved or removed."
+                : "Artikel yang Anda cari tidak dapat ditemukan atau telah dipindahkan."
+            }}
+          </p>
           <NuxtLink
             to="/insight"
-            class="inline-flex items-center gap-2 text-sm font-semibold text-[#083653] hover:underline"
+            class="mt-6 inline-flex items-center gap-2 px-5 py-2.5 bg-[#0869B2] hover:bg-[#075997] text-white text-xs font-bold uppercase tracking-wider rounded-[2px] transition-colors"
           >
-            <UIcon name="i-heroicons-arrow-left" class="size-4" />
-            {{ t('insight.detail.exploreMore') }}
+            <span>←</span>
+            <span>{{ t("insight.detail.backLink") }}</span>
           </NuxtLink>
-
-          <UButton
-            to="/contact"
-            color="primary"
-            variant="solid"
-            size="md"
-            class="rounded-none bg-[#FFBB00] text-[#083653] hover:bg-[#FFBB00]/90 font-medium"
-          >
-            {{ t('insight.detail.discussBtn') }}
-          </UButton>
         </div>
+
+        <!-- Article Content State -->
+        <article v-else>
+          <!-- Featured Image -->
+          <div
+            class="overflow-hidden aspect-[16/9] rounded-[2px] border border-[#DCE8F5] bg-[#EBF3FA]"
+          >
+            <img
+              :src="resolveImageUrl(article.cover_image, '/images/redesign/article-featured.png')"
+              :alt="article.title"
+              class="size-full object-cover"
+            />
+          </div>
+
+          <!-- Article Excerpt / Highlight -->
+          <div
+            v-if="article.excerpt"
+            class="mt-8 p-5 sm:p-6 bg-[#F4F9FE] border-l-4 border-[#0869B2] rounded-r-[2px]"
+          >
+            <p
+              class="text-sm sm:text-base text-[#092F50] font-medium leading-[1.7] italic"
+            >
+              {{ article.excerpt }}
+            </p>
+          </div>
+
+          <!-- Article Body Content -->
+          <div
+            class="mt-8 article-content text-[#2E465C] text-[15.5px] sm:text-[17px] leading-[1.8] font-normal space-y-5 border-b border-[#DCE8F5] pb-12"
+            v-html="formattedContent"
+          />
+
+          <!-- Bottom Navigation -->
+          <div
+            class="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+          >
+            <NuxtLink
+              to="/insight"
+              class="group inline-flex items-center gap-2 text-sm font-bold text-[#0869B2] hover:text-[#06477D] transition-colors"
+            >
+              <span class="transition-transform duration-200 group-hover:-translate-x-1">←</span>
+              <span>{{ t("insight.detail.exploreMore") }}</span>
+            </NuxtLink>
+
+            <NuxtLink
+              to="/contact"
+              class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[2px] bg-[#0869B2] hover:bg-[#075997] text-white text-sm font-bold transition-colors shadow-xs"
+            >
+              <span>{{ t("insight.detail.discussBtn") }}</span>
+              <span>→</span>
+            </NuxtLink>
+          </div>
+        </article>
       </div>
-    </div>
-  </div>
+    </section>
+
+    <!-- Consultation CTA Banner -->
+    <HomeCta />
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -190,12 +228,12 @@ const formattedContent = computed(() => {
 
 const pageTitle = computed(() => (article.value?.title ? article.value.title : "Insight Detail"));
 const pageDescription = computed(() =>
-  article.value?.excerpt ? toPlainText(article.value.excerpt, 160) : "PCG Article Insight"
+  article.value?.excerpt ? toPlainText(article.value.excerpt, 160) : "AP Consulting Article Insight"
 );
 const pageImage = computed(() =>
   article.value?.cover_image
     ? resolveImageUrl(article.value.cover_image)
-    : `${config.public.siteUrl}/pcg_logo.jpeg`
+    : `${config.public.siteUrl}/ap_logo.jpeg`
 );
 const canonicalUrl = computed(() => {
   if (typeof window !== "undefined" && window.location?.origin) {
@@ -233,14 +271,14 @@ useHead(() => ({
             datePublished: article.value.published_at,
             author: {
               "@type": "Person",
-              name: article.value.author_name || "PCG Team",
+              name: article.value.author_name || "AP Consulting Team",
             },
             publisher: {
               "@type": "Organization",
-              name: "Phangkawira Consulting Group",
+              name: "AP Consulting",
               logo: {
                 "@type": "ImageObject",
-                url: `${config.public.siteUrl}/pcg_logo.jpeg`,
+                url: `${config.public.siteUrl}/ap_logo.jpeg`,
               },
             },
             mainEntityOfPage: {
@@ -261,14 +299,14 @@ useHead(() => ({
 .article-content h2 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #083653;
+  color: #092F50;
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
 .article-content h3 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #083653;
+  color: #092F50;
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
 }
@@ -284,13 +322,13 @@ useHead(() => ({
 }
 .article-content blockquote {
   padding: 1rem 1.5rem;
-  background-color: #F5FBFF;
-  border-left: 4px solid #083653;
+  background-color: #F4F9FE;
+  border-left: 4px solid #0869B2;
   font-style: italic;
   margin-bottom: 1.25rem;
 }
 .article-content a {
-  color: #083653;
+  color: #0869B2;
   text-decoration: underline;
 }
 
@@ -306,7 +344,7 @@ useHead(() => ({
 .article-content table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #DFE7ED;
+  border: 1px solid #DCE8F5;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   font-size: 0.875rem;
@@ -326,32 +364,32 @@ useHead(() => ({
 }
 
 .article-content thead {
-  background-color: #F5FBFF;
+  background-color: #F4F9FE;
 }
 
 .article-content th {
-  border: 1px solid #DFE7ED;
+  border: 1px solid #DCE8F5;
   padding: 0.75rem 1rem;
   font-weight: 600;
-  color: #083653;
-  background-color: #F5FBFF;
+  color: #092F50;
+  background-color: #F4F9FE;
   text-align: left;
   vertical-align: top;
 }
 
 .article-content td {
-  border: 1px solid #DFE7ED;
+  border: 1px solid #DCE8F5;
   padding: 0.75rem 1rem;
-  color: #374151;
+  color: #2E465C;
   vertical-align: top;
 }
 
 .article-content tr:nth-child(even) td {
-  background-color: #FAFCFE;
+  background-color: #FAFCFF;
 }
 
 .article-content tr:hover td {
-  background-color: #F0F7FC;
+  background-color: #F0F7FF;
 }
 
 .article-content th p,
@@ -367,6 +405,6 @@ useHead(() => ({
 
 .article-content th strong,
 .article-content td strong {
-  color: #083653;
+  color: #092F50;
 }
 </style>

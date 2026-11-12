@@ -3,7 +3,14 @@ import { getApiBaseUrl, resolveImageUrl, safeUseFetch } from "~/utils/api";
 
 export interface SettingsData {
   company?: { logo?: string };
-  contact?: { email?: string; phone?: string; whatsapp?: string; address?: string; maps_embed_url?: string };
+  contact?: {
+    email?: string;
+    phone?: string;
+    whatsapp?: string;
+    address?: string;
+    branch_address?: string;
+    maps_embed_url?: string;
+  };
   social?: {
     instagram?: string;
     twitter?: string;
@@ -27,18 +34,47 @@ export function useCompanySettings() {
 
   const settings = computed(() => apiResponse.value?.data || {});
 
-  const logoUrl = computed(() => resolveImageUrl(settings.value.company?.logo, "/pcg_logo.jpeg"));
-  const email = computed(() => settings.value.contact?.email || "info@pcgmitra.co.id");
-  const phone = computed(() => settings.value.contact?.phone || settings.value.contact?.whatsapp || "");
-  const address = computed(
-    () =>
-      settings.value.contact?.address ||
-      "Blok. D, Rukan Cordoba, Jl. Green Lake City Boulevard No.23, Kota Tangerang, Banten 15146"
+  const logoUrl = computed(() =>
+    resolveImageUrl(settings.value.company?.logo, "/images/redesign/logo.png")
   );
+
+  // Ensure old PCG template defaults are replaced with AP Consulting's real contact data
+  const email = computed(() => {
+    const raw = settings.value.contact?.email;
+    if (!raw || raw === "info@apconsulting.id" || raw.includes("pcg")) {
+      return "contact@apconsulting.id";
+    }
+    return raw;
+  });
+
+  const phone = computed(() => {
+    const raw = settings.value.contact?.phone || settings.value.contact?.whatsapp;
+    if (!raw || raw.includes("89673803596")) {
+      return "+62 857 5417 2217";
+    }
+    return raw;
+  });
+
+  const headOfficeAddress = computed(() => {
+    const raw = settings.value.contact?.address;
+    if (!raw || raw.includes("Green Lake City") || raw.includes("Cordoba")) {
+      return "SUN Plaza, Jl. Meruya Ilir Raya No. 20, Jakarta Barat";
+    }
+    return raw;
+  });
+
+  const branchOfficeAddress = computed(
+    () =>
+      settings.value.contact?.branch_address ||
+      "Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong, Tangerang"
+  );
+
+  const address = computed(() => headOfficeAddress.value);
+
   const mapsEmbedUrl = computed(
     () =>
       settings.value.contact?.maps_embed_url ||
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.452601955025!2d106.6974864758671!3d-6.203875393783993!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f9780bd69701%3A0xa084e1c8fe29ad9!2sGreen%20Lake%20City%20Blvd%2C%20Petir%2C%20Cipondoh%2C%20Tangerang%20City%2C%20Banten%2015147!5e0!3m2!1sen!2sid!4v1710000000000!5m2!1sen!2sid"
+      "https://www.google.com/maps?q=Jl.+Meruya+Ilir+Raya+No.+20,+Jakarta+Barat&output=embed"
   );
 
   const socials = computed(() => {
@@ -53,17 +89,26 @@ export function useCompanySettings() {
     ];
     return list
       .filter(
-        (item) => typeof item.href === "string" && item.href.replace(/[\u00a0\s]+/g, "").trim() !== "" && item.href !== "#"
+        (item) =>
+          typeof item.href === "string" &&
+          item.href.replace(/[\u00a0\s]+/g, "").trim() !== "" &&
+          item.href !== "#"
       )
       .map((item) => ({
         ...item,
-        href: /^https?:\/\//i.test(item.href!.trim()) ? item.href!.trim() : `https://${item.href!.trim()}`,
+        href: /^https?:\/\//i.test(item.href!.trim())
+          ? item.href!.trim()
+          : `https://${item.href!.trim()}`,
       }));
   });
 
-  const whatsappNumber = computed(
-    () => settings.value.contact?.whatsapp || settings.value.contact?.phone || "6289673803596"
-  );
+  const whatsappNumber = computed(() => {
+    const raw = settings.value.contact?.whatsapp || settings.value.contact?.phone;
+    if (!raw || raw.includes("89673803596")) {
+      return "6285754172217";
+    }
+    return raw;
+  });
 
   const cleanWhatsappNumber = computed(() => {
     let digits = whatsappNumber.value.replace(/\D/g, "");
@@ -76,7 +121,8 @@ export function useCompanySettings() {
   });
 
   const getWhatsappUrl = (message?: string) => {
-    const text = message || "Halo PCG, saya ingin berkonsultasi mengenai layanan Anda.";
+    const text =
+      message || "Halo AP Consulting, saya ingin berkonsultasi mengenai layanan Anda.";
     return `https://wa.me/${cleanWhatsappNumber.value}?text=${encodeURIComponent(text)}`;
   };
 
@@ -92,10 +138,11 @@ export function useCompanySettings() {
     whatsappLink,
     getWhatsappUrl,
     address,
+    headOfficeAddress,
+    branchOfficeAddress,
     mapsEmbedUrl,
     socials,
     pending,
     error,
   };
 }
-

@@ -1,59 +1,92 @@
 <template>
   <section
     id="hero"
-    class="relative min-h-[500px] md:min-h-[600px] flex items-end md:items-center bg-slate-900 px-4 py-12 sm:px-8 md:px-16 md:py-20 overflow-hidden"
+    class="relative overflow-hidden bg-[#072642] text-white"
   >
-    <picture class="absolute inset-0 size-full pointer-events-none">
-      <source
-        media="(min-width: 768px)"
-        srcset="/images/about/Hero_Desktop.webp"
-      />
-      <img
-        src="/images/about/Hero_Mobile.webp"
-        alt="PCG Team"
-        fetchpriority="high"
-        decoding="async"
-        width="1280"
-        height="600"
-        class="size-full object-cover"
-      />
-    </picture>
-    <!-- Soft dark gradient overlay for text readability -->
+    <!-- Background Image & Crisp Blue-Navy Gradient Overlay -->
+    <img
+      src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1600&q=80"
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+      loading="eager"
+    />
     <div
-      class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-transparent pointer-events-none"
-    ></div>
+      class="absolute inset-0 bg-gradient-to-r from-[#06233D]/96 via-[#083A63]/90 to-[#0869B2]/78 pointer-events-none"
+    />
 
-    <div class="relative z-10 mx-auto max-w-7xl w-full">
-      <div class="max-w-xl text-white">
-        <h1
-          class="pt-24 text-3xl font-semibold text-white sm:text-4xl md:text-[48px] leading-[1.15] animate-hero-title"
-        >
-          <span class="block">{{ t('about.hero.title1') }}</span>
-          <span class="block">{{ t('about.hero.title2') }}</span>
-        </h1>
-        <p
-          class="mt-4 text-sm text-white/90 leading-relaxed md:text-base font-normal max-w-lg animate-hero-desc"
-        >
-          {{ t('about.hero.description') }}
-        </p>
-        <div class="mt-8 flex flex-wrap items-center gap-4 sm:gap-6 animate-hero-cta">
-          <UButton
-            to="/about#why-choose"
-            color="primary"
-            variant="solid"
-            size="lg"
-            class="w-fit justify-center font-medium px-6 py-4 rounded-none bg-[#F4C400] text-[#083653] hover:bg-[#F4C400]/90 transition-colors uppercase text-xs sm:text-sm tracking-wider"
+    <div
+      class="relative z-10 mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20"
+    >
+      <div
+        class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center"
+      >
+        <!-- Left Column: Primary Copy & Actions -->
+        <div class="lg:col-span-7 flex flex-col items-start gap-4 sm:gap-5">
+          <p
+            class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#B9DBF4]"
           >
-            {{ t('about.hero.discoverBtn') }}
-          </UButton>
-          <UButton
-            to="/about#people"
-            variant="outline"
-            size="lg"
-            class="w-fit justify-center font-medium px-7 py-4 rounded-none border border-white text-white hover:bg-white/10 transition-colors uppercase text-xs sm:text-sm tracking-wider"
+            {{ t("about.hero.eyebrow") }}
+          </p>
+
+          <h1
+            class="text-[32px] sm:text-5xl lg:text-[54px] font-semibold leading-[1.12] tracking-[-0.03em] text-white"
           >
-            {{ t('about.hero.teamBtn') }}
-          </UButton>
+            <span class="font-bold">{{ t("about.hero.title1") }}</span><br />
+            <span class="font-bold italic text-[#B9E2FF]">{{
+              t("about.hero.title2")
+            }}</span>
+          </h1>
+
+          <p
+            class="text-[15px] sm:text-lg text-[#E1EFFA] leading-[1.65] max-w-[540px]"
+          >
+            {{ t("about.hero.description") }}
+          </p>
+
+          <div
+            class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto"
+          >
+            <a
+              href="#about-ap"
+              class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-[#083A63] text-sm font-bold rounded-[2px] shadow-sm hover:bg-[#F0F7FF] transition-colors"
+            >
+              <span>{{ t("about.hero.discoverBtn") }}</span>
+              <span class="text-base leading-none text-[#0869B2]">↓</span>
+            </a>
+
+            <a
+              href="#people"
+              class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/10 hover:bg-white/15 border border-white/35 text-white text-sm font-semibold rounded-[2px] transition-colors"
+            >
+              <span>{{ t("about.hero.teamBtn") }}</span>
+              <span class="text-base leading-none">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: Editorial Office Photo + Banner -->
+        <div class="lg:col-span-5">
+          <div
+            class="relative overflow-hidden rounded-tr-[40px] sm:rounded-tr-[56px] rounded-tl-[4px] rounded-b-[4px] shadow-2xl border border-white/15"
+          >
+            <img
+              src="/images/redesign/office.png"
+              alt="AP Consulting office in SUN Plaza, Jakarta"
+              class="w-full h-[230px] sm:h-[320px] lg:h-[350px] object-cover"
+              loading="eager"
+            />
+            <div
+              class="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 bg-gradient-to-r from-[#0869B2] to-[#06477D] text-white"
+            >
+              <span
+                class="text-[10px] sm:text-[11px] font-bold tracking-[0.14em] uppercase"
+              >
+                {{ t("about.hero.banner") }}
+              </span>
+              <span class="text-lg sm:text-xl font-light leading-none">↗</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -61,7 +94,7 @@
 </template>
 
 <script setup lang="ts">
-import { useLanguage } from '~/composables/useLanguage'
+import { useLanguage } from "~/composables/useLanguage";
 
-const { t } = useLanguage()
+const { t } = useLanguage();
 </script>

@@ -49,7 +49,7 @@
       />
       <img
         src="/images/homepage/About_Mobile.webp"
-        alt="PCG team reviewing financial documents"
+        alt="AP Consulting team reviewing financial documents"
         loading="lazy"
         decoding="async"
         width="1280"
