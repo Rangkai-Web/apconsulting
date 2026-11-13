@@ -127,9 +127,11 @@
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         <article
-          v-for="article in displayedArticles"
+          v-for="(article, aIdx) in displayedArticles"
           :key="article.id"
-          class="group bg-white rounded-[2px] border border-[#DCE8F5] hover:border-[#0869B2] overflow-hidden flex flex-col justify-between transition-colors duration-200"
+          class="group hover-lift bg-white rounded-[2px] border border-[#DCE8F5] hover:border-[#0869B2] overflow-hidden flex flex-col justify-between transition-colors duration-200"
+          data-reveal="up"
+          :data-reveal-delay="(aIdx % 3) * 120"
         >
           <div>
             <!-- Thumbnail + AP Consulting Signature Date Badge -->

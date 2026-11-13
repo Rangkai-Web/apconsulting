@@ -8,7 +8,7 @@
         class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start"
       >
         <!-- Left Column: Headline & CTA -->
-        <div class="lg:col-span-5">
+        <div class="lg:col-span-5" data-reveal="up">
           <p
             class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#0869B2] mb-2"
           >
@@ -45,9 +45,11 @@
         <!-- Right Column: 2x2 Architectural Advantage Cards -->
         <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
           <div
-            v-for="card in cards"
+            v-for="(card, cIdx) in cards"
             :key="card.titleKey"
-            class="flex flex-col justify-between p-6 sm:p-7 rounded-[2px] bg-white border border-[#DCE8F5] hover:border-[#0869B2] transition-colors duration-200"
+            class="hover-lift flex flex-col justify-between p-6 sm:p-7 rounded-[2px] bg-white border border-[#DCE8F5] hover:border-[#0869B2] transition-colors duration-200"
+            data-reveal="up"
+            :data-reveal-delay="cIdx * 100"
           >
             <div>
               <div

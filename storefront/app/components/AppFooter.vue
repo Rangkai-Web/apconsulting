@@ -21,7 +21,9 @@
               class="h-9 w-auto object-contain footer-logo"
             />
           </div>
-          <span class="text-xs sm:text-sm font-semibold text-white leading-tight">
+          <span
+            class="text-xs sm:text-sm font-semibold text-white leading-tight"
+          >
             Tax &amp; Consulting<br />Services
           </span>
         </NuxtLink>
@@ -63,11 +65,9 @@
             }}</NuxtLink>
           </li>
           <li>
-            <NuxtLink
-              to="/about"
-              class="hover:text-white transition-colors"
-              >{{ t("nav.about") }}</NuxtLink
-            >
+            <NuxtLink to="/about" class="hover:text-white transition-colors">{{
+              t("nav.about")
+            }}</NuxtLink>
           </li>
           <li>
             <NuxtLink
@@ -100,10 +100,7 @@
         </p>
         <ul class="mt-4 space-y-2.5 text-sm text-[#B8CFE4] font-normal">
           <li v-for="cat in footerServices" :key="cat.id">
-            <NuxtLink
-              :to="cat.href"
-              class="hover:text-white transition-colors"
-            >
+            <NuxtLink :to="cat.href" class="hover:text-white transition-colors">
               {{ cat.label }}
             </NuxtLink>
           </li>
@@ -123,7 +120,9 @@
             class="mt-0.5 size-5 shrink-0 text-[#66B8FF]"
           />
           <div>
-            <p class="text-[11px] font-bold tracking-[0.08em] uppercase text-white mb-0.5">
+            <p
+              class="text-[11px] font-bold tracking-[0.08em] uppercase text-white mb-0.5"
+            >
               {{ t("footer.headOffice") }}
             </p>
             <a
@@ -144,7 +143,9 @@
             class="mt-0.5 size-5 shrink-0 text-[#66B8FF]"
           />
           <div>
-            <p class="text-[11px] font-bold tracking-[0.08em] uppercase text-white mb-0.5">
+            <p
+              class="text-[11px] font-bold tracking-[0.08em] uppercase text-white mb-0.5"
+            >
               {{ t("footer.branchOffice") }}
             </p>
             <a
@@ -166,7 +167,11 @@
             name="i-heroicons-envelope"
             class="size-5 shrink-0 text-[#66B8FF]"
           />
-          <a :href="`mailto:${email}`" class="hover:underline hover:text-white transition-colors">{{ email }}</a>
+          <a
+            :href="`mailto:${email}`"
+            class="hover:underline hover:text-white transition-colors"
+            >{{ email }}</a
+          >
         </p>
 
         <!-- Phone / WhatsApp -->
@@ -217,7 +222,11 @@
         <span>{{ t("footer.ikpiMember") }}</span>
         <span aria-hidden="true" class="hidden sm:inline text-white/30">·</span>
         <span>
-          {{ t("footer.practiceLicensePrefix") }} <strong class="font-semibold text-white">KIP-6592/IP.B/PJ/2020</strong> (Andry Phangkawira)
+          {{ t("footer.practiceLicensePrefix") }}
+          <strong class="font-semibold text-white"
+            >KIP-6592/IP.B/PJ/2020</strong
+          >
+          (Andry Phangkawira)
         </span>
       </div>
 
@@ -229,7 +238,9 @@
         class="inline-flex items-center gap-1.5 font-semibold text-[#8EC5F2] hover:text-white transition-colors"
         @click="copyConsultantName"
       >
-        <span>{{ copiedLicense ? t("footer.copiedLicense") : t("footer.viewLicenses") }}</span>
+        <span>{{
+          copiedLicense ? t("footer.copiedLicense") : t("footer.viewLicenses")
+        }}</span>
         <span aria-hidden="true">→</span>
       </a>
     </div>
@@ -287,7 +298,9 @@ const footerServices = computed(() => {
     },
     {
       id: "payroll-outsourcing",
-      label: isEn ? "Payroll Outsourcing Services" : "Layanan Payroll Outsourcing",
+      label: isEn
+        ? "Payroll Outsourcing Services"
+        : "Layanan Payroll Outsourcing",
       href: "/services#payroll",
     },
     {

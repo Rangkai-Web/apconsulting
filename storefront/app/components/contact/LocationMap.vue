@@ -2,7 +2,7 @@
   <section class="border-b border-[#DCE8F5] bg-[#F4F9FE] py-12 sm:py-16 lg:py-20">
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <!-- Header -->
-      <div class="mb-8 flex flex-col justify-between gap-4 sm:mb-10 md:flex-row md:items-end">
+      <div class="mb-8 flex flex-col justify-between gap-4 sm:mb-10 md:flex-row md:items-end" data-reveal="up">
         <div>
           <p class="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#0869B2]">
             {{ t("contact.location.tag") }}
@@ -30,13 +30,13 @@
       </div>
 
       <!-- Office Selector Cards -->
-      <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2" data-reveal="up" data-reveal-delay="100">
         <button
           v-for="office in offices"
           :key="office.id"
           type="button"
           :class="[
-            'group flex items-start gap-3.5 rounded-[2px] border p-5 text-left transition-colors',
+            'group hover-lift flex items-start gap-3.5 rounded-[2px] border p-5 text-left transition-colors',
             activeOffice === office.id
               ? 'border-[#0869B2] bg-white'
               : 'border-[#DCE8F5] bg-white/75 hover:border-[#9EC5E8] hover:bg-white',

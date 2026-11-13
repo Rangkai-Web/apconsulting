@@ -5,7 +5,7 @@
   >
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <!-- Section Header -->
-      <div class="max-w-[720px] mb-10 sm:mb-12">
+      <div class="max-w-[720px] mb-10 sm:mb-12" data-reveal="up">
         <p
           class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#0869B2] mb-2"
         >
@@ -30,10 +30,12 @@
       <!-- 3 Core Services Architectural Cards -->
       <div class="space-y-6 sm:space-y-8">
         <article
-          v-for="service in coreServices"
+          v-for="(service, idx) in coreServices"
           :id="service.anchorId"
           :key="service.number"
-          class="scroll-mt-24 bg-white rounded-[2px] border border-[#DCE8F5] hover:border-[#0869B2] transition-colors duration-200 overflow-hidden"
+          class="scroll-mt-24 hover-lift bg-white rounded-[2px] border border-[#DCE8F5] hover:border-[#0869B2] transition-colors duration-200 overflow-hidden"
+          data-reveal="up"
+          :data-reveal-delay="idx * 120"
         >
           <div class="grid grid-cols-1 lg:grid-cols-12">
             <!-- Left Column: Service Overview & CTA -->
@@ -101,16 +103,11 @@
                 <div
                   v-for="(sub, sIdx) in service.subServices"
                   :key="sIdx"
-                  :class="[
-                    'flex items-start gap-3.5',
-                    sIdx === 0 ? 'pb-4 sm:pb-5' : '',
-                    sIdx === 1 ? 'py-4 sm:py-5' : '',
-                    sIdx === 2 ? 'pt-4 sm:pt-5' : '',
-                  ]"
+                  class="flex items-start gap-3.5 py-4 sm:py-4.5 first:pt-0 last:pb-0"
                 >
                   <!-- Checkmark Badge -->
                   <span
-                    class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-[#E6F2FC] text-[#0869B2]"
+                    class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-[2px] bg-[#E6F2FC] text-[#0869B2]"
                   >
                     <svg
                       aria-hidden="true"
@@ -219,6 +216,10 @@ const coreServices = computed(() => [
       {
         title: t("services.scope.s3Sub3Title"),
         description: t("services.scope.s3Sub3Desc"),
+      },
+      {
+        title: t("services.scope.s3Sub4Title"),
+        description: t("services.scope.s3Sub4Desc"),
       },
     ],
   },

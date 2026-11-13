@@ -5,7 +5,7 @@
   >
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <!-- Centered Editorial Header -->
-      <div class="mx-auto max-w-[680px] text-center mb-10 sm:mb-12">
+      <div class="mx-auto max-w-[680px] text-center mb-10 sm:mb-12" data-reveal="up">
         <p
           class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#0869B2] mb-2"
         >
@@ -40,14 +40,16 @@
       <!-- Team Grid (API Data or AP Consulting Leadership Fallback) -->
       <div v-else :class="containerClasses">
         <article
-          v-for="person in displayedPeople"
+          v-for="(person, pIdx) in displayedPeople"
           :key="person.id"
-          class="group flex flex-col bg-[#F8FBFF] rounded-[2px] border border-[#DCE8F5] hover:border-[#0869B2] transition-colors duration-200 overflow-hidden"
+          class="group hover-lift flex flex-col bg-[#F8FBFF] rounded-[2px] border border-[#DCE8F5] hover:border-[#0869B2] transition-colors duration-200 overflow-hidden"
+          data-reveal="up"
+          :data-reveal-delay="pIdx * 120"
         >
           <!-- Photo -->
           <div class="relative w-full h-[260px] sm:h-[290px] bg-[#EBF3FA] overflow-hidden border-b border-[#DCE8F5]">
             <img
-              :src="resolvePersonPhoto(person.photo)"
+              :src="resolvePersonPhoto(person.photo, person.name)"
               :alt="person.name"
               loading="lazy"
               decoding="async"
@@ -131,9 +133,9 @@ const fallbackLeadership = computed<TeamMember[]>(() => [
     id: "leadership-andry",
     name: "Andry Phangkawira, S.E., Ak., BKP.",
     position: "Partner",
-    photo: "/images/redesign/collaboration.png",
+    photo: "https://www.apconsulting.id/images/team/andry.jpeg",
     bio: t("about.people.licenseNote"),
-    linkedin_url: "https://www.linkedin.com/",
+    linkedin_url: "https://www.linkedin.com/in/andry-phangkawira/",
   },
 ]);
 
@@ -142,11 +144,14 @@ const displayedPeople = computed(() => {
   return items.length > 0 ? items : fallbackLeadership.value;
 });
 
-function resolvePersonPhoto(photo?: string): string {
-  if (photo && photo.startsWith("/images/redesign/")) {
+function resolvePersonPhoto(photo?: string, name?: string): string {
+  if (name && name.toLowerCase().includes("andry")) {
+    return "https://www.apconsulting.id/images/team/andry.jpeg";
+  }
+  if (photo && (photo.startsWith("http://") || photo.startsWith("https://") || photo.startsWith("/images/redesign/"))) {
     return photo;
   }
-  return resolveImageUrl(photo, "/images/redesign/collaboration.png");
+  return resolveImageUrl(photo, "https://www.apconsulting.id/images/team/andry.jpeg");
 }
 
 const containerClasses = computed(() => {
@@ -173,11 +178,15 @@ function formatExternalUrl(url?: string): string {
 }
 
 function getSocials(person: TeamMember) {
+  const linkedinUrl = person.name?.toLowerCase().includes("andry")
+    ? "https://www.linkedin.com/in/andry-phangkawira/"
+    : person.linkedin_url;
+
   const list = [
     {
       name: "LinkedIn",
       icon: "i-simple-icons-linkedin",
-      url: person.linkedin_url,
+      url: linkedinUrl,
     },
     {
       name: "Instagram",

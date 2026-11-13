@@ -1,7 +1,7 @@
 <template>
   <section class="w-full bg-[#F4F9FE] py-10 sm:py-12 lg:py-16 border-t border-[#DCE8F5]">
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
-      <div class="relative rounded-[2px] overflow-hidden bg-[#092F50] border border-[#144673]">
+      <div class="relative rounded-[2px] overflow-hidden bg-[#092F50] border border-[#144673]" data-reveal="up">
         <img
           src="/images/redesign/footer-bg.png"
           alt=""

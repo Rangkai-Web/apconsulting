@@ -23,7 +23,7 @@
       >
         <!-- Left Column: Featured Article Editorial -->
         <div class="lg:col-span-7 flex flex-col items-start gap-4 sm:gap-5">
-          <div class="flex flex-wrap items-center gap-3">
+          <div class="animate-hero-badge flex flex-wrap items-center gap-3">
             <span
               class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#B9DBF4]"
             >
@@ -38,7 +38,7 @@
 
           <NuxtLink
             :to="featuredHref"
-            class="group block focus:outline-none"
+            class="animate-hero-title group block focus:outline-none"
           >
             <h1
               class="text-[28px] sm:text-4xl lg:text-[46px] font-bold leading-[1.15] tracking-[-0.025em] text-white group-hover:text-[#B9E2FF] transition-colors line-clamp-3"
@@ -48,14 +48,14 @@
           </NuxtLink>
 
           <p
-            class="text-[15px] sm:text-[16.5px] text-[#E1EFFA] leading-[1.65] max-w-[560px] line-clamp-3"
+            class="animate-hero-desc text-[15px] sm:text-[16.5px] text-[#E1EFFA] leading-[1.65] max-w-[560px] line-clamp-3"
           >
             {{ featuredArticle?.excerpt || t("insight.hero.description") }}
           </p>
 
           <!-- Metadata Row -->
           <div
-            class="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs sm:text-sm text-[#B9DBF4]"
+            class="animate-hero-desc flex flex-wrap items-center gap-x-5 gap-y-2 text-xs sm:text-sm text-[#B9DBF4]"
           >
             <span class="font-semibold text-white">
               {{ featuredArticle?.author_name || t("insight.hero.author") }}
@@ -77,7 +77,7 @@
             </span>
           </div>
 
-          <div class="pt-1 w-full sm:w-auto">
+          <div class="animate-hero-cta pt-1 w-full sm:w-auto">
             <NuxtLink
               :to="featuredHref"
               class="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-6 py-3 bg-white text-[#083A63] text-sm font-bold rounded-[2px] shadow-sm hover:bg-[#F0F7FF] transition-colors"
@@ -89,7 +89,7 @@
         </div>
 
         <!-- Right Column: Featured Visual Frame -->
-        <div class="lg:col-span-5">
+        <div class="animate-hero-image lg:col-span-5">
           <NuxtLink
             :to="featuredHref"
             class="group block relative overflow-hidden rounded-tr-[40px] sm:rounded-tr-[52px] rounded-tl-[4px] rounded-b-[4px] border border-white/15 shadow-2xl bg-[#061F35]"

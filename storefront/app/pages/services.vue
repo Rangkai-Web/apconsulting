@@ -23,9 +23,9 @@ import { useSeoText } from "~/composables/useSeoText";
 const { toSafeJsonLd } = useSeoText();
 const config = useRuntimeConfig();
 const canonicalUrl = `${config.public.siteUrl}/services`;
-const title = "Services — Tax, Payroll Outsourcing & Tax Accounting | AP Consulting";
+const title = "Services — Tax, Payroll Outsourcing & Accounting Services | AP Consulting";
 const description =
-  "Explore AP Consulting's professional services: Tax Services (Compliance, Review, Audit & Dispute Resolution), Payroll Outsourcing Services, and Tax Accounting Services.";
+  "Explore AP Consulting's professional services: Tax Services (Compliance, Review, Audit Assistance), Payroll Outsourcing Services, and Accounting Services.";
 
 useSeoMeta({
   title,

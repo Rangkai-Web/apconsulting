@@ -41,8 +41,6 @@ const translations: Record<Locale, Record<string, string>> = {
     "cta.buttonText": "Discuss Your Needs",
     "footer.tagline":
       "Professional support in tax, accounting, and financial services. We're helping businesses move forward with clarity and confidence.",
-    "footer.quote":
-      '"If you fail to plan, you plan to fail — Plan your tax with us."',
     "footer.rights": "All Rights Reserved",
     "footer.quickLinks": "Quick Links",
     "footer.services": "Services",
@@ -68,7 +66,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "home.v3.hero.stat1Label": "Years of tax & accounting experience",
     "home.v3.hero.stat2Label": "Active corporate & individual clients",
     "home.v3.hero.stat3Label": "Tax returns (SPT) handled every year",
-    "home.v3.hero.stat4Label": "Certified tax consultants (Brevet A/B/C)",
+    "home.v3.hero.stat4Label": "Certified tax consultants",
 
     // Redesign Home - Services (Our Expertise)
     "home.v3.services.eyebrow": "OUR EXPERTISE",
@@ -78,13 +76,13 @@ const translations: Record<Locale, Record<string, string>> = {
     "home.v3.services.learnMore": "Learn more",
     "home.v3.services.s1Title": "Tax Services",
     "home.v3.services.s1Desc":
-      "From tax compliance and reviews to audit assistance and dispute resolution.",
+      "Comprehensive tax consulting and administration: Tax Compliance, Tax Review, and Tax Audit Assistance.",
     "home.v3.services.s2Title": "Payroll Outsourcing Services",
     "home.v3.services.s2Desc":
-      "Payroll support to help keep your business’s salary administration structured.",
-    "home.v3.services.s3Title": "Tax Accounting Services",
+      "Meticulous, confidential, and timely payroll and tax management, including HR administration, BPJS, and e-Payslips.",
+    "home.v3.services.s3Title": "Accounting Services",
     "home.v3.services.s3Desc":
-      "Accounting support for more organized records and financial information.",
+      "Sound bookkeeping, financial statement preparation (PT/CV/UMKM), accounting reviews, internal audits, and software consultation.",
 
     // Redesign Home - Sectors (Industries We Serve)
     "home.v3.sectors.eyebrow": "INDUSTRIES WE SERVE",
@@ -133,21 +131,21 @@ const translations: Record<Locale, Record<string, string>> = {
     // Redesign Home - Approach
     "home.v3.approach.eyebrow": "OUR APPROACH",
     "home.v3.approach.titleBold": "How we work",
-    "home.v3.approach.titleItalic": "with you.",
+    "home.v3.approach.titleItalic": "with your business.",
     "home.v3.approach.subtitle":
-      "A transparent, four-stage advisory framework designed to keep your operations compliant and audit-ready year-round.",
-    "home.v3.approach.s1Title": "Understand Your Situation",
+      "A clear, four-stage professional advisory framework designed to keep your tax, payroll, and financial operations compliant and growth-ready.",
+    "home.v3.approach.s1Title": "Understand Your Business",
     "home.v3.approach.s1Desc":
-      "We take time to thoroughly understand your business structure, financial records, and compliance obligations before recommending any action.",
-    "home.v3.approach.s2Title": "Tailored Strategy",
+      "We thoroughly review your business entity, transaction flows, and compliance status before recommending any action.",
+    "home.v3.approach.s2Title": "Tailored Solutions",
     "home.v3.approach.s2Desc":
-      "Every business is different. We develop a clear, practical plan suited to your specific tax, payroll, or accounting needs — no unnecessary complexity.",
+      "Every business has unique requirements. We craft practical strategies suited to your tax, payroll, or accounting scope — with no unnecessary complexity.",
     "home.v3.approach.s3Title": "Clear Communication",
     "home.v3.approach.s3Desc":
-      "We keep you informed at every step, explaining regulations and options in plain language so you can make confident decisions.",
+      "We explain regulations, tax calculations, and financial reports in plain, actionable language so you can make confident decisions.",
     "home.v3.approach.s4Title": "Ongoing Support",
     "home.v3.approach.s4Desc":
-      "Tax and compliance are not one-time tasks. We stay with you year-round to anticipate changes, meet deadlines, and support your growth.",
+      "Compliance and financial management are ongoing priorities. We stand beside you throughout the year to anticipate deadlines and support your business growth.",
 
     // Redesign Home - Insights
     "home.v3.insights.eyebrow": "LATEST INSIGHTS",
@@ -347,7 +345,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "about.pcg.paragraph1":
       "AP Consulting is a law-abiding taxation consultancy that has a team consisting of certified, experienced & eclectic individuals in taxation and accountancy. We observe current, up-to-date laws and regulations in assisting both corporate entities and individual business owners.",
     "about.pcg.paragraph2":
-      "Our commitment is to be a reliable and trustworthy business partner in resolving client challenges across taxation, payroll outsourcing, and tax accounting. Through solid teamwork, optimal client service, and concrete problem-solving, we help your business move forward with clarity.",
+      "Our commitment is to be a reliable and trustworthy business partner in resolving client challenges across taxation, payroll outsourcing, and accounting. Through solid teamwork, optimal client service, and concrete problem-solving, we help your business move forward with clarity.",
 
     // About Vision & Mission
     "about.vision.tag": "OUR VISION",
@@ -356,11 +354,16 @@ const translations: Record<Locale, Record<string, string>> = {
     "about.mission.tag": "OUR MISSION",
     "about.mission.title":
       "We help businesses navigate tax, payroll, and accounting complexity through certified expertise, strict confidentiality, and concrete problem-solving.",
-    "about.mission.item1": "Deliver consistent, law-abiding tax & accounting services.",
-    "about.mission.item2": "Protect client data under strict professional confidentiality.",
-    "about.mission.item3": "Identify tax risks early and optimize compliant tax planning.",
-    "about.mission.item4": "Represent clients reliably during DJP reviews, audits, and disputes.",
-    "about.mission.item5": "Build long-term partnerships driven by integrity and excellence.",
+    "about.mission.item1":
+      "Deliver consistent, law-abiding tax & accounting services.",
+    "about.mission.item2":
+      "Protect client data under strict professional confidentiality.",
+    "about.mission.item3":
+      "Identify tax risks early and optimize compliant tax planning.",
+    "about.mission.item4":
+      "Represent clients reliably during DJP reviews, audits, and disputes.",
+    "about.mission.item5":
+      "Build long-term partnerships driven by integrity and excellence.",
 
     // About Why Choose AP Consulting
     "about.whyChoose.tag": "WHY CHOOSE AP CONSULTING",
@@ -372,9 +375,9 @@ const translations: Record<Locale, Record<string, string>> = {
     "about.whyChoose.card1Title": "Licensed & Law-Abiding Practice",
     "about.whyChoose.card1Body":
       "Registered tax consultants (IKPI) observing the latest Indonesian tax regulations with Practice License No. KIP-6592/IP.B/PJ/2020.",
-    "about.whyChoose.card2Title": "Certified Brevet A/B/C Team",
+    "about.whyChoose.card2Title": "Certified Tax Professionals",
     "about.whyChoose.card2Body":
-      "8 certified tax consultants with over 15 years of hands-on experience serving 50+ corporate and individual clients.",
+      "Experienced and certified tax professionals dedicated to assisting corporate and individual clients with up-to-date tax laws.",
     "about.whyChoose.card3Title": "Strict Client Confidentiality",
     "about.whyChoose.card3Body":
       "Your financial and tax data stays strictly confidential. We never publish client names and protect every engagement.",
@@ -389,7 +392,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "about.people.description":
       "Meet the leadership and professionals behind AP Consulting — bringing hands-on tax experience, clear focus, and a shared commitment to your compliance.",
     "about.people.seeProfile": "See Profile",
-    "about.people.licenseNote": "Practice License No. KIP-6592/IP.B/PJ/2020 · IKPI Member",
+    "about.people.licenseNote":
+      "Practice License No. KIP-6592/IP.B/PJ/2020 · IKPI Member",
 
     // Services Hero
     "services.hero.eyebrow": "AP CONSULTING · OUR SERVICES",
@@ -408,53 +412,56 @@ const translations: Record<Locale, Record<string, string>> = {
     "services.scope.titleItalic": "Practical support,",
     "services.scope.titleNormal": "from compliance to dispute resolution.",
     "services.scope.description":
-      "Whether you are a newly established business or an expanding enterprise, AP Consulting provides structured tax, payroll, and accounting services tailored to your operational needs.",
+      "Whether you are a newly established business or an expanding enterprise, AP Consulting provides structured tax, payroll outsourcing, and accounting services tailored to your operational needs.",
     "services.scope.includedLabel": "The services we provide include:",
 
     // 01. Tax Services
     "services.scope.s1Title": "Tax Services",
     "services.scope.s1Desc":
-      "We understand that taxation administration is often tedious and time-consuming, especially for a business that needs extra time to focus on the market. This is why AP Consulting has been created to provide you with consistent and professional taxation services.",
+      "Tax administration can often be exhausting for businesses that are just starting out. That is why we are here to provide consulting and complete tax administration support.",
     "services.scope.s1Cta": "Discuss Tax Services",
     "services.scope.s1Sub1Title": "Tax Compliance Service",
     "services.scope.s1Sub1Desc":
-      "We provide services to assist taxpayers in complying with legal tax laws and regulations through data analysis, calculating and paying taxes owed to the government, preparing annual and periodical (monthly) SPT, and ensuring all tax obligations are fulfilled on time.",
+      "Supporting taxpayers in fulfilling their tax obligations in accordance with prevailing laws and regulations — analyzing financial data, calculating, depositing taxes payable, preparing periodic and annual tax returns (SPT Masa & Tahunan), and reporting them on time.",
     "services.scope.s1Sub2Title": "Tax Review Service",
     "services.scope.s1Sub2Desc":
-      "We offer tax review services to assess our clients' (taxpayers') risk potentials based on company activities and transactions — making it easier for our clients to plan effective and compliant taxation strategies.",
-    "services.scope.s1Sub3Title": "Tax Dispute Resolution & Tax Audit",
+      "Offering tax review services to measure potential tax risks arising from corporate transactions and operations. This tax review report empowers clients to implement more effective tax planning.",
+    "services.scope.s1Sub3Title": "Tax Audit & Examination Assistance",
     "services.scope.s1Sub3Desc":
-      "We accompany our clients during inspections by the Directorate General of Taxes (DJP) from start to finish, including preparing Income Tax Equalization Data and legal document verification, providing relevant information to the tax authority (fiscus) until the matter is resolved.",
+      "Providing end-to-end representation throughout the tax examination process, including preparing income tax equalization data and documentary evidence, and providing relevant clarifications to tax authorities until the final decision is reached.",
 
     // 02. Payroll Outsourcing Services
     "services.scope.s2Title": "Payroll Outsourcing Services",
     "services.scope.s2Desc":
-      "Managing employee compensation and monthly tax withholdings requires precision, timeliness, and strict confidentiality. Our payroll outsourcing service keeps your company's salary administration and employee tax compliance structured and worry-free.",
+      "Meticulous, confidential, and timely payroll processing is what every client expects. We offer efficient payroll and income tax administration so clients can save valuable time while ensuring payroll records remain strictly confidential.",
     "services.scope.s2Cta": "Discuss Payroll Services",
-    "services.scope.s2Sub1Title": "Monthly Payroll Administration",
+    "services.scope.s2Sub1Title": "HR Administration & BPJS Registration",
     "services.scope.s2Sub1Desc":
-      "End-to-end calculation of monthly salaries, allowances, overtime, BPJS Kesehatan & Ketenagakerjaan contributions, and deductions with strict data confidentiality.",
-    "services.scope.s2Sub2Title": "PPh 21/26 Tax Calculation & Withholding",
+      "Assisting with Human Resource-related administration such as registration for BPJS Kesehatan and BPJS Ketenagakerjaan, and more.",
+    "services.scope.s2Sub2Title": "Payroll, Allowance & PPh 21 Calculation",
     "services.scope.s2Sub2Desc":
-      "Accurate computation of employee and expatriate income tax withholdings (PPh Article 21/26) in full compliance with the latest TER and DJP regulations.",
-    "services.scope.s2Sub3Title": "Payslips & Periodic Tax Reporting",
+      "Accurate calculation of salary data, allowances, deductions, and Article 21 Income Tax (PPh 21) withholding for employees.",
+    "services.scope.s2Sub3Title": "e-Payslip Generation",
     "services.scope.s2Sub3Desc":
-      "Timely preparation of confidential employee payslips, monthly payroll summary reports, periodic SPT Masa PPh 21 filings, and annual 1721-A1 withholding certificates.",
+      "Generating and securely distributing digital electronic pay slips (e-Payslips) directly to employees.",
 
-    // 03. Tax Accounting Services
-    "services.scope.s3Title": "Tax Accounting Services",
+    // 03. Accounting Services
+    "services.scope.s3Title": "Accounting Services",
     "services.scope.s3Desc":
-      "Clean, well-organized financial records are the foundation of accurate tax reporting and confident business decisions. We provide structured bookkeeping and tax accounting support so your financial statements are always clear and audit-ready.",
+      "Sound bookkeeping is the key to the successful growth of any business. By entrusting their accounting to our professional team, companies can stay fully focused on expanding their business.",
     "services.scope.s3Cta": "Discuss Accounting Services",
-    "services.scope.s3Sub1Title": "Bookkeeping & Transaction Recording",
+    "services.scope.s3Sub1Title": "Financial Statement Preparation",
     "services.scope.s3Sub1Desc":
-      "Systematic recording of daily financial transactions, general ledgers, accounts receivable/payable, bank reconciliations, and accounting journal adjustments.",
-    "services.scope.s3Sub2Title": "Monthly & Annual Financial Statements",
+      "Preparation of comprehensive financial statements for corporations (PT), limited partnerships (CV), sole proprietorships, MSMEs (UMKM), and others.",
+    "services.scope.s3Sub2Title": "Accounting Review Services",
     "services.scope.s3Sub2Desc":
-      "Preparation of accurate Balance Sheet, Income Statement, and Cash Flow reports to give management clear visibility into day-to-day financial performance.",
-    "services.scope.s3Sub3Title": "Fiscal Reconciliation & Tax-Ready Reports",
+      "Identifying and verifying source documents as well as supervising transaction recording and the integrity of financial statements.",
+    "services.scope.s3Sub3Title": "Internal Audit",
     "services.scope.s3Sub3Desc":
-      "Aligning commercial financial statements with Indonesian tax regulations (fiscal reconciliation) to ensure smooth and accurate Corporate Annual Tax Return (SPT Tahunan Badan) filings.",
+      "Conducting systematic internal audits to evaluate internal accounting controls, financial accuracy, and operational compliance.",
+    "services.scope.s3Sub4Title": "Accounting Software Consultation",
+    "services.scope.s3Sub4Desc":
+      "Providing expert consultation and setup assistance for accounting software tailored to the company's operational requirements.",
 
     // Services Current Need
     "services.need.tag": "START WITH YOUR CURRENT NEED",
@@ -462,18 +469,18 @@ const translations: Record<Locale, Record<string, string>> = {
     "services.need.titleItalic": "need more clarity?",
     "services.need.subtitle":
       "Choose the priority below that matches your current situation. We tailor our scope of engagement around what your business needs right now.",
-    "services.need.n1Title": "Stay Tax Compliant",
+    "services.need.n1Title": "Tax Compliance & Reporting",
     "services.need.n1Body":
       "Fulfill monthly and annual SPT obligations accurately and on time without administrative stress.",
-    "services.need.n2Title": "Streamline Payroll & PPh 21",
+    "services.need.n2Title": "Payroll & PPh 21 Processing",
     "services.need.n2Body":
-      "Keep salary administration, payslips, and employee tax withholdings confidential and structured.",
-    "services.need.n3Title": "Organize Financial Books",
+      "Ensure timely salaries, BPJS compliance, and confidential e-Payslips for your employees.",
+    "services.need.n3Title": "Bookkeeping & Financial Reports",
     "services.need.n3Body":
-      "Build clean bookkeeping, bank reconciliations, and fiscal-ready financial statements.",
-    "services.need.n4Title": "Resolve Audits & Disputes",
+      "Prepare accurate financial statements for PT, CV, or UMKM and optimize your accounting software.",
+    "services.need.n4Title": "Tax Review & Audit Assistance",
     "services.need.n4Body":
-      "Get professional representation for tax reviews, SP2DK inquiries, DJP audits, and tax disputes.",
+      "Identify tax exposure through reviews and secure professional assistance during tax office examinations.",
 
     // Services Overrides
     "services.ourApproach.tag": "HOW WE WORK",
@@ -491,8 +498,7 @@ const translations: Record<Locale, Record<string, string>> = {
     // Insights Hero
     "insight.hero.eyebrow": "AP CONSULTING · INSIGHTS & ARTICLES",
     "insight.hero.tag": "FEATURED ARTICLE",
-    "insight.hero.title":
-      "New Business: Do You Need to Pay Tax Right Away?",
+    "insight.hero.title": "New Business: Do You Need to Pay Tax Right Away?",
     "insight.hero.description":
       "Taxation is an essential part of national economic sustainability. Understanding tax obligations from day one helps newly established businesses stay compliant and avoid unnecessary penalties.",
     "insight.hero.author": "By AP Consulting Editorial Team",
@@ -645,8 +651,6 @@ const translations: Record<Locale, Record<string, string>> = {
     "cta.buttonText": "Diskusikan Kebutuhanmu",
     "footer.tagline":
       "Dukungan profesional untuk urusan pajak, akuntansi, dan layanan keuangan. Kami hadir untuk membantu bisnismu melangkah maju dengan penuh keyakinan.",
-    "footer.quote":
-      '"Jika Anda gagal merencanakan, Anda merencanakan kegagalan — Rencanakan pajak Anda bersama kami."',
     "footer.rights": "Hak Cipta Dilindungi",
     "footer.quickLinks": "Tautan Cepat",
     "footer.services": "Layanan Kami",
@@ -672,7 +676,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "home.v3.hero.stat1Label": "Tahun pengalaman di bidang pajak & akuntansi",
     "home.v3.hero.stat2Label": "Klien badan usaha & perorangan aktif",
     "home.v3.hero.stat3Label": "Pelaporan SPT yang ditangani setiap tahun",
-    "home.v3.hero.stat4Label": "Konsultan pajak bersertifikat (Brevet A/B/C)",
+    "home.v3.hero.stat4Label": "Konsultan pajak bersertifikat",
 
     // Redesign Home - Services (Our Expertise)
     "home.v3.services.eyebrow": "KEAHLIAN KAMI",
@@ -680,15 +684,15 @@ const translations: Record<Locale, Record<string, string>> = {
     "home.v3.services.titleItalic": "untuk bisnis Anda.",
     "home.v3.services.explore": "Jelajahi layanan kami",
     "home.v3.services.learnMore": "Pelajari selengkapnya",
-    "home.v3.services.s1Title": "Layanan Perpajakan",
+    "home.v3.services.s1Title": "Jasa Perpajakan",
     "home.v3.services.s1Desc":
-      "Mulai dari kepatuhan dan peninjauan pajak hingga pendampingan pemeriksaan dan penyelesaian sengketa pajak.",
-    "home.v3.services.s2Title": "Layanan Payroll Outsourcing",
+      "Konsultasi dan pemenuhan administrasi perpajakan: Jasa Tax Compliance, Penelaahan Pajak, dan Pendampingan Pemeriksaan Pajak.",
+    "home.v3.services.s2Title": "Jasa Payroll Outsourcing",
     "home.v3.services.s2Desc":
-      "Dukungan pengelolaan payroll untuk menjaga administrasi penggajian dan PPh 21 perusahaan Anda tetap rapi dan terstruktur.",
-    "home.v3.services.s3Title": "Layanan Akuntansi Pajak",
+      "Pengelolaan data dan penghitungan gaji yang teliti, rahasia, dan tepat waktu, termasuk administrasi BPJS dan e-Payslip.",
+    "home.v3.services.s3Title": "Jasa Akuntansi",
     "home.v3.services.s3Desc":
-      "Dukungan akuntansi dan pembukuan untuk pencatatan transaksi serta laporan keuangan yang lebih terorganisir.",
+      "Pembukuan usaha, penyusunan laporan keuangan (PT/CV/UMKM), penelaahan akuntansi, audit internal, hingga konsultasi software akuntansi.",
 
     // Redesign Home - Sectors (Industries We Serve)
     "home.v3.sectors.eyebrow": "INDUSTRI YANG KAMI LAYANI",
@@ -696,7 +700,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "home.v3.sectors.titleItalic": "sektor industri Anda.",
     "home.v3.sectors.description":
       "Kami mendampingi bisnis dari berbagai skala, mulai dari UMKM lokal hingga perusahaan penanaman modal asing, di berbagai sektor berikut.",
-    "home.v3.sectors.confidentialBold": "Data Anda tetap terjaga kerahasiaannya.",
+    "home.v3.sectors.confidentialBold":
+      "Data Anda tetap terjaga kerahasiaannya.",
     "home.v3.sectors.confidentialBody":
       "Kami tidak pernah mempublikasikan nama klien. Setiap kerja sama ditangani dengan standar kerahasiaan yang ketat.",
     "home.v3.sectors.item1": "Manufaktur",
@@ -737,21 +742,21 @@ const translations: Record<Locale, Record<string, string>> = {
     // Redesign Home - Approach
     "home.v3.approach.eyebrow": "PENDEKATAN KAMI",
     "home.v3.approach.titleBold": "Cara kami bekerja",
-    "home.v3.approach.titleItalic": "bersama Anda.",
+    "home.v3.approach.titleItalic": "bersama bisnis Anda.",
     "home.v3.approach.subtitle":
-      "Kerangka kerja pendampingan empat tahap yang transparan untuk menjaga operasional bisnis Anda tetap patuh dan siap audit sepanjang tahun.",
-    "home.v3.approach.s1Title": "Memahami Situasi Anda",
+      "Kerangka kerja pendampingan empat tahap yang terstruktur untuk memastikan kepatuhan pajak, penggajian, dan laporan keuangan perusahaan Anda selalu terjaga.",
+    "home.v3.approach.s1Title": "Memahami Kondisi Usaha",
     "home.v3.approach.s1Desc":
-      "Kami meluangkan waktu untuk memahami struktur bisnis, catatan keuangan, dan kewajiban kepatuhan Anda secara menyeluruh sebelum merekomendasikan langkah apa pun.",
-    "home.v3.approach.s2Title": "Strategi yang Disesuaikan",
+      "Kami mempelajari bentuk usaha, alur transaksi, dan status kepatuhan Anda secara mendalam sebelum menentukan langkah penanganan.",
+    "home.v3.approach.s2Title": "Solusi yang Disesuaikan",
     "home.v3.approach.s2Desc":
-      "Setiap bisnis memiliki kebutuhan berbeda. Kami menyusun rencana yang jelas dan praktis sesuai kebutuhan pajak, payroll, atau akuntansi Anda — tanpa kerumitan yang tidak perlu.",
-    "home.v3.approach.s3Title": "Komunikasi yang Jelas",
+      "Setiap bisnis memiliki kebutuhan berbeda. Kami merancang rencana praktis sesuai ruang lingkup pajak, payroll, atau akuntansi Anda tanpa kerumitan yang tidak perlu.",
+    "home.v3.approach.s3Title": "Komunikasi Terbuka & Jelas",
     "home.v3.approach.s3Desc":
-      "Kami menyampaikan perkembangan di setiap tahap serta menjelaskan regulasi dan opsi yang ada dengan bahasa yang mudah dipahami agar Anda dapat mengambil keputusan dengan yakin.",
+      "Kami menyampaikan setiap regulasi, perhitungan, dan laporan dalam bahasa yang lugas dan transparan agar Anda dapat mengambil keputusan dengan mantap.",
     "home.v3.approach.s4Title": "Pendampingan Berkelanjutan",
     "home.v3.approach.s4Desc":
-      "Urusan pajak dan kepatuhan bukanlah pekerjaan sekali selesai. Kami mendampingi Anda sepanjang tahun untuk mengantisipasi perubahan regulasi, memenuhi tenggat waktu, dan mendukung pertumbuhan bisnis Anda.",
+      "Urusan pajak dan keuangan merupakan komitmen berkelanjutan. Kami mendampingi Anda sepanjang tahun untuk memenuhi tenggat waktu dan mendukung pertumbuhan bisnis.",
 
     // Redesign Home - Insights
     "home.v3.insights.eyebrow": "WAWASAN TERBARU",
@@ -771,8 +776,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "home.v3.insights.f2Excerpt":
       "Langkah-langkah penting bagi wajib pajak badan maupun orang pribadi untuk memvalidasi pemadanan NIK-NPWP agar terhindar dari kendala administrasi perpajakan.",
     "home.v3.insights.f3Date": "18 OKTOBER 2023",
-    "home.v3.insights.f3Title":
-      "Konsultan Pajak SPT Tahunan di Tangerang",
+    "home.v3.insights.f3Title": "Konsultan Pajak SPT Tahunan di Tangerang",
     "home.v3.insights.f3Excerpt":
       "Panduan praktis dalam menyiapkan rekonsiliasi fiskal yang akurat dan pelaporan SPT Tahunan bersama konsultan pajak berlisensi resmi.",
 
@@ -782,11 +786,13 @@ const translations: Record<Locale, Record<string, string>> = {
     "home.v3.faq.titleItalic": "ditanyakan klien.",
     "home.v3.faq.subtitle":
       "Jawaban jelas mengenai cara kami berkolaborasi, menyusun ruang lingkup kerja sama, serta mendukung kepatuhan pajak dan keuangan Anda.",
-    "home.v3.faq.boxTitle": "Punya pertanyaan khusus terkait pajak atau kepatuhan?",
+    "home.v3.faq.boxTitle":
+      "Punya pertanyaan khusus terkait pajak atau kepatuhan?",
     "home.v3.faq.boxDesc":
       "Diskusikan langsung bersama konsultan berlisensi kami untuk mendapatkan saran yang sesuai dengan situasi perusahaan Anda.",
     "home.v3.faq.boxCta": "Hubungi tim kami",
-    "home.v3.faq.q1": "Jenis bisnis apa saja yang didampingi oleh AP Consulting?",
+    "home.v3.faq.q1":
+      "Jenis bisnis apa saja yang didampingi oleh AP Consulting?",
     "home.v3.faq.a1":
       "Kami melayani beragam klien di seluruh Indonesia — mulai dari UMKM yang sedang berkembang dan startup hingga perusahaan nasional serta perusahaan penanaman modal asing (PT PMA) yang membutuhkan dukungan perpajakan, payroll, dan akuntansi yang komprehensif.",
     "home.v3.faq.q2":
@@ -952,7 +958,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "about.pcg.paragraph1":
       "AP Consulting merupakan kantor konsultan pajak berbasis hukum yang memiliki tim profesional bersertifikat, berpengalaman, dan berwawasan luas di bidang perpajakan serta akuntansi. Kami senantiasa mengikuti peraturan perundang-undangan terbaru dalam mendampingi klien badan usaha maupun wajib pajak orang pribadi.",
     "about.pcg.paragraph2":
-      "Komitmen kami adalah menjadi mitra bisnis yang handal dan tepercaya dalam menyelesaikan tantangan klien di bidang perpajakan, payroll outsourcing, dan akuntansi pajak. Melalui kerja sama tim yang solid, pelayanan optimal, serta penyelesaian masalah yang konkrit, kami membantu bisnis Anda melangkah maju dengan jelas.",
+      "Komitmen kami adalah menjadi mitra bisnis yang handal dan tepercaya dalam menyelesaikan tantangan klien di bidang perpajakan, payroll outsourcing, dan akuntansi. Melalui kerja sama tim yang solid, pelayanan optimal, serta penyelesaian masalah yang konkrit, kami membantu bisnis Anda melangkah maju dengan jelas.",
 
     // About Vision & Mission
     "about.vision.tag": "VISI KAMI",
@@ -961,11 +967,16 @@ const translations: Record<Locale, Record<string, string>> = {
     "about.mission.tag": "MISI KAMI",
     "about.mission.title":
       "Kami membantu pelaku usaha mengelola kerumitan pajak, payroll, dan akuntansi melalui keahlian bersertifikat, kerahasiaan data yang ketat, dan solusi konkrit.",
-    "about.mission.item1": "Menghadirkan layanan pajak & akuntansi yang konsisten dan taat hukum.",
-    "about.mission.item2": "Menjaga kerahasiaan data klien dengan standar profesional yang ketat.",
-    "about.mission.item3": "Mengidentifikasi risiko pajak sejak dini dan menyusun perencanaan pajak patuh aturan.",
-    "about.mission.item4": "Mendampingi klien secara profesional dalam peninjauan, pemeriksaan DJP, dan sengketa pajak.",
-    "about.mission.item5": "Membangun kemitraan jangka panjang berlandaskan integritas dan keunggulan.",
+    "about.mission.item1":
+      "Menghadirkan layanan pajak & akuntansi yang konsisten dan taat hukum.",
+    "about.mission.item2":
+      "Menjaga kerahasiaan data klien dengan standar profesional yang ketat.",
+    "about.mission.item3":
+      "Mengidentifikasi risiko pajak sejak dini dan menyusun perencanaan pajak patuh aturan.",
+    "about.mission.item4":
+      "Mendampingi klien secara profesional dalam peninjauan, pemeriksaan DJP, dan sengketa pajak.",
+    "about.mission.item5":
+      "Membangun kemitraan jangka panjang berlandaskan integritas dan keunggulan.",
 
     // About Why Choose AP Consulting
     "about.whyChoose.tag": "MENGAPA MEMILIH AP CONSULTING",
@@ -977,9 +988,9 @@ const translations: Record<Locale, Record<string, string>> = {
     "about.whyChoose.card1Title": "Praktik Berlisensi & Taat Hukum",
     "about.whyChoose.card1Body":
       "Konsultan pajak terdaftar (IKPI) yang mematuhi regulasi perpajakan Indonesia terbaru dengan Izin Praktik No. KIP-6592/IP.B/PJ/2020.",
-    "about.whyChoose.card2Title": "Tim Bersertifikat Brevet A/B/C",
+    "about.whyChoose.card2Title": "Tim Profesional Bersertifikat",
     "about.whyChoose.card2Body":
-      "8 konsultan pajak bersertifikat dengan lebih dari 15 tahun pengalaman mendampingi 50+ klien korporasi maupun perorangan.",
+      "Didukung konsultan pajak berpengalaman dan bersertifikat resmi dalam mendampingi kepatuhan klien korporasi maupun perorangan.",
     "about.whyChoose.card3Title": "Kerahasiaan Data Terjamin",
     "about.whyChoose.card3Body":
       "Data keuangan dan pajak Anda dijaga kerahasiaannya secara ketat. Kami tidak pernah mempublikasikan nama klien.",
@@ -994,7 +1005,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "about.people.description":
       "Kenali pimpinan dan tim profesional di balik AP Consulting — menghadirkan pengalaman praktis perpajakan, fokus yang jelas, dan komitmen penuh untuk kepatuhan bisnis Anda.",
     "about.people.seeProfile": "Lihat Profil",
-    "about.people.licenseNote": "Izin Praktik No. KIP-6592/IP.B/PJ/2020 · Anggota IKPI",
+    "about.people.licenseNote":
+      "Izin Praktik No. KIP-6592/IP.B/PJ/2020 · Anggota IKPI",
 
     // Services Hero
     "services.hero.eyebrow": "AP CONSULTING · LAYANAN KAMI",
@@ -1013,56 +1025,60 @@ const translations: Record<Locale, Record<string, string>> = {
     "services.scope.tag": "RUANG LINGKUP LAYANAN",
     "services.scope.titleItalic": "Dukungan praktis,",
     "services.scope.titleNormal":
-      "mulai dari kepatuhan hingga penyelesaian sengketa.",
+      "mulai dari kepatuhan hingga pendampingan pemeriksaan.",
     "services.scope.description":
-      "Baik untuk perusahaan yang baru berdiri maupun bisnis yang sedang berkembang pesat, AP Consulting menyediakan layanan perpajakan, payroll, dan akuntansi terstruktur yang disesuaikan dengan skala operasional Anda.",
-    "services.scope.includedLabel": "Layanan yang kami sediakan meliputi:",
+      "Baik untuk perusahaan yang baru merintis maupun bisnis yang sedang berkembang pesat, AP Consulting menyediakan jasa perpajakan, payroll outsourcing, dan akuntansi terstruktur yang disesuaikan dengan kebutuhan Anda.",
+    "services.scope.includedLabel": "Jasa yang kami berikan meliputi:",
 
     // 01. Tax Services
-    "services.scope.s1Title": "Layanan Perpajakan (Tax Services)",
+    "services.scope.s1Title": "Jasa Perpajakan",
     "services.scope.s1Desc":
-      "Kami memahami bahwa administrasi perpajakan sering kali rumit dan memakan waktu, terutama bagi bisnis yang membutuhkan waktu ekstra untuk fokus pada pengembangan pasar. Karena itulah AP Consulting hadir memberikan layanan perpajakan yang konsisten, berbasis hukum, dan profesional.",
+      "Administrasi perpajakan terkadang sangat melelahkan bagi sebuah perusahaan yang baru saja merintis usahanya, oleh karena itu kami hadir untuk membantu memberikan konsultasi dan pemenuhan administrasi perpajakan.",
     "services.scope.s1Cta": "Diskusikan Layanan Pajak",
-    "services.scope.s1Sub1Title": "Layanan Kepatuhan Pajak (Tax Compliance Service)",
+    "services.scope.s1Sub1Title": "Jasa Tax Compliance",
     "services.scope.s1Sub1Desc":
-      "Kami membantu wajib pajak memenuhi peraturan perundang-undangan perpajakan melalui analisis data, perhitungan dan pembayaran pajak terutang kepada negara, serta penyusunan dan pelaporan SPT Masa (bulanan) maupun SPT Tahunan secara tepat waktu.",
-    "services.scope.s1Sub2Title": "Layanan Peninjauan Pajak (Tax Review Service)",
+      "Kami memberikan jasa dalam mendukung wajib pajak untuk memenuhi kewajiban perpajakan sesuai ketentuan perundang-undangan yang berlaku dengan cara menganalisa data, menghitung, menyetorkan pajak terutang, mempersiapkan SPT Masa dan Tahunan serta melaporkannya dengan tepat waktu.",
+    "services.scope.s1Sub2Title": "Jasa Penelaahan Pajak",
     "services.scope.s1Sub2Desc":
-      "Kami menyediakan layanan peninjauan pajak untuk menilai potensi risiko perpajakan klien (wajib pajak) berdasarkan aktivitas dan transaksi perusahaan — memudahkan Anda dalam merencanakan strategi perpajakan yang efektif dan patuh aturan.",
+      "Kami menawarkan jasa penelaahan pajak untuk mengukur potensi risiko wajib pajak dari aktivitas dan transaksi perusahaan. Dari Laporan hasil penelaahan pajak ini akan memudahkan klien untuk perencanaan pajak yang lebih efektif.",
     "services.scope.s1Sub3Title":
-      "Penyelesaian Sengketa & Pemeriksaan Pajak (Tax Dispute & Audit)",
+      "Jasa Pendampingan Klien dalam Pemeriksaan Pajak",
     "services.scope.s1Sub3Desc":
-      "Kami mendampingi klien selama proses pemeriksaan oleh Direktorat Jenderal Pajak (DJP) dari awal hingga akhir, termasuk menyiapkan Data Ekualisasi Pajak Penghasilan serta verifikasi dokumen hukum, dan memberikan keterangan yang relevan kepada fiskus hingga permasalahan selesai.",
+      "Kami memberikan pendampingan dalam proses pemeriksaan sampai selesai, termasuk dalam hal menyiapkan data ekualisasi pajak penghasilan dan pembuktian dokumen, memberikan keterangan kepada fiskus sampai mendapatkan hasil keputusan.",
 
     // 02. Payroll Outsourcing Services
-    "services.scope.s2Title": "Layanan Payroll Outsourcing",
+    "services.scope.s2Title": "Jasa Payroll Outsourcing",
     "services.scope.s2Desc":
-      "Mengelola penggajian karyawan dan pemotongan pajak bulanan membutuhkan ketelitian, ketepatan waktu, serta kerahasiaan data yang ketat. Layanan payroll outsourcing kami menjaga administrasi gaji dan kepatuhan PPh 21 perusahaan Anda tetap rapi dan terstruktur.",
+      "Penghitungan Payroll yang teliti, rahasia dan tepat waktu merupakan keinginan dari klien. Kami menawarkan pengelolaan data dan penghitungan gaji beserta pajak penghasilannya yang akan dilakukan secara efektif sehingga klien bisa lebih menghemat waktu mereka dan data gaji akan senantiasa rahasia.",
     "services.scope.s2Cta": "Diskusikan Layanan Payroll",
-    "services.scope.s2Sub1Title": "Administrasi Penggajian Bulanan",
+    "services.scope.s2Sub1Title": "Administrasi HR & Pendaftaran BPJS",
     "services.scope.s2Sub1Desc":
-      "Perhitungan menyeluruh atas gaji bulanan, tunjangan, lembur, iuran BPJS Kesehatan & Ketenagakerjaan, serta potongan karyawan dengan standar kerahasiaan data yang ketat.",
-    "services.scope.s2Sub2Title": "Perhitungan & Pemotongan PPh Pasal 21/26",
+      "Membantu melakukan administrasi yang berhubungan dengan Human Resource seperti Pendaftaran BPJS Kesehatan dan Tenagakerja, dll.",
+    "services.scope.s2Sub2Title": "Penghitungan Gaji, Tunjangan & Pajak PPh 21",
     "services.scope.s2Sub2Desc":
-      "Perhitungan akurat atas pemotongan pajak penghasilan karyawan dan ekspatriat (PPh Pasal 21/26) sesuai dengan ketentuan tarif efektif (TER) dan regulasi DJP terbaru.",
-    "services.scope.s2Sub3Title": "Slip Gaji & Pelaporan SPT Masa PPh 21",
+      "Penghitungan data gaji, tunjangan, dan potongan serta Pajak PPh 21 untuk karyawan.",
+    "services.scope.s2Sub3Title": "Pembuatan e-Payslip",
     "services.scope.s2Sub3Desc":
-      "Penyusunan slip gaji karyawan yang terjaga kerahasiaannya, rekapitulasi laporan payroll bulanan, pelaporan SPT Masa PPh 21, serta pembuatan bukti potong tahunan (1721-A1).",
+      "Pembuatan dan penerbitan slip gaji digital (e-Payslip) secara terstruktur, rahasia, dan tepat waktu.",
 
-    // 03. Tax Accounting Services
-    "services.scope.s3Title": "Layanan Akuntansi Pajak (Tax Accounting Services)",
+    // 03. Accounting Services
+    "services.scope.s3Title": "Jasa Akuntansi",
     "services.scope.s3Desc":
-      "Catatan keuangan yang rapi dan terorganisir merupakan fondasi utama bagi pelaporan pajak yang akurat serta pengambilan keputusan bisnis yang tepat. Kami menyediakan dukungan pembukuan dan akuntansi perpajakan agar laporan keuangan Anda selalu jelas dan siap audit.",
+      "Pembukuan yang baik merupakan kunci kesuksesan pengembangan suatu usaha. Dengan memberikan akuntansi-nya untuk ditangani oleh tim kami, perusahaan dapat fokus mengembangkan usahanya.",
     "services.scope.s3Cta": "Diskusikan Layanan Akuntansi",
-    "services.scope.s3Sub1Title": "Pembukuan & Pencatatan Transaksi",
+    "services.scope.s3Sub1Title": "Penyusunan Laporan Keuangan",
     "services.scope.s3Sub1Desc":
-      "Pencatatan sistematis atas transaksi keuangan harian, buku besar (general ledger), piutang/utang usaha, rekonsiliasi bank, serta penyesuaian jurnal akuntansi.",
-    "services.scope.s3Sub2Title": "Laporan Keuangan Bulanan & Tahunan",
+      "Penyusunan Laporan keuangan baik untuk PT, CV, perseorangan yang memiliki usaha UMKM, dll.",
+    "services.scope.s3Sub2Title":
+      "Jasa Penelaahan Akuntansi (Accounting Review)",
     "services.scope.s3Sub2Desc":
-      "Penyusunan laporan Neraca (Balance Sheet), Laba Rugi (Income Statement), dan Arus Kas secara akurat untuk memberikan visibilitas kinerja keuangan yang jelas bagi manajemen.",
-    "services.scope.s3Sub3Title": "Rekonsiliasi Fiskal & Laporan Siap Pajak",
+      "Meliputi pengidentifikasian dan verifikasi dokumen serta mensupervisi pencatatan transaksi dan laporan keuangan.",
+    "services.scope.s3Sub3Title": "Internal Audit",
     "services.scope.s3Sub3Desc":
-      "Penyelarasan laporan keuangan komersial dengan ketentuan perpajakan yang berlaku (rekonsiliasi fiskal) guna memastikan kelancaran dan keakuratan pelaporan SPT Tahunan Badan.",
+      "Pemeriksaan internal independen untuk memastikan kepatuhan prosedur, efektivitas pengendalian, dan keakuratan pelaporan keuangan.",
+    "services.scope.s3Sub4Title": "Konsultasi Accounting Software",
+    "services.scope.s3Sub4Desc":
+      "Konsultasi dan rekomendasi pemilihan serta penerapan Accounting Software bagi perusahaan yang membutuhkan sistem pencatatan keuangan modern.",
 
     // Services Current Need
     "services.need.tag": "MULAI DARI KEBUTUHAN ANDA SAAT INI",
@@ -1070,18 +1086,18 @@ const translations: Record<Locale, Record<string, string>> = {
     "services.need.titleItalic": "membutuhkan kejelasan lebih?",
     "services.need.subtitle":
       "Pilih prioritas di bawah ini yang paling sesuai dengan kondisi perusahaan Anda. Kami merancang cakupan pendampingan sesuai kebutuhan bisnis Anda saat ini.",
-    "services.need.n1Title": "Tetap Patuh Pajak",
+    "services.need.n1Title": "Kepatuhan & Pelaporan Pajak",
     "services.need.n1Body":
-      "Penuhi kewajiban pelaporan SPT Masa dan Tahunan secara akurat dan tepat waktu tanpa beban administrasi.",
-    "services.need.n2Title": "Rapikan Payroll & PPh 21",
+      "Penuhi kewajiban pelaporan SPT Masa dan Tahunan secara akurat, tepat waktu, dan bebas dari kendala administrasi.",
+    "services.need.n2Title": "Penggajian & Pajak PPh 21",
     "services.need.n2Body":
-      "Kelola administrasi penggajian, slip gaji, dan pajak karyawan secara terstruktur dan rahasia.",
-    "services.need.n3Title": "Tata Pembukuan Keuangan",
+      "Kelola administrasi penggajian, pendaftaran BPJS, pemotongan PPh 21, dan e-Payslip secara terstruktur dan rahasia.",
+    "services.need.n3Title": "Laporan Keuangan & Software",
     "services.need.n3Body":
-      "Bangun pencatatan transaksi, rekonsiliasi bank, dan laporan keuangan yang rapi serta siap rekonsiliasi fiskal.",
-    "services.need.n4Title": "Pendampingan Audit & Sengketa",
+      "Susun laporan keuangan rapi untuk PT, CV, maupun UMKM serta optimalkan penerapan software akuntansi Anda.",
+    "services.need.n4Title": "Penelaahan & Pemeriksaan Pajak",
     "services.need.n4Body":
-      "Dapatkan pendampingan profesional untuk tax review, tanggapan SP2DK, pemeriksaan DJP, hingga penyelesaian sengketa.",
+      "Ukur potensi risiko lewat penelaahan pajak dan dapatkan pendampingan penuh hingga selesai saat pemeriksaan pajak oleh fiskus.",
 
     // Services Overrides
     "services.ourApproach.tag": "CARA KAMI BEKERJA",
@@ -1100,8 +1116,7 @@ const translations: Record<Locale, Record<string, string>> = {
     // Insights Hero
     "insight.hero.eyebrow": "AP CONSULTING · WAWASAN & ARTIKEL",
     "insight.hero.tag": "ARTIKEL UNGGULAN",
-    "insight.hero.title":
-      "Usaha Baru Buka, Harus Langsung Bayar Pajak?",
+    "insight.hero.title": "Usaha Baru Buka, Harus Langsung Bayar Pajak?",
     "insight.hero.description":
       "Pajak merupakan bagian penting dari keberlanjutan ekonomi negara. Memahami kewajiban perpajakan sejak awal berdiri membantu usaha baru tetap patuh aturan dan terhindar dari sanksi administrasi.",
     "insight.hero.author": "Oleh Tim Redaksi AP Consulting",
@@ -1211,7 +1226,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "contact.form.optGen": "Pertanyaan Umum",
     "contact.form.phone": "Nomor Telepon (opsional)",
     "contact.form.message": "Pesan",
-    "contact.form.messagePlaceholder": "Tuliskan bagaimana kami dapat membantu bisnis Anda",
+    "contact.form.messagePlaceholder":
+      "Tuliskan bagaimana kami dapat membantu bisnis Anda",
     "contact.form.sendBtn": "Kirim Pesan",
     "contact.form.sendingBtn": "Mengirim...",
     "contact.form.successMsg":

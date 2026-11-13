@@ -2,7 +2,7 @@
   <section id="services" class="bg-[#F4F9FE] py-12 sm:py-14 lg:py-16 border-b border-[#DCEAF7]">
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <!-- Top Header Bar -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-10" data-reveal="up">
         <div class="flex flex-col gap-2">
           <p class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#0869B2]">
             {{ t("home.v3.services.eyebrow") }}
@@ -26,10 +26,12 @@
       <!-- 3-Column Architectural Service Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
         <NuxtLink
-          v-for="service in services"
+          v-for="(service, idx) in services"
           :key="service.index"
           :to="service.href"
-          class="group flex flex-col justify-between bg-white p-6 sm:p-8 rounded-[2px] border border-[#DCE8F5] hover:border-[#0869B2] transition-colors duration-200"
+          class="group hover-lift flex flex-col justify-between bg-white p-6 sm:p-8 rounded-[2px] border border-[#DCE8F5] hover:border-[#0869B2] transition-colors duration-200"
+          data-reveal="up"
+          :data-reveal-delay="idx * 120"
         >
           <div>
             <!-- Top Row: Clean Index + Icon -->

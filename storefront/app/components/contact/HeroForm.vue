@@ -5,11 +5,11 @@
       <div class="mb-10 border-b border-[#DCE8F5] pb-8 sm:mb-12 sm:pb-10">
         <div class="grid grid-cols-1 items-end gap-6 lg:grid-cols-12 lg:gap-10">
           <div class="lg:col-span-7">
-            <p class="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#0869B2]">
+            <p class="animate-hero-badge mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#0869B2]">
               {{ t("contact.hero.tag") }}
             </p>
             <h1
-              class="text-[30px] font-semibold leading-[1.16] tracking-[-0.03em] text-[#092F50] sm:text-4xl lg:text-[46px]"
+              class="animate-hero-title text-[30px] font-semibold leading-[1.16] tracking-[-0.03em] text-[#092F50] sm:text-4xl lg:text-[46px]"
             >
               <span class="font-bold">{{ t("contact.hero.titleLight") }}</span>
               {{ " " }}
@@ -17,7 +17,7 @@
             </h1>
           </div>
 
-          <div class="lg:col-span-5 lg:pb-1">
+          <div class="animate-hero-desc lg:col-span-5 lg:pb-1">
             <p class="text-[15px] font-bold text-[#092F50] sm:text-[16px]">
               {{ t("contact.hero.headerSubtitle") }}
             </p>
@@ -31,7 +31,7 @@
       <!-- 2-Column Contact Layout -->
       <div class="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-12 lg:gap-10">
         <!-- Left Column: Direct Contact & Office Directory -->
-        <div class="lg:col-span-5">
+        <div class="lg:col-span-5" data-reveal="up" data-reveal-delay="100">
           <div
             class="flex h-full flex-col justify-between overflow-hidden rounded-[2px] border border-[#0D3D66] bg-[#072642] text-white"
           >
@@ -155,7 +155,7 @@
         </div>
 
         <!-- Right Column: Consultation Inquiry Form -->
-        <div class="lg:col-span-7">
+        <div class="lg:col-span-7" data-reveal="up" data-reveal-delay="150">
           <div class="h-full rounded-[2px] border border-[#DCE8F5] bg-[#F4F9FE] p-6 sm:p-9">
             <div class="mb-7 border-b border-[#DCE8F5] pb-5">
               <h2 class="text-[22px] font-bold text-[#092F50] sm:text-[26px]">

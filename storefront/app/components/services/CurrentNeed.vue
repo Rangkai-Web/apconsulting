@@ -2,7 +2,7 @@
   <section class="bg-white py-12 sm:py-16 lg:py-20 border-b border-[#DCE8F5]">
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <!-- Clean Header -->
-      <div class="max-w-[680px] mb-8 sm:mb-10">
+      <div class="max-w-[680px] mb-8 sm:mb-10" data-reveal="up">
         <p
           class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#0869B2] mb-2"
         >
@@ -27,10 +27,12 @@
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
       >
         <a
-          v-for="need in needs"
+          v-for="(need, idx) in needs"
           :key="need.number"
           :href="need.href"
-          class="group flex flex-col justify-between p-6 sm:p-7 rounded-[2px] bg-[#F8FBFF] border border-[#DCE8F5] hover:border-[#0869B2] hover:bg-white transition-all duration-200"
+          class="group hover-lift flex flex-col justify-between p-6 sm:p-7 rounded-[2px] bg-[#F8FBFF] border border-[#DCE8F5] hover:border-[#0869B2] hover:bg-white transition-all duration-200"
+          data-reveal="up"
+          :data-reveal-delay="idx * 100"
         >
           <div>
             <div class="flex items-center justify-between mb-4 sm:mb-5">

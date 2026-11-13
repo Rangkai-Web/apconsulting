@@ -24,13 +24,13 @@
         <!-- Left Column: Primary Message & CTAs -->
         <div class="lg:col-span-7 flex flex-col items-start gap-4 sm:gap-5">
           <p
-            class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#B9DBF4]"
+            class="animate-hero-badge text-[11px] font-bold tracking-[0.14em] uppercase text-[#B9DBF4]"
           >
             {{ t("services.hero.eyebrow") }}
           </p>
 
           <h1
-            class="text-[32px] sm:text-5xl lg:text-[56px] font-semibold leading-[1.12] tracking-[-0.03em] text-white"
+            class="animate-hero-title text-[32px] sm:text-5xl lg:text-[56px] font-semibold leading-[1.12] tracking-[-0.03em] text-white"
           >
             <span class="font-bold">{{ t("services.hero.titleBold") }}</span><br />
             <span class="font-bold italic text-[#B9E2FF]">{{
@@ -39,13 +39,13 @@
           </h1>
 
           <p
-            class="text-[15px] sm:text-lg text-[#E1EFFA] leading-[1.65] max-w-[540px]"
+            class="animate-hero-desc text-[15px] sm:text-lg text-[#E1EFFA] leading-[1.65] max-w-[540px]"
           >
             {{ t("services.hero.description") }}
           </p>
 
           <div
-            class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto"
+            class="animate-hero-cta pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto"
           >
             <a
               href="#scope-of-support"
@@ -66,7 +66,7 @@
         </div>
 
         <!-- Right Column: Quick Service Directory Card (Inspired by AP Consulting Service Navigation) -->
-        <div class="lg:col-span-5">
+        <div class="animate-hero-image lg:col-span-5">
           <div
             class="rounded-[2px] bg-[#061F36]/80 backdrop-blur-xs border border-white/15 overflow-hidden shadow-2xl"
           >

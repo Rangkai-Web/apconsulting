@@ -34,7 +34,7 @@ const faqs = computed(() => [
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         <!-- Left Column (5 cols) -->
-        <div class="lg:col-span-5">
+        <div class="lg:col-span-5" data-reveal="up">
           <p class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#0869B2] mb-2">
             {{ t("home.v3.faq.eyebrow") }}
           </p>
@@ -64,7 +64,7 @@ const faqs = computed(() => [
         </div>
 
         <!-- Right Column (7 cols): Clean Editorial Accordion -->
-        <div class="lg:col-span-7 border-t border-[#DCE8F5]">
+        <div class="lg:col-span-7 border-t border-[#DCE8F5]" data-reveal="up" data-reveal-delay="100">
           <div
             v-for="(faq, index) in faqs"
             :key="index"

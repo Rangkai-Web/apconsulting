@@ -3,7 +3,7 @@
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-start">
         <!-- Left Column: Heading & Confidentiality Commitment -->
-        <div class="lg:col-span-5 flex flex-col">
+        <div class="lg:col-span-5 flex flex-col" data-reveal="up">
           <p class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#0869B2] mb-2">
             {{ t("home.v3.sectors.eyebrow") }}
           </p>
@@ -42,7 +42,7 @@
         </div>
 
         <!-- Right Column: 6 Sectors Grid -->
-        <div class="lg:col-span-7">
+        <div class="lg:col-span-7" data-reveal="up" data-reveal-delay="100">
           <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-8">
             <!-- 1. Manufacturing -->
             <li class="flex items-center gap-4 py-4.5 sm:py-5 border-t border-b border-[#DCE8F5] text-[15px] sm:text-[17px] font-semibold text-[#092F50]">

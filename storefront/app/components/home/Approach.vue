@@ -34,7 +34,7 @@ const steps = computed(() => [
   >
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <!-- Clean Left-Aligned Header -->
-      <div class="max-w-[640px] mb-8 sm:mb-10">
+      <div class="max-w-[640px] mb-8 sm:mb-10" data-reveal="up">
         <p
           class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#0869B2] mb-2"
         >
@@ -56,11 +56,14 @@ const steps = computed(() => [
       <!-- Unified 4-Column Architectural Grid (1-col mobile, 2x2 tablet, 4-col desktop with clean 1px borders) -->
       <div
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[#DCE8F5] border border-[#DCE8F5] rounded-[2px] overflow-hidden"
+        data-reveal="up"
+        data-reveal-delay="100"
       >
         <div
-          v-for="step in steps"
+          v-for="(step, sIdx) in steps"
           :key="step.number"
           class="p-6 sm:p-7 lg:p-8 flex flex-col justify-between bg-[#F8FBFF] hover:bg-white transition-colors duration-200"
+          :style="{ transitionDelay: `${sIdx * 100}ms` }"
         >
           <div>
             <span

@@ -17,13 +17,13 @@
         <!-- Left Column: Copy & Primary Message -->
         <div class="lg:col-span-7 flex flex-col items-start gap-5 sm:gap-6">
           <!-- Eyebrow -->
-          <p class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#B9DBF4]">
+          <p class="animate-hero-badge text-[11px] font-bold tracking-[0.14em] uppercase text-[#B9DBF4]">
             {{ t("home.v3.hero.eyebrow") }}
           </p>
 
           <!-- H1 Headline -->
           <h1
-            class="text-[34px] sm:text-5xl lg:text-[62px] font-semibold leading-[1.1] tracking-[-0.03em] text-white"
+            class="animate-hero-title text-[34px] sm:text-5xl lg:text-[62px] font-semibold leading-[1.1] tracking-[-0.03em] text-white"
           >
             <span class="font-bold">{{ t("home.v3.hero.titleBold") }}</span><br />
             {{ t("home.v3.hero.titleMiddle") }}<br />
@@ -31,12 +31,12 @@
           </h1>
 
           <!-- Subtitle -->
-          <p class="text-[15px] sm:text-lg text-[#E1EFFA] leading-[1.6] max-w-[500px]">
+          <p class="animate-hero-desc text-[15px] sm:text-lg text-[#E1EFFA] leading-[1.6] max-w-[500px]">
             {{ t("home.v3.hero.subtitle") }}
           </p>
 
           <!-- CTA Button -->
-          <div class="pt-1 w-full sm:w-auto">
+          <div class="animate-hero-cta pt-1 w-full sm:w-auto">
             <NuxtLink
               to="/contact"
               class="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-6 py-3.5 bg-white text-[#083A63] text-sm font-bold rounded-[2px] shadow-sm hover:bg-[#F0F7FF] transition-colors"
@@ -48,7 +48,7 @@
         </div>
 
         <!-- Right Column: Editorial Photo Composition -->
-        <div class="lg:col-span-5 flex flex-col">
+        <div class="animate-hero-image lg:col-span-5 flex flex-col">
           <div class="relative overflow-hidden rounded-tr-[40px] sm:rounded-tr-[56px] rounded-tl-[4px] rounded-b-[4px] shadow-2xl">
             <img
               src="/images/redesign/collaboration.png"
@@ -69,21 +69,23 @@
         </div>
       </div>
 
-      <!-- AP Consulting in Numbers (Stats Bar from Client v3) -->
+      <!-- AP Consulting in Numbers (Stats Bar with Count-Up) -->
       <dl
+        ref="statsContainerRef"
         aria-label="AP Consulting in numbers"
         class="mt-10 sm:mt-12 lg:mt-16 pt-8 lg:pt-10 border-t border-white/20 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10"
+        data-reveal="up"
       >
         <div
-          v-for="stat in stats"
-          :key="stat.label"
+          v-for="(stat, idx) in statConfigs"
+          :key="stat.labelKey"
           class="flex flex-col gap-1.5 sm:gap-2"
         >
-          <dd class="text-3xl sm:text-4xl lg:text-[44px] font-bold leading-none tracking-[-0.02em] text-white">
-            {{ stat.value }}
+          <dd class="text-3xl sm:text-4xl lg:text-[44px] font-bold leading-none tracking-[-0.02em] text-white tabular-nums">
+            {{ displayValues[idx] }}
           </dd>
           <dt class="text-xs sm:text-sm leading-[1.45] text-[#D3E0EC]">
-            {{ stat.label }}
+            {{ t(stat.labelKey) }}
           </dt>
         </div>
       </dl>
@@ -92,27 +94,46 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useLanguage } from "~/composables/useLanguage";
+import { useCountUp } from "~/composables/useCountUp";
 
 const { t } = useLanguage();
 
-const stats = computed(() => [
-  {
-    value: "15+",
-    label: t("home.v3.hero.stat1Label"),
-  },
-  {
-    value: "50+",
-    label: t("home.v3.hero.stat2Label"),
-  },
-  {
-    value: "300+",
-    label: t("home.v3.hero.stat3Label"),
-  },
-  {
-    value: "8",
-    label: t("home.v3.hero.stat4Label"),
-  },
-]);
+const statConfigs = [
+  { target: 15, suffix: "+", labelKey: "home.v3.hero.stat1Label" },
+  { target: 50, suffix: "+", labelKey: "home.v3.hero.stat2Label" },
+  { target: 300, suffix: "+", labelKey: "home.v3.hero.stat3Label" },
+  { target: 8, suffix: "", labelKey: "home.v3.hero.stat4Label" },
+];
+
+const { displayValues, start } = useCountUp(statConfigs, { duration: 1600 });
+const statsContainerRef = ref<HTMLElement | null>(null);
+let observer: IntersectionObserver | null = null;
+
+onMounted(() => {
+  if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+    start();
+    return;
+  }
+  if (statsContainerRef.value) {
+    observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          start();
+          observer?.disconnect();
+          observer = null;
+        }
+      },
+      { rootMargin: "0px 0px -20px 0px", threshold: 0.1 }
+    );
+    observer.observe(statsContainerRef.value);
+  } else {
+    start();
+  }
+});
+
+onBeforeUnmount(() => {
+  observer?.disconnect();
+});
 </script>

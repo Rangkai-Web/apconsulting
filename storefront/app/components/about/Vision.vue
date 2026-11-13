@@ -22,6 +22,7 @@
         <!-- Left Column: Vision -->
         <div
           class="lg:col-span-5 pb-8 lg:pb-0 border-b lg:border-b-0 lg:border-r border-white/15 lg:pr-10"
+          data-reveal="up"
         >
           <p
             class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#8EC5F2] mb-3"
@@ -36,7 +37,7 @@
         </div>
 
         <!-- Right Column: Mission & Checklist -->
-        <div class="lg:col-span-7">
+        <div class="lg:col-span-7" data-reveal="up" data-reveal-delay="100">
           <p
             class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#8EC5F2] mb-3"
           >
@@ -55,7 +56,7 @@
               class="flex items-start gap-3"
             >
               <span
-                class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-[#0869B2] text-white"
+                class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-[2px] bg-[#0869B2] text-white"
               >
                 <svg
                   aria-hidden="true"

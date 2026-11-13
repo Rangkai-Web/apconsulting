@@ -14,7 +14,7 @@
 
     <div class="relative z-10 mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <!-- Compact Header Row -->
-      <div class="mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-white/15 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+      <div class="mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-white/15 flex flex-col lg:flex-row lg:items-end justify-between gap-4" data-reveal="up">
         <div>
           <p class="text-[11px] font-bold tracking-[0.14em] uppercase text-[#B9DBF4] mb-2">
             {{ t("home.v3.values.eyebrow") }}
@@ -33,7 +33,7 @@
       </div>
 
       <!-- 3-Column Architectural Divided Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 divide-y divide-white/15 md:divide-y-0 md:divide-x md:divide-white/20">
+      <div class="grid grid-cols-1 md:grid-cols-3 divide-y divide-white/15 md:divide-y-0 md:divide-x md:divide-white/20" data-reveal="up" data-reveal-delay="100">
         <div
           v-for="(item, idx) in values"
           :key="item.title"

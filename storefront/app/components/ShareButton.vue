@@ -33,8 +33,7 @@
         >
           <UIcon
             :name="isCopied ? 'i-heroicons-check-circle' : 'i-heroicons-link'"
-            class="size-4 shrink-0"
-            :class="isCopied ? 'text-emerald-600' : 'text-neutral-500'"
+            :class="['size-4 shrink-0', isCopied ? 'text-emerald-600' : 'text-neutral-500']"
           />
           <span :class="{ 'text-emerald-600 font-medium': isCopied }">
             {{
