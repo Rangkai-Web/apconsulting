@@ -9,15 +9,18 @@ describe('AboutHero', () => {
   it('renders the headline, description, and CTAs', () => {
     const wrapper = mount(AboutHero)
     const text = wrapper.text()
-    expect(text).toContain('More than accountants.')
-    expect(text).toContain('Partners in your progress.')
-    expect(text).toContain('AP Consulting helps businesses make confident financial decisions.')
-    expect(text).toContain('DISCOVER OUR APPROACH')
-    expect(text).toContain('MEET THE TEAM')
+    expect(text).toContain('ABOUT US')
+    expect(text).toContain('AP CONSULTING')
+    expect(text).toContain('Law-abiding tax experts.')
+    expect(text).toContain('Trusted partners in your growth.')
+    expect(text).toContain('AP Consulting')
+    expect(text).toContain('Discover our profile')
+    expect(text).toContain('Meet our leadership')
   })
 })
+
 describe('AboutPeople', () => {
-  it('centers single team member with max-w-xs and grid-cols-1', () => {
+  it('centers single team member with max-w-[360px] and grid-cols-1', () => {
     vi.spyOn(apiModule, 'safeUseFetch').mockReturnValue({
       data: ref({
         data: [{ id: 1, name: 'Yunita Salim', position: 'Administration' }],
@@ -39,12 +42,12 @@ describe('AboutPeople', () => {
 
     const grid = wrapper.find('.grid')
     expect(grid.exists()).toBe(true)
-    expect(grid.classes()).toContain('max-w-xs')
+    expect(grid.classes()).toContain('max-w-[360px]')
     expect(grid.classes()).toContain('grid-cols-1')
     expect(grid.classes()).toContain('mx-auto')
   })
 
-  it('centers two team members with sm:max-w-2xl and sm:grid-cols-2', () => {
+  it('centers two team members with max-w-[740px] and sm:grid-cols-2', () => {
     vi.spyOn(apiModule, 'safeUseFetch').mockReturnValue({
       data: ref({
         data: [
@@ -65,7 +68,7 @@ describe('AboutPeople', () => {
 
     const grid = wrapper.find('.grid')
     expect(grid.exists()).toBe(true)
-    expect(grid.classes()).toContain('sm:max-w-2xl')
+    expect(grid.classes()).toContain('max-w-[740px]')
     expect(grid.classes()).toContain('sm:grid-cols-2')
     expect(grid.classes()).toContain('mx-auto')
   })
@@ -93,8 +96,9 @@ describe('AboutPeople', () => {
 
     const grid = wrapper.find('.grid')
     expect(grid.exists()).toBe(true)
-    expect(grid.classes()).toContain('max-w-7xl')
+    expect(grid.classes()).toContain('max-w-[1240px]')
     expect(grid.classes()).toContain('lg:grid-cols-4')
   })
 })
+
 

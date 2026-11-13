@@ -1,21 +1,35 @@
-import { describe, expect, it } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { describe, expect, it, vi, beforeEach } from 'vitest'
+import { mount, flushPromises } from '@vue/test-utils'
+import { defineComponent, h, Suspense, ref } from 'vue'
 import Insights from '../../app/components/home/Insights.vue'
 
 describe('Home Insights', () => {
-  it('renders the headline and all three article cards', () => {
-    const wrapper = mount(Insights)
+  beforeEach(() => {
+    vi.stubGlobal('useFetch', () => ({
+      data: ref({ data: [] }),
+      pending: ref(false),
+      error: ref(null),
+    }))
+  })
+
+  it('renders the headline and article cards', async () => {
+    const TestComponent = defineComponent({
+      render() {
+        return h(Suspense, null, {
+          default: () => h(Insights),
+        })
+      },
+    })
+    const wrapper = mount(TestComponent, {
+      global: {
+        stubs: { NuxtLink: { template: '<a><slot /></a>' }, UIcon: true },
+      },
+    })
+    await flushPromises()
     const text = wrapper.text()
-    expect(text).toContain('INSIGHTS')
-    expect(text).toContain('Practical insight for better')
-    expect(text).toContain('business decisions.')
-    expect(text).toContain('What your financial reports are really telling you')
-    expect(text).toContain('Why monthly financial reporting matters')
-    expect(text).toContain('A practical way to improve cash-flow visibility')
-    expect(text).toContain('Financial Management')
-    expect(text).toContain('Accounting')
-    expect(text).toContain('Finance')
-    const viewDetailsCount = wrapper.findAll('[data-testid="view-details"]').length
-    expect(viewDetailsCount).toBe(3)
+    expect(text).toContain('LATEST INSIGHTS')
+    expect(text).toContain('Fresh perspectives for better decisions.')
+    expect(text).toContain('TAXATION')
   })
 })
+

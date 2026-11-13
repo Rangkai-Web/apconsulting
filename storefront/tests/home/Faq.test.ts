@@ -3,18 +3,28 @@ import { mount } from '@vue/test-utils'
 import Faq from '../../app/components/home/Faq.vue'
 
 describe('Home Faq', () => {
-  it('renders the headline and the one confirmed question', () => {
-    const wrapper = mount(Faq)
+  it('renders the headline and questions', () => {
+    const wrapper = mount(Faq, {
+      global: {
+        stubs: { NuxtLink: { template: '<a><slot /></a>' } },
+      },
+    })
     const text = wrapper.text()
-    expect(text).toContain('FREQUENTLY ASKED QUESTIONS')
-    expect(text).toContain('Clear answers for your next step.')
-    expect(text).toContain('What services does AP Consulting provide?')
+    expect(text).toContain('COMMON QUESTIONS')
+    expect(text).toContain('What types of businesses does AP Consulting work with?')
   })
 
   it('expands the answer when the question is clicked', async () => {
-    const wrapper = mount(Faq)
-    expect(wrapper.text()).not.toContain('AP Consulting provides professional consulting')
-    await wrapper.find('[data-testid="faq-question"]').trigger('click')
-    expect(wrapper.text()).toContain('AP Consulting provides professional consulting and advisory support across taxation, accounting and bookkeeping, and other customized financial services.')
+    const wrapper = mount(Faq, {
+      global: {
+        stubs: { NuxtLink: { template: '<a><slot /></a>' } },
+      },
+    })
+    const buttons = wrapper.findAll('button')
+    expect(buttons.length).toBeGreaterThan(0)
+    await buttons[0].trigger('click')
+    expect(wrapper.text()).toContain('We serve a wide range of clients across Indonesia')
   })
 })
+
+

@@ -1,23 +1,42 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import AppHeader from '../app/components/AppHeader.vue'
 
+vi.mock('vue-router', () => ({
+  useRoute: () => ({ path: '/' }),
+}))
+
 describe('AppHeader', () => {
   it('renders all primary nav links and the CTA', () => {
-    const wrapper = mount(AppHeader)
+    const wrapper = mount(AppHeader, {
+      global: {
+        stubs: {
+          NuxtLink: { template: '<a><slot /></a>' },
+          UIcon: true,
+        },
+      },
+    })
     const text = wrapper.text()
     expect(text).toContain('Home')
     expect(text).toContain('Services')
     expect(text).toContain('Insights')
     expect(text).toContain('About')
     expect(text).toContain('Contact')
-    expect(text).toContain('Discuss Your Needs')
+    expect(text).toContain('Consultation')
   })
 
   it('toggles the mobile menu open state when the hamburger is clicked', async () => {
-    const wrapper = mount(AppHeader)
+    const wrapper = mount(AppHeader, {
+      global: {
+        stubs: {
+          NuxtLink: { template: '<a><slot /></a>' },
+          UIcon: true,
+        },
+      },
+    })
     expect(wrapper.find('[data-testid="mobile-menu"]').exists()).toBe(false)
     await wrapper.find('[data-testid="hamburger-button"]').trigger('click')
     expect(wrapper.find('[data-testid="mobile-menu"]').exists()).toBe(true)
   })
 })
+
