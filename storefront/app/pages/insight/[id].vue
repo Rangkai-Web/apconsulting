@@ -233,7 +233,7 @@ const pageDescription = computed(() =>
 const pageImage = computed(() =>
   article.value?.cover_image
     ? resolveImageUrl(article.value.cover_image)
-    : `${config.public.siteUrl}/ap_logo.jpeg`
+    : `${config.public.siteUrl}/images/redesign/logo.png`
 );
 const canonicalUrl = computed(() => {
   if (typeof window !== "undefined" && window.location?.origin) {
@@ -264,27 +264,54 @@ useHead(() => ({
           type: "application/ld+json",
           innerHTML: toSafeJsonLd({
             "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline: article.value.title,
-            description: pageDescription.value,
-            image: [pageImage.value],
-            datePublished: article.value.published_at,
-            author: {
-              "@type": "Person",
-              name: article.value.author_name || "AP Consulting Team",
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "AP Consulting",
-              logo: {
-                "@type": "ImageObject",
-                url: `${config.public.siteUrl}/ap_logo.jpeg`,
+            "@graph": [
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Home",
+                    item: `${config.public.siteUrl}/`,
+                  },
+                  {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: "Insights",
+                    item: `${config.public.siteUrl}/insight`,
+                  },
+                  {
+                    "@type": "ListItem",
+                    position: 3,
+                    name: article.value.title,
+                    item: canonicalUrl.value,
+                  },
+                ],
               },
-            },
-            mainEntityOfPage: {
-              "@type": "WebPage",
-              "@id": canonicalUrl.value,
-            },
+              {
+                "@type": "BlogPosting",
+                headline: article.value.title,
+                description: pageDescription.value,
+                image: [pageImage.value],
+                datePublished: article.value.published_at,
+                author: {
+                  "@type": "Person",
+                  name: article.value.author_name || "AP Consulting Team",
+                },
+                publisher: {
+                  "@type": "Organization",
+                  name: "AP Consulting",
+                  logo: {
+                    "@type": "ImageObject",
+                    url: `${config.public.siteUrl}/images/redesign/logo.png`,
+                  },
+                },
+                mainEntityOfPage: {
+                  "@type": "WebPage",
+                  "@id": canonicalUrl.value,
+                },
+              },
+            ],
           }),
         },
       ]

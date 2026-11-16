@@ -28,6 +28,7 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "https://admin.apconsulting.id/api",
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://apconsulting.id",
+      gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID || "G-SH1GS7FRBG",
     },
   },
   ui: {
@@ -54,28 +55,26 @@ export default defineNuxtConfig({
         {
           rel: "preload",
           as: "image",
-          href: "/images/homepage/HeroContent_Desktop.webp",
-          media: "(min-width: 768px)",
-          type: "image/webp",
+          href: "/images/redesign/hero-bg.png",
+          type: "image/png",
         },
         {
           rel: "preload",
           as: "image",
-          href: "/images/homepage/HeroContent_Mobile.webp",
-          media: "(max-width: 767px)",
-          type: "image/webp",
+          href: "/images/redesign/logo.png",
+          type: "image/png",
         },
       ],
       script: [
         {
-          src: "https://www.googletagmanager.com/gtag/js?id=G-SH1GS7FRBG",
+          src: `https://www.googletagmanager.com/gtag/js?id=${process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID || "G-SH1GS7FRBG"}`,
           async: true,
         },
         {
           innerHTML: `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-SH1GS7FRBG');`,
+gtag('config', '${process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID || "G-SH1GS7FRBG"}');`,
         },
       ],
       meta: [
@@ -89,7 +88,7 @@ gtag('config', 'G-SH1GS7FRBG');`,
         {
           name: "keywords",
           content:
-            "AP Consulting, konsultan pajak, konsultan pajak berbasis hukum, akuntansi, perpajakan, tax consulting, Indonesia",
+            "AP Consulting, konsultan pajak, konsultan pajak berbasis hukum, akuntansi, perpajakan, tax consulting, payroll outsourcing, Andry Phangkawira, IKPI, Indonesia, Jakarta Barat, Tangerang",
         },
         { property: "og:title", content: "AP Consulting — Kantor Konsultan Pajak Berbasis Hukum" },
         {
@@ -99,7 +98,7 @@ gtag('config', 'G-SH1GS7FRBG');`,
         },
         { property: "og:site_name", content: "AP Consulting" },
         { property: "og:type", content: "website" },
-        { property: "og:image", content: "https://apconsulting.id/ap_logo.jpeg" },
+        { property: "og:image", content: "https://apconsulting.id/images/redesign/logo.png" },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: "AP Consulting — Kantor Konsultan Pajak Berbasis Hukum" },
         {
@@ -107,7 +106,7 @@ gtag('config', 'G-SH1GS7FRBG');`,
           content:
             "AP Consulting merupakan kantor konsultan pajak berbasis hukum yang berpengalaman, profesional dan berintegritas dalam membantu klien (badan usaha ataupun perorangan) dalam memenuhi kewajiban perpajakannya secara efektif.",
         },
-        { name: "twitter:image", content: "https://apconsulting.id/ap_logo.jpeg" },
+        { name: "twitter:image", content: "https://apconsulting.id/images/redesign/logo.png" },
       ],
     },
   },

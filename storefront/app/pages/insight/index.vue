@@ -25,30 +25,56 @@ useSeoMeta({
   ogTitle: title,
   description,
   ogDescription: description,
-  ogImage: `${config.public.siteUrl}/ap_logo.jpeg`,
+  ogImage: `${config.public.siteUrl}/images/redesign/logo.png`,
   ogUrl: canonicalUrl,
   twitterCard: "summary_large_image",
   twitterTitle: title,
   twitterDescription: description,
-  twitterImage: `${config.public.siteUrl}/ap_logo.jpeg`,
+  twitterImage: `${config.public.siteUrl}/images/redesign/logo.png`,
 });
 
 useHead({
-  link: [{ rel: "canonical", href: canonicalUrl }],
+  link: [
+    { rel: "canonical", href: canonicalUrl },
+    { rel: "alternate", hreflang: "id", href: `${config.public.siteUrl}/insight` },
+    { rel: "alternate", hreflang: "en", href: `${config.public.siteUrl}/insight` },
+    { rel: "alternate", hreflang: "x-default", href: `${config.public.siteUrl}/insight` },
+  ],
   script: [
     {
       type: "application/ld+json",
       innerHTML: toSafeJsonLd({
         "@context": "https://schema.org",
-        "@type": "Blog",
-        name: title,
-        description,
-        url: canonicalUrl,
-        publisher: {
-          "@type": "Organization",
-          name: "AP Consulting",
-          logo: `${config.public.siteUrl}/ap_logo.jpeg`,
-        },
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: `${config.public.siteUrl}/`,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Insights",
+                item: canonicalUrl,
+              },
+            ],
+          },
+          {
+            "@type": "Blog",
+            name: title,
+            description,
+            url: canonicalUrl,
+            publisher: {
+              "@type": "Organization",
+              name: "AP Consulting",
+              logo: `${config.public.siteUrl}/images/redesign/logo.png`,
+            },
+          },
+        ],
       }),
     },
   ],

@@ -27,28 +27,69 @@ useSeoMeta({
 });
 
 useHead({
-  link: [{ rel: "canonical", href: currentUrl }],
+  link: [
+    { rel: "canonical", href: currentUrl },
+    { rel: "alternate", hreflang: "id", href: `${siteUrl}/contact` },
+    { rel: "alternate", hreflang: "en", href: `${siteUrl}/contact` },
+    { rel: "alternate", hreflang: "x-default", href: `${siteUrl}/contact` },
+  ],
   script: [
     {
       type: "application/ld+json",
       innerHTML: JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "ContactPage",
-        name: "Contact AP Consulting",
-        url: currentUrl,
-        mainEntity: {
-          "@type": "Organization",
-          name: "AP Consulting",
-          email: "contact@apconsulting.id",
-          telephone: "+62 857 5417 2217",
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "SUN Plaza, Jl. Meruya Ilir Raya No. 20",
-            addressLocality: "Jakarta Barat",
-            addressRegion: "DKI Jakarta",
-            addressCountry: "ID",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: `${siteUrl}/`,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Contact",
+                item: currentUrl.value,
+              },
+            ],
           },
-        },
+          {
+            "@type": "ContactPage",
+            name: "Contact AP Consulting — Tax & Consulting Services",
+            description: "Hubungi kantor konsultan pajak AP Consulting di Jakarta Barat atau Gading Serpong Tangerang untuk konsultasi pajak, akuntansi, dan payroll.",
+            url: currentUrl.value,
+            mainEntity: {
+              "@type": "AccountingService",
+              name: "AP Consulting",
+              url: siteUrl,
+              email: "contact@apconsulting.id",
+              telephone: "+6285754172217",
+              address: [
+                {
+                  "@type": "PostalAddress",
+                  name: "Head Office Jakarta Barat",
+                  streetAddress: "SUN Plaza, Jl. Meruya Ilir Raya No. 20",
+                  addressLocality: "Jakarta Barat",
+                  addressRegion: "DKI Jakarta",
+                  postalCode: "11620",
+                  addressCountry: "ID",
+                },
+                {
+                  "@type": "PostalAddress",
+                  name: "Branch Office Gading Serpong",
+                  streetAddress: "Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong",
+                  addressLocality: "Tangerang",
+                  addressRegion: "Banten",
+                  postalCode: "15810",
+                  addressCountry: "ID",
+                },
+              ],
+            },
+          },
+        ],
       }),
     },
   ],

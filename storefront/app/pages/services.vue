@@ -41,46 +41,78 @@ useSeoMeta({
 });
 
 useHead({
-  link: [{ rel: "canonical", href: canonicalUrl }],
+  link: [
+    { rel: "canonical", href: canonicalUrl },
+    { rel: "alternate", hreflang: "id", href: `${config.public.siteUrl}/services` },
+    { rel: "alternate", hreflang: "en", href: `${config.public.siteUrl}/services` },
+    { rel: "alternate", hreflang: "x-default", href: `${config.public.siteUrl}/services` },
+  ],
   script: [
     {
       type: "application/ld+json",
       innerHTML: toSafeJsonLd({
         "@context": "https://schema.org",
-        "@type": "ItemList",
-        name: title,
-        description,
-        url: canonicalUrl,
-        itemListElement: [
+        "@graph": [
           {
-            "@type": "Service",
-            name: "Tax Services",
-            description:
-              "Tax Compliance Service, Tax Review Service, and Tax Dispute Resolution & Tax Audit assistance.",
-            provider: {
-              "@type": "Organization",
-              name: "AP Consulting",
-            },
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: `${config.public.siteUrl}/`,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Services",
+                item: canonicalUrl,
+              },
+            ],
           },
           {
-            "@type": "Service",
-            name: "Payroll Outsourcing Services",
-            description:
-              "Monthly payroll administration, PPh 21/26 calculation & withholding, payslips, and periodic employee tax reporting.",
-            provider: {
-              "@type": "Organization",
-              name: "AP Consulting",
-            },
-          },
-          {
-            "@type": "Service",
-            name: "Tax Accounting Services",
-            description:
-              "Bookkeeping, monthly & annual financial statements, and fiscal reconciliation for tax compliance.",
-            provider: {
-              "@type": "Organization",
-              name: "AP Consulting",
-            },
+            "@type": "ItemList",
+            name: title,
+            description,
+            url: canonicalUrl,
+            itemListElement: [
+              {
+                "@type": "Service",
+                name: "Jasa Perpajakan (Tax Services)",
+                serviceType: "Tax Advisory & Compliance",
+                description:
+                  "Jasa Tax Compliance (SPT Masa & Tahunan), Jasa Penelaahan Pajak (Tax Review), dan Jasa Pendampingan Klien dalam Pemeriksaan Pajak (Tax Audit).",
+                provider: {
+                  "@type": "AccountingService",
+                  name: "AP Consulting",
+                  url: config.public.siteUrl,
+                },
+              },
+              {
+                "@type": "Service",
+                name: "Jasa Payroll Outsourcing",
+                serviceType: "Payroll & HR Administration",
+                description:
+                  "Pengelolaan data gaji dan PPh 21, administrasi BPJS Ketenagakerjaan & Kesehatan, serta pembuatan e-Payslip digital.",
+                provider: {
+                  "@type": "AccountingService",
+                  name: "AP Consulting",
+                  url: config.public.siteUrl,
+                },
+              },
+              {
+                "@type": "Service",
+                name: "Jasa Akuntansi (Accounting Services)",
+                serviceType: "Accounting & Bookkeeping",
+                description:
+                  "Penyusunan Laporan Keuangan PT, CV, dan UMKM, Accounting Review, Internal Audit, serta Konsultasi Software Akuntansi.",
+                provider: {
+                  "@type": "AccountingService",
+                  name: "AP Consulting",
+                  url: config.public.siteUrl,
+                },
+              },
+            ],
           },
         ],
       }),
