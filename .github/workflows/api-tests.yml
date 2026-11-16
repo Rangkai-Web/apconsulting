@@ -1,12 +1,13 @@
 name: API Tests
 
 on:
-  push:
-    paths:
-      - 'api/**'
-  pull_request:
-    paths:
-      - 'api/**'
+  workflow_dispatch: # Hanya dijalankan manual via GitHub Actions tab jika dibutuhkan
+  # push:
+  #   paths:
+  #     - 'api/**'
+  # pull_request:
+  #   paths:
+  #     - 'api/**'
 
 jobs:
   test:
