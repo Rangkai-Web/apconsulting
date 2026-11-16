@@ -487,9 +487,9 @@
 
             <!-- Center Editorial Copywriting -->
             <div class="ap-hero-editorial">
-                <div class="ap-hero-tag">
+                <!-- <div class="ap-hero-tag">
                     Kantor Konsultan Pajak Berbasis Hukum
-                </div>
+                </div> -->
 
                 <h1 class="ap-hero-heading">
                     Clearer taxes.<br />

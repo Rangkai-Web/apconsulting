@@ -5,14 +5,17 @@ namespace App\Filament\Pages;
 use App\Models\Setting;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
-use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\HtmlString;
 
 class ManageCompanySettings extends Page implements HasForms
 {
@@ -54,91 +57,157 @@ class ManageCompanySettings extends Page implements HasForms
     public function form(Schema $schema): Schema
     {
         return $schema
+            ->columns([
+                'default' => 1,
+                'lg' => 3,
+            ])
             ->schema([
-                Section::make('Identitas Perusahaan')
-                    ->description('Upload logo perusahaan yang akan ditampilkan di header/footer website.')
+                // ==========================================
+                // KOLOM KIRI (Kontak & Lokasi - 2 Kolom Lebar)
+                // ==========================================
+                Group::make()
                     ->schema([
-                        FileUpload::make('company_logo')
-                            ->label('Logo Perusahaan')
-                            ->disk('public_uploads')
-                            ->directory('settings')
-                            ->visibility('public')
-                            ->maxSize(2048)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
-                            ->helperText('Upload logo resmi perusahaan. Ukuran maks: 2MB. Format: JPG, PNG, WEBP, SVG.'),
+                        Section::make('Informasi Kontak & WhatsApp Kantor')
+                            ->description('Email dan nomor kontak kantor untuk layanan klien')
+                            ->icon('heroicon-o-phone')
+                            ->schema([
+                                TextInput::make('contact_email')
+                                    ->label('Email Resmi Kantor')
+                                    ->email()
+                                    ->placeholder('info@apconsulting.id')
+                                    ->required()
+                                    ->maxLength(255),
+
+                                TextInput::make('contact_phone')
+                                    ->label('Nomor Telepon Kantor (Hunting / PSTN)')
+                                    ->tel()
+                                    ->placeholder('+62 21 1234 5678')
+                                    ->maxLength(255),
+
+                                TextInput::make('whatsapp_number')
+                                    ->label('Nomor WhatsApp Resmi (Tujuan Form Kontak)')
+                                    ->tel()
+                                    ->required()
+                                    ->placeholder('6281234567890')
+                                    ->helperText('Gunakan format angka tanpa tanda plus/spasi (contoh: 6281234567890). Nomor ini menerima pesan konsultasi saat klien mengisi formulir kontak di website.')
+                                    ->columnSpan(2),
+                            ])
+                            ->columns(2),
+
+                        Section::make('Alamat Kantor & Lokasi Peta (Google Maps)')
+                            ->description('Lokasi fisik kantor untuk footer & halaman Kontak')
+                            ->icon('heroicon-o-map-pin')
+                            ->schema([
+                                Textarea::make('office_address')
+                                    ->label('Alamat Fisik Kantor')
+                                    ->placeholder('Contoh: Lt 3 Sayur Sentul, Blk. D, Rukan Cordoba, Jl. Green Lake City Boulevard No.23, Kota Tangerang, Banten 15146')
+                                    ->rows(3)
+                                    ->maxLength(500),
+
+                                Textarea::make('google_maps_embed_url')
+                                    ->label('Google Maps Embed URL / iFrame src')
+                                    ->rows(3)
+                                    ->placeholder('https://www.google.com/maps/embed?pb=...')
+                                    ->helperText('Tempelkan URL embed dari Google Maps (https://www.google.com/maps/embed?...) untuk peta interaktif di halaman Kontak.'),
+                            ]),
+
+                        Section::make('Media Sosial Perusahaan')
+                            ->description('Tautan akun profil publik perusahaan')
+                            ->icon('heroicon-o-share')
+                            ->collapsible()
+                            ->schema([
+                                TextInput::make('social_linkedin')
+                                    ->label('LinkedIn Perusahaan')
+                                    ->url()
+                                    ->placeholder('https://linkedin.com/company/...')
+                                    ->maxLength(255)
+                                    ->helperText('Sangat direkomendasikan untuk kredibilitas kantor konsultan pajak & bisnis.')
+                                    ->columnSpan(2),
+
+                                TextInput::make('social_instagram')
+                                    ->label('Instagram URL')
+                                    ->url()
+                                    ->placeholder('https://instagram.com/...')
+                                    ->maxLength(255),
+
+                                TextInput::make('social_twitter')
+                                    ->label('Twitter / X URL')
+                                    ->url()
+                                    ->placeholder('https://x.com/...')
+                                    ->maxLength(255),
+
+                                TextInput::make('social_threads')
+                                    ->label('Threads URL')
+                                    ->url()
+                                    ->placeholder('https://threads.net/@...')
+                                    ->maxLength(255),
+
+                                TextInput::make('social_facebook')
+                                    ->label('Facebook URL')
+                                    ->url()
+                                    ->placeholder('https://facebook.com/...')
+                                    ->maxLength(255),
+
+                                TextInput::make('social_tiktok')
+                                    ->label('TikTok URL')
+                                    ->url()
+                                    ->placeholder('https://tiktok.com/@...')
+                                    ->maxLength(255),
+
+                                TextInput::make('social_youtube')
+                                    ->label('YouTube URL')
+                                    ->url()
+                                    ->placeholder('https://youtube.com/@...')
+                                    ->maxLength(255),
+                            ])
+                            ->columns(2),
+                    ])
+                    ->columnSpan([
+                        'default' => 1,
+                        'lg' => 2,
                     ]),
 
-                Section::make('Informasi Kontak & Lokasi')
-                    ->description('Pengaturan email, nomor telepon, WhatsApp, alamat kantor, dan lokasi peta.')
+                // ==========================================
+                // KOLOM KANAN (Logo & Legalitas - 1 Kolom)
+                // ==========================================
+                Group::make()
                     ->schema([
-                        TextInput::make('contact_email')
-                            ->label('Email Kontak')
-                            ->email()
-                            ->required()
-                            ->maxLength(255),
-                        TextInput::make('contact_phone')
-                            ->label('Nomor Telepon Kantor')
-                            ->tel()
-                            ->maxLength(255),
-                        TextInput::make('whatsapp_number')
-                            ->label('Nomor WhatsApp (Form Kontak)')
-                            ->tel()
-                            ->required()
-                            ->placeholder('6281234567890')
-                            ->helperText('Format nomor WhatsApp (misal: 6281234567890) yang akan menerima pesan dari form kontak.'),
-                        Textarea::make('office_address')
-                            ->label('Alamat Kantor')
-                            ->rows(3)
-                            ->columnSpan(2)
-                            ->maxLength(500),
-                        Textarea::make('google_maps_embed_url')
-                            ->label('Google Maps Embed URL / iFrame src')
-                            ->rows(3)
-                            ->columnSpan(2)
-                            ->helperText('Paste URL Google Maps Embed (https://www.google.com/maps/embed?...) untuk peta lokasi kantor.'),
-                    ])
-                    ->columns(2),
+                        Section::make('Logo Resmi Perusahaan')
+                            ->description('Logo utama untuk header & footer website')
+                            ->icon('heroicon-o-photo')
+                            ->schema([
+                                FileUpload::make('company_logo')
+                                    ->label('Unggah Logo')
+                                    ->disk('public_uploads')
+                                    ->directory('settings')
+                                    ->visibility('public')
+                                    ->maxSize(2048)
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
+                                    ->helperText('Format: PNG, JPG, WEBP, SVG. Maksimal: 2MB. Disarankan dengan latar belakang transparan.'),
+                            ]),
 
-                Section::make('Media Sosial Perusahaan')
-                    ->description('Tautan ke akun media sosial resmi perusahaan.')
-                    ->schema([
-                        TextInput::make('social_linkedin')
-                            ->label('LinkedIn URL')
-                            ->url()
-                            ->placeholder('https://linkedin.com/company/...')
-                            ->maxLength(255),
-                        TextInput::make('social_instagram')
-                            ->label('Instagram URL')
-                            ->url()
-                            ->placeholder('https://instagram.com/...')
-                            ->maxLength(255),
-                        TextInput::make('social_tiktok')
-                            ->label('TikTok URL')
-                            ->url()
-                            ->placeholder('https://tiktok.com/@...')
-                            ->maxLength(255),
-                        TextInput::make('social_threads')
-                            ->label('Threads URL')
-                            ->url()
-                            ->placeholder('https://threads.net/@...')
-                            ->maxLength(255),
-                        TextInput::make('social_facebook')
-                            ->label('Facebook URL')
-                            ->url()
-                            ->placeholder('https://facebook.com/...')
-                            ->maxLength(255),
-                        TextInput::make('social_twitter')
-                            ->label('Twitter / X URL')
-                            ->url()
-                            ->placeholder('https://twitter.com/...')
-                            ->maxLength(255),
-                        TextInput::make('social_youtube')
-                            ->label('YouTube URL')
-                            ->url()
-                            ->placeholder('https://youtube.com/@...')
-                            ->maxLength(255),
+                        Section::make('Legalitas & Kredensial')
+                            ->description('Data resmi kantor konsultan')
+                            ->icon('heroicon-o-shield-check')
+                            ->schema([
+                                Placeholder::make('license_info')
+                                    ->hiddenLabel()
+                                    ->content(new HtmlString('
+                                        <div style="font-size: 0.82rem; line-height: 1.6; color: #94a3b8;">
+                                            <strong>Izin Kemenkeu RI:</strong><br/>
+                                            <span style="color: #ffffff; font-weight: 600;">KIP-6592/IP.B/PJ/2020</span><br/><br/>
+                                            <strong>Keanggotaan Asosiasi:</strong><br/>
+                                            <span style="color: #ffffff; font-weight: 600;">IKPI (Ikatan Konsultan Pajak Indonesia)</span><br/><br/>
+                                            <strong>Legalitas Terdaftar:</strong><br/>
+                                            Kantor konsultan pajak berbasis hukum resmi di Republik Indonesia.
+                                        </div>
+                                    ')),
+                            ]),
                     ])
-                    ->columns(2),
+                    ->columnSpan([
+                        'default' => 1,
+                        'lg' => 1,
+                    ]),
             ])
             ->statePath('data');
     }
@@ -158,11 +227,21 @@ class ManageCompanySettings extends Page implements HasForms
 
         foreach ($state as $key => $value) {
             $group = str_starts_with($key, 'social_') ? 'social' : 'contact';
-            Setting::setKey($key, $value, $group);
+            if ($key === 'company_logo') {
+                $group = 'company';
+            }
+
+            Setting::updateOrCreate(
+                ['key' => $key],
+                [
+                    'value' => $value,
+                    'group' => $group,
+                ]
+            );
         }
 
         Notification::make()
-            ->title('Pengaturan perusahaan berhasil disimpan')
+            ->title('Pengaturan berhasil disimpan')
             ->success()
             ->send();
     }
