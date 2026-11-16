@@ -27,13 +27,13 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('')
             ->authGuard('admin')
-            ->login()
+            ->login(\App\Filament\Pages\Auth\Login::class)
             ->brandName('AP Consulting Admin Panel')
-            ->brandLogo(asset('ap_consulting_logo.jpeg'))
-            ->brandLogoHeight('3rem')
+            ->brandLogo(asset('images/redesign/logo.png'))
+            ->brandLogoHeight('2.75rem')
             ->favicon(asset('favicon.ico'))
             ->colors([
-                'primary' => Color::hex('#083653'),
+                'primary' => Color::hex('#0869B2'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
