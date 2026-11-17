@@ -4,13 +4,35 @@ export function getApiBaseUrl(): string {
   try {
     if (typeof useRuntimeConfig === "function") {
       const config = useRuntimeConfig();
-      if (config?.public?.apiBase) {
-        return config.public.apiBase as string;
+      const configuredBase = config?.public?.apiBase as string | undefined;
+
+      // Auto-detect local development in browser
+      if (
+        typeof window !== "undefined" &&
+        (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+      ) {
+        if (configuredBase && (configuredBase.includes("localhost") || configuredBase.includes("127.0.0.1"))) {
+          return configuredBase;
+        }
+        return "http://localhost:8000/api";
+      }
+
+      if (configuredBase) {
+        return configuredBase;
       }
     }
   } catch {
     // Fallback when executed outside Nuxt context (e.g. unit tests)
   }
+
+  // Fallback for browser on localhost outside runtime config
+  if (
+    typeof window !== "undefined" &&
+    (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+  ) {
+    return "http://localhost:8000/api";
+  }
+
   return "https://admin.apconsulting.id/api";
 }
 

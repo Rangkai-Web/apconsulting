@@ -26,8 +26,16 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || "https://admin.apconsulting.id/api",
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://apconsulting.id",
+      apiBase:
+        process.env.NUXT_PUBLIC_API_BASE ||
+        (process.env.NODE_ENV === "production"
+          ? "https://admin.apconsulting.id/api"
+          : "http://localhost:8000/api"),
+      siteUrl:
+        process.env.NUXT_PUBLIC_SITE_URL ||
+        (process.env.NODE_ENV === "production"
+          ? "https://apconsulting.id"
+          : "http://localhost:3000"),
       gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID || "G-SH1GS7FRBG",
     },
   },

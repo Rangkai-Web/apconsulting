@@ -14,9 +14,11 @@
 
 <script setup lang="ts">
 import { useSeoText } from "~/composables/useSeoText";
+import { useCompanySettings } from "~/composables/useCompanySettings";
 
 const config = useRuntimeConfig();
 const { toSafeJsonLd } = useSeoText();
+const { email, phone, cleanWhatsappNumber, headOfficeAddress, branchOfficeAddress } = useCompanySettings();
 const canonicalUrl = `${config.public.siteUrl}/`;
 
 // Comprehensive SEO Metadata
@@ -37,7 +39,7 @@ useSeoMeta({
   twitterImage: `${config.public.siteUrl}/images/redesign/logo.webp`,
 });
 
-useHead({
+useHead(() => ({
   link: [
     { rel: "canonical", href: canonicalUrl },
     { rel: "alternate", hreflang: "id", href: `${config.public.siteUrl}/` },
@@ -63,8 +65,8 @@ useHead({
             logo: `${config.public.siteUrl}/images/redesign/logo.webp`,
             image: `${config.public.siteUrl}/images/redesign/office.webp`,
             description,
-            email: "contact@apconsulting.id",
-            telephone: "+6285754172217",
+            email: email.value || "contact@apconsulting.id",
+            telephone: phone.value || "+6285754172217",
             priceRange: "$$",
             currenciesAccepted: "IDR",
             paymentAccepted: "Bank Transfer",
@@ -72,7 +74,7 @@ useHead({
               {
                 "@type": "PostalAddress",
                 name: "Head Office Jakarta",
-                streetAddress: "SUN Plaza, Jl. Meruya Ilir Raya No. 20",
+                streetAddress: headOfficeAddress.value || "SUN Plaza, Jl. Meruya Ilir Raya No. 20",
                 addressLocality: "Jakarta Barat",
                 addressRegion: "DKI Jakarta",
                 postalCode: "11620",
@@ -81,7 +83,7 @@ useHead({
               {
                 "@type": "PostalAddress",
                 name: "Branch Office Tangerang",
-                streetAddress: "Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong",
+                streetAddress: branchOfficeAddress.value || "Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong",
                 addressLocality: "Tangerang",
                 addressRegion: "Banten",
                 postalCode: "15810",
@@ -173,7 +175,7 @@ useHead({
                 name: "Bagaimana cara memulai konsultasi dengan AP Consulting?",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "Cukup hubungi tim kami melalui formulir kontak di website, WhatsApp (+62 857 5417 2217), atau email (contact@apconsulting.id) untuk menjadwalkan konsultasi awal.",
+                  text: `Cukup hubungi tim kami melalui formulir kontak di website, WhatsApp (+${cleanWhatsappNumber.value || "6285754172217"}), atau email (${email.value || "contact@apconsulting.id"}) untuk menjadwalkan konsultasi awal.`,
                 },
               },
             ],
@@ -182,5 +184,5 @@ useHead({
       }),
     },
   ],
-});
+}));
 </script>

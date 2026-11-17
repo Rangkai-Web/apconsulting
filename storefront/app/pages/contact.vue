@@ -7,7 +7,10 @@
 </template>
 
 <script setup lang="ts">
+import { useCompanySettings } from "~/composables/useCompanySettings";
+
 const { t } = useLanguage();
+const { email, phone, headOfficeAddress, branchOfficeAddress } = useCompanySettings();
 const config = useRuntimeConfig();
 const route = useRoute();
 const siteUrl = config.public.siteUrl || "https://apconsulting.id";
@@ -26,7 +29,7 @@ useSeoMeta({
   twitterImage: `${siteUrl}/images/redesign/logo.webp`,
 });
 
-useHead({
+useHead(() => ({
   link: [
     { rel: "canonical", href: currentUrl },
     { rel: "alternate", hreflang: "id", href: `${siteUrl}/contact` },
@@ -65,13 +68,13 @@ useHead({
               "@type": "AccountingService",
               name: "AP Consulting",
               url: siteUrl,
-              email: "contact@apconsulting.id",
-              telephone: "+6285754172217",
+              email: email.value || "contact@apconsulting.id",
+              telephone: phone.value || "+6285754172217",
               address: [
                 {
                   "@type": "PostalAddress",
                   name: "Head Office Jakarta Barat",
-                  streetAddress: "SUN Plaza, Jl. Meruya Ilir Raya No. 20",
+                  streetAddress: headOfficeAddress.value || "SUN Plaza, Jl. Meruya Ilir Raya No. 20",
                   addressLocality: "Jakarta Barat",
                   addressRegion: "DKI Jakarta",
                   postalCode: "11620",
@@ -80,7 +83,7 @@ useHead({
                 {
                   "@type": "PostalAddress",
                   name: "Branch Office Gading Serpong",
-                  streetAddress: "Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong",
+                  streetAddress: branchOfficeAddress.value || "Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong",
                   addressLocality: "Tangerang",
                   addressRegion: "Banten",
                   postalCode: "15810",
@@ -93,5 +96,5 @@ useHead({
       }),
     },
   ],
-});
+}));
 </script>

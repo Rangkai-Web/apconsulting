@@ -41,7 +41,7 @@
             </NuxtLink>
 
             <a
-              href="https://wa.me/6285754172217"
+              :href="whatsappLink"
               target="_blank"
               rel="noopener noreferrer"
               class="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-[2px] bg-white/10 hover:bg-white/15 border border-white/35 text-white text-[14px] font-semibold transition-colors"
@@ -57,6 +57,8 @@
 
 <script setup lang="ts">
 import { useLanguage } from "~/composables/useLanguage";
+import { useCompanySettings } from "~/composables/useCompanySettings";
 
 const { t } = useLanguage();
+const { whatsappLink } = useCompanySettings();
 </script>

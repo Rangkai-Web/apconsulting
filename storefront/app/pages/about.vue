@@ -11,9 +11,11 @@
 
 <script setup lang="ts">
 import { useSeoText } from "~/composables/useSeoText";
+import { useCompanySettings } from "~/composables/useCompanySettings";
 
 const config = useRuntimeConfig();
 const { toSafeJsonLd } = useSeoText();
+const { email, phone } = useCompanySettings();
 const canonicalUrl = `${config.public.siteUrl}/about`;
 const title = "About Us — AP Consulting";
 const description =
@@ -32,7 +34,7 @@ useSeoMeta({
   twitterImage: `${config.public.siteUrl}/images/redesign/logo.webp`,
 });
 
-useHead({
+useHead(() => ({
   link: [
     { rel: "canonical", href: canonicalUrl },
     { rel: "alternate", hreflang: "id", href: `${config.public.siteUrl}/about` },
@@ -74,15 +76,15 @@ useHead({
               logo: `${config.public.siteUrl}/images/redesign/logo.webp`,
               image: `${config.public.siteUrl}/images/redesign/office.webp`,
               description,
-              telephone: "+6285754172217",
-              email: "contact@apconsulting.id",
+              telephone: phone.value || "+6285754172217",
+              email: email.value || "contact@apconsulting.id",
               founder: {
                 "@type": "Person",
                 name: "Andry Phangkawira, S.E., Ak., BKP.",
                 jobTitle: "Partner & Licensed Tax Consultant",
                 identifier: "KIP-6592/IP.B/PJ/2020",
                 sameAs: "https://www.linkedin.com/in/andry-phangkawira/",
-                image: "https://www.apconsulting.id/images/team/andry.jpeg",
+                image: `${config.public.siteUrl}/images/redesign/logo.webp`,
                 alumniOf: "Universitas",
                 memberOf: {
                   "@type": "Organization",
@@ -95,5 +97,5 @@ useHead({
       }),
     },
   ],
-});
+}));
 </script>

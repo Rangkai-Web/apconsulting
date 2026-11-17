@@ -138,7 +138,7 @@
                     {{ t("footer.headOffice") }}
                   </div>
                   <p class="mt-1 text-[13px] leading-[1.6] text-[#E2EDF7]">
-                    SUN Plaza, Jl. Meruya Ilir Raya No. 20, Jakarta Barat
+                    {{ headOfficeAddress }}
                   </p>
                 </div>
                 <div>
@@ -146,7 +146,7 @@
                     {{ t("footer.branchOffice") }}
                   </div>
                   <p class="mt-1 text-[13px] leading-[1.6] text-[#E2EDF7]">
-                    Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong, Tangerang
+                    {{ branchOfficeAddress }}
                   </p>
                 </div>
               </div>
@@ -361,11 +361,12 @@
 import { ref, reactive, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useServiceCategories } from "~/composables/useServiceCategories";
+import { getApiBaseUrl } from "~/utils/api";
 
 const route = useRoute();
 const { t, currentLocale } = useLanguage();
 const { formattedCategories } = useServiceCategories();
-const { email, phone, getWhatsappUrl } = useCompanySettings();
+const { email, phone, getWhatsappUrl, headOfficeAddress, branchOfficeAddress } = useCompanySettings();
 
 const contactEmail = computed(() => email.value || "contact@apconsulting.id");
 const contactPhone = computed(() => phone.value || "+62 857 5417 2217");
@@ -442,7 +443,8 @@ const handleSubmit = async () => {
   submitError.value = "";
 
   try {
-    const res: any = await $fetch(`${config.public.apiBase}/contact`, {
+    const apiBase = getApiBaseUrl();
+    const res: any = await $fetch(`${apiBase}/contact`, {
       method: "POST",
       body: {
         full_name: form.fullName,

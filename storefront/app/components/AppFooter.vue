@@ -126,7 +126,7 @@
               {{ t("footer.headOffice") }}
             </p>
             <a
-              href="https://maps.google.com/?q=SUN+Plaza+Jl+Meruya+Ilir+Raya+No+20+Jakarta+Barat"
+              :href="`https://maps.google.com/?q=${encodeURIComponent(headOfficeAddress)}`"
               target="_blank"
               rel="noopener noreferrer"
               class="hover:underline hover:text-white transition-colors leading-relaxed"
@@ -149,7 +149,7 @@
               {{ t("footer.branchOffice") }}
             </p>
             <a
-              href="https://maps.google.com/?q=Ruko+Alexandrite+3+No+23+Jl+Boulevard+Gading+Serpong+Tangerang"
+              :href="`https://maps.google.com/?q=${encodeURIComponent(branchOfficeAddress)}`"
               target="_blank"
               rel="noopener noreferrer"
               class="hover:underline hover:text-white transition-colors leading-relaxed"
