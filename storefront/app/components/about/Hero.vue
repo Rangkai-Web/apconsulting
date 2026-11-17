@@ -71,7 +71,7 @@
             class="relative overflow-hidden rounded-tr-[40px] sm:rounded-tr-[56px] rounded-tl-[4px] rounded-b-[4px] shadow-2xl border border-white/15"
           >
             <img
-              src="/images/redesign/office.png"
+              src="/images/redesign/office.webp"
               alt="AP Consulting office in SUN Plaza, Jakarta"
               class="w-full h-[230px] sm:h-[320px] lg:h-[350px] object-cover"
               loading="eager"

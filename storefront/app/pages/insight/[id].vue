@@ -109,7 +109,7 @@
             class="overflow-hidden aspect-[16/9] rounded-[2px] border border-[#DCE8F5] bg-[#EBF3FA]"
           >
             <img
-              :src="resolveImageUrl(article.cover_image, '/images/redesign/article-featured.png')"
+              :src="resolveImageUrl(article.cover_image, '/images/redesign/article-featured.webp')"
               :alt="article.title"
               class="size-full object-cover"
             />
@@ -233,7 +233,7 @@ const pageDescription = computed(() =>
 const pageImage = computed(() =>
   article.value?.cover_image
     ? resolveImageUrl(article.value.cover_image)
-    : `${config.public.siteUrl}/images/redesign/logo.png`
+    : `${config.public.siteUrl}/images/redesign/logo.webp`
 );
 const canonicalUrl = computed(() => {
   if (typeof window !== "undefined" && window.location?.origin) {
@@ -303,7 +303,7 @@ useHead(() => ({
                   name: "AP Consulting",
                   logo: {
                     "@type": "ImageObject",
-                    url: `${config.public.siteUrl}/images/redesign/logo.png`,
+                    url: `${config.public.siteUrl}/images/redesign/logo.webp`,
                   },
                 },
                 mainEntityOfPage: {

@@ -6,7 +6,7 @@
         <div class="lg:col-span-5">
           <div class="overflow-hidden rounded-tr-[40px] sm:rounded-tr-[48px] rounded-tl-[4px] rounded-b-[4px]">
             <img
-              src="/images/redesign/office.png"
+              src="/images/redesign/office.webp"
               alt="AP Consulting office lounge in SUN Plaza, Jakarta"
               class="w-full h-[240px] sm:h-[320px] lg:h-[360px] object-cover"
               loading="lazy"

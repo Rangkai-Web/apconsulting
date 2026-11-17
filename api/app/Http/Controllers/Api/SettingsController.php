@@ -13,7 +13,7 @@ class SettingsController extends Controller
         $settings = Setting::all()->pluck('value', 'key')->toArray();
 
         $logoPath = $settings['company_logo'] ?? null;
-        $logoUrl = $logoPath ? asset('uploads/' . $logoPath) : asset('ap_consulting_logo.jpeg');
+        $logoUrl = $logoPath ? asset('uploads/' . $logoPath) : null;
 
         return response()->json([
             'status' => 'success',
@@ -22,11 +22,13 @@ class SettingsController extends Controller
                     'logo' => $logoUrl,
                 ],
                 'contact' => [
-                    'email' => $settings['contact_email'] ?? 'info@apconsulting.id',
-                    'phone' => $settings['contact_phone'] ?? '+62 21 1234 5678',
-                    'whatsapp' => $settings['whatsapp_number'] ?? '6281234567890',
-                    'address' => $settings['office_address'] ?? '',
-                    'maps_embed_url' => $settings['google_maps_embed_url'] ?? '',
+                    'email' => $settings['contact_email'] ?? 'contact@apconsulting.id',
+                    'phone' => $settings['contact_phone'] ?? '+62 857 5417 2217',
+                    'whatsapp' => $settings['whatsapp_number'] ?? '6285754172217',
+                    'address' => $settings['office_address'] ?? 'SUN Plaza, Jl. Meruya Ilir Raya No. 20, Jakarta Barat',
+                    'maps_embed_url' => $settings['google_maps_embed_url'] ?? 'https://maps.google.com/maps?q=SUN+Plaza+Jl+Meruya+Ilir+Raya+No+20+Jakarta+Barat&output=embed',
+                    'branch_address' => $settings['branch_office_address'] ?? ($settings['branch_address'] ?? 'Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong, Tangerang'),
+                    'branch_maps_embed_url' => $settings['branch_google_maps_embed_url'] ?? ($settings['branch_maps_embed_url'] ?? 'https://maps.google.com/maps?q=Ruko+Alexandrite+3+No+23+Jl+Boulevard+Gading+Serpong+Tangerang&output=embed'),
                 ],
                 'social' => [
                     'linkedin' => $settings['social_linkedin'] ?? '',

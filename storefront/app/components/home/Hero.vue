@@ -2,7 +2,7 @@
   <section class="relative overflow-hidden bg-[#072642] text-white">
     <!-- Background Image & Crisp Blue-Navy Gradient overlay -->
     <img
-      src="/images/redesign/hero-bg.png"
+      src="/images/redesign/hero-bg.webp"
       alt=""
       aria-hidden="true"
       class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
@@ -51,7 +51,7 @@
         <div class="animate-hero-image lg:col-span-5 flex flex-col">
           <div class="relative overflow-hidden rounded-tr-[40px] sm:rounded-tr-[56px] rounded-tl-[4px] rounded-b-[4px] shadow-2xl">
             <img
-              src="/images/redesign/collaboration.png"
+              src="/images/redesign/collaboration.webp"
               alt="AP Consulting team working together at laptops"
               class="w-full h-[240px] sm:h-[340px] lg:h-[380px] object-cover"
               loading="eager"

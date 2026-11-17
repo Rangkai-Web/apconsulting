@@ -31,9 +31,14 @@ class InquiryController extends Controller
             'status' => 'unread',
         ]);
 
-        // Format WhatsApp message redirect URL
-        $rawWa = Setting::getByKey('whatsapp_number', '6281234567890');
-        $waNumber = preg_replace('/[^0-9]/', '', $rawWa ?? '6281234567890');
+        // Format WhatsApp message redirect URL with clean international digits
+        $rawWa = Setting::getByKey('whatsapp_number', '6285754172217');
+        $waNumber = preg_replace('/[^0-9]/', '', $rawWa ?? '6285754172217');
+        if (str_starts_with($waNumber, '0')) {
+            $waNumber = '62' . substr($waNumber, 1);
+        } elseif (str_starts_with($waNumber, '8')) {
+            $waNumber = '62' . $waNumber;
+        }
 
         $textLines = [
             "Halo AP Consulting, saya berminat dengan layanan Anda. Berikut detail kontak saya:",

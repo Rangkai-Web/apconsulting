@@ -14,7 +14,7 @@
         >
           <div class="bg-white px-3 py-1.5 rounded-[2px] shadow-xs">
             <img
-              src="/images/redesign/logo.png"
+              :src="logoUrl"
               alt="AP Consulting Logo"
               loading="lazy"
               decoding="async"
@@ -269,6 +269,7 @@ import { useCompanySettings } from "~/composables/useCompanySettings";
 
 const { t, currentLocale } = useLanguage();
 const {
+  logoUrl,
   email,
   phone,
   headOfficeAddress,

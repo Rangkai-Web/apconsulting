@@ -76,7 +76,7 @@
               <!-- Bottom CTA Link -->
               <div class="mt-7 pt-5 border-t border-[#EBF2F9]">
                 <NuxtLink
-                  to="/contact"
+                  :to="`/contact?service=${encodeURIComponent(service.anchorId)}`"
                   class="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-[0.08em] text-[#0869B2] hover:text-[#06477D] transition-colors"
                 >
                   <span>{{ service.cta }}</span>
@@ -131,6 +131,7 @@
                       {{ sub.title }}
                     </h4>
                     <p
+                      v-if="sub.description"
                       class="text-xs sm:text-[14px] leading-[1.65] text-[#52687B]"
                     >
                       {{ sub.description }}
@@ -149,79 +150,89 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useLanguage } from "~/composables/useLanguage";
+import { useServiceCategories } from "~/composables/useServiceCategories";
 
-const { t } = useLanguage();
+const { t, currentLocale } = useLanguage();
+const { categories } = useServiceCategories();
 
-const coreServices = computed(() => [
-  {
-    number: "01",
-    anchorId: "tax",
-    icon: "/images/redesign/tax-service-icon.png",
-    title: t("services.scope.s1Title"),
-    description: t("services.scope.s1Desc"),
-    cta: t("services.scope.s1Cta"),
-    subServices: [
-      {
-        title: t("services.scope.s1Sub1Title"),
-        description: t("services.scope.s1Sub1Desc"),
-      },
-      {
-        title: t("services.scope.s1Sub2Title"),
-        description: t("services.scope.s1Sub2Desc"),
-      },
-      {
-        title: t("services.scope.s1Sub3Title"),
-        description: t("services.scope.s1Sub3Desc"),
-      },
-    ],
-  },
-  {
-    number: "02",
-    anchorId: "payroll",
-    icon: "/images/redesign/payroll-icon.png",
-    title: t("services.scope.s2Title"),
-    description: t("services.scope.s2Desc"),
-    cta: t("services.scope.s2Cta"),
-    subServices: [
-      {
-        title: t("services.scope.s2Sub1Title"),
-        description: t("services.scope.s2Sub1Desc"),
-      },
-      {
-        title: t("services.scope.s2Sub2Title"),
-        description: t("services.scope.s2Sub2Desc"),
-      },
-      {
-        title: t("services.scope.s2Sub3Title"),
-        description: t("services.scope.s2Sub3Desc"),
-      },
-    ],
-  },
-  {
-    number: "03",
-    anchorId: "accounting",
-    icon: "/images/redesign/accounting-icon.png",
-    title: t("services.scope.s3Title"),
-    description: t("services.scope.s3Desc"),
-    cta: t("services.scope.s3Cta"),
-    subServices: [
-      {
-        title: t("services.scope.s3Sub1Title"),
-        description: t("services.scope.s3Sub1Desc"),
-      },
-      {
-        title: t("services.scope.s3Sub2Title"),
-        description: t("services.scope.s3Sub2Desc"),
-      },
-      {
-        title: t("services.scope.s3Sub3Title"),
-        description: t("services.scope.s3Sub3Desc"),
-      },
-      {
-        title: t("services.scope.s3Sub4Title"),
-        description: t("services.scope.s3Sub4Desc"),
-      },
-    ],
-  },
-]);
+const defaultIcons = [
+  "/images/redesign/tax-service-icon.png",
+  "/images/redesign/payroll-icon.png",
+  "/images/redesign/accounting-icon.png",
+];
+const defaultAnchors = ["tax", "payroll", "accounting"];
+
+const defaultSubServices = [
+  [
+    {
+      title: t("services.scope.s1Sub1Title"),
+      description: t("services.scope.s1Sub1Desc"),
+    },
+    {
+      title: t("services.scope.s1Sub2Title"),
+      description: t("services.scope.s1Sub2Desc"),
+    },
+    {
+      title: t("services.scope.s1Sub3Title"),
+      description: t("services.scope.s1Sub3Desc"),
+    },
+  ],
+  [
+    {
+      title: t("services.scope.s2Sub1Title"),
+      description: t("services.scope.s2Sub1Desc"),
+    },
+    {
+      title: t("services.scope.s2Sub2Title"),
+      description: t("services.scope.s2Sub2Desc"),
+    },
+    {
+      title: t("services.scope.s2Sub3Title"),
+      description: t("services.scope.s2Sub3Desc"),
+    },
+  ],
+  [
+    {
+      title: t("services.scope.s3Sub1Title"),
+      description: t("services.scope.s3Sub1Desc"),
+    },
+    {
+      title: t("services.scope.s3Sub2Title"),
+      description: t("services.scope.s3Sub2Desc"),
+    },
+    {
+      title: t("services.scope.s3Sub3Title"),
+      description: t("services.scope.s3Sub3Desc"),
+    },
+    {
+      title: t("services.scope.s3Sub4Title"),
+      description: t("services.scope.s3Sub4Desc"),
+    },
+  ],
+];
+
+const coreServices = computed(() => {
+  const isEn = currentLocale.value === "en";
+  return categories.value.map((cat, idx) => {
+    const rawFeatures = isEn
+      ? (cat.features_en && cat.features_en.length > 0 ? cat.features_en : cat.features_id)
+      : (cat.features_id && cat.features_id.length > 0 ? cat.features_id : cat.features_en);
+
+    const subServices = Array.isArray(rawFeatures) && rawFeatures.length > 0
+      ? rawFeatures.map((f) => ({ title: f, description: "" }))
+      : (defaultSubServices[idx] || []);
+
+    return {
+      number: String(idx + 1).padStart(2, "0"),
+      anchorId: defaultAnchors[idx] || `service-${cat.id}`,
+      icon: defaultIcons[idx % defaultIcons.length],
+      title: isEn ? (cat.name_en || cat.name_id) : (cat.name_id || cat.name_en),
+      description: isEn ? (cat.description_en || cat.description_id || "") : (cat.description_id || cat.description_en || ""),
+      cta: isEn
+        ? (cat.cta_text_en || "DISCUSS THIS SERVICE")
+        : (cat.cta_text_id || "KONSULTASIKAN LAYANAN INI"),
+      subServices,
+    };
+  });
+});
 </script>

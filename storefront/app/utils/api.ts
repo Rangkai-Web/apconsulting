@@ -34,7 +34,9 @@ export function safeUseFetch<T>(url: string | (() => string), opts?: any) {
 }
 
 export function resolveImageUrl(imagePath?: string | null, fallback = "/images/homepage/About_Desktop.webp"): string {
-  if (!imagePath) return fallback;
+  if (!imagePath || !imagePath.trim() || imagePath === "null" || imagePath === "undefined") {
+    return fallback;
+  }
   if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
     return imagePath;
   }

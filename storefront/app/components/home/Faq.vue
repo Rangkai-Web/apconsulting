@@ -1,32 +1,57 @@
 <script setup lang="ts">
 import { ref, computed } from "vue"
 import { useLanguage } from "~/composables/useLanguage"
+import { getApiBaseUrl, safeUseFetch } from "~/utils/api"
 
-const { t } = useLanguage()
+interface FaqItem {
+  id?: number
+  question: string
+  answer: string
+  category?: string
+}
+
+const { t, currentLocale } = useLanguage()
+const apiBase = getApiBaseUrl()
 const openFaqIndex = ref<number | null>(0)
 
 const toggleFaq = (idx: number) => {
   openFaqIndex.value = openFaqIndex.value === idx ? null : idx
 }
 
-const faqs = computed(() => [
+const { data: apiResponse } = safeUseFetch<{ data: FaqItem[] }>(
+  () => `${apiBase}/faqs?lang=${currentLocale.value}`,
   {
-    question: t("home.v3.faq.q1"),
-    answer: t("home.v3.faq.a1"),
-  },
-  {
-    question: t("home.v3.faq.q2"),
-    answer: t("home.v3.faq.a2"),
-  },
-  {
-    question: t("home.v3.faq.q3"),
-    answer: t("home.v3.faq.a3"),
-  },
-  {
-    question: t("home.v3.faq.q4"),
-    answer: t("home.v3.faq.a4"),
-  },
-])
+    watch: [currentLocale],
+  }
+)
+
+const faqs = computed<FaqItem[]>(() => {
+  if (
+    apiResponse.value?.data &&
+    Array.isArray(apiResponse.value.data) &&
+    apiResponse.value.data.length > 0
+  ) {
+    return apiResponse.value.data
+  }
+  return [
+    {
+      question: t("home.v3.faq.q1"),
+      answer: t("home.v3.faq.a1"),
+    },
+    {
+      question: t("home.v3.faq.q2"),
+      answer: t("home.v3.faq.a2"),
+    },
+    {
+      question: t("home.v3.faq.q3"),
+      answer: t("home.v3.faq.a3"),
+    },
+    {
+      question: t("home.v3.faq.q4"),
+      answer: t("home.v3.faq.a4"),
+    },
+  ]
+})
 </script>
 
 <template>
@@ -97,7 +122,7 @@ const faqs = computed(() => [
               v-show="openFaqIndex === index"
               class="pb-5 pr-8"
             >
-              <p class="text-[14.5px] leading-[1.7] text-[#4E6B85]">
+              <p class="text-[14.5px] leading-[1.7] text-[#4E6B85] whitespace-pre-line">
                 {{ faq.answer }}
               </p>
             </div>

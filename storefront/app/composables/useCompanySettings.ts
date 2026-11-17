@@ -10,6 +10,7 @@ export interface SettingsData {
     address?: string;
     branch_address?: string;
     maps_embed_url?: string;
+    branch_maps_embed_url?: string;
   };
   social?: {
     instagram?: string;
@@ -35,47 +36,53 @@ export function useCompanySettings() {
   const settings = computed(() => apiResponse.value?.data || {});
 
   const logoUrl = computed(() =>
-    resolveImageUrl(settings.value.company?.logo, "/images/redesign/logo.png")
+    resolveImageUrl(settings.value.company?.logo, "/images/redesign/logo.webp")
   );
 
-  // Ensure old PCG template defaults are replaced with AP Consulting's real contact data
+  // Return real settings with sensible AP Consulting defaults
   const email = computed(() => {
-    const raw = settings.value.contact?.email;
-    if (!raw || raw === "info@apconsulting.id" || raw.includes("pcg")) {
+    const raw = settings.value.contact?.email?.trim();
+    if (!raw || raw.includes("pcg") || raw.includes("example.com")) {
       return "contact@apconsulting.id";
     }
     return raw;
   });
 
   const phone = computed(() => {
-    const raw = settings.value.contact?.phone || settings.value.contact?.whatsapp;
-    if (!raw || raw.includes("89673803596")) {
+    const raw = (settings.value.contact?.phone || settings.value.contact?.whatsapp)?.trim();
+    if (!raw || raw.includes("pcg") || raw === "+62 21 1234 5678") {
       return "+62 857 5417 2217";
     }
     return raw;
   });
 
   const headOfficeAddress = computed(() => {
-    const raw = settings.value.contact?.address;
-    if (!raw || raw.includes("Green Lake City") || raw.includes("Cordoba")) {
+    const raw = settings.value.contact?.address?.trim();
+    if (!raw || raw.includes("Sudirman No. 123")) {
       return "SUN Plaza, Jl. Meruya Ilir Raya No. 20, Jakarta Barat";
     }
     return raw;
   });
 
-  const branchOfficeAddress = computed(
-    () =>
-      settings.value.contact?.branch_address ||
-      "Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong, Tangerang"
-  );
+  const branchOfficeAddress = computed(() => {
+    const raw = settings.value.contact?.branch_address?.trim();
+    return raw || "Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong, Tangerang";
+  });
 
   const address = computed(() => headOfficeAddress.value);
 
-  const mapsEmbedUrl = computed(
-    () =>
-      settings.value.contact?.maps_embed_url ||
-      "https://www.google.com/maps?q=Jl.+Meruya+Ilir+Raya+No.+20,+Jakarta+Barat&output=embed"
-  );
+  const mapsEmbedUrl = computed(() => {
+    const raw = settings.value.contact?.maps_embed_url?.trim();
+    if (!raw || raw.includes("123456789") || raw.includes("Sudirman")) {
+      return "https://maps.google.com/maps?q=SUN+Plaza+Jl+Meruya+Ilir+Raya+No+20+Jakarta+Barat&output=embed";
+    }
+    return raw;
+  });
+
+  const branchMapsEmbedUrl = computed(() => {
+    const raw = settings.value.contact?.branch_maps_embed_url?.trim();
+    return raw || "https://maps.google.com/maps?q=Ruko+Alexandrite+3+No+23+Jl+Boulevard+Gading+Serpong+Tangerang&output=embed";
+  });
 
   const socials = computed(() => {
     const list = [
@@ -103,8 +110,8 @@ export function useCompanySettings() {
   });
 
   const whatsappNumber = computed(() => {
-    const raw = settings.value.contact?.whatsapp || settings.value.contact?.phone;
-    if (!raw || raw.includes("89673803596")) {
+    const raw = (settings.value.contact?.whatsapp || settings.value.contact?.phone)?.trim();
+    if (!raw || raw === "6281234567890" || raw.includes("89673803596")) {
       return "6285754172217";
     }
     return raw;
@@ -141,6 +148,7 @@ export function useCompanySettings() {
     headOfficeAddress,
     branchOfficeAddress,
     mapsEmbedUrl,
+    branchMapsEmbedUrl,
     socials,
     pending,
     error,

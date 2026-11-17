@@ -2,7 +2,7 @@
   <section class="relative overflow-hidden bg-[#072B4A] text-white py-12 sm:py-14 lg:py-16">
     <!-- Background Image & Rich Blue Gradient Overlay -->
     <img
-      src="/images/redesign/values-bg.png"
+      src="/images/redesign/values-bg.webp"
       alt=""
       aria-hidden="true"
       class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"

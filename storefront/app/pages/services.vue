@@ -32,12 +32,12 @@ useSeoMeta({
   ogTitle: title,
   description,
   ogDescription: description,
-  ogImage: `${config.public.siteUrl}/images/redesign/logo.png`,
+  ogImage: `${config.public.siteUrl}/images/redesign/logo.webp`,
   ogUrl: canonicalUrl,
   twitterCard: "summary_large_image",
   twitterTitle: title,
   twitterDescription: description,
-  twitterImage: `${config.public.siteUrl}/images/redesign/logo.png`,
+  twitterImage: `${config.public.siteUrl}/images/redesign/logo.webp`,
 });
 
 useHead({

@@ -24,12 +24,12 @@ useSeoMeta({
   ogTitle: title,
   description,
   ogDescription: description,
-  ogImage: `${config.public.siteUrl}/images/redesign/logo.png`,
+  ogImage: `${config.public.siteUrl}/images/redesign/logo.webp`,
   ogUrl: canonicalUrl,
   twitterCard: "summary_large_image",
   twitterTitle: title,
   twitterDescription: description,
-  twitterImage: `${config.public.siteUrl}/images/redesign/logo.png`,
+  twitterImage: `${config.public.siteUrl}/images/redesign/logo.webp`,
 });
 
 useHead({
@@ -71,8 +71,8 @@ useHead({
               "@type": "AccountingService",
               name: "AP Consulting",
               url: config.public.siteUrl,
-              logo: `${config.public.siteUrl}/images/redesign/logo.png`,
-              image: `${config.public.siteUrl}/images/redesign/office.png`,
+              logo: `${config.public.siteUrl}/images/redesign/logo.webp`,
+              image: `${config.public.siteUrl}/images/redesign/office.webp`,
               description,
               telephone: "+6285754172217",
               email: "contact@apconsulting.id",

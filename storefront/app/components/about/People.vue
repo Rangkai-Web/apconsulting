@@ -145,13 +145,13 @@ const displayedPeople = computed(() => {
 });
 
 function resolvePersonPhoto(photo?: string, name?: string): string {
-  if (name && name.toLowerCase().includes("andry")) {
-    return "https://www.apconsulting.id/images/team/andry.jpeg";
-  }
-  if (photo && (photo.startsWith("http://") || photo.startsWith("https://") || photo.startsWith("/images/redesign/"))) {
+  if (photo && (photo.startsWith("http://") || photo.startsWith("https://") || photo.startsWith("/images/"))) {
     return photo;
   }
-  return resolveImageUrl(photo, "https://www.apconsulting.id/images/team/andry.jpeg");
+  if (photo) {
+    return resolveImageUrl(photo, "https://www.apconsulting.id/images/team/andry.jpeg");
+  }
+  return "https://www.apconsulting.id/images/team/andry.jpeg";
 }
 
 const containerClasses = computed(() => {
@@ -178,9 +178,9 @@ function formatExternalUrl(url?: string): string {
 }
 
 function getSocials(person: TeamMember) {
-  const linkedinUrl = person.name?.toLowerCase().includes("andry")
+  const linkedinUrl = person.linkedin_url || (person.name?.toLowerCase().includes("andry")
     ? "https://www.linkedin.com/in/andry-phangkawira/"
-    : person.linkedin_url;
+    : undefined);
 
   const list = [
     {

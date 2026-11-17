@@ -101,8 +101,11 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
+import { useLanguage } from "~/composables/useLanguage";
+import { useCompanySettings } from "~/composables/useCompanySettings";
 
 const { t } = useLanguage();
+const { headOfficeAddress, branchOfficeAddress, mapsEmbedUrl, branchMapsEmbedUrl } = useCompanySettings();
 
 interface OfficeItem {
   id: "head" | "branch";
@@ -113,34 +116,29 @@ interface OfficeItem {
   externalUrl: string;
 }
 
-const headOffice: OfficeItem = {
-  id: "head",
-  labelKey: "footer.headOffice",
-  city: "Jakarta Barat",
-  address: "SUN Plaza, Jl. Meruya Ilir Raya No. 20, Jakarta Barat",
-  embedUrl:
-    "https://maps.google.com/maps?q=SUN+Plaza+Jl+Meruya+Ilir+Raya+No+20+Jakarta+Barat&output=embed",
-  externalUrl:
-    "https://maps.google.com/?q=SUN+Plaza+Jl+Meruya+Ilir+Raya+No+20+Jakarta+Barat",
-};
-
-const branchOffice: OfficeItem = {
-  id: "branch",
-  labelKey: "footer.branchOffice",
-  city: "Gading Serpong, Tangerang",
-  address: "Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong, Tangerang",
-  embedUrl:
-    "https://maps.google.com/maps?q=Ruko+Alexandrite+3+No+23+Jl+Boulevard+Gading+Serpong+Tangerang&output=embed",
-  externalUrl:
-    "https://maps.google.com/?q=Ruko+Alexandrite+3+No+23+Jl+Boulevard+Gading+Serpong+Tangerang",
-};
-
-const offices: OfficeItem[] = [headOffice, branchOffice];
+const offices = computed<OfficeItem[]>(() => [
+  {
+    id: "head",
+    labelKey: "footer.headOffice",
+    city: "Jakarta Barat",
+    address: headOfficeAddress.value,
+    embedUrl: mapsEmbedUrl.value,
+    externalUrl: `https://maps.google.com/?q=${encodeURIComponent(headOfficeAddress.value)}`,
+  },
+  {
+    id: "branch",
+    labelKey: "footer.branchOffice",
+    city: "Gading Serpong, Tangerang",
+    address: branchOfficeAddress.value,
+    embedUrl: branchMapsEmbedUrl.value,
+    externalUrl: `https://maps.google.com/?q=${encodeURIComponent(branchOfficeAddress.value)}`,
+  },
+]);
 
 const activeOffice = ref<"head" | "branch">("head");
 
 const currentOffice = computed<OfficeItem>(() =>
-  activeOffice.value === "branch" ? branchOffice : headOffice
+  offices.value.find((o) => o.id === activeOffice.value) ?? offices.value[0]!
 );
 
 const mapContainer = ref<HTMLElement | null>(null);

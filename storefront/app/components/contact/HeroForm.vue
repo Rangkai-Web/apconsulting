@@ -38,7 +38,7 @@
             <!-- Clean Office Photo Header -->
             <div class="relative h-44 w-full overflow-hidden border-b border-white/10 sm:h-48">
               <img
-                src="/images/redesign/office.png"
+                src="/images/redesign/office.webp"
                 alt="AP Consulting Office"
                 class="h-full w-full object-cover"
                 loading="eager"
@@ -341,6 +341,14 @@
               >
                 {{ t("contact.form.successMsg") }}
               </div>
+
+              <!-- Error Message -->
+              <div
+                v-if="submitError"
+                class="rounded-[2px] border border-red-200 bg-red-50 px-4 py-3.5 text-[13px] font-medium text-red-700"
+              >
+                {{ submitError }}
+              </div>
             </form>
           </div>
         </div>
@@ -350,10 +358,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import { useServiceCategories } from "~/composables/useServiceCategories";
 
-const { t } = useLanguage();
+const route = useRoute();
+const { t, currentLocale } = useLanguage();
 const { formattedCategories } = useServiceCategories();
 const { email, phone, getWhatsappUrl } = useCompanySettings();
 
@@ -369,6 +379,18 @@ const form = reactive({
   message: "",
 });
 
+onMounted(() => {
+  const queryService = typeof route.query.service === "string" ? route.query.service.toLowerCase().trim() : "";
+  if (queryService) {
+    const matched = formattedCategories.value.find((c) =>
+      c.value.toLowerCase().includes(queryService) || c.label.toLowerCase().includes(queryService)
+    );
+    if (matched) {
+      form.service = matched.value;
+    }
+  }
+});
+
 const errors = reactive({
   fullName: "",
   email: "",
@@ -377,6 +399,7 @@ const errors = reactive({
 
 const loading = ref(false);
 const submitted = ref(false);
+const submitError = ref("");
 
 const validateField = (field: "fullName" | "email" | "message") => {
   if (field === "fullName") {
@@ -416,6 +439,7 @@ const handleSubmit = async () => {
   if (!validateAll()) return;
 
   loading.value = true;
+  submitError.value = "";
 
   try {
     const res: any = await $fetch(`${config.public.apiBase}/contact`, {
@@ -442,8 +466,12 @@ const handleSubmit = async () => {
     if (res && res.whatsapp_url) {
       window.open(res.whatsapp_url, "_blank");
     }
-  } catch (err) {
-    // Form error handled gracefully
+  } catch (err: any) {
+    submitError.value =
+      err?.data?.message ||
+      (currentLocale.value === "en"
+        ? "Failed to send message. Please try again or reach us directly via WhatsApp."
+        : "Gagal mengirim pesan. Silakan coba lagi atau hubungi kami langsung via WhatsApp.");
   } finally {
     loading.value = false;
   }

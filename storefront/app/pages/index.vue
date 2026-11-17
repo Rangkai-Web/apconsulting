@@ -29,12 +29,12 @@ useSeoMeta({
   ogTitle: title,
   description,
   ogDescription: description,
-  ogImage: `${config.public.siteUrl}/images/redesign/logo.png`,
+  ogImage: `${config.public.siteUrl}/images/redesign/logo.webp`,
   ogUrl: canonicalUrl,
   twitterCard: "summary_large_image",
   twitterTitle: title,
   twitterDescription: description,
-  twitterImage: `${config.public.siteUrl}/images/redesign/logo.png`,
+  twitterImage: `${config.public.siteUrl}/images/redesign/logo.webp`,
 });
 
 useHead({
@@ -60,8 +60,8 @@ useHead({
               "Konsultan Pajak Andry Phangkawira",
             ],
             url: config.public.siteUrl,
-            logo: `${config.public.siteUrl}/images/redesign/logo.png`,
-            image: `${config.public.siteUrl}/images/redesign/office.png`,
+            logo: `${config.public.siteUrl}/images/redesign/logo.webp`,
+            image: `${config.public.siteUrl}/images/redesign/office.webp`,
             description,
             email: "contact@apconsulting.id",
             telephone: "+6285754172217",

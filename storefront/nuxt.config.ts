@@ -55,14 +55,14 @@ export default defineNuxtConfig({
         {
           rel: "preload",
           as: "image",
-          href: "/images/redesign/hero-bg.png",
-          type: "image/png",
+          href: "/images/redesign/hero-bg.webp",
+          type: "image/webp",
         },
         {
           rel: "preload",
           as: "image",
-          href: "/images/redesign/logo.png",
-          type: "image/png",
+          href: "/images/redesign/logo.webp",
+          type: "image/webp",
         },
       ],
       script: [

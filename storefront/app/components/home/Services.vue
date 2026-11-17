@@ -69,30 +69,26 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useLanguage } from "~/composables/useLanguage";
+import { useServiceCategories } from "~/composables/useServiceCategories";
 
-const { t } = useLanguage();
+const { t, currentLocale } = useLanguage();
+const { categories } = useServiceCategories();
 
-const services = computed(() => [
-  {
-    index: "01",
-    title: t("home.v3.services.s1Title"),
-    description: t("home.v3.services.s1Desc"),
-    icon: "/images/redesign/tax-service-icon.png",
-    href: "/services#tax",
-  },
-  {
-    index: "02",
-    title: t("home.v3.services.s2Title"),
-    description: t("home.v3.services.s2Desc"),
-    icon: "/images/redesign/payroll-icon.png",
-    href: "/services#payroll",
-  },
-  {
-    index: "03",
-    title: t("home.v3.services.s3Title"),
-    description: t("home.v3.services.s3Desc"),
-    icon: "/images/redesign/accounting-icon.png",
-    href: "/services#accounting",
-  },
-]);
+const defaultIcons = [
+  "/images/redesign/tax-service-icon.png",
+  "/images/redesign/payroll-icon.png",
+  "/images/redesign/accounting-icon.png",
+];
+const defaultAnchors = ["tax", "payroll", "accounting"];
+
+const services = computed(() => {
+  const isEn = currentLocale.value === "en";
+  return categories.value.map((cat, idx) => ({
+    index: String(idx + 1).padStart(2, "0"),
+    title: isEn ? (cat.name_en || cat.name_id) : (cat.name_id || cat.name_en),
+    description: isEn ? (cat.description_en || cat.description_id || "") : (cat.description_id || cat.description_en || ""),
+    icon: defaultIcons[idx % defaultIcons.length],
+    href: `/services#${defaultAnchors[idx] || "service-" + cat.id}`,
+  }));
+});
 </script>

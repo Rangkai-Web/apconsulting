@@ -3,7 +3,7 @@
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <div class="relative rounded-[2px] overflow-hidden bg-[#092F50] border border-[#144673]" data-reveal="up">
         <img
-          src="/images/redesign/footer-bg.png"
+          src="/images/redesign/footer-bg.webp"
           alt=""
           aria-hidden="true"
           class="absolute inset-0 w-full h-full object-cover object-center opacity-20 mix-blend-luminosity pointer-events-none"

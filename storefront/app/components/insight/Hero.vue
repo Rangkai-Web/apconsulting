@@ -98,7 +98,7 @@
               :src="
                 resolveImageUrl(
                   featuredArticle?.cover_image,
-                  '/images/redesign/article-featured.png'
+                  '/images/redesign/article-featured.webp'
                 )
               "
               :alt="featuredArticle?.title || t('insight.hero.title')"

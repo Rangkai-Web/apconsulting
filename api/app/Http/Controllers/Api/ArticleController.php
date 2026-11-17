@@ -33,6 +33,7 @@ class ArticleController extends Controller
         }
 
         $articles = $query->orderBy('published_at', 'desc')
+            ->orderBy('id', 'desc')
             ->paginate($request->get('per_page', 10));
 
         $items = collect($articles->items())

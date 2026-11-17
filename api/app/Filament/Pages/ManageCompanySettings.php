@@ -39,11 +39,13 @@ class ManageCompanySettings extends Page implements HasForms
 
         $this->form->fill([
             'company_logo' => $settings['company_logo'] ?? null,
-            'contact_email' => $settings['contact_email'] ?? 'info@apconsulting.id',
-            'contact_phone' => $settings['contact_phone'] ?? '+62 21 1234 5678',
-            'whatsapp_number' => $settings['whatsapp_number'] ?? '6281234567890',
+            'contact_email' => $settings['contact_email'] ?? 'contact@apconsulting.id',
+            'contact_phone' => $settings['contact_phone'] ?? '+62 857 5417 2217',
+            'whatsapp_number' => $settings['whatsapp_number'] ?? '6285754172217',
             'office_address' => $settings['office_address'] ?? '',
             'google_maps_embed_url' => $settings['google_maps_embed_url'] ?? '',
+            'branch_office_address' => $settings['branch_office_address'] ?? '',
+            'branch_google_maps_embed_url' => $settings['branch_google_maps_embed_url'] ?? '',
             'social_linkedin' => $settings['social_linkedin'] ?? '',
             'social_instagram' => $settings['social_instagram'] ?? '',
             'social_tiktok' => $settings['social_tiktok'] ?? '',
@@ -99,16 +101,28 @@ class ManageCompanySettings extends Page implements HasForms
                             ->icon('heroicon-o-map-pin')
                             ->schema([
                                 Textarea::make('office_address')
-                                    ->label('Alamat Fisik Kantor')
-                                    ->placeholder('Contoh: Lt 3 Sayur Sentul, Blk. D, Rukan Cordoba, Jl. Green Lake City Boulevard No.23, Kota Tangerang, Banten 15146')
+                                    ->label('Alamat Kantor Pusat')
+                                    ->placeholder('Contoh: SUN Plaza, Jl. Meruya Ilir Raya No. 20, Jakarta Barat')
                                     ->rows(3)
                                     ->maxLength(500),
 
                                 Textarea::make('google_maps_embed_url')
-                                    ->label('Google Maps Embed URL / iFrame src')
+                                    ->label('Google Maps Embed URL — Kantor Pusat')
                                     ->rows(3)
                                     ->placeholder('https://www.google.com/maps/embed?pb=...')
-                                    ->helperText('Tempelkan URL embed dari Google Maps (https://www.google.com/maps/embed?...) untuk peta interaktif di halaman Kontak.'),
+                                    ->helperText('Tempelkan URL embed dari Google Maps (https://www.google.com/maps/embed?...) untuk peta interaktif kantor pusat.'),
+
+                                Textarea::make('branch_office_address')
+                                    ->label('Alamat Kantor Cabang (Opsional)')
+                                    ->placeholder('Contoh: Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong, Tangerang')
+                                    ->rows(3)
+                                    ->maxLength(500),
+
+                                Textarea::make('branch_google_maps_embed_url')
+                                    ->label('Google Maps Embed URL — Kantor Cabang (Opsional)')
+                                    ->rows(3)
+                                    ->placeholder('https://www.google.com/maps/embed?pb=...')
+                                    ->helperText('Tempelkan URL embed dari Google Maps untuk peta interaktif kantor cabang.'),
                             ]),
 
                         Section::make('Media Sosial Perusahaan')

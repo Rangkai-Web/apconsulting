@@ -1,23 +1,29 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { useLanguage } from "~/composables/useLanguage"
+import { getApiBaseUrl, resolveImageUrl, safeUseFetch } from "~/utils/api"
+
+interface ArticleItem {
+  id: string | number
+  title: string
+  slug: string
+  category?: string
+  published_at?: string
+  cover_image?: string
+  thumbnail?: string
+  excerpt?: string
+}
 
 const { t, currentLocale } = useLanguage()
+const apiBase = getApiBaseUrl()
 
-const { data: insightsData } = await useFetch<{
-  data?: Array<{
-    id: string | number
-    title: string
-    slug: string
-    category?: { name: string }
-    published_at?: string
-    thumbnail?: string
-    excerpt?: string
-  }>
-}>("/api/insights", {
-  query: { limit: 3 },
-  default: () => ({ data: [] }),
-})
+const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleItem[] }>(
+  () => `${apiBase}/articles?lang=${currentLocale.value}&per_page=3`,
+  {
+    key: "home-insights-articles",
+    watch: [currentLocale],
+  }
+)
 
 const fallbackInsights = computed(() => [
   {
@@ -27,7 +33,7 @@ const fallbackInsights = computed(() => [
     title: t("home.v3.insights.f1Title"),
     excerpt: t("home.v3.insights.f1Excerpt"),
     slug: "new-business-do-you-need-to-pay-tax-right-away",
-    image: "/images/redesign/article-featured.png",
+    image: "/images/redesign/article-featured.webp",
   },
   {
     id: "fallback-2",
@@ -36,7 +42,7 @@ const fallbackInsights = computed(() => [
     title: t("home.v3.insights.f2Title"),
     excerpt: t("home.v3.insights.f2Excerpt"),
     slug: "padankan-nik-npwp",
-    image: "/images/redesign/article-thumb-1.png",
+    image: "/images/redesign/article-thumb-1.webp",
   },
   {
     id: "fallback-3",
@@ -45,17 +51,17 @@ const fallbackInsights = computed(() => [
     title: t("home.v3.insights.f3Title"),
     excerpt: t("home.v3.insights.f3Excerpt"),
     slug: "konsultan-pajak-spt-tahunan",
-    image: "/images/redesign/article-thumb-2.png",
+    image: "/images/redesign/article-thumb-2.webp",
   },
 ])
 
 const insightsList = computed(() => {
-  const items = insightsData.value?.data
-  if (items && items.length >= 3) {
+  const items = apiResponse.value?.data
+  if (items && items.length > 0) {
     const localeStr = currentLocale.value === "id" ? "id-ID" : "en-GB"
     return items.slice(0, 3).map((item, idx) => ({
       id: item.id,
-      category: (item.category?.name || t("home.v3.insights.defaultCat")).toUpperCase(),
+      category: (item.category || t("home.v3.insights.defaultCat")).toUpperCase(),
       date: item.published_at
         ? new Date(item.published_at)
             .toLocaleDateString(localeStr, {
@@ -70,7 +76,9 @@ const insightsList = computed(() => {
         item.excerpt ||
         t("home.v3.insights.f1Excerpt"),
       slug: item.slug,
-      image: item.thumbnail || fallbackInsights.value[idx]?.image || "/images/redesign/article-featured.png",
+      image: item.cover_image
+        ? resolveImageUrl(item.cover_image, fallbackInsights.value[idx]?.image || "/images/redesign/article-featured.webp")
+        : (fallbackInsights.value[idx]?.image || "/images/redesign/article-featured.webp"),
     }))
   }
   return fallbackInsights.value
@@ -100,8 +108,25 @@ const insightsList = computed(() => {
         </NuxtLink>
       </div>
 
+      <!-- Skeleton Loading State -->
+      <div v-if="pending" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div
+          v-for="n in 3"
+          :key="n"
+          class="bg-white rounded-[2px] border border-[#DCE8F5] overflow-hidden flex flex-col justify-between animate-pulse"
+        >
+          <div class="w-full h-[200px] bg-[#EBF3FA]" />
+          <div class="p-6 space-y-3">
+            <div class="h-3.5 w-24 bg-[#EBF3FA]" />
+            <div class="h-5 w-4/5 bg-[#EBF3FA]" />
+            <div class="h-3.5 w-full bg-[#EBF3FA]" />
+            <div class="h-3.5 w-2/3 bg-[#EBF3FA]" />
+          </div>
+        </div>
+      </div>
+
       <!-- 3-Column Editorial Article Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <NuxtLink
           v-for="article in insightsList"
           :key="article.id"

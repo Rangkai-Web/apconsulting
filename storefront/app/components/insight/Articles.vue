@@ -356,7 +356,7 @@ const fallbackRawArticles = computed<ArticleItem[]>(() => {
       excerpt: isEn
         ? "Taxation is an essential part of national economic sustainability. Understanding tax obligations from day one helps newly established businesses stay compliant."
         : "Pajak merupakan bagian penting dari keberlanjutan ekonomi negara, dan pemahaman mengenai kewajiban pajak membantu bisnis baru tetap patuh aturan.",
-      cover_image: "/images/redesign/article-featured.png",
+      cover_image: "/images/redesign/article-featured.webp",
       read_time: 5,
       published_at: "2023-12-18",
     },
@@ -370,7 +370,7 @@ const fallbackRawArticles = computed<ArticleItem[]>(() => {
       excerpt: isEn
         ? "Since July 14, 2022, Indonesia's taxation system has undergone significant digital integration through NIK-NPWP validation."
         : "Mulai tanggal 14 Juli 2022, sistem perpajakan di Indonesia telah mengalami perubahan signifikan melalui implementasi pemadanan NIK dan NPWP.",
-      cover_image: "/images/redesign/article-thumb-1.png",
+      cover_image: "/images/redesign/article-thumb-1.webp",
       read_time: 4,
       published_at: "2023-12-15",
     },
@@ -384,7 +384,7 @@ const fallbackRawArticles = computed<ArticleItem[]>(() => {
       excerpt: isEn
         ? "Practical guidance for individuals and corporate taxpayers in Tangerang on preparing accurate annual SPT filings with licensed consultants."
         : "Konsultan Pajak SPT Tahunan Tangerang — Masyarakat ataupun Perusahaan harus memiliki kesadaran wajib pajak untuk pelaporan tahunan tepat waktu.",
-      cover_image: "/images/redesign/article-thumb-2.png",
+      cover_image: "/images/redesign/article-thumb-2.webp",
       read_time: 5,
       published_at: "2023-10-18",
     },
@@ -419,9 +419,9 @@ const displayedArticles = computed(() =>
   rawArticles.value.map((article, idx) => {
     const badge = formatBadgeDate(article.published_at);
     const fallbackImages = [
-      "/images/redesign/article-featured.png",
-      "/images/redesign/article-thumb-1.png",
-      "/images/redesign/article-thumb-2.png",
+      "/images/redesign/article-featured.webp",
+      "/images/redesign/article-thumb-1.webp",
+      "/images/redesign/article-thumb-2.webp",
     ];
     return {
       ...article,

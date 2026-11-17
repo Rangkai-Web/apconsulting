@@ -9,7 +9,7 @@
         aria-label="AP Consulting Homepage"
       >
         <img
-          src="/images/redesign/logo.png"
+          :src="logoUrl"
           alt="AP Consulting Logo"
           decoding="async"
           fetchpriority="high"
@@ -101,8 +101,10 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { useLanguage } from "~/composables/useLanguage";
+import { useCompanySettings } from "~/composables/useCompanySettings";
 
 const { t } = useLanguage();
+const { logoUrl } = useCompanySettings();
 const route = useRoute();
 const mobileOpen = ref(false);
 

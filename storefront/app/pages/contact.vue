@@ -19,11 +19,11 @@ useSeoMeta({
   description: computed(() => t("seo.contact.description")),
   ogDescription: computed(() => t("seo.contact.description")),
   ogUrl: currentUrl,
-  ogImage: `${siteUrl}/images/redesign/logo.png`,
+  ogImage: `${siteUrl}/images/redesign/logo.webp`,
   twitterCard: "summary_large_image",
   twitterTitle: computed(() => t("seo.contact.title")),
   twitterDescription: computed(() => t("seo.contact.description")),
-  twitterImage: `${siteUrl}/images/redesign/logo.png`,
+  twitterImage: `${siteUrl}/images/redesign/logo.webp`,
 });
 
 useHead({
@@ -52,7 +52,7 @@ useHead({
                 "@type": "ListItem",
                 position: 2,
                 name: "Contact",
-                item: currentUrl.value,
+                item: currentUrl,
               },
             ],
           },
@@ -60,7 +60,7 @@ useHead({
             "@type": "ContactPage",
             name: "Contact AP Consulting — Tax & Consulting Services",
             description: "Hubungi kantor konsultan pajak AP Consulting di Jakarta Barat atau Gading Serpong Tangerang untuk konsultasi pajak, akuntansi, dan payroll.",
-            url: currentUrl.value,
+            url: currentUrl,
             mainEntity: {
               "@type": "AccountingService",
               name: "AP Consulting",
