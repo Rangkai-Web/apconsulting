@@ -32,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('AP Consulting Admin Panel')
             ->brandLogo(fn () => view('filament.components.brand-logo'))
             ->brandLogoHeight('2.6rem')
-            ->favicon(asset('favicon.ico'))
+            ->favicon(asset('images/redesign/logo.png'))
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
                 fn () => view('filament.custom-theme')
