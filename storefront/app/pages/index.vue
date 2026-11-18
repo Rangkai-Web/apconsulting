@@ -73,22 +73,20 @@ useHead(() => ({
             address: [
               {
                 "@type": "PostalAddress",
-                name: "Head Office Jakarta",
+                name: "Head Office",
                 streetAddress: headOfficeAddress.value || "SUN Plaza, Jl. Meruya Ilir Raya No. 20",
-                addressLocality: "Jakarta Barat",
-                addressRegion: "DKI Jakarta",
-                postalCode: "11620",
                 addressCountry: "ID",
               },
-              {
-                "@type": "PostalAddress",
-                name: "Branch Office Tangerang",
-                streetAddress: branchOfficeAddress.value || "Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong",
-                addressLocality: "Tangerang",
-                addressRegion: "Banten",
-                postalCode: "15810",
-                addressCountry: "ID",
-              },
+              ...(branchOfficeAddress.value
+                ? [
+                    {
+                      "@type": "PostalAddress",
+                      name: "Branch Office",
+                      streetAddress: branchOfficeAddress.value,
+                      addressCountry: "ID",
+                    },
+                  ]
+                : []),
             ],
             founder: {
               "@type": "Person",

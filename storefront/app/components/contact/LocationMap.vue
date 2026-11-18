@@ -12,7 +12,7 @@
           >
             <span class="font-bold">{{ t("contact.location.titleNormal") }}</span>
             {{ " " }}
-            <span class="font-bold italic text-[#0869B2]">{{ t("contact.location.titleItalic") }}</span>
+            <span class="font-bold italic text-[#0869B2]">{{ locationTitleHighlighted }}</span>
           </h2>
         </div>
 
@@ -30,23 +30,31 @@
       </div>
 
       <!-- Office Selector Cards -->
-      <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2" data-reveal="up" data-reveal-delay="100">
+      <div
+        :class="[
+          'mb-6 grid gap-4',
+          offices.length > 1 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1',
+        ]"
+        data-reveal="up"
+        data-reveal-delay="100"
+      >
         <button
           v-for="office in offices"
           :key="office.id"
           type="button"
           :class="[
-            'group hover-lift flex items-start gap-3.5 rounded-[2px] border p-5 text-left transition-colors',
-            activeOffice === office.id
+            'group flex items-start gap-3.5 rounded-[2px] border p-5 text-left transition-colors',
+            offices.length > 1 ? 'hover-lift cursor-pointer' : 'cursor-default',
+            activeOffice === office.id || offices.length === 1
               ? 'border-[#0869B2] bg-white'
               : 'border-[#DCE8F5] bg-white/75 hover:border-[#9EC5E8] hover:bg-white',
           ]"
-          @click="activeOffice = office.id"
+          @click="offices.length > 1 ? (activeOffice = office.id) : undefined"
         >
           <div
             :class="[
               'mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-[2px] transition-colors',
-              activeOffice === office.id
+              activeOffice === office.id || offices.length === 1
                 ? 'bg-[#0869B2] text-white'
                 : 'bg-[#E9F3FC] text-[#0869B2]',
             ]"
@@ -104,7 +112,7 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useLanguage } from "~/composables/useLanguage";
 import { useCompanySettings } from "~/composables/useCompanySettings";
 
-const { t } = useLanguage();
+const { t, currentLocale } = useLanguage();
 const { headOfficeAddress, branchOfficeAddress, mapsEmbedUrl, branchMapsEmbedUrl } = useCompanySettings();
 
 interface OfficeItem {
@@ -116,24 +124,59 @@ interface OfficeItem {
   externalUrl: string;
 }
 
-const offices = computed<OfficeItem[]>(() => [
-  {
-    id: "head",
-    labelKey: "footer.headOffice",
-    city: "Jakarta Barat",
-    address: headOfficeAddress.value,
-    embedUrl: mapsEmbedUrl.value,
-    externalUrl: `https://maps.google.com/?q=${encodeURIComponent(headOfficeAddress.value)}`,
-  },
-  {
-    id: "branch",
-    labelKey: "footer.branchOffice",
-    city: "Gading Serpong, Tangerang",
-    address: branchOfficeAddress.value,
-    embedUrl: branchMapsEmbedUrl.value,
-    externalUrl: `https://maps.google.com/?q=${encodeURIComponent(branchOfficeAddress.value)}`,
-  },
-]);
+function parseOfficeCity(address?: string, fallback = "Jakarta"): string {
+  if (!address || !address.trim()) return fallback;
+  const parts = address.split(",").map((p) => p.trim()).filter(Boolean);
+  if (parts.length === 1) return parts[0]!;
+
+  const suffixes = ["dki jakarta", "banten", "jawa barat", "jawa timur", "indonesia", "dki"];
+  let candidate = parts[parts.length - 1]!;
+
+  if (suffixes.includes(candidate.toLowerCase()) && parts.length >= 2) {
+    candidate = parts[parts.length - 2]!;
+  }
+
+  const prev = parts.length >= 3 ? parts[parts.length - 2] : null;
+  if (prev && /gading serpong|serpong|bsd|senayan|mega kuningan|scbd|meruya/i.test(prev)) {
+    return `${prev}, ${candidate}`;
+  }
+
+  return candidate || fallback;
+}
+
+const offices = computed<OfficeItem[]>(() => {
+  const list: OfficeItem[] = [
+    {
+      id: "head",
+      labelKey: "footer.headOffice",
+      city: parseOfficeCity(headOfficeAddress.value, "Jakarta Barat"),
+      address: headOfficeAddress.value,
+      embedUrl: mapsEmbedUrl.value,
+      externalUrl: `https://maps.google.com/?q=${encodeURIComponent(headOfficeAddress.value)}`,
+    },
+  ];
+
+  if (branchOfficeAddress.value && branchOfficeAddress.value.trim() !== "") {
+    list.push({
+      id: "branch",
+      labelKey: "footer.branchOffice",
+      city: parseOfficeCity(branchOfficeAddress.value, "Gading Serpong, Tangerang"),
+      address: branchOfficeAddress.value,
+      embedUrl: branchMapsEmbedUrl.value,
+      externalUrl: `https://maps.google.com/?q=${encodeURIComponent(branchOfficeAddress.value)}`,
+    });
+  }
+
+  return list;
+});
+
+const locationTitleHighlighted = computed(() => {
+  if (offices.value.length > 1) {
+    return t("contact.location.titleItalic");
+  }
+  const city = offices.value[0]?.city || "Jakarta";
+  return currentLocale.value === "en" ? `${city} office.` : `kantor ${city} kami.`;
+});
 
 const activeOffice = ref<"head" | "branch">("head");
 

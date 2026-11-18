@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-white pt-10 pb-14 sm:pt-14 sm:pb-20 border-b border-[#DCE8F5]">
+  <section id="consultation-form" class="bg-white pt-10 pb-14 sm:pt-14 sm:pb-20 border-b border-[#DCE8F5]">
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <!-- Page Header -->
       <div class="mb-10 border-b border-[#DCE8F5] pb-8 sm:mb-12 sm:pb-10">
@@ -141,7 +141,7 @@
                     {{ headOfficeAddress }}
                   </p>
                 </div>
-                <div>
+                <div v-if="branchOfficeAddress">
                   <div class="text-[11px] font-bold uppercase tracking-[0.12em] text-[#93C5FD]">
                     {{ t("footer.branchOffice") }}
                   </div>

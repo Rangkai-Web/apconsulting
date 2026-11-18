@@ -136,8 +136,11 @@
           </div>
         </div>
 
-        <!-- Branch Office -->
-        <div class="mt-3.5 flex gap-2.5 text-sm text-[#B8CFE4] font-normal">
+        <!-- Branch Office (Optional) -->
+        <div
+          v-if="branchOfficeAddress"
+          class="mt-3.5 flex gap-2.5 text-sm text-[#B8CFE4] font-normal"
+        >
           <UIcon
             name="i-heroicons-building-office-2"
             class="mt-0.5 size-5 shrink-0 text-[#66B8FF]"
@@ -266,8 +269,10 @@
 import { ref, computed } from "vue";
 import { useLanguage } from "~/composables/useLanguage";
 import { useCompanySettings } from "~/composables/useCompanySettings";
+import { useServiceCategories } from "~/composables/useServiceCategories";
 
 const { t, currentLocale } = useLanguage();
+const { categories } = useServiceCategories();
 const {
   logoUrl,
   email,
@@ -291,6 +296,16 @@ function copyConsultantName() {
 
 const footerServices = computed(() => {
   const isEn = currentLocale.value === "en";
+  if (categories.value && categories.value.length > 0) {
+    const defaultAnchors = ["tax", "payroll", "accounting"];
+    return categories.value
+      .filter((cat) => (cat.name_en || "").toLowerCase() !== "general inquiry")
+      .map((cat, idx) => ({
+        id: `service-${cat.id}`,
+        label: isEn ? (cat.name_en || cat.name_id) : (cat.name_id || cat.name_en),
+        href: `/services#${defaultAnchors[idx] || "service-" + cat.id}`,
+      }));
+  }
   return [
     {
       id: "tax-services",

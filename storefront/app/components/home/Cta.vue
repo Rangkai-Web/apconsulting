@@ -33,8 +33,9 @@
           <!-- Action Buttons & Direct Contact -->
           <div class="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center gap-4 shrink-0">
             <NuxtLink
-              to="/contact"
-              class="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-[2px] bg-white hover:bg-[#F4F9FE] text-[#092F50] text-[14px] font-bold transition-colors shadow-sm"
+              to="/contact#consultation-form"
+              class="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-[2px] bg-white hover:bg-[#F4F9FE] text-[#092F50] text-[14px] font-bold transition-colors shadow-sm cursor-pointer"
+              @click="handleConsultationClick"
             >
               <span>{{ t("home.v3.cta.primaryBtn") }}</span>
               <span class="text-base leading-none text-[#0869B2]">→</span>
@@ -56,9 +57,29 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from "vue-router";
 import { useLanguage } from "~/composables/useLanguage";
 import { useCompanySettings } from "~/composables/useCompanySettings";
 
+const route = useRoute();
 const { t } = useLanguage();
 const { whatsappLink } = useCompanySettings();
+
+const handleConsultationClick = (e: MouseEvent) => {
+  if (route.path === "/contact") {
+    e.preventDefault();
+    const target =
+      document.getElementById("consultation-form") ||
+      document.getElementById("fullName");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      const input = document.getElementById("fullName");
+      if (input) {
+        setTimeout(() => input.focus(), 500);
+      }
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+};
 </script>

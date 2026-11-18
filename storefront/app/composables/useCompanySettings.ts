@@ -41,47 +41,47 @@ export function useCompanySettings() {
 
   // Return real settings with sensible AP Consulting defaults
   const email = computed(() => {
-    const raw = settings.value.contact?.email?.trim();
-    if (!raw || raw.includes("pcg") || raw.includes("example.com")) {
-      return "contact@apconsulting.id";
-    }
-    return raw;
+    return settings.value.contact?.email?.trim() || "contact@apconsulting.id";
   });
 
   const phone = computed(() => {
     const raw = (settings.value.contact?.phone || settings.value.contact?.whatsapp)?.trim();
-    if (!raw || raw.includes("pcg") || raw === "+62 21 1234 5678") {
-      return "+62 857 5417 2217";
-    }
-    return raw;
+    return raw || "+62 857 5417 2217";
   });
 
   const headOfficeAddress = computed(() => {
     const raw = settings.value.contact?.address?.trim();
-    if (!raw || raw.includes("Sudirman No. 123")) {
-      return "SUN Plaza, Jl. Meruya Ilir Raya No. 20, Jakarta Barat";
-    }
-    return raw;
+    return raw || "SUN Plaza, Jl. Meruya Ilir Raya No. 20, Jakarta Barat";
   });
 
   const branchOfficeAddress = computed(() => {
-    const raw = settings.value.contact?.branch_address?.trim();
-    return raw || "Ruko Alexandrite 3 No. 23, Jl. Boulevard Gading Serpong, Tangerang";
+    return settings.value.contact?.branch_address?.trim() || "";
+  });
+
+  const hasBranchOffice = computed(() => {
+    return Boolean(branchOfficeAddress.value);
   });
 
   const address = computed(() => headOfficeAddress.value);
 
   const mapsEmbedUrl = computed(() => {
     const raw = settings.value.contact?.maps_embed_url?.trim();
-    if (!raw || raw.includes("123456789") || raw.includes("Sudirman")) {
-      return "https://maps.google.com/maps?q=SUN+Plaza+Jl+Meruya+Ilir+Raya+No+20+Jakarta+Barat&output=embed";
+    if (raw && (raw.startsWith("https://") || raw.startsWith("http://"))) {
+      return raw;
     }
-    return raw;
+    const query = encodeURIComponent(headOfficeAddress.value || "SUN Plaza, Jl. Meruya Ilir Raya No. 20, Jakarta Barat");
+    return `https://maps.google.com/maps?q=${query}&output=embed`;
   });
 
   const branchMapsEmbedUrl = computed(() => {
     const raw = settings.value.contact?.branch_maps_embed_url?.trim();
-    return raw || "https://maps.google.com/maps?q=Ruko+Alexandrite+3+No+23+Jl+Boulevard+Gading+Serpong+Tangerang&output=embed";
+    if (raw && (raw.startsWith("https://") || raw.startsWith("http://"))) {
+      return raw;
+    }
+    if (branchOfficeAddress.value) {
+      return `https://maps.google.com/maps?q=${encodeURIComponent(branchOfficeAddress.value)}&output=embed`;
+    }
+    return "";
   });
 
   const socials = computed(() => {
@@ -111,10 +111,7 @@ export function useCompanySettings() {
 
   const whatsappNumber = computed(() => {
     const raw = (settings.value.contact?.whatsapp || settings.value.contact?.phone)?.trim();
-    if (!raw || raw === "6281234567890" || raw.includes("89673803596")) {
-      return "6285754172217";
-    }
-    return raw;
+    return raw || "6285754172217";
   });
 
   const cleanWhatsappNumber = computed(() => {
@@ -147,6 +144,7 @@ export function useCompanySettings() {
     address,
     headOfficeAddress,
     branchOfficeAddress,
+    hasBranchOffice,
     mapsEmbedUrl,
     branchMapsEmbedUrl,
     socials,
