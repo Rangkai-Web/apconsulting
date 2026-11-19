@@ -25,41 +25,11 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: ArticleItem[] }>(
   }
 )
 
-const fallbackInsights = computed(() => [
-  {
-    id: "fallback-1",
-    category: t("home.v3.insights.defaultCat"),
-    date: t("home.v3.insights.f1Date"),
-    title: t("home.v3.insights.f1Title"),
-    excerpt: t("home.v3.insights.f1Excerpt"),
-    slug: "new-business-do-you-need-to-pay-tax-right-away",
-    image: "/images/redesign/article-featured.webp",
-  },
-  {
-    id: "fallback-2",
-    category: t("home.v3.insights.defaultCat"),
-    date: t("home.v3.insights.f2Date"),
-    title: t("home.v3.insights.f2Title"),
-    excerpt: t("home.v3.insights.f2Excerpt"),
-    slug: "padankan-nik-npwp",
-    image: "/images/redesign/article-thumb-1.webp",
-  },
-  {
-    id: "fallback-3",
-    category: t("home.v3.insights.defaultCat"),
-    date: t("home.v3.insights.f3Date"),
-    title: t("home.v3.insights.f3Title"),
-    excerpt: t("home.v3.insights.f3Excerpt"),
-    slug: "konsultan-pajak-spt-tahunan",
-    image: "/images/redesign/article-thumb-2.webp",
-  },
-])
-
 const insightsList = computed(() => {
   const items = apiResponse.value?.data
   if (items && items.length > 0) {
     const localeStr = currentLocale.value === "id" ? "id-ID" : "en-GB"
-    return items.slice(0, 3).map((item, idx) => ({
+    return items.slice(0, 3).map((item) => ({
       id: item.id,
       category: (item.category || t("home.v3.insights.defaultCat")).toUpperCase(),
       date: item.published_at
@@ -77,16 +47,16 @@ const insightsList = computed(() => {
         t("home.v3.insights.f1Excerpt"),
       slug: item.slug,
       image: item.cover_image
-        ? resolveImageUrl(item.cover_image, fallbackInsights.value[idx]?.image || "/images/redesign/article-featured.webp")
-        : (fallbackInsights.value[idx]?.image || "/images/redesign/article-featured.webp"),
+        ? resolveImageUrl(item.cover_image, "/images/redesign/article-featured.webp")
+        : "/images/redesign/article-featured.webp",
     }))
   }
-  return fallbackInsights.value
+  return []
 })
 </script>
 
 <template>
-  <section class="w-full bg-[#F4F9FE] py-12 sm:py-14 lg:py-16 border-b border-[#DCE8F5]">
+  <section v-if="pending || insightsList.length > 0" class="w-full bg-[#F4F9FE] py-12 sm:py-14 lg:py-16 border-b border-[#DCE8F5]">
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <!-- Top Header -->
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">

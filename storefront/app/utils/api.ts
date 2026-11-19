@@ -55,7 +55,7 @@ export function safeUseFetch<T>(url: string | (() => string), opts?: any) {
   };
 }
 
-export function resolveImageUrl(imagePath?: string | null, fallback = "/images/homepage/About_Desktop.webp"): string {
+export function resolveImageUrl(imagePath?: string | null, fallback = "/images/redesign/office.webp"): string {
   if (!imagePath || !imagePath.trim() || imagePath === "null" || imagePath === "undefined") {
     return fallback;
   }

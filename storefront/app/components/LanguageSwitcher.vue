@@ -15,7 +15,7 @@
       @click="isOpen = !isOpen"
     >
       <img
-        :src="currentLanguage?.flag || '/images/icon/UnitedFlagIcon.svg'"
+        :src="currentLanguage?.flag || '/images/redesign/flag-uk.png'"
         :alt="currentLanguage?.label || 'Language'"
         class="h-3.5 w-5 object-contain"
       />

@@ -343,57 +343,9 @@ const { data: apiResponse, pending } = safeUseFetch<{
   }
 );
 
-const fallbackRawArticles = computed<ArticleItem[]>(() => {
-  const isEn = currentLocale.value === "en";
-  return [
-    {
-      id: "fb-1",
-      title: isEn
-        ? "New Business: Do You Need to Pay Tax Right Away?"
-        : "Usaha Baru Buka, Harus Langsung Bayar Pajak?",
-      slug: "new-business-do-you-need-to-pay-tax-right-away",
-      category: isEn ? "Tax Services" : "Layanan Perpajakan",
-      excerpt: isEn
-        ? "Taxation is an essential part of national economic sustainability. Understanding tax obligations from day one helps newly established businesses stay compliant."
-        : "Pajak merupakan bagian penting dari keberlanjutan ekonomi negara, dan pemahaman mengenai kewajiban pajak membantu bisnis baru tetap patuh aturan.",
-      cover_image: "/images/redesign/article-featured.webp",
-      read_time: 5,
-      published_at: "2023-12-18",
-    },
-    {
-      id: "fb-2",
-      title: isEn
-        ? "Link Your NIK and NPWP Before the End of 2023!"
-        : "Padankan NIK dan NPWP Sebelum Akhir Tahun 2023!",
-      slug: "padankan-nik-npwp",
-      category: isEn ? "Tax Services" : "Layanan Perpajakan",
-      excerpt: isEn
-        ? "Since July 14, 2022, Indonesia's taxation system has undergone significant digital integration through NIK-NPWP validation."
-        : "Mulai tanggal 14 Juli 2022, sistem perpajakan di Indonesia telah mengalami perubahan signifikan melalui implementasi pemadanan NIK dan NPWP.",
-      cover_image: "/images/redesign/article-thumb-1.webp",
-      read_time: 4,
-      published_at: "2023-12-15",
-    },
-    {
-      id: "fb-3",
-      title: isEn
-        ? "Annual Tax Return (SPT) Consultants in Tangerang"
-        : "Konsultan Pajak SPT Tahunan Tangerang Jadi Lebih Mudah",
-      slug: "konsultan-pajak-spt-tahunan",
-      category: isEn ? "Tax Services" : "Layanan Perpajakan",
-      excerpt: isEn
-        ? "Practical guidance for individuals and corporate taxpayers in Tangerang on preparing accurate annual SPT filings with licensed consultants."
-        : "Konsultan Pajak SPT Tahunan Tangerang — Masyarakat ataupun Perusahaan harus memiliki kesadaran wajib pajak untuk pelaporan tahunan tepat waktu.",
-      cover_image: "/images/redesign/article-thumb-2.webp",
-      read_time: 5,
-      published_at: "2023-10-18",
-    },
-  ];
-});
-
 function formatBadgeDate(dateStr?: string) {
-  const d = dateStr ? new Date(dateStr) : new Date("2023-12-18");
-  const valid = !Number.isNaN(d.getTime()) ? d : new Date("2023-12-18");
+  const d = dateStr ? new Date(dateStr) : new Date();
+  const valid = !Number.isNaN(d.getTime()) ? d : new Date();
   const day = String(valid.getDate()).padStart(2, "0");
   const month = valid.toLocaleDateString(
     currentLocale.value === "id" ? "id-ID" : "en-US",
@@ -407,12 +359,7 @@ function formatBadgeDate(dateStr?: string) {
 }
 
 const rawArticles = computed(() => {
-  const apiItems = apiResponse.value?.data || [];
-  if (apiItems.length > 0) return apiItems;
-  if (!debouncedSearch.value && !selectedCategoryKey.value && currentPage.value === 1) {
-    return fallbackRawArticles.value;
-  }
-  return [];
+  return apiResponse.value?.data || [];
 });
 
 const displayedArticles = computed(() =>

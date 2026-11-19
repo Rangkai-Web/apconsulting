@@ -14,13 +14,13 @@ export const LANGUAGES: LanguageOption[] = [
     code: "en",
     label: "English",
     shortLabel: "EN",
-    flag: "/images/icon/UnitedFlagIcon.svg",
+    flag: "/images/redesign/flag-uk.png",
   },
   {
     code: "id",
     label: "Bahasa Indonesia",
     shortLabel: "ID",
-    flag: "/images/icon/IndonesiaFlagIcon.svg",
+    flag: "/images/redesign/flag-id.png",
   },
 ];
 
