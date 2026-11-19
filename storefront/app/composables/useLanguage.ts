@@ -606,6 +606,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "contact.form.optFin": "Tax Audit & Dispute Resolution",
     "contact.form.optGen": "General Inquiry",
     "contact.form.phone": "Phone number (optional)",
+    "contact.form.company": "Company Name (optional)",
+    "contact.form.companyPlaceholder": "e.g. PT Maju Bersama",
     "contact.form.message": "Message",
     "contact.form.messagePlaceholder": "Tell us how we can help your business",
     "contact.form.sendBtn": "Send Message",
@@ -1225,6 +1227,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "contact.form.optFin": "Pemeriksaan & Sengketa Pajak",
     "contact.form.optGen": "Pertanyaan Umum",
     "contact.form.phone": "Nomor Telepon (opsional)",
+    "contact.form.company": "Nama Perusahaan (opsional)",
+    "contact.form.companyPlaceholder": "contoh: PT Maju Bersama",
     "contact.form.message": "Pesan",
     "contact.form.messagePlaceholder":
       "Tuliskan bagaimana kami dapat membantu bisnis Anda",

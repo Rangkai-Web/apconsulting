@@ -226,46 +226,6 @@
               </div>
 
               <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <!-- Service Interest -->
-                <div>
-                  <label
-                    for="service"
-                    class="mb-1.5 block text-[13px] font-semibold text-[#092F50]"
-                  >
-                    {{ t("contact.form.service") }}
-                  </label>
-                  <div class="relative">
-                    <select
-                      id="service"
-                      v-model="form.service"
-                      :class="[
-                        'w-full appearance-none rounded-[2px] border border-[#DCE8F5] bg-white px-4 py-3 pr-10 text-[14px] transition-colors focus:border-[#0869B2] focus:outline-none',
-                        form.service ? 'text-[#092F50]' : 'text-[#8AA0B4]',
-                      ]"
-                    >
-                      <option value="">{{ t("contact.form.selectOne") }}</option>
-                      <option
-                        v-for="cat in formattedCategories"
-                        :key="cat.value"
-                        :value="cat.value"
-                        class="text-[#092F50]"
-                      >
-                        {{ cat.label }}
-                      </option>
-                    </select>
-                    <svg
-                      class="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-[#52687B]"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      aria-hidden="true"
-                    >
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                </div>
-
                 <!-- Phone -->
                 <div>
                   <label
@@ -281,6 +241,63 @@
                     placeholder="+62 8xx-xxxx-xxxx"
                     class="w-full rounded-[2px] border border-[#DCE8F5] bg-white px-4 py-3 text-[14px] text-[#092F50] placeholder-[#8AA0B4] transition-colors focus:border-[#0869B2] focus:outline-none"
                   />
+                </div>
+
+                <!-- Company -->
+                <div>
+                  <label
+                    for="company"
+                    class="mb-1.5 block text-[13px] font-semibold text-[#092F50]"
+                  >
+                    {{ t("contact.form.company") }}
+                  </label>
+                  <input
+                    id="company"
+                    v-model="form.company"
+                    type="text"
+                    :placeholder="t('contact.form.companyPlaceholder')"
+                    class="w-full rounded-[2px] border border-[#DCE8F5] bg-white px-4 py-3 text-[14px] text-[#092F50] placeholder-[#8AA0B4] transition-colors focus:border-[#0869B2] focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <!-- Service Interest -->
+              <div>
+                <label
+                  for="service"
+                  class="mb-1.5 block text-[13px] font-semibold text-[#092F50]"
+                >
+                  {{ t("contact.form.service") }}
+                </label>
+                <div class="relative">
+                  <select
+                    id="service"
+                    v-model="form.service"
+                    :class="[
+                      'w-full appearance-none rounded-[2px] border border-[#DCE8F5] bg-white px-4 py-3 pr-10 text-[14px] transition-colors focus:border-[#0869B2] focus:outline-none',
+                      form.service ? 'text-[#092F50]' : 'text-[#8AA0B4]',
+                    ]"
+                  >
+                    <option value="">{{ t("contact.form.selectOne") }}</option>
+                    <option
+                      v-for="cat in formattedCategories"
+                      :key="cat.value"
+                      :value="cat.value"
+                      class="text-[#092F50]"
+                    >
+                      {{ cat.label }}
+                    </option>
+                  </select>
+                  <svg
+                    class="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-[#52687B]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
                 </div>
               </div>
 
@@ -376,6 +393,7 @@ const form = reactive({
   fullName: "",
   email: "",
   phone: "",
+  company: "",
   service: "",
   message: "",
 });
@@ -450,6 +468,7 @@ const handleSubmit = async () => {
         full_name: form.fullName,
         email: form.email,
         phone: form.phone || null,
+        company: form.company || null,
         service_interest: form.service || null,
         message: form.message,
       },
@@ -461,6 +480,7 @@ const handleSubmit = async () => {
     form.fullName = "";
     form.email = "";
     form.phone = "";
+    form.company = "";
     form.service = "";
     form.message = "";
 
