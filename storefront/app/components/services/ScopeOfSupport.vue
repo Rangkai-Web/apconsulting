@@ -28,7 +28,7 @@
       </div>
 
       <!-- 3 Core Services Architectural Cards -->
-      <div class="space-y-6 sm:space-y-8">
+      <div v-if="coreServices.length > 0" class="space-y-6 sm:space-y-8">
         <article
           v-for="(service, idx) in coreServices"
           :id="service.anchorId"
@@ -143,6 +143,20 @@
           </div>
         </article>
       </div>
+
+      <!-- Empty State when no services are active -->
+      <div
+        v-else-if="!pending"
+        class="p-12 text-center border border-dashed border-[#B9D3EB] rounded-[2px] bg-white"
+      >
+        <UIcon
+          name="i-heroicons-briefcase"
+          class="size-11 text-[#728FA9] mx-auto"
+        />
+        <h3 class="mt-3 text-lg font-bold text-[#092F50]">
+          {{ currentLocale === "en" ? "No services available at this time." : "Belum ada layanan yang aktif saat ini." }}
+        </h3>
+      </div>
     </div>
   </section>
 </template>
@@ -153,7 +167,7 @@ import { useLanguage } from "~/composables/useLanguage";
 import { useServiceCategories } from "~/composables/useServiceCategories";
 
 const { t, currentLocale } = useLanguage();
-const { categories } = useServiceCategories();
+const { categories, pending } = useServiceCategories();
 
 const defaultIcons = [
   "/images/redesign/tax-service-icon.png",

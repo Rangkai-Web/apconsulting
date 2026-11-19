@@ -306,24 +306,6 @@ const footerServices = computed(() => {
         href: `/services#${defaultAnchors[idx] || "service-" + cat.id}`,
       }));
   }
-  return [
-    {
-      id: "tax-services",
-      label: isEn ? "Tax Services" : "Layanan Perpajakan",
-      href: "/services#tax",
-    },
-    {
-      id: "payroll-outsourcing",
-      label: isEn
-        ? "Payroll Outsourcing Services"
-        : "Layanan Payroll Outsourcing",
-      href: "/services#payroll",
-    },
-    {
-      id: "tax-accounting",
-      label: isEn ? "Tax Accounting Services" : "Layanan Akuntansi Pajak",
-      href: "/services#accounting",
-    },
-  ];
+  return [];
 });
 </script>

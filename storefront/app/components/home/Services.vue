@@ -1,5 +1,5 @@
 <template>
-  <section id="services" class="bg-[#F4F9FE] py-12 sm:py-14 lg:py-16 border-b border-[#DCEAF7]">
+  <section v-if="pending || services.length > 0" id="services" class="bg-[#F4F9FE] py-12 sm:py-14 lg:py-16 border-b border-[#DCEAF7]">
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <!-- Top Header Bar -->
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-10" data-reveal="up">
@@ -72,7 +72,7 @@ import { useLanguage } from "~/composables/useLanguage";
 import { useServiceCategories } from "~/composables/useServiceCategories";
 
 const { t, currentLocale } = useLanguage();
-const { categories } = useServiceCategories();
+const { categories, pending } = useServiceCategories();
 
 const defaultIcons = [
   "/images/redesign/tax-service-icon.png",

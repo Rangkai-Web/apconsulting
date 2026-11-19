@@ -1,5 +1,6 @@
 <template>
   <section
+    v-if="pending || displayedPeople.length > 0"
     id="people"
     class="scroll-mt-20 bg-white py-12 sm:py-16 lg:py-20"
   >
@@ -128,20 +129,8 @@ const { data: apiResponse, pending } = safeUseFetch<{ data: TeamMember[] }>(
   }
 );
 
-const fallbackLeadership = computed<TeamMember[]>(() => [
-  {
-    id: "leadership-andry",
-    name: "Andry Phangkawira, S.E., Ak., BKP.",
-    position: "Partner",
-    photo: "https://www.apconsulting.id/images/team/andry.jpeg",
-    bio: t("about.people.licenseNote"),
-    linkedin_url: "https://www.linkedin.com/in/andry-phangkawira/",
-  },
-]);
-
 const displayedPeople = computed(() => {
-  const items = apiResponse.value?.data || [];
-  return items.length > 0 ? items : fallbackLeadership.value;
+  return apiResponse.value?.data || [];
 });
 
 function resolvePersonPhoto(photo?: string, name?: string): string {

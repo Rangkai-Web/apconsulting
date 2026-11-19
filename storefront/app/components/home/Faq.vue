@@ -18,7 +18,7 @@ const toggleFaq = (idx: number) => {
   openFaqIndex.value = openFaqIndex.value === idx ? null : idx
 }
 
-const { data: apiResponse } = safeUseFetch<{ data: FaqItem[] }>(
+const { data: apiResponse, pending } = safeUseFetch<{ data: FaqItem[] }>(
   () => `${apiBase}/faqs?lang=${currentLocale.value}`,
   {
     watch: [currentLocale],
@@ -26,36 +26,12 @@ const { data: apiResponse } = safeUseFetch<{ data: FaqItem[] }>(
 )
 
 const faqs = computed<FaqItem[]>(() => {
-  if (
-    apiResponse.value?.data &&
-    Array.isArray(apiResponse.value.data) &&
-    apiResponse.value.data.length > 0
-  ) {
-    return apiResponse.value.data
-  }
-  return [
-    {
-      question: t("home.v3.faq.q1"),
-      answer: t("home.v3.faq.a1"),
-    },
-    {
-      question: t("home.v3.faq.q2"),
-      answer: t("home.v3.faq.a2"),
-    },
-    {
-      question: t("home.v3.faq.q3"),
-      answer: t("home.v3.faq.a3"),
-    },
-    {
-      question: t("home.v3.faq.q4"),
-      answer: t("home.v3.faq.a4"),
-    },
-  ]
+  return apiResponse.value?.data || []
 })
 </script>
 
 <template>
-  <section class="w-full bg-white py-12 sm:py-14 lg:py-16">
+  <section v-if="pending || faqs.length > 0" class="w-full bg-white py-12 sm:py-14 lg:py-16">
     <div class="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         <!-- Left Column (5 cols) -->
