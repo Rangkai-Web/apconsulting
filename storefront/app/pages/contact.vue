@@ -9,23 +9,33 @@
 <script setup lang="ts">
 import { useCompanySettings } from "~/composables/useCompanySettings";
 
-const { t } = useLanguage();
+const { t, currentLocale } = useLanguage();
 const { email, phone, headOfficeAddress, branchOfficeAddress } = useCompanySettings();
 const config = useRuntimeConfig();
 const route = useRoute();
 const siteUrl = config.public.siteUrl || "https://apconsulting.id";
 const currentUrl = `${siteUrl}${route.path}`;
 
+const pageTitle = computed(() => {
+  return currentLocale.value === "en" ? "Contact Us" : "Hubungi Kami";
+});
+
+const pageDescription = computed(() => {
+  return currentLocale.value === "en"
+    ? "Get in touch with AP Consulting for professional tax consulting, payroll outsourcing, and tax accounting services."
+    : "Hubungi AP Consulting untuk konsultasi perpajakan, payroll outsourcing, dan akuntansi pajak terpercaya di Indonesia.";
+});
+
 useSeoMeta({
-  title: computed(() => t("seo.contact.title")),
-  ogTitle: computed(() => t("seo.contact.title")),
-  description: computed(() => t("seo.contact.description")),
-  ogDescription: computed(() => t("seo.contact.description")),
+  title: pageTitle,
+  ogTitle: pageTitle,
+  description: pageDescription,
+  ogDescription: pageDescription,
   ogUrl: currentUrl,
   ogImage: `${siteUrl}/images/redesign/logo.webp`,
   twitterCard: "summary_large_image",
-  twitterTitle: computed(() => t("seo.contact.title")),
-  twitterDescription: computed(() => t("seo.contact.description")),
+  twitterTitle: pageTitle,
+  twitterDescription: pageDescription,
   twitterImage: `${siteUrl}/images/redesign/logo.webp`,
 });
 

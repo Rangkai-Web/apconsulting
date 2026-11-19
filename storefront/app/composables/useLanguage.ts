@@ -620,6 +620,10 @@ const translations: Record<Locale, Record<string, string>> = {
     "contact.form.errMsgEmpty": "Message is required.",
     "contact.form.errMsgShort": "Message must be at least 10 characters.",
 
+    "seo.contact.title": "Contact Us",
+    "seo.contact.description":
+      "Get in touch with AP Consulting for professional tax consulting, payroll outsourcing, and tax accounting services.",
+
     // Contact Location
     "contact.location.tag": "OUR OFFICES",
     "contact.location.titleNormal": "Visit our",
@@ -1241,6 +1245,10 @@ const translations: Record<Locale, Record<string, string>> = {
     "contact.form.errEmailInvalid": "Masukkan alamat email yang valid.",
     "contact.form.errMsgEmpty": "Pesan wajib diisi.",
     "contact.form.errMsgShort": "Pesan minimal 10 karakter.",
+
+    "seo.contact.title": "Hubungi Kami",
+    "seo.contact.description":
+      "Hubungi AP Consulting untuk konsultasi perpajakan, payroll outsourcing, dan akuntansi pajak terpercaya di Indonesia.",
 
     // Contact Location
     "contact.location.tag": "LOKASI KANTOR",
