@@ -36,7 +36,8 @@ export default defineNuxtConfig({
         (process.env.NODE_ENV === "production"
           ? "https://apconsulting.id"
           : "http://localhost:3000"),
-      gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID || "G-SH1GS7FRBG",
+      gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID || "G-58DMCKKCP2",
+      gtmId: process.env.NUXT_PUBLIC_GTM_ID || "GTM-W8BW44LV",
     },
   },
   ui: {
@@ -78,14 +79,25 @@ export default defineNuxtConfig({
       ],
       script: [
         {
-          src: `https://www.googletagmanager.com/gtag/js?id=${process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID || "G-SH1GS7FRBG"}`,
+          innerHTML: `window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID || "G-58DMCKKCP2"}');`,
+        },
+        {
+          src: `https://www.googletagmanager.com/gtm.js?id=${process.env.NUXT_PUBLIC_GTM_ID || "GTM-W8BW44LV"}`,
           async: true,
         },
         {
-          innerHTML: `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID || "G-SH1GS7FRBG"}');`,
+          src: `https://www.googletagmanager.com/gtag/js?id=${process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID || "G-58DMCKKCP2"}`,
+          async: true,
+        },
+      ],
+      noscript: [
+        {
+          innerHTML: `<iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.NUXT_PUBLIC_GTM_ID || "GTM-W8BW44LV"}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+          tagPosition: "bodyOpen",
         },
       ],
       meta: [
